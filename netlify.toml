@@ -1,4 +1,4 @@
 [build]
  base = "pawsnfind/"
  publish = "pawsnfind/build"
- command="npm build"
+ command="npm run-script build"
