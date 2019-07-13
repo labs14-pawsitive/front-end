@@ -62,6 +62,7 @@ export default class Auth {
                 user,
                 config
               );
+              console.log(addUser)
           
         
         }
