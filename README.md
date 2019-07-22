@@ -1,194 +1,293 @@
+# [Material Dashboard PRO React](https://demos.creative-tim.com/material-dashboard-pro-react/#/dashboard) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&logo=twitter)](https://twitter.com/intent/tweet?url=https%3A%2F%2Fcreativetimofficial.github.io%2Fmaterial-dashboard-pro-react%2F%23%2Fdashboard&text=Material%20Dashboard%20PRO%20React%20-%20Premium%20Material-UI%20Admin%20Template&original_referer=https%3A%2F%2Fdemos.creative-tim.com%2Fmaterial-dashboard-pro-react%2F%3F_ga%3D2.234372891.44370326.1533641128-1803433978.1528781151&via=creativetim&hashtags=react%2Cmaterial-ui)
 
 
 
-# Pawsnfind
+![version](https://img.shields.io/badge/version-1.7.0-blue.svg) [![GitHub issues open](https://img.shields.io/github/issues/creativetimofficial/ct-material-dashboard-pro-react.svg?maxAge=2592000)](https://github.com/creativetimofficial/ct-material-dashboard-pro-react/issues?q=is%3Aopen+is%3Aissue) [![GitHub issues closed](https://img.shields.io/github/issues-closed-raw/creativetimofficial/ct-material-dashboard-pro-react.svg?maxAge=2592000)](https://github.com/creativetimofficial/ct-material-dashboard-pro/issues-react?q=is%3Aissue+is%3Aclosed) [![Join the chat at https://gitter.im/NIT-dgp/General](https://badges.gitter.im/NIT-dgp/General.svg)](https://gitter.im/creative-tim/material-dashboard) [![Chat](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/E4aHAQy)
 
-You can find the deployed project at [Pawsnfind](http://pawsnfind.com/).
+![Product Gif](./src/assets/github/material-dashboard-pro-react.gif)
 
-## 4️⃣ Contributors
+Material Dashboard PRO React is a Premium Material-UI Admin created using [create-react-app](https://github.com/facebook/create-react-app) with a fresh, new design inspired by Google's Material Design. We are very excited to introduce our take on the material concepts through an easy to use and beautiful set of components. Material Dashboard PRO React was built over the popular Material-UI framework.
 
-🚫Add contributor info below, make sure add images and edit the social links for each member. Add to or delete these place-holders as needed
+Material Dashboard PRO React makes use of light, surface and movement. The general layout resembles sheets of paper following multiple different layers, so that the depth and order is obvious. The navigation stays mainly on the left sidebar and the content is on the right inside the main panel.
 
-|                                       [Student 1](https://github.com/)                                        |                                       [Student 2](https://github.com/)                                        |                                       [Student 3](https://github.com/)                                        |                                       [Student 4](https://github.com/)                                        |                                       [Student 5](https://github.com/)                                        |
-| :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
-|                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-male.png" width = "200" />](https://github.com/)                       |                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-female.png" width = "200" />](https://github.com/)                       |                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-male.png" width = "200" />](https://github.com/)                       |                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-female.png" width = "200" />](https://github.com/)                       |                      [<img src="https://www.dalesjewelers.com/wp-content/uploads/2018/10/placeholder-silhouette-male.png" width = "200" />](https://github.com/)                       |
-|                 [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/)                 |            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/honda0306)             |           [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/Mister-Corn)            |          [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/NandoTheessen)           |            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/wvandolah)             |
-| [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/) |
+Material Dashboard PRO React comes with 7 color filter choices for the links of the Sidebar (`blue`, `green`, `orange`, `red`, `purple`, `rose`, `white`), 3 filter color choices for background of the Sidebar (`white`, `blue`, `black`), an option to have a background image on the Sidebar and 6 color filter choices the card headers (`blue`, `green`, `orange`, `red`, `purple`, `rose`).
 
-<br>
-<br>
+Material Dashboard PRO React was created with [create-react-app](https://github.com/facebook/create-react-app) and it uses a framework built by our friend [Olivier - Material-UI](https://github.com/mui-org/material-ui), who did an amazing job creating the backbone for the material effects, animations, ripples and transitions. Big thanks to his team for the effort and forward thinking they put into it.
 
-🚫 4️⃣ Optional examples of using images with links for your tech stack, make sure to change these to fit your project
+#### Special thanks
+During the development of this dashboard, we have used many existing resources from awesome developers. We want to thank them for providing their tools open source:
++ [Perfect-scrollbar](https://github.com/utatti/perfect-scrollbar) for the slim and beautiful scrollbars.
++ [React-chartist](https://github.com/fraserxu/react-chartist) for the wonderful charts.
++ [React-datetime](https://github.com/YouCanBookMe/react-datetime) for the easy to use date and time pickers.
++ [React-big-calendar](https://github.com/intljusticemission/react-big-calendar) for the a wonderful calendar.
++ [React-bootstrap-sweetalert](https://github.com/djorg83/react-bootstrap-sweetalert) for the wonderful alerts.
++ [React-google-maps](https://github.com/tomchentw/react-google-maps) for the nice and easy to use map components.
++ [React-jvectormap](https://github.com/kadoshms/react-jvectormap) for the nice vector map components.
++ [React-nouislider](https://github.com/algolia/react-nouislider) for the nice and clean slider.
++ [React-tables](https://react-table.js.org/#/story/simple-table) for the nice and clean slider.
++ [React-tagsinput](https://github.com/olahol/react-tagsinput) for the easy and beatiful to use tags components.
 
-![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg)
-![React](https://img.shields.io/badge/react-v16.7.0--alpha.2-blue.svg)
-![Typescript](https://img.shields.io/npm/types/typescript.svg?style=flat)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/b5c4db1c-b10d-42c3-b157-3746edd9e81d/deploy-status)](netlify link goes in these parenthesis)
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+Let us know your thoughts below. And good luck with development!
 
-🚫 more info on using badges [here](https://github.com/badges/shields)
+## Table of Contents
 
-## Project Overview
+* [Versions](#versions)
+* [Demo](#demo)
+* [Quick Start](#quick-start)
+* [Documentation](#documentation)
+* [File Structure](#file-structure)
+* [Browser Support](#browser-support)
+* [Resources](#resources)
+* [Reporting Issues](#reporting-issues)
+* [Technical Support or Questions](#technical-support-or-questions)
+* [Licensing](#licensing)
+* [Useful Links](#useful-links)
 
-1️⃣ [Trello Board](🚫add link to trello board here)
 
-1️⃣ [Product Canvas](🚫add link to product canvas here)
+## Versions
 
-1️⃣ [UX Design files](🚫add link to design files here) - 🚫 delete if not applicable
+[<img src="https://s3.amazonaws.com/creativetim_bucket/github/html.png" width="60" height="60" />](https://www.creative-tim.com/product/material-dashboard-pro)
+[<img src="https://s3.amazonaws.com/creativetim_bucket/github/react.svg" width="60" height="60" />](https://www.creative-tim.com/product/material-dashboard-pro-react)
+[<img src="https://s3.amazonaws.com/creativetim_bucket/github/vuejs.png" width="60" height="60" />](https://www.creative-tim.com/product/vue-material-dashboard-pro)
+[<img src="https://s3.amazonaws.com/creativetim_bucket/github/angular.png" width="60" height="60" />](https://www.creative-tim.com/product/material-dashboard-pro-angular2)
 
-🚫 Replace lorem ipsum with a description of your project
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+| HTML | React | Vue | Angular |
+| --- | --- | --- | --- |
+| [![Material Dashboard Pro HTML](https://s3.amazonaws.com/creativetim_bucket/products/51/thumb/opt_mdp_thumbnail.jpg)](https://www.creative-tim.com/product/material-dashboard-pro) | [![Material Dashboard Pro React](https://s3.amazonaws.com/creativetim_bucket/products/80/thumb/opt_mdp_react_thumbnail.jpg)](https://www.creative-tim.com/product/material-dashboard-pro-react)  | [![Vue Material Dashboard Pro](https://s3.amazonaws.com/creativetim_bucket/products/87/thumb/opt_mdp_vue_thumbnail.jpg)](https://www.creative-tim.com/product/vue-material-dashboard-pro)  | [![Material Dashboard Pro Angular](https://s3.amazonaws.com/creativetim_bucket/products/55/thumb/opt_mdp_angular_thumbnail.jpg)](https://www.creative-tim.com/product/material-dashboard-pro-angular2)
 
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+## Demo
 
+- [Start page](https://demos.creative-tim.com/material-dashboard-pro-react/#/dashboard)
+- [User profile page](https://demos.creative-tim.com/material-dashboard-pro-react/#/user-page)
+- [Tables page ](https://demos.creative-tim.com/material-dashboard-pro-react/#/tables/extended-tables)
+- [Maps Page](https://demos.creative-tim.com/material-dashboard-pro-react/#/maps/google-maps)
+- [Notifications page](https://demos.creative-tim.com/material-dashboard-pro-react/#/components/notifications)
 
-### 4️⃣ Key Features
+[View More](https://demos.creative-tim.com/material-dashboard-pro-react/#/dashboard).
 
--    feature one
--    feature two
--    feature three
--    feature four
--    feature five
 
-## 1️⃣ Tech Stack
+## Quick start
 
-### Front end built using:
+Quick start options:
 
-#### _Front end framework goes here_
+- Buy from [Creative Tim](https://www.creative-tim.com/product/material-dashboard-pro-react)
 
-🚫 Why did you choose this framework?
-
--    point one
--    point two
--    point three
--    point four
-
-🚫List the rest of the front end features and libraries in the same format as the framework above.
-
-#### Front end deployed to `🚫insert service here`
-
-#### [Back end](🚫link to back end repo here) built using:
-
-#### 🚫 back end framework goes here
-
--    point one
--    point two
--    point three
-
-🚫 List the rest of the back end end features and libraries in the same format as the framework above
-
-# APIs
-
-## 2️⃣ Authentication API here
-
-🚫Replace text below with a description of the API
-
-Water's like me. It's laaazy ... Boy, it always looks for the easiest way to do things A little happy sunlight shining through there. Let all these little things happen. Don't fight them. Learn to use them. Even the worst thing we can do here is good.
-
-## 2️⃣ Payment API here
-
-🚫Replace text below with a description of the API
-
-This is the way you take out your flustrations. Get away from those little Christmas tree things we used to make in school. Isn't it fantastic that you can change your mind and create all these happy things? Everything's not great in life, but we can still find beauty in it.
-
-## 3️⃣ Misc API here
-
-🚫Replace text below with a description of the API
-
-You can do anything your heart can imagine. In life you need colors. This is where you take out all your hostilities and frustrations. It's better than kicking the puppy dog around and all that so. I'm sort of a softy, I couldn't shoot Bambi except with a camera. Trees get lonely too, so we'll give him a little friend. We'll lay all these little funky little things in there.
-
-## 3️⃣ Misc API here
-
-🚫Replace text below with a description of the API
-
-When you do it your way you can go anywhere you choose. Let your heart take you to wherever you want to be. If I paint something, I don't want to have to explain what it is. A tree needs to be your friend if you're going to paint him. That's a son of a gun of a cloud. Even the worst thing we can do here is good.
-
-## 3️⃣ Misc API here
-
-🚫Replace text below with a description of the API
-
-Volunteering your time; it pays you and your whole community fantastic dividends. Maybe there's a happy little waterfall happening over here. You can spend all day playing with mountains. We don't have to be committed. We are just playing here. You have freedom here. The only guide is your heart. It's cold, but it's beautiful.
-
-# 3️⃣ Environment Variables
-
-In order for the app to function correctly, the user must set up their own environment variables. There should be a .env file containing the following:
-
-🚫These are just examples, replace them with the specifics for your app
-
-    *  REACT_APP_apiKey - this is your Google API key, which can be generated in the Google Cloud Console
-    *  REACT_APP_authDomain - when you set up your Firebase project, this information will be in the dashboard
-    *  REACT_APP_databaseURL - in the Firebase dashboard
-    *  REACT_APP_projectID - in the Firebase dashboard
-    *  REACT_APP_storageBucket - in the Firebase dashboard
-    *  REACT_APP_messagingSenderId - in the Firebase dashboard
-    *  REACT_APP_stripe_API - this is your public Stripe API key, generated in the Stripe dashboard
-    *  REACT_APP_backendURL - optional for your local development server
-    *  REACT_APP_clientid - this is the Stripe_connect clientID, generated in Stripe_connect settings
-    *  REACT_APP_stripe_plan - this is the ID for a second Stripe subscription plan, generated under Stripe products
-
-# 5️⃣ Content Licenses
-
-🚫For all content - images, icons, etc, use this table to document permission of use. Remove the two placeholders and add you content to this table
-
-| Image Filename | Source / Creator | License                                                                      |
-| -------------- | ---------------- | ---------------------------------------------------------------------------- |
-| doodles.png    | Nicole Bennett   | [Creative Commons](https://www.toptal.com/designers/subtlepatterns/doodles/) |
-| rings.svg      | Sam Herbert      | [MIT](https://github.com/SamHerbert/SVG-Loaders)                             |
-
-# 4️⃣ Testing
-
-🚫Document what you used for testing and why
-
-# 4️⃣ Installation Instructions
-
-🚫explain how to install the required dependencies to get this project up and running with yarn and NPM
-
-## Other Scripts
-
-🚫replace these examples with your own
-
-    * typecheck - runs the TypeScript compiler
-    * build - creates a build of the application
-    * start - starts the production server after a build is created
-    * test - runs tests in **tests** directory \* eject - copy the configuration files and dependencies into the project so you have full control over them
-
-# Contributing
-
-When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
-
-Please note we have a [code of conduct](./CODE_OF_CONDUCT.md). Please follow it in all your interactions with the project.
-
-## Issue/Bug Request
-   
- **If you are having an issue with the existing project code, please submit a bug report under the following guidelines:**
- - Check first to see if your issue has already been reported.
- - Check to see if the issue has recently been fixed by attempting to reproduce the issue using the latest master branch in the repository.
- - Create a live example of the problem.
- - Submit a detailed bug report including your environment & browser, steps to reproduce the issue, actual and expected outcomes,  where you believe the issue is originating from, and any potential solutions you have considered.
-
-### Feature Requests
-
-We would love to hear from you about new features which would improve this app and further the aims of our project. Please provide as much detail and information as possible to show us why you think your new feature should be implemented.
-
-### Pull Requests
-
-If you have developed a patch, bug fix, or new feature that would improve this app, please submit a pull request. It is best to communicate your ideas with the developers first before investing a great deal of time into a pull request to ensure that it will mesh smoothly with the project.
-
-Remember that this project is licensed under the MIT license, and by submitting a pull request, you agree that your work will be, too.
-
-#### Pull Request Guidelines
-
-- Ensure any install or build dependencies are removed before the end of the layer when doing a build.
-- Update the README.md with details of changes to the interface, including new plist variables, exposed ports, useful file locations and container parameters.
-- Ensure that your code conforms to our existing code conventions and test coverage.
-- Include the relevant issue number, if applicable.
-- You may merge the Pull Request in once you have the sign-off of two other developers, or if you do not have permission to do that, you may request the second reviewer to merge it for you.
-
-### Attribution
-
-These contribution guidelines have been adapted from [this good-Contributing.md-template](https://gist.github.com/PurpleBooth/b24679402957c63ec426).
 
 ## Documentation
+The documentation for the Material Dashboard Pro is hosted at our [website](https://demos.creative-tim.com/material-dashboard-pro-react/#/documentation/tutorial).
 
-See [Backend Documentation](🚫_link to your backend readme here_) for details on the backend of our project.
+
+## File Structure
+
+Within the download you'll find the following directories and files:
+
+```
+material-dashboard-pro-react
+│
+├── CHANGELOG.md
+├── ISSUE_TEMPLATE.md
+├── README.md
+├── package.json
+├── documentation
+│   ├── assets
+│   └── tutorial-components.html
+├── public
+│   ├── favicon.ico
+│   ├── index.html
+│   └── manifest.json
+└── src
+    ├── index.js
+    ├── routes.js
+    ├── assets
+    │   ├── github
+    │   ├── img
+    │   │   ├── faces
+    │   │   ├── flags
+    │   ├── jss
+    │   │   ├── material-dashboard-pro-react
+    │   │   │   ├── components
+    │   │   │   ├── layouts
+    │   │   │   └── views
+    │   │   └── material-dashboard-pro-react.jsx
+    │   └── scss
+    │       ├── material-dashboard-pro-react
+    │       │   ├── mixins
+    │       │   └── plugins
+    │       └── material-dashboard-pro-react.scss
+    ├── components
+    │   ├── Accordion
+    │   │   └── Accordion.jsx
+    │   ├── Badge
+    │   │   └── Badge.jsx
+    │   ├── Card
+    │   │   ├── Card.jsx
+    │   │   ├── CardAvatar.jsx
+    │   │   ├── CardBody.jsx
+    │   │   ├── CardFooter.jsx
+    │   │   ├── CardHeader.jsx
+    │   │   ├── CardIcon.jsx
+    │   │   └── CardText.jsx
+    │   ├── Clearfix
+    │   │   └── Clearfix.jsx
+    │   ├── CustomButtons
+    │   │   └── Button.jsx
+    │   ├── CustomDropdown
+    │   │   └── CustomDropdown.jsx
+    │   ├── CustomInput
+    │   │   └── CustomInput.jsx
+    │   ├── CustomLinearProgress
+    │   │   └── CustomLinearProgress.jsx
+    │   ├── CustomTabs
+    │   │   └── CustomTabs.jsx
+    │   ├── CustomUpload
+    │   │   ├── ImageUpload.jsx
+    │   │   └── PictureUpload.jsx
+    │   ├── FixedPlugin
+    │   │   └── FixedPlugin.jsx
+    │   ├── Footer
+    │   │   └── Footer.jsx
+    │   ├── Grid
+    │   │   ├── GridContainer.jsx
+    │   │   └── GridItem.jsx
+    │   ├── Heading
+    │   │   └── Heading.jsx
+    │   ├── InfoArea
+    │   │   └── InfoArea.jsx
+    │   ├── Instruction
+    │   │   └── Instruction.jsx
+    │   ├── NavPills
+    │   │   └── NavPills.jsx
+    │   ├── Navbars
+    │   │   ├── AdminNavbar.jsx
+    │   │   ├── AdminNavbarLinks.jsx
+    │   │   └── AuthNavbar.jsx
+    │   ├── Pagination
+    │   │   └── Pagination.jsx
+    │   ├── Sidebar
+    │   │   └── Sidebar.jsx
+    │   ├── Snackbar
+    │   │   ├── Snackbar.jsx
+    │   │   └── SnackbarContent.jsx
+    │   ├── Table
+    │   │   └── Table.jsx
+    │   ├── Tasks
+    │   │   └── Tasks.jsx
+    │   ├── Timeline
+    │   │   └── Timeline.jsx
+    │   ├── Typography
+    │   │   ├── Danger.jsx
+    │   │   ├── Info.jsx
+    │   │   ├── Muted.jsx
+    │   │   ├── Primary.jsx
+    │   │   ├── Quote.jsx
+    │   │   ├── Success.jsx
+    │   │   └── Warning.jsx
+    │   └── Wizard
+    │       └── Wizard.jsx
+    ├── layouts
+    │   ├── Admin.jsx
+    │   ├── Auth.jsx
+    │   └── RTL.jsx
+    ├── variables
+    │   ├── charts.jsx
+    │   └── general.jsx
+    └── views
+        ├── Calendar
+        │   └── Calendar.jsx
+        ├── Charts
+        │   └── Charts.jsx
+        ├── Components
+        │   ├── Buttons.jsx
+        │   ├── GridSystem.jsx
+        │   ├── Icons.jsx
+        │   ├── Notifications.jsx
+        │   ├── Panels.jsx
+        │   ├── SweetAlert.jsx
+        │   └── Typography.jsx
+        ├── Dashboard
+        │   └── Dashboard.jsx
+        ├── Forms
+        │   ├── ExtendedForms.jsx
+        │   ├── RegularForms.jsx
+        │   ├── ValidationForms.jsx
+        │   ├── Wizard.jsx
+        │   └── WizardSteps
+        │       ├── Step1.jsx
+        │       ├── Step2.jsx
+        │       └── Step3.jsx
+        ├── Maps
+        │   ├── FullScreenMap.jsx
+        │   ├── GoogleMaps.jsx
+        │   └── VectorMap.jsx
+        ├── Pages
+        │   ├── ErrorPage.jsx
+        │   ├── LockScreenPage.jsx
+        │   ├── LoginPage.jsx
+        │   ├── PricingPage.jsx
+        │   ├── RTLSupport.jsx
+        │   ├── RegisterPage.jsx
+        │   ├── Timeline.jsx
+        │   └── UserProfile.jsx
+        ├── Tables
+        │   ├── ExtendedTables.jsx
+        │   ├── ReactTables.jsx
+        │   └── RegularTables.jsx
+        └── Widgets
+            └── Widgets.jsx
+```
+
+## Browser Support
+
+At present, we officially aim to support the last two versions of the following browsers:
+
+<img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/chrome.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/firefox.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/edge.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/safari.png" width="64" height="64"> <img src="https://s3.amazonaws.com/creativetim_bucket/github/browser/opera.png" width="64" height="64">
+
+
+## Resources
+- [Live Preview](https://demos.creative-tim.com/material-dashboard-pro-react/#/dashboard)
+- Buy Page: https://www.creative-tim.com/product/material-dashboard-pro-react
+- Documentation is [here](https://demos.creative-tim.com/material-dashboard-pro-react/#/documentation/tutorial)
+- License Agreement: https://www.creative-tim.com/license
+- Support: https://www.creative-tim.com/contact-us
+- Issues: [Github Issues Page](https://github.com/creativetimofficial/ct-material-dashboard-pro-react/issues)
+- Material Dashboard React - [demo](https://www.creative-tim.com/product/material-dashboard-react?ref=github-md-pro-react)
+- For Front End Development - [Material Kit Pro React ](https://www.creative-tim.com/product/material-kit-pro-react?ref=github-md-pro-react)
+
+## Reporting Issues
+We use GitHub Issues as the official bug tracker for the Material Dashboard Pro. Here are some advices for our users that want to report an issue:
+
+1. Make sure that you are using the latest version of the Material Dashboard Pro. Check the CHANGELOG from your dashboard on our [website](https://www.creative-tim.com/).
+2. Providing us reproducible steps for the issue will shorten the time it takes for it to be fixed.
+3. Some issues may be browser specific, so specifying in what browser you encountered the issue might help.
+
+## Technical Support or Questions
+
+If you have questions or need help integrating the product please [contact us](https://www.creative-tim.com/contact-us) instead of opening an issue.
+
+## Licensing
+
+- Copyright 2018 Creative Tim (https://www.creative-tim.com)
+- Creative Tim [license](https://www.creative-tim.com/license)
+
+## Useful Links
+
+ - [More products](https://www.creative-tim.com/bootstrap-themes) from Creative Tim
+
+- [Tutorials](https://www.youtube.com/channel/UCVyTG4sCw-rOvB9oHkzZD1w)
+
+- [Freebies](https://www.creative-tim.com/bootstrap-themes/free) from Creative Tim
+
+- [Affiliate Program](https://www.creative-tim.com/affiliates/new) (earn money)
+
+##### Social Media
+
+Twitter: <https://twitter.com/CreativeTim>
+
+Facebook: <https://www.facebook.com/CreativeTim>
+
+Dribbble: <https://dribbble.com/creativetim>
+
+Google+: <https://plus.google.com/+CreativetimPage>
+
+Instagram: <https://instagram.com/creativetimofficial>
