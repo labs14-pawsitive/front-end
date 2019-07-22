@@ -31,11 +31,16 @@ import mainPageStyle from "assets/jss/material-dashboard-pro-react/views/mainPag
 class Main extends React.Component {
   render() {
     const { classes } = this.props;
+    const customStyle = {
+      raise : {
+
+      }
+    }
     return (
       <div className={classes.contentCenter}>
         <GridContainer>
           <GridItem md={12}>
-            <h1 className={classes.title}>8/15</h1>
+            <h1 className={classes.title}>8/15<sup>*</sup></h1>
             <h2 className={classes.subTitle}>Search, discover, adopt your pets!</h2>
             <h4 className={classes.description}>
               Busy pawing on our keyboards so you can have a seamless adoption experience, very soon!

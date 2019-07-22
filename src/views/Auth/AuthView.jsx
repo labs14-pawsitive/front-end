@@ -51,7 +51,7 @@ class AuthView extends React.Component {
       }
         return(
         <ListItem className={classes.listItem} onClick={this.authLogin} style={customStyle.buttonWrapper}>
-            <NavLink to="/callback">
+            <NavLink to="#">
                <Fingerprint className={classes.listItemIcon} style={customStyle.linkStyle} />
                <ListItemText
                 style={customStyle.linkStyle}
