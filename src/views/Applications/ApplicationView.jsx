@@ -24,7 +24,9 @@ import FormLabel from "@material-ui/core/FormLabel";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Radio from "@material-ui/core/Radio";
+
 import Checkbox from "@material-ui/core/Checkbox";
+import Typography from "@material-ui/core/Typography";
 
 // @material-ui/icons
 import MailOutline from "@material-ui/icons/MailOutline";
@@ -50,7 +52,7 @@ class AppliationView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      
+
       application: {}
     };
     this.handleChange = this.handleChange.bind(this);
@@ -59,24 +61,25 @@ class AppliationView extends React.Component {
 
   componentDidMount() {
 
-    axios.
-    get(`http://localhost:8000/api/applications/${this.props.match.params.id}`)
-    .then( application => {
-     
-      console.log('application', application.data)
-      if(application.data.shelter !== this.props.shelter)  {
-        this.props.history.push('/admin/dashboard')
-      } else {
-        this.setState({
-                application: application.data,
-              })
-              console.log(this.state.application)
-      }
-      
-    })
-    .catch( error => {
-      console.log(error)
-    })
+    axios
+      // get(`http://localhost:8000/api/applications/${this.props.match.params.id}`)
+      .get(`https://staging1-pawsnfind.herokuapp.com/api/applications/${this.props.match.params.id}`)
+      .then(application => {
+
+        console.log('application', application.data)
+        if (application.data.shelter !== this.props.shelter) {
+          this.props.history.push('/admin/dashboard')
+        } else {
+          this.setState({
+            application: application.data,
+          })
+          console.log(this.state.application)
+        }
+
+      })
+      .catch(error => {
+        console.log(error)
+      })
 
 
   }
@@ -112,114 +115,369 @@ class AppliationView extends React.Component {
       titleStyle: {
         padding: "0px 15px"
       },
-      imgCardStyle:{
+      imgCardStyle: {
         padding: "0px 15px"
       },
       imgStyle: {
         borderRadius: "4px"
       },
-      labelStyle : {
+      labelStyle: {
         color: "#333333",
         paddingTop: "33px"
       },
-      checkBoxStyle : {
+      checkBoxStyle: {
         float: "right"
       }
     }
 
     return (
       <>
-      <GridContainer>
-      <GridItem xs={12} sm={12} md={8}>
-          <Card>
-            <CardHeader color="rose" icon>
-              <CardIcon color="rose">
-                <MailOutline />
-              </CardIcon>
-              <h4 className={classes.cardIconTitle}>Application Information</h4>
-            </CardHeader>
-            <CardBody>
-              <form>
-                <CustomInput
-                  labelText="Application ID"
-                  id="application_id"
-                  formControlProps={{
-                    fullWidth: true
-                  }}
-                  inputProps={{
-                    type: "text" ,
-                    disabled: true, 
-                    value : this.state.application.application_id,
-                  }}
+        <GridContainer>
 
-                />
-                <CustomInput
-                  labelText="Animal Name"
-                  id="animal_name"
-                  formControlProps={{
-                    fullWidth: true
-                  }}
-                  inputProps={{
-                    type: "text" ,
-                    disabled: true, 
-                    value : this.state.application.animal_name,
-                  }}
+          <GridItem xs={false} sm={4} md={7}>
+            <GridItem xs={12} sm={12}>
+              <Typography>
+                <h4>Applicant Information</h4>
+              </Typography>
+              <Card>
+                <CardBody>
+                  <form>
+                    <CustomInput
+                      labelText="Application ID"
+                      id="application_id"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        type: "text",
+                        disabled: true,
+                        value: this.state.application.application_id,
+                      }}
+                    />
 
-                />
-                <CustomInput
-                  labelText="Password"
-                  id="password"
-                  formControlProps={{
-                    fullWidth: true
-                  }}
-                  inputProps={{
-                    type: "password",
-                    autoComplete: "off"
-                  }}
-                />
-                <div className={classes.checkboxAndRadio}>
-                  <FormControlLabel
-                    control={
+                    <CustomInput
+                      labelText="Animal Name"
+                      id="animal_name"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        type: "text",
+                        disabled: true,
+                        value: this.state.application.animal_name,
+                      }}
+                    />
+
+                    <CustomInput
+                      labelText="Application Status"
+                      id="application_status"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        type: "text",
+                        value: this.state.application.application_status
+                      }}
+                    />
+
+                    <CustomInput
+                      labelText="Applicant Name"
+                      id="name"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        type: "text",
+                        disabled: true,
+                        value: this.state.application.name
+                      }}
+                    />
+
+                    <CustomInput
+                      labelText="Submission Date"
+                      id="application_status"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        type: "text",
+                        disabled: true,
+                        // value: this.state.application
+                      }}
+                    />
+                  </form>
+                </CardBody>
+              </Card>
+            </GridItem>
+
+            <GridItem xs={12} sm={12}>
+              <Typography>
+                <h4>Applicant Contact Information</h4>
+              </Typography>
+              <Card>
+                <CardBody>
+                  <CustomInput
+                    labelText="Street Address"
+                    id="street_address"
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                    inputProps={{
+                      type: "text",
+                      disabled: true,
+                      value: this.state.application.street_address,
+                    }}
+
+                  />
+                  <CustomInput
+                    labelText="City / State / Zip"
+                    id="city"
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                    inputProps={{
+                      type: "text",
+                      disabled: true,
+                      value: this.state.application.city,
+                    }}
+
+                  />
+                  <CustomInput
+                    labelText="Home Phone Number"
+                    id="home_number"
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                    inputProps={{
+                      type: "text",
+                      disabled: true,
+                      value: this.state.application.home_phone
+                    }}
+                  />
+                  <CustomInput
+                    labelText="Cell Phone Number"
+                    id="cell_number"
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                    inputProps={{
+                      type: "text",
+                      disabled: true,
+                      value: this.state.application.cell_phone
+                    }}
+                  />
+                  <CustomInput
+                    labelText="Email"
+                    id="name"
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                    inputProps={{
+                      type: "text",
+                      disabled: true,
+                      value: this.state.application.email
+                    }}
+                  />
+                </CardBody>
+              </Card>
+            </GridItem>
+
+            <GridItem xs={12} sm={12}>
+              <Typography>
+                <h4>Applicant References</h4>
+              </Typography>
+
+              <Card>
+                <CardBody>
+                  <CustomInput
+                    labelText="Reference 1"
+                    id="ref_name_1"
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                    inputProps={{
+                      type: "text",
+                      disabled: true,
+                      value: this.state.application.ref_name_1,
+                    }}
+                  />
+
+                  <CustomInput
+                    labelText="Reference 1 Phone Number"
+                    id="ref_phone_1"
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                    inputProps={{
+                      type: "text",
+                      disabled: true,
+                      value: this.state.application.ref_phone_1,
+                    }}
+                  />
+
+                  <CustomInput
+                    labelText="Reference 1 Relationship"
+                    id="ref_relationship_1"
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                    inputProps={{
+                      type: "text",
+                      disabled: true,
+                      value: this.state.application.ref_relationship_1,
+                    }}
+                  />
+
+                  <CustomInput
+                    labelText="Reference 2"
+                    id="ref_name_2"
+                    formCOntrolProps={{
+                      fullWidth: true
+                    }}
+                    inputProps={{
+                      type: "text",
+                      disabled: true,
+                      value: this.state.application.ref_name_2
+                    }}
+                  />
+
+                  <CustomInput
+                    labelText="Reference 2 Phone Number"
+                    id="ref_phone_2"
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                    inputProps={{
+                      type: "text",
+                      disabled: true,
+                      value: this.state.application.ref_phone_2,
+                    }}
+                  />
+
+                  <CustomInput
+                    labelText="Reference 2 Relationship"
+                    id="ref_relationship_2"
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                    inputProps={{
+                      type: "text",
+                      disabled: true,
+                      value: this.state.application.ref_relationship_2,
+                    }}
+                  />
+
+                </CardBody>
+              </Card>
+            </GridItem>
+
+            <GridItem xs={12} sm={16}>
+              <Typography>
+                <h4>Applicant Signature</h4>
+              </Typography>
+
+              <Card>
+                <CardBody>
+
+                  <GridContainer direction='row' alignItems='center' >
+                    <GridItem xs={10}>
+                      <FormLabel style={customStyle.labelStyle}>
+                        I hereby certify that the information provided above is true and correct
+                      </FormLabel>
+                    </GridItem>
+
+                    <GridItem xs={false}>
                       <Checkbox
-                        tabIndex={-1}
-                        onClick={() => this.handleToggle(2)}
-                        checkedIcon={<Check className={classes.checkedIcon} />}
+                        style={customStyle.checkBoxStyle}
+                        value={this.state.application.is_over_18}
+                        checkedIcon={
+                          <Check className={classes.checkedIcon} />
+                        }
                         icon={<Check className={classes.uncheckedIcon} />}
                         classes={{
                           checked: classes.checked,
                           root: classes.checkRoot
                         }}
                       />
-                    }
-                    classes={{
-                      label: classes.label,
-                      root: classes.labelRoot
+                    </GridItem>
+                  </GridContainer>
+
+                </CardBody>
+              </Card>
+
+            </GridItem>
+          </GridItem>
+
+          <GridItem xs={12} sm={8} md={5}>
+            <Typography>
+              <h4>Admin Notes</h4>
+            </Typography>
+
+            <Card>
+              <CardBody>
+                  <CustomInput
+                    labelText="Add a note"
+                    id="new_note"
+                    formControlProps={{
+                      fullWidth: true
                     }}
-                    label="Subscribe to newsletter"
+                    inputProps={{
+                      type: "text",
+
+                    }}
                   />
-                </div>
-                <Button color="rose">Submit</Button>
-              </form>
-            </CardBody>
-          </Card>
-        </GridItem>
 
-        <GridItem xs={12} sm={12} md={4}>
-          <Card>
-            <CardHeader>
-            <legend>Application Notes</legend>
-            </CardHeader>
-          </Card>
-        </GridItem>
+                    <Button>
+                      Cancel
+                    </Button>
 
-        <GridItem xs={12} sm={12} md={8}>
-          <Card>
-            <CardHeader color="rose" text>
-              <CardText color="rose">
-                <h4 className={classes.cardTitle}>Application for {this.state.application.animal_name}</h4>
-              </CardText>
-            </CardHeader>
-            <CardBody>
+                    <Button>
+                      Submit
+                    </Button>
+
+                { /* Listed Notes Component here*/ }
+                    
+
+              </CardBody>
+            </Card>
+          </GridItem>
+
+
+        </GridContainer>
+
+
+      </>
+    );
+  }
+}
+
+AppliationView.propTypes = {
+  classes: PropTypes.object
+};
+
+const mapStateToProps = (state) => {
+  return {
+    userID: state.userReducer.userID,
+    shelterID: state.shelterReducer.shelterID,
+    shelterWorkerID: state.userReducer.shelterWorkerID,
+    roleID: state.userReducer.roleID,
+    shelter: state.shelterReducer.shelter
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  {}
+)(withStyles(regularFormsStyle)(AppliationView))
+
+{/* <GridItem xs={12} sm={12} md={8}>
+            <Card>
+              <CardHeader color="rose" text>
+                <CardText color="rose">
+                  <h4>Application for {this.state.application.animal_name}</h4>
+                </CardText>
+              </CardHeader>
+              <CardBody>
                 <GridContainer>
                   <GridItem xs={12} sm={3}>
                     <FormLabel className={classes.labelHorizontal} style={customStyle.labelStyle}>
@@ -233,10 +491,10 @@ class AppliationView extends React.Component {
                         fullWidth: true
                       }}
                       inputProps={{
-                        type: "text" ,
-                        disabled: true, 
-                        value : this.state.application.application_id
-                      }} 
+                        type: "text",
+                        disabled: true,
+                        value: this.state.application.application_id
+                      }}
                     />
                   </GridItem>
                 </GridContainer>
@@ -253,16 +511,16 @@ class AppliationView extends React.Component {
                         fullWidth: true
                       }}
                       inputProps={{
-                        type: "text" ,
-                        disabled: true, 
-                        value : this.state.application.application_status
-                      }} 
+                        type: "text",
+                        disabled: true,
+                        value: this.state.application.application_status
+                      }}
                     />
                   </GridItem>
                 </GridContainer>
-                
+
                 <GridContainer>
-                 
+
                   <GridItem xs={12} sm={3}>
                     <div
                       className={
@@ -291,13 +549,13 @@ class AppliationView extends React.Component {
                           label: classes.label,
                           root: classes.labelRoot
                         }}
-                        
+
                       />
                     </div>
-                    
-                    
+
+
                   </GridItem>
-                 <GridItem xs={12} sm={9}>
+                  <GridItem xs={12} sm={9}>
                     <FormLabel
                       className={
                         classes.labelHorizontal +
@@ -308,16 +566,7 @@ class AppliationView extends React.Component {
                       Applicant is over 18 years of age
                     </FormLabel>
                   </GridItem>
-                  </GridContainer>
-                
-                
-                
-                
-                
-                
-                
-                
-                
+                </GridContainer>
                 <GridContainer>
                   <GridItem xs={12} sm={3}>
                     <FormLabel className={classes.labelHorizontal}>
@@ -617,34 +866,6 @@ class AppliationView extends React.Component {
                     </div>
                   </GridItem>
                 </GridContainer>
-            </CardBody>
-          </Card>
-        </GridItem>
-        
-      </GridContainer>
-      
-      
-      </>
-    );
-  }
-}
-
-AppliationView.propTypes = {
-  classes: PropTypes.object
-};
-
-const mapStateToProps = (state) => {
-  return {
-    userID : state.userReducer.userID,
-    shelterID : state.shelterReducer.shelterID,
-    shelterWorkerID : state.userReducer.shelterWorkerID,
-    roleID : state.userReducer.roleID,
-    shelter : state.shelterReducer.shelter
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  {}
-)(withStyles(regularFormsStyle)(AppliationView))
-
+              </CardBody>
+            </Card>
+          </GridItem>  */}
