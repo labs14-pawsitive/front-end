@@ -48,12 +48,14 @@ import CardBody from "components/Card/CardBody.jsx";
 
 import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
 
+import DisplayNotes from '../Components/Application/DisplayNotes';
+
 class AppliationView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
 
-      application: {}
+      application: {},
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeEnabled = this.handleChangeEnabled.bind(this);
@@ -413,33 +415,9 @@ class AppliationView extends React.Component {
               <h4>Admin Notes</h4>
             </Typography>
 
-            <Card>
-              <CardBody>
-                  <CustomInput
-                    labelText="Add a note"
-                    id="new_note"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      type: "text",
-
-                    }}
-                  />
-
-                    <Button>
-                      Cancel
-                    </Button>
-
-                    <Button>
-                      Submit
-                    </Button>
-
-                { /* Listed Notes Component here*/ }
-                    
-
-              </CardBody>
-            </Card>
+            
+                <DisplayNotes />
+            
           </GridItem>
 
 
