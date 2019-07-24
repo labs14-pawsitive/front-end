@@ -20,6 +20,7 @@ class DisplayNotes extends React.Component {
     }
     
 handleChanges = e => {
+    console.log('handleChanges')
     this.setState({ 
         inputField: e.target.value
     })
@@ -31,8 +32,6 @@ componentDidMount() {
     console.log(this.props.application_id)
 
     this.props.getNotes(applicationId)
-
-
 }
 
 addNotes = e => {
@@ -43,7 +42,7 @@ addNotes = e => {
     }
 
     this.props.addNotes( newNote, 3 );
-    this.setState({ inputField: '' })
+    this.setState({ inputField: '' });
 }
 
 deleteNotes = id => {
@@ -54,7 +53,7 @@ render() {
 
     console.log(this.state.notes)
     console.log(this.props.application)
-
+    
 
     return (
         <>
