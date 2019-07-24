@@ -88,22 +88,22 @@ render() {
 return (
     <div>
       <GridContainer>
-        <GridItem xs={12} sm={12} md={8}>
+        <GridItem xs={12} sm={12} md={6}>
           <Card>
             <CardHeader color="rose" icon>
               <CardIcon color="rose">
                 <StoreMallDirectory />
               </CardIcon>
-              <h4 className={classes.cardIconTitle}>
+              <h3 className={classes.cardIconTitle}>
                 {this.state.editMode? "Edit Shelter Profile" : "Shelter Profile"}
-              </h4>
+              </h3>
             </CardHeader>
             <CardBody>
               <GridContainer>
-                <GridItem xs={12} sm={12} md={5}>
+                <GridItem xs={12} sm={12} md={12}>
                   <CustomInput
-                    labelText={this.state.shelter? "" : "Shelter"}
-                    id="company"
+                    labelText={this.state.shelter? "Shelter Name" : "Shelter"}
+                    id="shelter"
                     formControlProps={{
                       fullWidth: true
                     }}
@@ -114,9 +114,14 @@ return (
                     }}
                   />
                 </GridItem>
-                <GridItem xs={12} sm={12} md={3}>
+              </GridContainer>
+              <GridContainer>
+                <GridItem xs={12} sm={12} md={12}>
+                <h3 className={classes.cardTitle}>Contacts</h3>
+                </GridItem>
+                <GridItem xs={12} sm={12} md={12}>
                   <CustomInput
-                    labelText="Username"
+                    labelText="Name"
                     id={this.state.editMode? "username-disabled" : "username"}
                     formControlProps={{
                       fullWidth: true
@@ -128,7 +133,7 @@ return (
 
                   />
                 </GridItem>
-                <GridItem xs={12} sm={12} md={4}>
+                <GridItem xs={12} sm={12} md={6}>
                   <CustomInput
                     labelText="Email address"
                     id={this.state.editMode? "email-address-disabled" : "email-address"}
@@ -142,26 +147,10 @@ return (
 
                   />
                 </GridItem>
-              </GridContainer>
-              <GridContainer>
                 <GridItem xs={12} sm={12} md={6}>
                   <CustomInput
-                    labelText="First Name"
-                    id="first-name"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      disabled: this.state.editMode? false : true
-                    }}
-                    style={this.state.editMode? "" : customStyle.shelterDisplayView}
-
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={6}>
-                  <CustomInput
-                    labelText="Last Name"
-                    id="last-name"
+                    labelText="Phone Number"
+                    id={this.state.editMode? "email-address-disabled" : "email-address"}
                     formControlProps={{
                       fullWidth: true
                     }}
@@ -173,71 +162,7 @@ return (
                   />
                 </GridItem>
               </GridContainer>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={4}>
-                  <CustomInput
-                    labelText="City"
-                    id="city"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      disabled: this.state.editMode? false : true
-                    }}
-                    style={this.state.editMode? "" : customStyle.shelterDisplayView}
-
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={4}>
-                  <CustomInput
-                    labelText="Country"
-                    id="country"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      disabled: this.state.editMode? false : true
-                    }}
-                    style={this.state.editMode? "" : customStyle.shelterDisplayView}
-
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={4}>
-                  <CustomInput
-                    labelText="Postal Code"
-                    id="postal-code"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      disabled: this.state.editMode? false : true
-                    }}
-                    style={this.state.editMode? "" : customStyle.shelterDisplayView}
-
-                  />
-                </GridItem>
-              </GridContainer>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-                  <InputLabel style={{ color: "#AAAAAA" }}>About me</InputLabel>
-                  <CustomInput
-                    labelText="Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."
-                    id="about-me"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      multiline: true,
-                      rows: 5
-                    }}
-                    inputProps={{
-                      disabled: this.state.editMode? false : true
-                    }}
-                    style={this.state.editMode? "" : customStyle.shelterDisplayView}
-
-                  />
-                </GridItem>
-              </GridContainer>
+              
               <Button color="rose" className={classes.updateProfileButton} onClick={this.handleFormButtonToggle}>
                 {this.state.editMode? "Save Changes" : "Update Profile"}
               </Button>
@@ -245,27 +170,145 @@ return (
             </CardBody>
           </Card>
         </GridItem>
-        <GridItem xs={12} sm={12} md={4}>
-          <Card profile>
-            <CardAvatar profile>
-              <a href="#pablo" onClick={e => e.preventDefault()}>
-                <img src={avatar} alt="..." />
-              </a>
-            </CardAvatar>
-            <CardBody profile>
-              <h6 className={classes.cardCategory}>CEO / CO-FOUNDER</h6>
-              <h4 className={classes.cardTitle}>Alec Thompson</h4>
-              <p className={classes.description}>
-                Don{"'"}t be scared of the truth because we need to restart the
-                human foundation in truth And I love you like Kanye loves Kanye
-                I love Rick Owens’ bed design but the back is...
-              </p>
-              <Button color="rose" round>
-                Follow
-              </Button>
+        <GridItem xs={12} sm={12} md={6}>
+          <Card>
+            <CardHeader>
+            <h3 className={classes.cardTitle}>Locations</h3>
+            </CardHeader>
+            <CardBody>
+            <GridContainer>
+                <GridItem xs={12} sm={12} md={12}>
+                  <CustomInput
+                    labelText={this.state.shelter? "Location Name" : "Location"}
+                    id="location"
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                    inputProps={{
+                      disabled: this.state.editMode? false : true,
+                      style: customStyle.shelterDisplayView,
+                      value: this.state.shelter.shelter
+                    }}
+                  />
+                </GridItem>
+              </GridContainer>
+            <GridContainer>
+                <GridItem xs={12} sm={12} md={12}>
+                <CustomInput
+                    labelText="Street Address"
+                    id={this.state.editMode? "street-address-disabled" : "street-address"}
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                    inputProps={{
+                      disabled: this.state.editMode? false : true
+                    }}
+                    style={this.state.editMode? "" : customStyle.shelterDisplayView}
+
+                  />
+              </GridItem>
+               <GridItem xs={12} sm={12} md={6}>
+               <CustomInput
+                    labelText="City"
+                    id={this.state.editMode? "city-disabled" : "city"}
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                    inputProps={{
+                      disabled: this.state.editMode? false : true
+                    }}
+                    style={this.state.editMode? "" : customStyle.shelterDisplayView}
+                  />  
+              </GridItem>
+              <GridItem xs={12} sm={12} md={6}>
+              <CustomInput
+                    labelText="State"
+                    id={this.state.editMode? "city-disabled" : "city"}
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                    inputProps={{
+                      disabled: this.state.editMode? false : true
+                    }}
+                    style={this.state.editMode? "" : customStyle.shelterDisplayView}
+                  />  
+            </GridItem>
+            </GridContainer>
             </CardBody>
           </Card>
         </GridItem>
+      </GridContainer>
+      <GridContainer>
+      <GridItem xs={12} sm={12} md={6}></GridItem>
+      <GridItem xs={12} sm={12} md={6}>
+        <Card>
+          <CardHeader><h3 className={classes.cardTitle}>Add A Location</h3></CardHeader>
+          <CardBody color={true}>
+          <GridContainer>
+                <GridItem xs={12} sm={12} md={12}>
+                  <CustomInput
+                    labelText={this.state.shelter? "Location Name" : "Location"}
+                    id="location"
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                    inputProps={{
+                      disabled: this.state.editMode? false : true,
+                      style: customStyle.shelterDisplayView,
+                      value: this.state.shelter.shelter
+                    }}
+                  />
+                </GridItem>
+              </GridContainer>
+            <GridContainer>
+                <GridItem xs={12} sm={12} md={12}>
+                <CustomInput
+                    labelText="Street Address"
+                    id={this.state.editMode? "street-address-disabled" : "street-address"}
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                    inputProps={{
+                      disabled: this.state.editMode? false : true
+                    }}
+                    style={this.state.editMode? "" : customStyle.shelterDisplayView}
+
+                  />
+              </GridItem>
+               <GridItem xs={12} sm={12} md={6}>
+               <CustomInput
+                    labelText="City"
+                    id={this.state.editMode? "city-disabled" : "city"}
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                    inputProps={{
+                      disabled: this.state.editMode? false : true
+                    }}
+                    style={this.state.editMode? "" : customStyle.shelterDisplayView}
+                  />  
+              </GridItem>
+              <GridItem xs={12} sm={12} md={6}>
+              <CustomInput
+                    labelText="State"
+                    id={this.state.editMode? "city-disabled" : "city"}
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                    inputProps={{
+                      disabled: this.state.editMode? false : true
+                    }}
+                    style={this.state.editMode? "" : customStyle.shelterDisplayView}
+                  />  
+            </GridItem>
+            </GridContainer>
+            <Button color="rose" className={classes.updateProfileButton} onClick={this.handleFormButtonToggle}>
+                Add Location
+            </Button>
+            <Clearfix />
+          </CardBody>
+        </Card>
+      </GridItem>
       </GridContainer>
     </div>
   );
