@@ -131,8 +131,8 @@ class AnimalView extends React.Component {
       },
       imgCardStyle: {
         padding: "0px 15px",
-        width: "100%",
-        height: "100%"
+        width: "224px",
+        height: "224px"
       },
       imgStyle: {
         borderRadius: "4px",
