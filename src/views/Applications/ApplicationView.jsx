@@ -56,33 +56,37 @@ class AppliationView extends React.Component {
     this.state = {
 
       application: {},
+      over_18: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeEnabled = this.handleChangeEnabled.bind(this);
   }
 
-  componentDidMount() {
 
-    axios
-      // get(`http://localhost:8000/api/applications/${this.props.match.params.id}`)
-      .get(`https://staging1-pawsnfind.herokuapp.com/api/applications/${this.props.match.params.id}`)
-      .then(application => {
+  loadApplication = async() => { await axios
+    // get(`http://localhost:8000/api/applications/${this.props.match.params.id}`)
+    .get(`https://staging1-pawsnfind.herokuapp.com/api/applications/${this.props.match.params.id}`)
+    .then(application => {
 
-        console.log('application', application.data)
-        if (application.data.shelter !== this.props.shelter) {
-          this.props.history.push('/admin/dashboard')
-        } else {
-          this.setState({
-            application: application.data,
-          })
-          console.log(this.state.application)
-        }
+      console.log('application', application.data)
+      if (application.data.shelter !== this.props.shelter) {
+        this.props.history.push('/admin/dashboard')
+      } else {
+        this.setState({
+          application: application.data,
+          over_18: application.data.is_over_18,
+        })
+        console.log(this.state.application)
+        console.log(this.state.over_18)
+      }
+    })
+    .catch(error => {
+      console.log(error)
+    })}
 
-      })
-      .catch(error => {
-        console.log(error)
-      })
+  componentWillMount() {
 
+    this.loadApplication()
 
   }
 
@@ -389,19 +393,20 @@ class AppliationView extends React.Component {
                     </GridItem>
 
                     <GridItem xs={false}>
+                
                       <Checkbox
                         style={customStyle.checkBoxStyle}
-                        value={this.state.application.is_over_18}
-                        checkedIcon={
-                          <Check className={classes.checkedIcon} />
-                        }
+                        checked={this.state.testCheckBox}
+                        value={this.state.testCheckBox}
+                        disabled={true}
+                        // checkedIcon={
+                        //   <Check className={classes.checkedIcon} />
+                        // }
                         icon={<Check className={classes.uncheckedIcon} />}
-                        classes={{
-                          checked: classes.checked,
-                          root: classes.checkRoot
-                        }}
                       />
+
                     </GridItem>
+
                   </GridContainer>
 
                 </CardBody>
@@ -416,7 +421,7 @@ class AppliationView extends React.Component {
             </Typography>
 
             
-                <DisplayNotes />
+                <DisplayNotes application={this.state.application} />
             
           </GridItem>
 

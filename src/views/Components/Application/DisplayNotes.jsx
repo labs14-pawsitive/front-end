@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { addNotes, getNotes } from '../../../actions/applicationAction';
 
+import axios from 'axios';
+
 import MapNotes from './MapNotes';
 
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -11,10 +13,11 @@ import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 
+
 class DisplayNotes extends React.Component {
     state= {
         application_admin: [],
-       
+        inputField: ''
     };
 
 handleChanges = e => {
@@ -23,18 +26,26 @@ handleChanges = e => {
     })
 };
 
-componentDidMount() {
-    const shelterUserId = localStorage.getItem('shelter_user_id')
-    this.props.getNotes(shelterUserId)
-}
+// componentDidMount() {
+//     const shelterUserId = localStorage.getItem('shelter_user_id')
+//     this.props.getNotes(shelterUserId)
+// }
 
-addNote = e => {
+addNotes = e => {
     const newNote = {
-        note: this.state.inputField,
-        shelter_user: localStorage.getItem('shelter_user')
+        notes: 'test',
+        shelter_user_id: 3,
+        application_id: 3 
     }
 
-    this.props.addNotes(newNote);
+    this.props.addNotes(newNote, 3 );
+    // axios.post(`https://staging1-pawsnfind.herokuapp.com/api/applications/3/note`, newNote )
+    // .then(res => {
+    //     console.log(res);
+    // })
+    // .catch(err => {
+    //     console.log(err)
+    // })
     this.setState({ inputField: '' })
 }
 
@@ -59,13 +70,14 @@ render() {
                       Cancel
                     </Button>
 
-                    <Button onClick={this.addNote}>
+                    <Button onClick={this.addNotes}>
                       Submit
                     </Button>
               </CardBody>
-              { /* Listed Notes Component here*/ }
+
+              { /* Map Out Notes Component here*/ }
                     <div>
-                        {this.props.application_admin.notes && this.props.application_admin.notes.map(notes => (
+                        {this.state.application_admin.notes && this.state.application_admin.notes.map(notes => (
                                <MapNotes
                                key={this.props.application.id} 
                                notes={notes}
@@ -82,7 +94,7 @@ render() {
 
 const mapStateToProps = state => {
     return {
-        application_admin: state.application_admin
+        application_admin: state.applicationReducer.application_admin
     }
 }
 
