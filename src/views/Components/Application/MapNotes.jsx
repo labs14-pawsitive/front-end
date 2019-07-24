@@ -5,11 +5,17 @@ import Button from "components/CustomButtons/Button.jsx";
 
 function MapNotes(props) {
 
+    const deleteNotes = e => {
+        e.preventDefault();
+
+        props.deleteNotes(props.notes.id)
+    }
+
     return (
         <div>
-            <h2> {props.application_admin.notes} </h2>
+            <h2> {props.notes.notes} </h2>
 
-            <Button> 
+            <Button onClick={deleteNotes} key={props.notes.id}> 
                 Delete
             </Button>
 

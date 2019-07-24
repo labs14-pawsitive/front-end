@@ -21,29 +21,29 @@ import { connect } from "react-redux";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import FormLabel from "@material-ui/core/FormLabel";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import Radio from "@material-ui/core/Radio";
+// import FormControlLabel from "@material-ui/core/FormControlLabel";
+// import InputAdornment from "@material-ui/core/InputAdornment";
+// import Radio from "@material-ui/core/Radio";
 
 import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
 
 // @material-ui/icons
-import MailOutline from "@material-ui/icons/MailOutline";
+// import MailOutline from "@material-ui/icons/MailOutline";
 import Check from "@material-ui/icons/Check";
-import Clear from "@material-ui/icons/Clear";
-import Contacts from "@material-ui/icons/Contacts";
-import FiberManualRecord from "@material-ui/icons/FiberManualRecord";
+// import Clear from "@material-ui/icons/Clear";
+// import Contacts from "@material-ui/icons/Contacts";
+// import FiberManualRecord from "@material-ui/icons/FiberManualRecord";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
-import Button from "components/CustomButtons/Button.jsx";
+// import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
-import CardHeader from "components/Card/CardHeader.jsx";
-import CardText from "components/Card/CardText.jsx";
-import CardIcon from "components/Card/CardIcon.jsx";
+// import CardHeader from "components/Card/CardHeader.jsx";
+// import CardText from "components/Card/CardText.jsx";
+// import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 
 import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
@@ -56,33 +56,35 @@ class AppliationView extends React.Component {
     this.state = {
 
       application: {},
-      over_18: false,
+      
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeEnabled = this.handleChangeEnabled.bind(this);
   }
 
 
-  loadApplication = async() => { await axios
-    // get(`http://localhost:8000/api/applications/${this.props.match.params.id}`)
-    .get(`https://staging1-pawsnfind.herokuapp.com/api/applications/${this.props.match.params.id}`)
-    .then(application => {
+  loadApplication = async () => {
+    await axios
+      // get(`http://localhost:8000/api/applications/${this.props.match.params.id}`)
+      .get(`https://staging1-pawsnfind.herokuapp.com/api/applications/${this.props.match.params.id}`)
+      .then(application => {
 
-      console.log('application', application.data)
-      if (application.data.shelter !== this.props.shelter) {
-        this.props.history.push('/admin/dashboard')
-      } else {
-        this.setState({
-          application: application.data,
-          over_18: application.data.is_over_18,
-        })
-        console.log(this.state.application)
-        console.log(this.state.over_18)
-      }
-    })
-    .catch(error => {
-      console.log(error)
-    })}
+        console.log('application', application.data)
+        if (application.data.shelter !== this.props.shelter) {
+          this.props.history.push('/admin/dashboard')
+        } else {
+          this.setState({
+            application: application.data,
+            
+          })
+          console.log(this.state.application)
+
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
 
   componentWillMount() {
 
@@ -132,7 +134,8 @@ class AppliationView extends React.Component {
         paddingTop: "33px"
       },
       checkBoxStyle: {
-        float: "right"
+        float: "right",
+        color: "#000"
       }
     }
 
@@ -393,16 +396,13 @@ class AppliationView extends React.Component {
                     </GridItem>
 
                     <GridItem xs={false}>
-                
+
+                      {/* from Ming */}
                       <Checkbox
-                        style={customStyle.checkBoxStyle}
-                        checked={this.state.testCheckBox}
-                        value={this.state.testCheckBox}
+                        style={customStyle.checkboxStyle}
+                        name="is_declaration"
+                        icon={this.state.application.is_declaration ? <Check className={classes.checkedIcon} /> : <Check className={classes.uncheckedIcon} />}
                         disabled={true}
-                        // checkedIcon={
-                        //   <Check className={classes.checkedIcon} />
-                        // }
-                        icon={<Check className={classes.uncheckedIcon} />}
                       />
 
                     </GridItem>
@@ -420,9 +420,9 @@ class AppliationView extends React.Component {
               <h4>Admin Notes</h4>
             </Typography>
 
-            
-                <DisplayNotes application={this.state.application} />
-            
+
+            <DisplayNotes application={this.state.application} application_id={this.props.match.params.id} />
+
           </GridItem>
 
 

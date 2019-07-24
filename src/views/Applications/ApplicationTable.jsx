@@ -29,11 +29,11 @@ import Icon from "@material-ui/core/Icon";
 import Update from "@material-ui/icons/Update";
 
 import Assignment from "@material-ui/icons/Assignment";
-import Dvr from "@material-ui/icons/Dvr";
+// import Dvr from "@material-ui/icons/Dvr";
 import Search from "@material-ui/icons/Search";
-import Favorite from "@material-ui/icons/Favorite";
-import Close from "@material-ui/icons/Close";
-import Warning from "@material-ui/icons/Warning";
+// import Favorite from "@material-ui/icons/Favorite";
+// import Close from "@material-ui/icons/Close";
+// import Warning from "@material-ui/icons/Warning";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -44,7 +44,7 @@ import CardBody from "components/Card/CardBody.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
-import Danger from "components/Typography/Danger.jsx";
+// import Danger from "components/Typography/Danger.jsx";
 
 
 

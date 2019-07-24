@@ -5,12 +5,16 @@ import {
     GET_NOTES_START,
     GET_NOTES_SUCCESS,
     GET_NOTES_FAILURE,
+    DELETE_NOTES_START, 
+    DELETE_NOTES_SUCCESS,
+    DELETE_NOTES_FAILURE,
 } from '../actions/applicationAction';
 
 const initialState = {
-    application_admin: [],
+    notes: [],
     addingNotes: false,
     gettingNotes: false,
+    deletingNotes:false,
     error: '',
 };
 
@@ -23,11 +27,11 @@ export const applicationReducer = (state = initialState, action) => {
             };
 
         case ADD_NOTES_SUCCESS: 
-        const newState = [...state.application_admin, action.payload]
+        const newState = [...state.notes, action.payload]
         return {
             ...state,
             addingNotes: false,
-            application_admin: newState
+            notes: newState
         };
 
         case ADD_NOTES_FAILURE: 
@@ -47,7 +51,7 @@ export const applicationReducer = (state = initialState, action) => {
         return {
             ...state,
             gettingNotes: false,
-            application_admin: action.payload
+            notes: action.payload
         };
 
         case GET_NOTES_FAILURE: 
@@ -56,6 +60,26 @@ export const applicationReducer = (state = initialState, action) => {
             gettingNotes: false,
             error: action.payload
         }
+
+        case DELETE_NOTES_START:
+            return {
+                ...state, 
+                deletingNotes: true,
+            }
+
+        case DELETE_NOTES_SUCCESS: 
+            return {
+                ...state,
+                deletingNotes: false,
+                notes: state.notes.filter( note => note.id !== action.payload )
+            }
+
+        case DELETE_NOTES_FAILURE: 
+            return {
+                ...state,
+                deletingNotes: false,
+                error: action.payload
+            }
 
     }
     return state;
