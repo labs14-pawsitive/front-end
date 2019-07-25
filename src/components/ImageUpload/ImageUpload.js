@@ -102,8 +102,6 @@ class ImageUpload extends Component {
               this.props.callback(response);
             }
           }
-    
-          console.log(imageInfo);
         }
     });
   }
