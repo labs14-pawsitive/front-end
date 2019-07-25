@@ -28,6 +28,7 @@ import FormLabel from "@material-ui/core/FormLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
 
+
 // @material-ui/icons
 // import MailOutline from "@material-ui/icons/MailOutline";
 import Check from "@material-ui/icons/Check";
@@ -45,6 +46,7 @@ import Card from "components/Card/Card.jsx";
 // import CardText from "components/Card/CardText.jsx";
 // import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
+
 
 import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
 
@@ -131,11 +133,14 @@ class AppliationView extends React.Component {
       },
       labelStyle: {
         color: "#333333",
-        paddingTop: "33px"
+        paddingTop: "33px",
       },
       checkBoxStyle: {
         float: "right",
         color: "#000"
+      },
+      inputStyle: {
+        background: '#edeae8'
       }
     }
 
@@ -146,7 +151,7 @@ class AppliationView extends React.Component {
           <GridItem xs={false} sm={4} md={7}>
             <GridItem xs={12} sm={12}>
               <Typography>
-                <h4>Applicant Information</h4>
+                <h2>Applicant Information</h2>
               </Typography>
               <Card>
                 <CardBody>
@@ -162,6 +167,7 @@ class AppliationView extends React.Component {
                         disabled: true,
                         value: this.state.application.application_id,
                       }}
+                      style={customStyle.inputStyle}
                     />
 
                     <CustomInput
@@ -175,6 +181,7 @@ class AppliationView extends React.Component {
                         disabled: true,
                         value: this.state.application.animal_name,
                       }}
+                      style={customStyle.inputStyle}
                     />
 
                     <CustomInput
@@ -187,6 +194,7 @@ class AppliationView extends React.Component {
                         type: "text",
                         value: this.state.application.application_status
                       }}
+                      style={customStyle.inputStyle}
                     />
 
                     <CustomInput
@@ -200,6 +208,7 @@ class AppliationView extends React.Component {
                         disabled: true,
                         value: this.state.application.name
                       }}
+                      style={customStyle.inputStyle}
                     />
 
                     <CustomInput
@@ -213,6 +222,7 @@ class AppliationView extends React.Component {
                         disabled: true,
                         // value: this.state.application
                       }}
+                      style={customStyle.inputStyle}
                     />
                   </form>
                 </CardBody>
@@ -221,7 +231,7 @@ class AppliationView extends React.Component {
 
             <GridItem xs={12} sm={12}>
               <Typography>
-                <h4>Applicant Contact Information</h4>
+                <h2>Applicant Contact Information</h2>
               </Typography>
               <Card>
                 <CardBody>
@@ -236,7 +246,7 @@ class AppliationView extends React.Component {
                       disabled: true,
                       value: this.state.application.street_address,
                     }}
-
+                    style={customStyle.inputStyle}
                   />
                   <CustomInput
                     labelText="City / State / Zip"
@@ -249,7 +259,7 @@ class AppliationView extends React.Component {
                       disabled: true,
                       value: this.state.application.city,
                     }}
-
+                    style={customStyle.inputStyle}
                   />
                   <CustomInput
                     labelText="Home Phone Number"
@@ -262,6 +272,7 @@ class AppliationView extends React.Component {
                       disabled: true,
                       value: this.state.application.home_phone
                     }}
+                    style={customStyle.inputStyle}
                   />
                   <CustomInput
                     labelText="Cell Phone Number"
@@ -274,6 +285,7 @@ class AppliationView extends React.Component {
                       disabled: true,
                       value: this.state.application.cell_phone
                     }}
+                    style={customStyle.inputStyle}
                   />
                   <CustomInput
                     labelText="Email"
@@ -286,6 +298,7 @@ class AppliationView extends React.Component {
                       disabled: true,
                       value: this.state.application.email
                     }}
+                    style={customStyle.inputStyle}
                   />
                 </CardBody>
               </Card>
@@ -293,7 +306,7 @@ class AppliationView extends React.Component {
 
             <GridItem xs={12} sm={12}>
               <Typography>
-                <h4>Applicant References</h4>
+                <h2>Applicant References</h2>
               </Typography>
 
               <Card>
@@ -309,6 +322,7 @@ class AppliationView extends React.Component {
                       disabled: true,
                       value: this.state.application.ref_name_1,
                     }}
+                    style={customStyle.inputStyle}
                   />
 
                   <CustomInput
@@ -322,6 +336,7 @@ class AppliationView extends React.Component {
                       disabled: true,
                       value: this.state.application.ref_phone_1,
                     }}
+                    style={customStyle.inputStyle}
                   />
 
                   <CustomInput
@@ -335,6 +350,7 @@ class AppliationView extends React.Component {
                       disabled: true,
                       value: this.state.application.ref_relationship_1,
                     }}
+                    style={customStyle.inputStyle}
                   />
 
                   <CustomInput
@@ -348,6 +364,7 @@ class AppliationView extends React.Component {
                       disabled: true,
                       value: this.state.application.ref_name_2
                     }}
+                    style={customStyle.labelStyle}
                   />
 
                   <CustomInput
@@ -361,6 +378,7 @@ class AppliationView extends React.Component {
                       disabled: true,
                       value: this.state.application.ref_phone_2,
                     }}
+                    style={customStyle.labelStyle}
                   />
 
                   <CustomInput
@@ -369,11 +387,13 @@ class AppliationView extends React.Component {
                     formControlProps={{
                       fullWidth: true
                     }}
+                    style={customStyle.inputStyle}
                     inputProps={{
                       type: "text",
                       disabled: true,
                       value: this.state.application.ref_relationship_2,
                     }}
+                    style={customStyle.inputStyle}
                   />
 
                 </CardBody>
@@ -382,7 +402,7 @@ class AppliationView extends React.Component {
 
             <GridItem xs={12} sm={16}>
               <Typography>
-                <h4>Applicant Signature</h4>
+                <h2>Applicant Signature</h2>
               </Typography>
 
               <Card>
@@ -390,7 +410,7 @@ class AppliationView extends React.Component {
 
                   <GridContainer direction='row' alignItems='center' >
                     <GridItem xs={10}>
-                      <FormLabel style={customStyle.labelStyle}>
+                      <FormLabel style={customStyle.inputStyle}>
                         I hereby certify that the information provided above is true and correct
                       </FormLabel>
                     </GridItem>
@@ -417,7 +437,7 @@ class AppliationView extends React.Component {
 
           <GridItem xs={12} sm={8} md={5}>
             <Typography>
-              <h4>Admin Notes</h4>
+              <h2>Admin Notes</h2>
             </Typography>
 
 

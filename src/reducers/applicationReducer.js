@@ -8,13 +8,17 @@ import {
     DELETE_NOTES_START, 
     DELETE_NOTES_SUCCESS,
     DELETE_NOTES_FAILURE,
+    UPDATE_NOTES_START,
+    UPDATE_NOTES_SUCCESS,
+    UPDATE_NOTES_FAILURE
 } from '../actions/applicationAction';
 
 const initialState = {
     notes: [],
     addingNotes: false,
     gettingNotes: false,
-    deletingNotes:false,
+    deletingNotes: false,
+    updatingNotes: false,
     error: '',
 };
 
@@ -79,6 +83,26 @@ export const applicationReducer = (state = initialState, action) => {
             return {
                 ...state,
                 deletingNotes: false,
+                error: action.payload
+            }
+
+            case UPDATE_NOTES_START: 
+            return {
+                ...state,
+                updatingNotes: true,
+            }
+
+            case UPDATE_NOTES_SUCCESS: 
+            return {
+                ...state,
+                updatingNotes: false,
+
+            }
+
+            case UPDATE_NOTES_FAILURE: 
+            return {
+                ...state,
+                updatingNotes: false,
                 error: action.payload
             }
 
