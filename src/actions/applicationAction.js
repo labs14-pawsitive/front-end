@@ -57,10 +57,10 @@ export const UPDATE_NOTES_START = 'UPDATE_NOTES_START';
 export const UPDATE_NOTES_SUCCESS = 'UPDATE_NOTES_SUCCESS';
 export const UPDATE_NOTES_FAILURE = 'UPDATE_NOTES_FAILURE';
 
-export const updateNotes = (updatedNote, id ) => dispatch => {
+export const updateNotes = ( updatedNote, id ) => dispatch => {
     dispatch({ type: UPDATE_NOTES_START })
     return axios 
-    .update(`https://staging1-pawsnfind.herokuapp.com/api/applications/note/${id}`, updatedNote )
+    .put(`https://staging1-pawsnfind.herokuapp.com/api/applications/note/${id}`, updatedNote )
     .then(res => {
         console.log(res)
         dispatch({ type: UPDATE_NOTES_SUCCESS, payload: res.data })

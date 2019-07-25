@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addNotes, getNotes, deleteNotes } from '../../../actions/applicationAction';
+import { addNotes, getNotes, updateNotes, deleteNotes } from '../../../actions/applicationAction';
 import MapNotes from './MapNotes';
 
 import CustomInput from "components/CustomInput/CustomInput.jsx";
@@ -54,15 +54,10 @@ class DisplayNotes extends React.Component {
         this.props.deleteNotes(id)
     }
 
-    updateNotes = id => {
+    updateNotes = (notes, id) => {
 
         const updatedNote = {
-            notes: '',
-            user_id: '',
-            shelter_id: '',
-            animal_id: this.props.id,
-            application_id: this.props.application_id,
-            application_status_id: ''
+            notes: notes,
 
         }
 
@@ -117,7 +112,9 @@ class DisplayNotes extends React.Component {
                             {this.props.notes && this.props.notes.map(note => (
                                 <MapNotes
                                     note={note}
+                                    application={this.props.application}
                                     deleteNotes={this.deleteNotes}
+                                    updateNotes={this.updateNotes}
                                 />
                             ))}
                         </div>
@@ -139,5 +136,5 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    { addNotes, getNotes, deleteNotes }
+    { addNotes, getNotes, updateNotes, deleteNotes }
 )(DisplayNotes)

@@ -52,7 +52,7 @@ import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/reg
 
 import DisplayNotes from '../Components/Application/DisplayNotes';
 
-class AppliationView extends React.Component {
+class ApplicationView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -417,7 +417,6 @@ class AppliationView extends React.Component {
 
                     <GridItem xs={false}>
 
-                      {/* from Ming */}
                       <Checkbox
                         style={customStyle.checkboxStyle}
                         name="is_declaration"
@@ -454,7 +453,7 @@ class AppliationView extends React.Component {
   }
 }
 
-AppliationView.propTypes = {
+ApplicationView.propTypes = {
   classes: PropTypes.object
 };
 
@@ -471,7 +470,7 @@ const mapStateToProps = (state) => {
 export default connect(
   mapStateToProps,
   {}
-)(withStyles(regularFormsStyle)(AppliationView))
+)(withStyles(regularFormsStyle)(ApplicationView))
 
 {/* <GridItem xs={12} sm={12} md={8}>
             <Card>

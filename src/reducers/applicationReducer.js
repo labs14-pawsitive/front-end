@@ -96,7 +96,7 @@ export const applicationReducer = (state = initialState, action) => {
             return {
                 ...state,
                 updatingNotes: false,
-
+ 
             }
 
             case UPDATE_NOTES_FAILURE: 
