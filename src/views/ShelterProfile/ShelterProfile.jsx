@@ -108,7 +108,7 @@ return (
                       fullWidth: true
                     }}
                     inputProps={{
-                      disabled: this.state.editMode? false : true,
+                      disabled: (this.state.editMode? false : true),
                       style: customStyle.shelterDisplayView,
                       value: this.state.shelter.shelter
                     }}

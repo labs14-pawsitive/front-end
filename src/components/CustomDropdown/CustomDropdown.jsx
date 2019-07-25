@@ -45,7 +45,9 @@ class CustomDropdown extends React.Component {
     this.handleCloseMenu = this.handleCloseMenu.bind(this);
   }
 
-  handleClick = () => {
+  handleClick = (e) => {
+   //this.props.externalHandleClick(e)
+    //console.log(e.target)
     this.setState(state => ({ open: !state.open }));
   };
   handleClose = event => {
@@ -56,6 +58,15 @@ class CustomDropdown extends React.Component {
     this.setState({ open: false });
   };
   handleCloseMenu(param) {
+    if (param.props.onChange !== undefined) {
+      // align with handleChange in form component
+      let payload = {target: { id: null, value: null }}
+      payload.target.id = this.props.id
+      payload.target.value = param.props.value
+      
+      // this is defined on the option in the Form component
+      param.props.onChange(payload)
+    }
     this.setState({ open: false });
     if (this.props && this.props.onClick) {
       this.props.onClick(param);
