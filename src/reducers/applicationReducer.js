@@ -48,6 +48,7 @@ export const applicationReducer = (state = initialState, action) => {
             };
 
         case GET_NOTES_SUCCESS: 
+        console.log(action.payload)
         return {
             ...state,
             gettingNotes: false,

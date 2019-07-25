@@ -8,21 +8,20 @@ function MapNotes(props) {
     const deleteNotes = e => {
         e.preventDefault();
 
-        console.log(props)
-        console.log(props.notes)
+        console.log(props.note)
 
         // NEED TO PASS IN THE NOTE ID
 
-        // GRAB FROM PARAMS?
+        // GRAB FROM WHERE???
 
-        props.deleteNotes(props.notes)
+        props.deleteNotes(props.note.id)
     }
 
     return (
         <div>
-            <h2> {props.notes.notes} </h2>
+            <h2> {props.note.notes} </h2>
 
-            <Button onClick={deleteNotes} key={props.application.id}> 
+            <Button onClick={deleteNotes}> 
                 Delete
             </Button>
 
