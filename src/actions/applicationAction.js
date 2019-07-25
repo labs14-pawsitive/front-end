@@ -37,9 +37,9 @@ export const getNotes = id => dispatch => {
         })
 }
 
-export const DELETE_NOTES_START = 'DELETE_NOTES_START'
-export const DELETE_NOTES_SUCCESS = 'DELETE_NOTES_START'
-export const DELETE_NOTES_FAILURE = 'DELETE_NOTES_START'
+export const DELETE_NOTES_START = 'DELETE_NOTES_START';
+export const DELETE_NOTES_SUCCESS = 'DELETE_NOTES_START';
+export const DELETE_NOTES_FAILURE = 'DELETE_NOTES_START';
 
 export const deleteNotes = id => dispatch => {
     dispatch({ type: DELETE_NOTES_START })

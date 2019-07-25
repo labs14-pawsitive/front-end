@@ -29,8 +29,6 @@ handleChanges = e => {
 componentDidMount() {
     const applicationId = this.props.application_id
 
-    console.log(this.props.application_id)
-
     this.props.getNotes(applicationId)
 }
 
@@ -46,6 +44,7 @@ addNotes = e => {
 }
 
 deleteNotes = id => {
+
     this.props.deleteNotes(id)
 }
 
@@ -62,14 +61,13 @@ render() {
                   <CustomInput
                     labelText="Add a note"
                     id="notes"
-                    onChange={this.handleChanges}
-                    value={this.state.inputField}
                     formControlProps={{
                       fullWidth: true
                     }}
                     inputProps={{
                       type: "text",
-                     
+                      onChange: this.handleChanges,
+                      value: this.state.inputField,
                     }}
                   />
 
@@ -88,6 +86,7 @@ render() {
                                <MapNotes
                                key={this.props.application.id} 
                                notes={notes}
+                               application={this.props.application}
                                deleteNotes={this.deleteNotes}
                                />
                         ))}
