@@ -19,7 +19,7 @@ class ImageUpload extends Component {
       media: {
         height: height,
         width: width,
-        background: "gray",
+        background: "lightgray",
         borderRadius: "5px",
         overflow: "hidden",
         padding: 0
