@@ -105,6 +105,8 @@ class ImageUpload extends Component {
   }
 
   handleOpen = () => {
+    if (!this.props.editable)
+    return;
     this.setState({
       open: true
     });
@@ -121,7 +123,7 @@ class ImageUpload extends Component {
         <Button onClick={this.handleOpen} style={this.styles.media}>
           {image ? (
             <img src={URL.createObjectURL(image)} alt="" style={this.styles.image} />
-          ) : (
+          ) : this.props.editable && (
             <div className="click-text"> Click to add image </div>
           )}
         </Button>
