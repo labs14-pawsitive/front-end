@@ -130,6 +130,7 @@ class CustomDropdown extends React.Component {
                 key={key}
                 className={dropdownItem}
                 style={{ overflow: "visible", padding: 0 }}
+                value={prop.id}
               >
                 {prop}
               </MenuItem>
@@ -140,6 +141,7 @@ class CustomDropdown extends React.Component {
               key={key}
               onClick={() => this.handleCloseMenu(prop)}
               className={dropdownItem}
+              value={prop.id}
             >
               {prop}
             </MenuItem>

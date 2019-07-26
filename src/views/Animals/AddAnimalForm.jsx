@@ -51,7 +51,6 @@ import ImageUpload from "components/CustomUpload/ImageUpload.jsx";
 import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
 import CustomDropdown from "components/CustomDropdown/CustomDropdown";
 
-
 class AddAnimalForm extends React.Component {
   constructor(props) {
     super(props);
@@ -61,15 +60,25 @@ class AddAnimalForm extends React.Component {
         color: "",
         health: "",
         description: "",
+        species_id: null,
+        breed_id: null,
         animal_status_id: null,
-        breed_id: "",
-        animal_status_id: "",
+        size_id: null,
+        coat_length_id: null,
+        subscriptions_id: null,
+        age_id: null,
       },
       checked: [],
     };
-    this.props.fetchOptions()
+    
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeEnabled = this.handleChangeEnabled.bind(this);
+  }
+
+  componentDidMount () {
+    this.props.fetchOptions()
+    const { shelterId, locationId } = this.props.match.params
+    console.log(shelterId)
   }
 
   //created an empty object and merged with state.animal
@@ -91,10 +100,6 @@ class AddAnimalForm extends React.Component {
   handleChangeEnabled(event) {
     this.setState({ selectedEnabled: event.target.value });
   }
-
-  handleSimple = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
 
   handleToggle(value) {
     const { checked } = this.state;
@@ -122,7 +127,7 @@ class AddAnimalForm extends React.Component {
     })
 
     this.props.addAnimal(animalAttributes).then(() => {
-      this.props.history.push('/admin/allanimals');
+      this.props.history.push('/admin/allAnimals');
     });
     
     this.setState({
@@ -130,10 +135,16 @@ class AddAnimalForm extends React.Component {
         name: "",
         color: "",
         health: "",
-        description: ""
+        description: "",
+        species_id: "",
+        breed_id: "",
+        animal_status_id: "",
+        size_id: "",
+        coat_length_id: "",
+        subscriptions_id: "",
+        age_id: ""
       },
       checked: [],
-      simpleSelect: ""
     })
   }
 
@@ -145,18 +156,36 @@ class AddAnimalForm extends React.Component {
     const breedsDropdownOptions = this.props.breedsOptions.map(option => {
       return <span onChange={this.handleChange} value={option.id}>{option.breed}</span>
     })
+    const animalStatusDropdownOptions = this.props.animalStatusOptions.map(option => {
+      return <span onChange={this.handleChange} value={option.id}>{option.animal_status}</span>
+    })
+    const sizeDropdownOptions = this.props.sizeOptions.map(option => {
+      return <span onChange={this.handleChange} value={option.id}>{option.size}</span>
+    })
+    const coatLengthDropdownOptions = this.props.coatLengthOptions.map(option => {
+      return <span onChange={this.handleChange} value={option.id}>{option.coat_length}</span>
+    })
+    const speciesDropdownOptions = this.props.speciesOptions.map(option => {
+      return <span onChange={this.handleChange} value={option.id}>{option.species}</span>
+    })
+    const agesDropdownOptions = this.props.agesOptions.map(option => {
+      return <span onChange={this.handleChange} value={option.id}>{option.age}</span>
+    })
 
+   
     //Used find to go through all options to find the matching option with the id that is the same as this.state.animal.breed_id. if there is a 
     //match, display the breed.
-    const breedButtonDisplay = this.state.animal.breed_id ? this.props.breedsOptions.find(option => option.id == parseInt(this.state.animal.breed_id)).breed : ''
+    const breedButtonDisplay = this.state.animal.breed_id ? this.props.breedsOptions.find(option => option.id == parseInt(this.state.animal.breed_id)).breed : 'Breed'
 
-    const dropdownMenuProps = {
-      menuStyle:{
-        border: "1px solid black",
-        borderRadius: "5%",
-        backgroundColor: 'lightgrey', 
-      }
-    }
+    const animalStatusButtonDisplay = this.state.animal.animal_status_id ? this.props.animalStatusOptions.find(option => option.id == parseInt(this.state.animal.animal_status_id)).animal_status : 'Animal Status'
+
+    const sizeButtonDisplay = this.state.animal.size_id ? this.props.sizeOptions.find(option => option.id == parseInt(this.state.animal.size_id)).size : 'Size'
+
+    const coatLengthButtonDisplay = this.state.animal.coat_length_id ? this.props.coatLengthOptions.find(option => option.id == parseInt(this.state.animal.coat_length_id)).coat_length : 'Coat length'
+
+    const speciesButtonDisplay = this.state.animal.species_id ? this.props.speciesOptions.find(option => option.id == parseInt(this.state.animal.species_id)).species : 'Species'
+
+    const agesButtonDisplay = this.state.animal.age_id ? this.props.agesOptions.find(option => option.id == parseInt(this.state.animal.age_id)).age : 'Age'
 
     return (
       
@@ -235,15 +264,28 @@ class AddAnimalForm extends React.Component {
                     onChange: (event) => this.handleChange(event)
                   }}
                 />
-
+                
                 <GridContainer>
-                  <GridItem xs={4} sm={4} md={4}>
+                  <GridItem xs={12} sm={12} md={12}>
                     <FormControl>
-                      Breed
-                      
                       <CustomDropdown 
-                      
-                        buttonText={breedButtonDisplay}
+                        buttonText= {speciesButtonDisplay}
+                        id="species_id"
+                        onChange={this.handleChange}
+                        externalHandleClick={this.handleChange}
+                        dropdownList={
+                          speciesDropdownOptions
+                        }
+                        dropdownHeader={
+                          speciesButtonDisplay
+                        }
+                      />
+                    </FormControl>
+
+                    <FormControl>
+                      <CustomDropdown 
+                        buttonText= {breedButtonDisplay}
+                        // buttonText= "breed"
                         id="breed_id"
                         onChange={this.handleChange}
                         externalHandleClick={this.handleChange}
@@ -253,34 +295,69 @@ class AddAnimalForm extends React.Component {
                         dropdownHeader={
                           breedButtonDisplay
                         }
-                        dropdownMenuProps={dropdownMenuProps}
+                     
                       /> 
                     </FormControl>
-                    {/* <FormControl
-                      fullWidth
-                      className={classes.selectFormControl}>
-                      <InputLabel
-                        htmlFor="simple-select"
-                        className={classes.selectLabel}>
-                        Breed
-                      </InputLabel>
-                      <Select
-                        MenuProps={{
-                          className: classes.selectMenu
-                        }}
-                        classes={{
-                          select: classes.select
-                        }}
-                        value={this.state.simpleSelect}
-                        onChange={this.handleSimple}
-                        externalHandleClick={this.handleChange}
 
-                        inputProps={{
-                         name: "breed_id",
-                         id: "breed_id"
-                        }}>
-                      </Select>
-                    </FormControl> */}
+                    <FormControl>
+                      <CustomDropdown 
+                        buttonText= {animalStatusButtonDisplay}
+                        id="animal_status_id"
+                        onChange={this.handleChange}
+                        externalHandleClick={this.handleChange}
+                        dropdownList={
+                          animalStatusDropdownOptions
+                        }
+                        dropdownHeader={
+                          animalStatusButtonDisplay
+                        }
+                      /> 
+                    </FormControl>
+
+                    <FormControl>
+                      <CustomDropdown 
+                        buttonText= {sizeButtonDisplay}
+                        id="size_id"
+                        onChange={this.handleChange}
+                        externalHandleClick={this.handleChange}
+                        dropdownList={
+                          sizeDropdownOptions
+                        }
+                        dropdownHeader={
+                          sizeButtonDisplay
+                        }
+                      /> 
+                    </FormControl>
+
+                    <FormControl>
+                      <CustomDropdown 
+                        buttonText= {agesButtonDisplay}
+                        id="age_id"
+                        onChange={this.handleChange}
+                        externalHandleClick={this.handleChange}
+                        dropdownList={
+                          agesDropdownOptions
+                        }
+                        dropdownHeader={
+                          agesButtonDisplay
+                        }
+                      /> 
+                    </FormControl>
+
+                    <FormControl>
+                      <CustomDropdown 
+                        buttonText= {coatLengthButtonDisplay}
+                        id="coat_length_id"
+                        onChange={this.handleChange}
+                        externalHandleClick={this.handleChange}
+                        dropdownList={
+                          coatLengthDropdownOptions
+                        }
+                        dropdownHeader={
+                          coatLengthButtonDisplay
+                        }
+                      /> 
+                    </FormControl>
                   </GridItem>
                 </GridContainer>
 
@@ -324,6 +401,35 @@ class AddAnimalForm extends React.Component {
                           root: classes.labelRoot
                         }}
                         label="house trained"
+                      />
+                    </div>
+                    <div
+                      className={
+                        classes.checkboxAndRadio +
+                        " " +
+                        classes.checkboxAndRadioHorizontal
+                      }
+                    >
+                    <FormControlLabel
+                        control={
+                          <Checkbox
+                            tabIndex={-1}
+                            onClick={() => this.handleToggle("is_male")}
+                            checkedIcon={
+                              <Check className={classes.checkedIcon} />
+                            }
+                            icon={<Check className={classes.uncheckedIcon} />}
+                            classes={{
+                              checked: classes.checked,
+                              root: classes.checkRoot
+                            }}
+                          />
+                        }
+                        classes={{
+                          label: classes.label,
+                          root: classes.labelRoot
+                        }}
+                        label="male (Do not check if the animal is female)"
                       />
                     </div>
                     <div
@@ -508,8 +614,6 @@ class AddAnimalForm extends React.Component {
           </Card>
         </GridItem>
       </GridContainer>
-
- 
     );
   }
 }
@@ -518,7 +622,13 @@ const mapStateToProps = state => {
   return {
     addingAnimal: state.animalReducer.addingAnimal,
     breedsOptions: state.animalReducer.breedsOptions,
-    animalStatusOptions: state.animalReducer.animalStatusOptions
+    animalStatusOptions: state.animalReducer.animalStatusOptions,
+    sizeOptions: state.animalReducer.sizeOptions,
+    coatLengthOptions: state.animalReducer.coatLengthOptions,
+    subscriptionOptions: state.animalReducer.subscriptionOptions,
+    agesOptions: state.animalReducer.agesOptions,
+    speciesOptions: state.animalReducer.speciesOptions
+    
   }
 };
 

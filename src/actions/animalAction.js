@@ -4,21 +4,17 @@ export const ADD_ANIMAL_START = 'ADD_ANIMAL_START';
 export const ADD_ANIMAL_SUCCESS = 'ADD_ANIMAL_SUCCESS';
 export const ADD_ANIMAL_ERROR = 'ADD_ANIMAL_ERROR'
 
-
 export const addAnimal  = animal => dispatch => {
-    dispatch ({type: ADD_ANIMAL_START});
-    const headers = {Authorization: localStorage.getItem('token')}
     console.log(animal)
-    return axios.post(
-        'https://staging1-pawsnfind.herokuapp.com/api/animals',
-        animal,
-        {headers: headers}
-    ).then(res => {
-        dispatch ({type: ADD_ANIMAL_SUCCESS, payload: res.data})
-    })
-    .catch(err => {
-        dispatch({type: ADD_ANIMAL_ERROR, payload: 'null'})
-    })
+    dispatch ({type: ADD_ANIMAL_START});
+    return axios
+        .post('https://staging1-pawsnfind.herokuapp.com/api/animals', animal)
+        .then(res => {
+            dispatch ({type: ADD_ANIMAL_SUCCESS, payload: res.data})
+        })
+        .catch(err => {
+            dispatch({type: ADD_ANIMAL_ERROR, payload: err.response})
+        })
 }
 
 export const FETCH_OPTIONS_START = 'FETCH_OPTIONS_START';
@@ -36,13 +32,11 @@ export const UPDATE_ROLES = 'UPDATE_ROLES'
 
 export const fetchOptions  = animal => dispatch => {
     dispatch ({type: FETCH_OPTIONS_START});
-    const headers = {Authorization: localStorage.getItem('token')}
-    return axios.get(
-        'https://staging1-pawsnfind.herokuapp.com/api/internal/paws/options',
-        animal,
-        {headers: headers}
-    ).then(res => {
-        console.log(res)
+    // const headers = {Authorization: localStorage.getItem('token')}
+    return axios
+    .get('https://staging1-pawsnfind.herokuapp.com/api/internal/paws/options', animal)
+    .then(res => {
+        // console.log(res)
         dispatch ({type: UPDATE_BREEDS, payload: res.data.breeds})
         dispatch ({type: UPDATE_SIZE, payload: res.data.size})
         dispatch ({type: UPDATE_SUBSCRIPTIONS, payload: res.data.subscriptions})
@@ -55,6 +49,6 @@ export const fetchOptions  = animal => dispatch => {
         dispatch ({type: FETCH_OPTIONS_SUCCESS, payload: res.data})
     })
     .catch(err => {
-        dispatch({type: FETCH_OPTIONS_ERROR, payload: 'null'})
+        dispatch({type: FETCH_OPTIONS_ERROR, payload: err.response})
     })
 } 

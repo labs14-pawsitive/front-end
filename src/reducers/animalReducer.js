@@ -16,7 +16,6 @@ import {
     ADD_ANIMAL_ERROR
 } from '../actions/animalAction'
 
-
 const initialState = {
     animalID : null,
     addingAnimal: false,
@@ -39,7 +38,7 @@ const initialState = {
     speciesOptions: [],
     animalStatusOptions: [],
     rolesOptions: [],
-
+    error: ''
 }
 
 export const animalReducer = (state = initialState, action) => {
@@ -58,7 +57,8 @@ export const animalReducer = (state = initialState, action) => {
         case ADD_ANIMAL_ERROR:
             return {
                 ...state,
-                addingAnimal: false
+                addingAnimal: false,
+                error: action.payload
             };
         case FETCH_OPTIONS_START:
             return {
@@ -75,6 +75,7 @@ export const animalReducer = (state = initialState, action) => {
             return {
                 ...state,
                 fetchingOptions: false,
+                error: action.payload
             };
         case UPDATE_BREEDS:
             return {
@@ -86,51 +87,50 @@ export const animalReducer = (state = initialState, action) => {
             return {
                 ...state,
                 updatingSize: true,
-                sizeOptions: action.payload.size
+                sizeOptions: action.payload
             };
         case UPDATE_SUBSCRIPTIONS:
             return {
                 ...state,
                 updatingSubscriptions: true,
-                subscriptionsOptions: action.payload.subscriptions
+                subscriptionsOptions: action.payload
             };
         case UPDATE_COAT_LENGTH:
             return {
                 ...state,
                 updatingCoatLength: true,
-                coatLengthOptions: action.payload.coat_length
+                coatLengthOptions: action.payload
             };
         case UPDATE_AGES:
             return {
                 ...state,
                 updatingAges: true,
-                agesOptions: action.payload.ages
+                agesOptions: action.payload
             };
         case UPDATE_APPLICATION_STATUS:
             return {
                 ...state,
                 updatingApplicationStatus: true,
-                applicationStatusOptions: action.payload.application_status
+                applicationStatusOptions: action.payload
             };
         case UPDATE_SPECIES:
             return {
                 ...state,
                 updatingSpecies: true,
-                speciesOptions: action.payload.species
+                speciesOptions: action.payload
             };
         case UPDATE_ANIMAL_STATUS:
             return {
                 ...state,
                 updatingAnimalStatus: true,
-                updatingAnimalStatus: action.payload.animal_staus
+                animalStatusOptions: action.payload
             };
         case UPDATE_ROLES:
             return {
                 ...state,
                 updatingRoles: true,
-                rolesOptions: action.payload.roles
+                rolesOptions: action.payload
             };
-        
         default: 
             return state;
     }
