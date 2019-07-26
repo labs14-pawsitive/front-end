@@ -79,7 +79,7 @@ class ReactTables extends React.Component {
   componentDidMount() {
     axios
     //.get(`http://localhost:8000/api/animals/shelter/${localStorage.getItem("shelter_id")}`)
-    .get(`http://localhost:8000/api/animals/shelter/${this.props.shelterID}`)
+    .get(`https://staging1-pawsnfind.herokuapp.com/api/animals/shelter/${this.props.shelterID}`)
     .then(animals => {
       const picStyle = { width: '100%' }
       console.log(animals)
