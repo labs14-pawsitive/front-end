@@ -93,8 +93,6 @@ class ImageUpload extends Component {
         if (image === array[array.length - 1]) {
           let response = imageInfo;
     
-          if (imageInfo.length === 1) response = imageInfo[0];
-    
           if (this.props.callback) {
             if (imageInfo.length === 0)
               this.props.callback({ error: "Nothing uploaded" });
