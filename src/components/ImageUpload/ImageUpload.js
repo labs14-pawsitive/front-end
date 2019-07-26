@@ -1,114 +1,152 @@
-/*!
+import React, { Component } from "react";
+import { DropzoneDialog } from "material-ui-dropzone";
+import Button from "@material-ui/core/Button";
+import axios from "axios";
 
-=========================================================
-* Material Dashboard PRO React - v1.7.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-import React from "react";
-// used for making the prop types of this component
-import PropTypes from "prop-types";
-
-// core components
-import Button from "components/CustomButtons/Button.jsx";
-
-import defaultImage from "assets/img/image_placeholder.jpg";
-import defaultAvatar from "assets/img/placeholder.jpg";
-
-class ImageUpload extends React.Component {
+class ImageUpload extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      file: null,
-      imagePreviewUrl: this.props.avatar ? defaultAvatar : defaultImage
+      open: false,
+      files: [],
+      defaultImage: null
+    };
+
+
+    const width = this.props.width ? this.props.width : "200px";
+    const height = this.props.height ? this.props.height : "200px";
+    const borderRadius = this.props.borderRadius ? this.props.borderRadius : "5px";
+
+    this.styles = {
+      media: {
+        height: height,
+        width: width,
+        background: "lightgray",
+        borderRadius: "5px",
+        overflow: "hidden",
+        padding: 0
+      },
+    
+      image: {
+        padding: 0,
+        margin: 0,
+        top: 0,
+        height: "100%",
+        width: "100%",
+        objectFit: "cover",
+        overflow: "hidden",
+        position: "relative",
+        borderRadius: borderRadius
+      },
+    
+      text: {
+        padding: 0,
+        margin: 0,
+        top: 0,
+        height: height,
+        width: width,
+        objectFit: "cover",
+        overflow: "hidden",
+        position: "absolute",
+        borderRadius: borderRadius
+      }
     };
   }
-  fileInput = React.createRef();
-  handleImageChange = e => {
-    e.preventDefault();
-    let reader = new FileReader();
-    let file = e.target.files[0];
-    reader.onloadend = () => {
-      this.setState({
-        file: file,
-        imagePreviewUrl: reader.result
-      });
-    };
-    reader.readAsDataURL(file);
-  };
-  handleSubmit = e => {
-    e.preventDefault();
-    // this.state.file is the file/image uploaded
-    // in this function you can save the image (this.state.file) on form submit
-    // you have to call it yourself
-  };
-  handleClick = () => {
-    this.fileInput.current.click();
-  };
-  handleRemove = () => {
+
+  componentDidMount(){
+
+    if (this.props.defaultImage)
+      this.setState({defaultImage: this.props.defaultImage});
+  }
+
+  handleClose() {
     this.setState({
-      file: null,
-      imagePreviewUrl: this.props.avatar ? defaultAvatar : defaultImage
+      open: false
     });
-    this.fileInput.current.value = null;
+  }
+
+  async handleSave(files) {
+ 
+    await this.setState({
+      files: files,
+      open: false
+    });
+    const imageInfo = [];
+
+    await this.state.files.forEach(async (image, index, array) => {
+      const formData = new FormData();
+      formData.append("image", image);
+      await axios
+        .post(this.props.url, formData, {
+          headers: {
+            "Content-type": "application/x-www-form-urlencoded"
+          }
+        })
+        .then(res => {
+          if (!res) {
+            if (this.props.callback) {
+              this.props.callback({ error: "upload error" });
+              return;
+            }
+          } else {
+            let response = {
+              image: {
+                image_url: res.data.url,
+                image_id: res.data.image_id
+              }
+            };
+            imageInfo.push(response);
+          }
+        });
+        if (image === array[array.length - 1]) {
+          let response = imageInfo;
+    
+          if (this.props.callback) {
+            if (imageInfo.length === 0)
+              this.props.callback({ error: "Nothing uploaded" });
+            else {
+              this.setState({defaultImage: response[0].image.image_url});
+              this.props.callback(response);
+            }
+          }
+        }
+    });
+  }
+
+  handleOpen = () => {
+    if (!this.props.editable)
+    return;
+    this.setState({
+      open: true
+    });
   };
+
   render() {
-    var {
-      avatar,
-      addButtonProps,
-      changeButtonProps,
-      removeButtonProps,
-      defaultImage
-    } = this.props;
+    let imageLimit = 20;
+    if (this.props.imageLimit) imageLimit = this.props.imageLimit;
+
+    const image = this.state.files ? this.state.files[0] : null;
+
     return (
-      <div className="fileinput text-center">
-        <input
-          type="file"
-          onChange={this.handleImageChange}
-          ref={this.fileInput}
-        />
-        <div className={"thumbnail" + (avatar ? " img-circle" : "")}>
-          <img src={defaultImage? defaultImage : this.state.imagePreviewUrl} alt="..." />
-        </div>
-        <div>
-          {this.state.file === null ? (
-            <Button {...addButtonProps} onClick={() => this.handleClick()}>
-              {avatar ? "Add Photo" : "Select image"}
-            </Button>
-          ) : (
-            <span>
-              <Button {...changeButtonProps} onClick={() => this.handleClick()}>
-                Change
-              </Button>
-              {avatar ? <br /> : null}
-              <Button
-                {...removeButtonProps}
-                onClick={() => this.handleRemove()}
-              >
-                <i className="fas fa-times" /> Remove
-              </Button>
-            </span>
+      <div>
+        <Button onClick={this.handleOpen} style={this.styles.media}>
+          {this.state.defaultImage && !this.props.editable ? (
+            <img src={this.state.defaultImage} alt="" style={this.styles.image} />
+          ) : this.props.editable && (
+            <div className="click-text"> Click to add image </div>
           )}
-        </div>
+        </Button>
+        <DropzoneDialog
+          open={this.state.open}
+          onSave={this.handleSave.bind(this)}
+          acceptedFiles={["image/jpeg", "image/png"]}
+          showPreviews={true}
+          maxFileSize={5000000}
+          filesLimit={imageLimit}
+          onClose={this.handleClose.bind(this)}
+        />
       </div>
     );
   }
 }
-
-ImageUpload.propTypes = {
-  avatar: PropTypes.bool,
-  addButtonProps: PropTypes.object,
-  changeButtonProps: PropTypes.object,
-  removeButtonProps: PropTypes.object
-};
-
 export default ImageUpload;
