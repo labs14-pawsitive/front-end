@@ -20,37 +20,26 @@ import axios from "axios";
 import { connect } from "react-redux";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-import FormLabel from "@material-ui/core/FormLabel";
-// import FormControlLabel from "@material-ui/core/FormControlLabel";
-// import InputAdornment from "@material-ui/core/InputAdornment";
-// import Radio from "@material-ui/core/Radio";
-
 import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
-
+import TextField from '@material-ui/core/TextField';
 
 // @material-ui/icons
-// import MailOutline from "@material-ui/icons/MailOutline";
 import Check from "@material-ui/icons/Check";
-// import Clear from "@material-ui/icons/Clear";
-// import Contacts from "@material-ui/icons/Contacts";
-// import FiberManualRecord from "@material-ui/icons/FiberManualRecord";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
-// import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
-// import CardHeader from "components/Card/CardHeader.jsx";
-// import CardText from "components/Card/CardText.jsx";
-// import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 
 
 import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
 
 import DisplayNotes from '../Components/Application/DisplayNotes';
+
+import moment from 'moment';
 
 class ApplicationView extends React.Component {
   constructor(props) {
@@ -140,7 +129,19 @@ class ApplicationView extends React.Component {
         color: "#000"
       },
       inputStyle: {
-        background: '#edeae8'
+        background: '#edeae8',
+        paddingTop: "5px",
+        paddingBottom: "5px",
+        paddingLeft: "0px",
+        paddingRight: "0px",
+      },
+      headerStyle: {
+        fontWeight: "bold",
+      },
+      textFieldStyle: {
+        background: '#edeae8',
+        marginTop: '3%',
+        marginBottom: '3%',
       }
     }
 
@@ -150,79 +151,55 @@ class ApplicationView extends React.Component {
 
           <GridItem xs={false} sm={4} md={7}>
             <GridItem xs={12} sm={12}>
-              <Typography>
+              <Typography >
                 <h2>Applicant Information</h2>
               </Typography>
               <Card>
                 <CardBody>
                   <form>
-                    <CustomInput
-                      labelText="Application ID"
+                    <TextField
+                      label="Application ID"
                       id="application_id"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        type: "text",
-                        disabled: true,
-                        value: this.state.application.application_id,
-                      }}
-                      style={customStyle.inputStyle}
+                      fullWidth='true'
+                      disabled='true'
+                      value= {this.state.application.application_id}
+                      style={customStyle.textFieldStyle}
                     />
 
-                    <CustomInput
-                      labelText="Animal Name"
+                    <TextField
+                      label="Animal Name"
                       id="animal_name"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        type: "text",
-                        disabled: true,
-                        value: this.state.application.animal_name,
-                      }}
-                      style={customStyle.inputStyle}
+                      fullWidth='true'
+                      disabled='true'
+                      value = {this.state.application.animal_name}
+                      style={customStyle.textFieldStyle}
                     />
 
-                    <CustomInput
-                      labelText="Application Status"
+                    <TextField
+                      label="Application Status"
                       id="application_status"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        type: "text",
-                        value: this.state.application.application_status
-                      }}
-                      style={customStyle.inputStyle}
+                      fullWidth='true'
+                      disabled='true'
+                      value = {this.state.application.application_status}
+                      style={customStyle.textFieldStyle}
                     />
 
-                    <CustomInput
-                      labelText="Applicant Name"
+                    <TextField
+                      label="Applicant Name"
                       id="name"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        type: "text",
-                        disabled: true,
-                        value: this.state.application.name
-                      }}
-                      style={customStyle.inputStyle}
+                      fullWidth='true'
+                      disabled='true'
+                      value = {this.state.application.name}
+                      style={customStyle.textFieldStyle}
                     />
 
-                    <CustomInput
-                      labelText="Submission Date"
+                    <TextField
+                      label="Submission Date"
                       id="application_status"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        type: "text",
-                        disabled: true,
-                        // value: this.state.application
-                      }}
-                      style={customStyle.inputStyle}
+                      fullWidth='true'
+                      disabled='true'
+                      value = { moment(this.state.application.created_at).format("MMMM Do YYYY").toString() }  
+                      style={customStyle.textFieldStyle}
                     />
                   </form>
                 </CardBody>
@@ -235,70 +212,45 @@ class ApplicationView extends React.Component {
               </Typography>
               <Card>
                 <CardBody>
-                  <CustomInput
-                    labelText="Street Address"
+                  <TextField
+                    label="Street Address"
                     id="street_address"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      type: "text",
-                      disabled: true,
-                      value: this.state.application.street_address,
-                    }}
-                    style={customStyle.inputStyle}
+                    fullWidth='true'
+                    disabled='true'
+                    value = {this.state.application.street_address}
+                    style={customStyle.textFieldStyle}
                   />
-                  <CustomInput
-                    labelText="City / State / Zip"
+                  <TextField
+                    label="City / State / Zip"
                     id="city"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      type: "text",
-                      disabled: true,
-                      value: this.state.application.city,
-                    }}
-                    style={customStyle.inputStyle}
+                    fullWidth='true'
+                    disabled='true'
+                    value = {this.state.application.city}
+                    style={customStyle.textFieldStyle}
                   />
-                  <CustomInput
-                    labelText="Home Phone Number"
+                  <TextField
+                    label="Home Phone Number"
                     id="home_number"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      type: "text",
-                      disabled: true,
-                      value: this.state.application.home_phone
-                    }}
-                    style={customStyle.inputStyle}
+                    fullWidth='true'
+                    disabled='true'
+                    value = {this.state.application.home_phone}
+                    style={customStyle.textFieldStyle}
                   />
-                  <CustomInput
-                    labelText="Cell Phone Number"
+                  <TextField
+                    label="Cell Phone Number"
                     id="cell_number"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      type: "text",
-                      disabled: true,
-                      value: this.state.application.cell_phone
-                    }}
-                    style={customStyle.inputStyle}
+                    fullWidth='true'
+                    disabled='true'
+                    value = {this.state.application.cell_phone}
+                    style={customStyle.textFieldStyle}
                   />
-                  <CustomInput
-                    labelText="Email"
+                  <TextField
+                    label="Email"
                     id="name"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      type: "text",
-                      disabled: true,
-                      value: this.state.application.email
-                    }}
-                    style={customStyle.inputStyle}
+                    fullWidth='true'
+                    disabled='true'
+                    value = {this.state.application.email}
+                    style={customStyle.textFieldStyle}
                   />
                 </CardBody>
               </Card>
@@ -311,89 +263,58 @@ class ApplicationView extends React.Component {
 
               <Card>
                 <CardBody>
-                  <CustomInput
-                    labelText="Reference 1"
+                  <TextField
+                    label="Reference 1"
                     id="ref_name_1"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      type: "text",
-                      disabled: true,
-                      value: this.state.application.ref_name_1,
-                    }}
-                    style={customStyle.inputStyle}
+                    fullWidth='true'
+                    disabled='true'
+                    value = {this.state.application.ref_name_1}
+                    style={customStyle.textFieldStyle}
                   />
 
-                  <CustomInput
-                    labelText="Reference 1 Phone Number"
+                  <TextField
+                    label="Reference 1 Phone Number"
                     id="ref_phone_1"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      type: "text",
-                      disabled: true,
-                      value: this.state.application.ref_phone_1,
-                    }}
-                    style={customStyle.inputStyle}
+                    fullWidth='true'
+                    disabled='true'
+                    value = {this.state.application.ref_phone_1}
+                    style={customStyle.textFieldStyle}
                   />
 
-                  <CustomInput
-                    labelText="Reference 1 Relationship"
+                  <TextField
+                    label="Reference 1 Relationship"
                     id="ref_relationship_1"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      type: "text",
-                      disabled: true,
-                      value: this.state.application.ref_relationship_1,
-                    }}
-                    style={customStyle.inputStyle}
+                    fullWidth='true'
+                    disabled='true'
+                    value = {this.state.application.ref_relationship_1}
+                    style={customStyle.textFieldStyle}
                   />
 
-                  <CustomInput
-                    labelText="Reference 2"
+                  <TextField
+                    label="Reference 2"
                     id="ref_name_2"
-                    formCOntrolProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      type: "text",
-                      disabled: true,
-                      value: this.state.application.ref_name_2
-                    }}
-                    style={customStyle.labelStyle}
+                    fullWidth='true'
+                    disabled='true'
+                    value = {this.state.application.ref_name_2}
+                    style={customStyle.textFieldStyle}
                   />
 
-                  <CustomInput
-                    labelText="Reference 2 Phone Number"
+                  <TextField
+                    label="Reference 2 Phone Number"
                     id="ref_phone_2"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      type: "text",
-                      disabled: true,
-                      value: this.state.application.ref_phone_2,
-                    }}
-                    style={customStyle.labelStyle}
+                    fullWidth='true'
+                    disabled='true'
+                    value = {this.state.application.ref_phone_2}
+                    style={customStyle.textFieldStyle}
                   />
 
-                  <CustomInput
-                    labelText="Reference 2 Relationship"
+                  <TextField
+                    label="Reference 2 Relationship"
                     id="ref_relationship_2"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    style={customStyle.inputStyle}
-                    inputProps={{
-                      type: "text",
-                      disabled: true,
-                      value: this.state.application.ref_relationship_2,
-                    }}
-                    style={customStyle.inputStyle}
+                    fullWidth='true'
+                    disabled='true'
+                    value = {this.state.application.ref_relationship_2}
+                    style={customStyle.textFieldStyle}
                   />
 
                 </CardBody>
@@ -408,23 +329,24 @@ class ApplicationView extends React.Component {
               <Card>
                 <CardBody>
 
-                  <GridContainer direction='row' alignItems='center' >
+                  <GridContainer style={customStyle.textFieldStyle} direction='row' justify='center' alignItems='center' >
                     <GridItem xs={10}>
-                      <FormLabel style={customStyle.inputStyle}>
-                        I hereby certify that the information provided above is true and correct
-                      </FormLabel>
+                    <TextField
+                    fullWidth='true'
+                    disabled='true'
+                    value = "I hereby certify that the information provided above is true and correct"
+                    style={customStyle.textFieldStyle}
+                  />
+           
+              
                     </GridItem>
 
-                    <GridItem xs={false}>
-
-                      <Checkbox
+                    <Checkbox
                         style={customStyle.checkboxStyle}
                         name="is_declaration"
                         icon={this.state.application.is_declaration ? <Check className={classes.checkedIcon} /> : <Check className={classes.uncheckedIcon} />}
                         disabled={true}
-                      />
-
-                    </GridItem>
+                    />
 
                   </GridContainer>
 

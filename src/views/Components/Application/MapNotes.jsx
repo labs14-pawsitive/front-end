@@ -2,24 +2,20 @@ import React from 'react';
 import PropTypes from "prop-types";
 import { withRouter } from 'react-router-dom';
 import moment from 'moment';
+import { connect } from "react-redux";
 
 import Button from "components/CustomButtons/Button.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 
+import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
+import displayNoteStyle from "assets/jss/material-dashboard-pro-react/views/DisplayNoteStyle";
+
 import Container from '@material-ui/core/Container';
 import FormLabel from "@material-ui/core/FormLabel";
 
-import injectSheet from 'react-jss';
-
-const styles = {
-
-    noteBackground: {
-        background: '#edeae8',
-        borderBottom: '1px solid lightgrey',
-    }
-}
+import withStyles from "@material-ui/core/styles/withStyles";
 
 class MapNotes extends React.Component {
 constructor(props) {
@@ -36,15 +32,19 @@ constructor(props) {
          })
     }
 
+    clearField = e => {
+        this.setState({ inputField: '' })
+    }
+
     deleteNotes = e => {
         e.preventDefault();
 
-        this.deleteNotes(this.props.note.id)
+        this.props.deleteNotes(this.props.note.id)
     }
 
     updateNotes = e => {
         
-        this.updateNotes(this.state.value, this.props.note.id)
+        this.props.updateNotes(this.state.value, this.props.note.id)
 
         this.props.note.notes = this.state.value
 
@@ -57,12 +57,24 @@ constructor(props) {
 
     render() {
 
-        console.log(this.props)
+        const { classes } = this.props;
+
+        const customStyle = {
+                noteBackground: {
+                    background: '#edeae8',
+                    borderBottom: '1px solid lightgrey',
+                },
+                adjustFont: {
+                    fontSize: "20px",
+                  }
+        
+        }
 
         return (
-            <Container className={this.props.classes.noteBackground} >
+            <Container className={classes.noteBackground} >
                <div style={{ paddingTop: 20 }}>
                 <CustomInput
+                className={classes.adjustFont}
                 formControlProps={{
                     fullWidth: true
                 }}
@@ -73,7 +85,7 @@ constructor(props) {
                 }}
                 />
 
-               <FormLabel> <p> {this.props.application.name} . {moment(this.props.note.created_at).fromNow() } </p> </FormLabel>
+               <FormLabel> <p> {this.props.application.name} . { moment(this.props.note.created_at).format("MMMM Do YYYY").toString() } </p> </FormLabel>
                 </div>
     
                 <GridContainer
@@ -83,9 +95,10 @@ constructor(props) {
     
                     <GridItem xs={3} >
                         <Button
-                            variant="contained"
+                            
                             color="transparent"
-                            onClick={this.deleteNotes}
+                            className={ classes.resizeButtonText }
+                            onClick={ this.deleteNotes }
                         >
                              { this.state.isEditSelected? "Cancel" : "Delete" }
                         </Button>
@@ -93,9 +106,9 @@ constructor(props) {
     
                     <GridItem>
                         <Button
-                            variant="contained"
+                            
                             color="transparent"
-                            className={ this.state.isEditSelected ? "saveButton" : "editButton" }
+                            className={ classes.resizeButtonText }
                             onClick={ this.state.isEditSelected ? this.updateNotes : this.editSelected }
 
                         >
@@ -110,7 +123,7 @@ constructor(props) {
 }
 
 MapNotes.propTypes = {
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object
 }
 
-export default injectSheet(styles)(MapNotes)
+export default withStyles(displayNoteStyle)(MapNotes);

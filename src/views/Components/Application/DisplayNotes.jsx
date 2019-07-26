@@ -11,6 +11,9 @@ import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 // import buttonsStyle from "assets/jss/material-dashboard-pro-react/views/buttonsStyle.jsx";
 
+import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
+import withStyles from "@material-ui/core/styles/withStyles";
+
 class DisplayNotes extends React.Component {
     constructor(props) {
         super(props)
@@ -31,6 +34,10 @@ class DisplayNotes extends React.Component {
         })
     };
 
+    clearField = e => {
+        this.setState({ inputField: '' })
+    }
+
     componentDidMount() {
         const applicationId = this.props.application_id
 
@@ -49,6 +56,8 @@ class DisplayNotes extends React.Component {
         this.setState({ inputField: '' });
     }
 
+ 
+
     deleteNotes = id => {
 
         this.props.deleteNotes(id)
@@ -66,6 +75,8 @@ class DisplayNotes extends React.Component {
     }
 
     render() {
+
+        console.log(this.props)
 
         return (
             <>
@@ -92,6 +103,7 @@ class DisplayNotes extends React.Component {
                                 <Button
                                     variant="contained"
                                     color="transparent"
+                                    onClick={ this.clearField}
                                 >
                                     Cancel
                                 </Button>
@@ -134,7 +146,4 @@ const mapStateToProps = state => {
     };
 }
 
-export default connect(
-    mapStateToProps,
-    { addNotes, getNotes, updateNotes, deleteNotes }
-)(DisplayNotes)
+export default connect( mapStateToProps, {addNotes, getNotes, updateNotes, deleteNotes})(withStyles(regularFormsStyle)(DisplayNotes))
