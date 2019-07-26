@@ -18,11 +18,17 @@ import React from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { connect } from "react-redux";
+
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Checkbox from "@material-ui/core/Checkbox";
 import Typography from "@material-ui/core/Typography";
 import TextField from '@material-ui/core/TextField';
+import Select from "@material-ui/core/Select";
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
 
 // @material-ui/icons
 import Check from "@material-ui/icons/Check";
@@ -30,10 +36,9 @@ import Check from "@material-ui/icons/Check";
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
-import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
-
+// import CustomDropdown from 'components/CustomDropdown/CustomDropdown.jsx';
 
 import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
 
@@ -41,13 +46,19 @@ import DisplayNotes from '../Components/Application/DisplayNotes';
 
 import moment from 'moment';
 
+import { getOptions } from '../../actions/applicationAction';
+
 class ApplicationView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
 
       application: {},
-      
+
+      options: [ { id: 1, status: 'Awaiting Review'}, { id : 2, status: 'Under Review'}, { id:  3, status: 'Approved'}, { id:4, status: 'Rejected' } ],
+
+      testField: '',
+
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeEnabled = this.handleChangeEnabled.bind(this);
@@ -59,17 +70,15 @@ class ApplicationView extends React.Component {
       // get(`http://localhost:8000/api/applications/${this.props.match.params.id}`)
       .get(`https://staging1-pawsnfind.herokuapp.com/api/applications/${this.props.match.params.id}`)
       .then(application => {
-
         console.log('application', application.data)
+
         if (application.data.shelter !== this.props.shelter) {
           this.props.history.push('/admin/dashboard')
         } else {
           this.setState({
             application: application.data,
-            
           })
-          console.log(this.state.application)
-
+          // console.log(this.state.application)
         }
       })
       .catch(error => {
@@ -77,16 +86,37 @@ class ApplicationView extends React.Component {
       })
   }
 
+  loadOptions = async () => {
+    await axios 
+    .get(`https://staging1-pawsnfind.herokuapp.com/api/internal/paws/options`)
+    .then(options => {
+      console.log( 'options', options.data )
+      
+      this.setState({ 
+        options: options.data.application_status
+      })
+      console.log( 'from state', this.state.options )
+    })
+    .catch(error => {
+      console.log(error)
+    })
+  }
+
   componentWillMount() {
 
     this.loadApplication()
+    
+    this.loadOptions()
 
+    // this.props.getOptions()
+  
   }
-
 
   handleChange(event) {
-    this.setState({ selectedValue: event.target.value });
+
+    this.setState({ ...this.state.application, application_status: event.target.value });
   }
+
   handleChangeEnabled(event) {
     this.setState({ selectedEnabled: event.target.value });
   }
@@ -108,6 +138,9 @@ class ApplicationView extends React.Component {
 
 
   render() {
+
+    console.log(this.state.options)
+
     const { classes } = this.props;
 
     const customStyle = {
@@ -135,15 +168,22 @@ class ApplicationView extends React.Component {
         paddingLeft: "0px",
         paddingRight: "0px",
       },
-      headerStyle: {
-        fontWeight: "bold",
-      },
       textFieldStyle: {
         background: '#edeae8',
         marginTop: '3%',
         marginBottom: '3%',
+      },
+      dropDownStyle: {
+        background: '#edeae8',
+        padding: '4%',
+        marginTop: '3%',
+        marginBottom: '3%'
       }
     }
+
+    // const appStatusDropdown = this.props.statusOptions.map(option => {
+
+    // })
 
     return (
       <>
@@ -151,7 +191,7 @@ class ApplicationView extends React.Component {
 
           <GridItem xs={false} sm={4} md={7}>
             <GridItem xs={12} sm={12}>
-              <Typography >
+              <Typography style={ customStyle.headerStyle } >
                 <h2>Applicant Information</h2>
               </Typography>
               <Card>
@@ -175,14 +215,49 @@ class ApplicationView extends React.Component {
                       style={customStyle.textFieldStyle}
                     />
 
-                    <TextField
-                      label="Application Status"
-                      id="application_status"
-                      fullWidth='true'
-                      disabled='true'
-                      value = {this.state.application.application_status}
-                      style={customStyle.textFieldStyle}
-                    />
+                    <FormControl fullWidth className={classes.selectFormControl}>
+                              <InputLabel htmlFor="application_status" className={classes.selectLabel}>
+                                Application Status 
+                              </InputLabel>
+                      <Select
+              //disabled
+                          MenuProps={{
+                            className: classes.selectMenu
+                          }}
+                          classes={{
+                            select: classes.select
+                          }}
+                          value={this.state.application.application_status}
+                          onChange={this.handleChange}
+                          name="application_status"
+                          id= "application_status"
+                        >
+                        
+                        <MenuItem
+                          disabled
+                          classes={{
+                            root: classes.selectMenuItem
+                          }}
+                        >
+                          Application Status
+                        </MenuItem>
+
+                        {this.state.options.map( (status, key) => (
+                              <MenuItem
+                                classes={{ 
+                                  root: classes.selectMenuItem, 
+                                  selected: classes.selectMenuItemSelected  
+                                }}
+                        
+                                value={ status.id }
+                                
+                              > 
+                                  { status.application_status }
+                              </MenuItem> 
+                        ))}
+                      </Select>
+
+                    </FormControl>
 
                     <TextField
                       label="Applicant Name"
@@ -385,13 +460,14 @@ const mapStateToProps = (state) => {
     shelterID: state.shelterReducer.shelterID,
     shelterWorkerID: state.userReducer.shelterWorkerID,
     roleID: state.userReducer.roleID,
-    shelter: state.shelterReducer.shelter
+    shelter: state.shelterReducer.shelter,
+    options: state.applicationReducer.options
   }
 }
 
 export default connect(
   mapStateToProps,
-  {}
+  { getOptions }
 )(withStyles(regularFormsStyle)(ApplicationView))
 
 {/* <GridItem xs={12} sm={12} md={8}>

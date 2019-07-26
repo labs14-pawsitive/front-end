@@ -10,11 +10,18 @@ import {
     DELETE_NOTES_FAILURE,
     UPDATE_NOTES_START,
     UPDATE_NOTES_SUCCESS,
-    UPDATE_NOTES_FAILURE
+    UPDATE_NOTES_FAILURE,
+    GET_OPTIONS_START,
+    GET_OPTIONS_SUCCESS, 
+    GET_OPTIONS_FAILURE,
 } from '../actions/applicationAction';
+import { statement } from '@babel/template';
+import { tumblrColor } from 'assets/jss/material-dashboard-pro-react';
 
 const initialState = {
     notes: [],
+    options: [],
+    gettingOptions: false,
     addingNotes: false,
     gettingNotes: false,
     deletingNotes: false,
@@ -103,6 +110,26 @@ export const applicationReducer = (state = initialState, action) => {
             return {
                 ...state,
                 updatingNotes: false,
+                error: action.payload
+            }
+
+            case GET_OPTIONS_START:
+                return {
+                    ...state,
+                    gettingOptions: true,
+                }
+            
+            case GET_OPTIONS_SUCCESS: 
+            return {
+                ...state,
+                gettingOptions: false,
+                options: action.payload
+            }
+
+            case GET_OPTIONS_FAILURE:
+            return {
+                ...state,
+                gettingOptions: false,
                 error: action.payload
             }
 

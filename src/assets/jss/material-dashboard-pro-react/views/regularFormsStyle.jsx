@@ -57,7 +57,7 @@ const regularFormsStyle = {
   },
   inputAdornmentIconError: {
     color: dangerColor[0] + "!important"
-  }
+  },
 };
 
 export default regularFormsStyle;

@@ -36,6 +36,12 @@ constructor(props) {
         this.setState({ inputField: '' })
     }
 
+    cancelClick = e => {
+        e.preventDefault();
+
+        this.setState({ isEditSelected: false });
+    }
+
     deleteNotes = e => {
         e.preventDefault();
 
@@ -98,7 +104,7 @@ constructor(props) {
                             
                             color="transparent"
                             className={ classes.resizeButtonText }
-                            onClick={ this.deleteNotes }
+                            onClick={ this.state.isEditSelected ? this.cancelClick : this.editSelected }
                         >
                              { this.state.isEditSelected? "Cancel" : "Delete" }
                         </Button>

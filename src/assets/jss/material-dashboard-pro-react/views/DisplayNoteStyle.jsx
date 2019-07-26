@@ -65,6 +65,9 @@ const displayNoteStyle = {
   resizeButtonText: {
     fontSize: '20',
  },
+ headerStyle: {
+  fontWeight: "bold",
+},
 
 };
 
