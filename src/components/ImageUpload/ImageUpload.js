@@ -8,8 +8,10 @@ class ImageUpload extends Component {
     super(props);
     this.state = {
       open: false,
-      files: []
+      files: [],
+      defaultImage: null
     };
+
 
     const width = this.props.width ? this.props.width : "200px";
     const height = this.props.height ? this.props.height : "200px";
@@ -49,6 +51,12 @@ class ImageUpload extends Component {
         borderRadius: borderRadius
       }
     };
+  }
+
+  componentDidMount(){
+
+    if (this.props.defaultImage)
+      this.setState({defaultImage: this.props.defaultImage});
   }
 
   handleClose() {
@@ -97,6 +105,7 @@ class ImageUpload extends Component {
             if (imageInfo.length === 0)
               this.props.callback({ error: "Nothing uploaded" });
             else {
+              this.setState({defaultImage: response[0].image.image_url});
               this.props.callback(response);
             }
           }
@@ -105,6 +114,8 @@ class ImageUpload extends Component {
   }
 
   handleOpen = () => {
+    if (!this.props.editable)
+    return;
     this.setState({
       open: true
     });
@@ -119,9 +130,9 @@ class ImageUpload extends Component {
     return (
       <div>
         <Button onClick={this.handleOpen} style={this.styles.media}>
-          {image ? (
-            <img src={URL.createObjectURL(image)} alt="" style={this.styles.image} />
-          ) : (
+          {this.state.defaultImage && !this.props.editable ? (
+            <img src={this.state.defaultImage} alt="" style={this.styles.image} />
+          ) : this.props.editable && (
             <div className="click-text"> Click to add image </div>
           )}
         </Button>
