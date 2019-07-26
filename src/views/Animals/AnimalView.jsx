@@ -444,30 +444,19 @@ class AnimalView extends React.Component {
                   <div style={customStyle.titleStyle}>
                     {this.state.isEditing ?
                       <form>
-                        {/* <TextField
-                          name="name"
-                          label="Name"
-                          className={classes.textField}
-                          value={this.state.animal.name}
-                          onChange={this.handleAdoption}
-                          margin="normal"
-                        /> */}
-
                         <TextField
                           name="name"
                           label="Name"
                           // type="text"
                           className={classes.textField}
-                          // value={this.state.animal.name}
-                          // onChange={(event) => this.handleAdoption(event)}
+                          value={this.state.animal.name}
+                          onChange={this.handleTextField}
                           margin="normal"
-                          inputProps={{
-                            type: "text",
-                            // value:this.state.editInfo.name ? this.state.editInfo.name : this.state.animal.name,
-                            // onChange: (event) => this.handleAdoption(event)
-                            value: this.state.animal.name,
-                            onChange: (event) => this.handleTextField(event)
-                          }}
+                          // inputProps={{
+                          //   type: "text",
+                          //   value: this.state.animal.name,
+                          //   onChange: (event) => this.handleTextField(event)
+                          // }}
                         />
 
                         <TextField
@@ -477,7 +466,7 @@ class AnimalView extends React.Component {
                           rows="4"
                           className={classes.textField}
                           value={this.state.animal_meta.description}
-                          onChange={this.handleTextField}
+                          onChange={this.handleMetaTextField}
                           margin="normal"
                         />
                       </form> :
@@ -511,6 +500,30 @@ class AnimalView extends React.Component {
 
                   <GridContainer style={customStyle.detailsContainerStyle}>
                     <GridItem xs={12} sm={12} md={12} style={customStyle.gridItemStyle}>
+                    {/* <form
+                          className={classes.root}
+                          autoComplete="off" style={customStyle.adoptionStyle}>
+
+                          <FormControl style={customStyle.form1ControlStyle} className={classes.formControl} >
+                            <InputLabel htmlFor="animal_status_id">Adoption Status</InputLabel>
+                            <Select
+
+                              value={this.state.editInfo.animal_status_id ? this.state.editInfo.animal_status_id : this.state.animal.animal_status}
+                              name='animal_status_id'
+                              onChange={this.handleAdoption}
+                              renderValue={value => `${value}`}
+                              input={<Input id="animal_status_id" />}
+                            >
+
+                              {this.state.animal_status.map(status => {
+                                return (
+                                  <MenuItem value={status.animal_status}>{status.animal_status}</MenuItem>
+                                )
+                              })}
+
+                            </Select>
+                          </FormControl>
+                          </form> */}
 
                       {this.state.isEditing ?
                         <form
