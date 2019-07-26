@@ -19,6 +19,9 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import { connect } from "react-redux";
 
+import LocationForm from './LocationForm';
+import ContactForm from './ContactForm';
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -42,7 +45,6 @@ import CardAvatar from "components/Card/CardAvatar.jsx";
 
 import shelterProfileStyles from "assets/jss/material-dashboard-pro-react/views/shelterProfileStyles.jsx";
 
-import avatar from "assets/img/faces/marc.jpg";
 
  class ShelterProfile extends React.Component {
   constructor(props) {
@@ -88,6 +90,12 @@ render() {
 return (
     <div>
       <GridContainer>
+      <GridItem xs={12} sm={12} md={12}>
+              <LocationForm />
+              <ContactForm />
+      </GridItem>
+      </GridContainer>
+      <GridContainer>
         <GridItem xs={12} sm={12} md={6}>
           <Card>
             <CardHeader color="rose" icon>
@@ -102,8 +110,8 @@ return (
               <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
                   <CustomInput
-                    labelText={this.state.shelter? "Shelter Name" : "Shelter"}
-                    id="shelter"
+                    labelText={this.state.shelter? "" : "Shelter"}
+                    id="company"
                     formControlProps={{
                       fullWidth: true
                     }}
@@ -117,7 +125,7 @@ return (
               </GridContainer>
               <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
-                <h3 className={classes.cardTitle}>Contacts</h3>
+                <h3 className={classes.cardTitle}>Main Contact</h3>
                 </GridItem>
                 <GridItem xs={12} sm={12} md={12}>
                   <CustomInput
@@ -165,6 +173,66 @@ return (
               
               <Button color="rose" className={classes.updateProfileButton} onClick={this.handleFormButtonToggle}>
                 {this.state.editMode? "Save Changes" : "Update Profile"}
+              </Button>
+              <Clearfix />
+            </CardBody>
+          </Card>
+          <Card>
+            <CardHeader>
+              <h3 className={classes.cardTitle}>
+              Contacts
+              </h3>
+            </CardHeader>
+            <CardBody>
+              <GridContainer>
+                <GridItem xs={12} sm={12} md={12}>
+                  <CustomInput
+                    labelText="Name"
+                    id={this.state.editMode? "username-disabled" : "username"}
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                    inputProps={{
+                      disabled: this.state.editMode? false : true
+                    }}
+                    style={this.state.editMode? "" : customStyle.shelterDisplayView}
+
+                  />
+                </GridItem>
+                <GridItem xs={12} sm={12} md={6}>
+                  <CustomInput
+                    labelText="Email address"
+                    id={this.state.editMode? "email-address-disabled" : "email-address"}
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                    inputProps={{
+                      disabled: this.state.editMode? false : true
+                    }}
+                    style={this.state.editMode? "" : customStyle.shelterDisplayView}
+
+                  />
+                </GridItem>
+                <GridItem xs={12} sm={12} md={6}>
+                  <CustomInput
+                    labelText="Phone Number"
+                    id={this.state.editMode? "email-address-disabled" : "email-address"}
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                    inputProps={{
+                      disabled: this.state.editMode? false : true
+                    }}
+                    style={this.state.editMode? "" : customStyle.shelterDisplayView}
+
+                  />
+                </GridItem>
+              </GridContainer>
+              <Button size= "sm" color="danger" className={classes.updateProfileButton} onClick={this.handleFormButtonToggle}>
+                Delete
+              </Button>
+              <Button size= "sm" color="rose" className={classes.updateProfileButton} onClick={this.handleFormButtonToggle}>
+                {this.state.editMode? "Save Changes" : "Update"}
               </Button>
               <Clearfix />
             </CardBody>
@@ -231,85 +299,22 @@ return (
                       disabled: this.state.editMode? false : true
                     }}
                     style={this.state.editMode? "" : customStyle.shelterDisplayView}
-                  />  
+                  />
+                <Button size= "sm" color="danger" className={classes.updateProfileButton} onClick={this.handleFormButtonToggle}>
+                Delete
+              </Button>
+              <Button size= "sm" color="rose" className={classes.updateProfileButton} onClick={this.handleFormButtonToggle}>
+                {this.state.editMode? "Save Changes" : "Update"}
+              </Button>  
             </GridItem>
             </GridContainer>
             </CardBody>
           </Card>
         </GridItem>
       </GridContainer>
-      <GridContainer>
-      <GridItem xs={12} sm={12} md={6}></GridItem>
-      <GridItem xs={12} sm={12} md={6}>
-        <Card>
-          <CardHeader><h3 className={classes.cardTitle}>Add A Location</h3></CardHeader>
-          <CardBody color={true}>
-          <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-                  <CustomInput
-                    labelText={this.state.shelter? "Location Name" : "Location"}
-                    id="location"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      disabled: this.state.editMode? false : true,
-                      style: customStyle.shelterDisplayView,
-                      value: this.state.shelter.shelter
-                    }}
-                  />
-                </GridItem>
-              </GridContainer>
-            <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-                <CustomInput
-                    labelText="Street Address"
-                    id={this.state.editMode? "street-address-disabled" : "street-address"}
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      disabled: this.state.editMode? false : true
-                    }}
-                    style={this.state.editMode? "" : customStyle.shelterDisplayView}
 
-                  />
-              </GridItem>
-               <GridItem xs={12} sm={12} md={6}>
-               <CustomInput
-                    labelText="City"
-                    id={this.state.editMode? "city-disabled" : "city"}
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      disabled: this.state.editMode? false : true
-                    }}
-                    style={this.state.editMode? "" : customStyle.shelterDisplayView}
-                  />  
-              </GridItem>
-              <GridItem xs={12} sm={12} md={6}>
-              <CustomInput
-                    labelText="State"
-                    id={this.state.editMode? "city-disabled" : "city"}
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      disabled: this.state.editMode? false : true
-                    }}
-                    style={this.state.editMode? "" : customStyle.shelterDisplayView}
-                  />  
-            </GridItem>
-            </GridContainer>
-            <Button color="rose" className={classes.updateProfileButton} onClick={this.handleFormButtonToggle}>
-                Add Location
-            </Button>
-            <Clearfix />
-          </CardBody>
-        </Card>
-      </GridItem>
-      </GridContainer>
+
+     
     </div>
   );
   }
