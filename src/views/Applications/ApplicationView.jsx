@@ -202,7 +202,7 @@ class ApplicationView extends React.Component {
                       id="application_id"
                       fullWidth='true'
                       disabled='true'
-                      value= {this.state.application.application_id}
+                      value={this.state.application.application_id}
                       style={customStyle.textFieldStyle}
                     />
 
