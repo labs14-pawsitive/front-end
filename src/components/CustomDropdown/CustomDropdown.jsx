@@ -38,7 +38,8 @@ class CustomDropdown extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      open: false,
+
     };
     this.handleClick = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -119,7 +120,8 @@ class CustomDropdown extends React.Component {
                 key={key}
                 className={dropdownItem}
                 style={{ overflow: "visible", padding: 0 }}
-              >
+
+              > 
                 {prop}
               </MenuItem>
             );
@@ -129,6 +131,7 @@ class CustomDropdown extends React.Component {
               key={key}
               onClick={() => this.handleCloseMenu(prop)}
               className={dropdownItem}
+
             >
               {prop}
             </MenuItem>

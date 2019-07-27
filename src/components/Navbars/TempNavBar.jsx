@@ -49,7 +49,7 @@ import authNavbarStyle from "assets/jss/material-dashboard-pro-react/components/
 //import custom style 
 import pawsStyle from "assets/custom/pawsnfind.css"
 
-const auth = new Auth();
+//const auth = new Auth();
 
 class TempNavBar extends React.Component {
   constructor(props) {
@@ -72,11 +72,11 @@ class TempNavBar extends React.Component {
     }
   }
 
-
+/*
   authLogin = () => {
     auth.login();
   }
-
+*/
   render() {
     const { classes, color, brandText } = this.props;
     const appBarClasses = cx({
@@ -109,6 +109,7 @@ class TempNavBar extends React.Component {
             />
           </NavLink>
         </ListItem>
+
         <AuthView {...this.props}/>
         
         

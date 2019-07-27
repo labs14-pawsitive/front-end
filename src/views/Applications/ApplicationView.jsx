@@ -77,8 +77,6 @@ class AppliationView extends React.Component {
     .catch( error => {
       console.log(error)
     })
-
-
   }
 
 
@@ -166,6 +164,19 @@ class AppliationView extends React.Component {
                   }}
 
                 />
+                 <CustomInput
+                  labelText="Application Status"
+                  id="application_status"
+                  formControlProps={{
+                    fullWidth: true
+                  }}
+                  inputProps={{
+                    type: "text" ,
+                    disabled: true, 
+                    value : this.state.application.application_status,
+                  }}
+                />
+
                 <CustomInput
                   labelText="Password"
                   id="password"

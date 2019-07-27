@@ -54,6 +54,8 @@ import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 
+import {getFullMonths} from "views/Dashboard/DashboardHelper.jsx";
+
 import {
   dailySalesChart,
   emailsSubscriptionChart,
@@ -87,10 +89,20 @@ var mapData = {
   US: 2920
 };
 
+
+
+
 class Dashboard extends React.Component {
   state = {
     value: 0
+   
   };
+
+  componentDidMount() {
+    let result = getFullMonths();
+    console.log(result)
+  }
+
   handleChange = (event, value) => {
     this.setState({ value });
   };

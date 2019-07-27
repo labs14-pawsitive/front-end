@@ -23,6 +23,12 @@ class AuthView extends React.Component {
     authLogin = () => {
         auth.login();
       }
+
+
+    logout = () => {
+      localStorage.clear()
+    }
+
     render()  {
       const { classes } = this.props
       const customStyle = {
@@ -44,12 +50,23 @@ class AuthView extends React.Component {
         }, 
         linkStyle: {
           color: "#fff"
-        }
-        
-        
-        
+        } 
       }
         return(
+          localStorage.getItem("id_token") 
+          ? 
+        <ListItem className={classes.listItem} onClick={this.logout} style={customStyle.buttonWrapper}>
+            <NavLink to="/">
+               <Fingerprint className={classes.listItemIcon} style={customStyle.linkStyle} />
+               <ListItemText
+                style={customStyle.linkStyle}
+                 primary={"Logout"}
+                 disableTypography={true}
+                 className={classes.listItemText}
+               />
+            </NavLink>
+        </ListItem> 
+        :
         <ListItem className={classes.listItem} onClick={this.authLogin} style={customStyle.buttonWrapper}>
             <NavLink to="#">
                <Fingerprint className={classes.listItemIcon} style={customStyle.linkStyle} />
@@ -60,8 +77,8 @@ class AuthView extends React.Component {
                  className={classes.listItemText}
                />
             </NavLink>
-        </ListItem>
-           )
+        </ListItem> 
+       )
 
 }
   

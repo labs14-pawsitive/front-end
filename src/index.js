@@ -33,6 +33,7 @@ import AdminLayout from "layouts/Admin.jsx";
 import ApplicationLayout from "layouts/Application_Temp.jsx";
 import MainLayout from "layouts/Main_Temp.jsx";
 import Callback from "layouts/Callback.jsx";
+import ShelterOnboarding from "layouts/ShelterOnboarding.jsx";
 
 import "assets/scss/material-dashboard-pro-react.scss?v=1.7.0";
 
@@ -61,7 +62,8 @@ ReactDOM.render(
             <Route path="/auth" component={AuthLayout} />
             <Route path="/callback" render={props => {handleAuthentication(props); return <Callback {...props} />}} />
             {/* <Route path="/application/:shelterId/:animalId" component={ApplicationLayout} /> */}
-            <Route path="/application/" component={ApplicationLayout} />
+            <Route path="/application" component={ApplicationLayout} />
+            <Route path="/shelter-signup" component={ShelterOnboarding}/>
             <Route path="/admin" component={AdminLayout} />
             {/* <Redirect from="/" to="/admin/dashboard" />  */}
             </Switch>

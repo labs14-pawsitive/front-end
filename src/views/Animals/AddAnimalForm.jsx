@@ -56,7 +56,8 @@ class AddAnimalForm extends React.Component {
       email: "",
       checked: [24, 22],
       selectedValue: null,
-      selectedEnabled: "b"
+      selectedEnabled: "b",
+      checkedLabelTest: true
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeEnabled = this.handleChangeEnabled.bind(this);
@@ -82,6 +83,13 @@ class AddAnimalForm extends React.Component {
       checked: newChecked
     });
   }
+
+  handleCheckboxToggle = e => {
+    this.setState({
+      [e.target.name]: !this.state.checkedLabelTest
+    })
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -607,24 +615,30 @@ class AddAnimalForm extends React.Component {
                       <FormControlLabel
                         control={
                           <Checkbox
-                            tabIndex={-1}
-                            onClick={() => this.handleToggle(21)}
+                           
                             checkedIcon={
                               <Check className={classes.checkedIcon} />
                             }
+                            name = "checkedLabelTest"
+                            checked = {this.state.checkedLabelTest}
                             icon={<Check className={classes.uncheckedIcon} />}
-                            classes={{
+                            
+                            
+                            /*classes={{
                               checked: classes.checked,
                               root: classes.checkRoot
-                            }}
+                            }} */
+                            
+                            
                           />
                         }
-                        classes={{
-                          label: classes.label,
-                          root: classes.labelRoot
-                        }}
-                        label="Unchecked"
+                        
+                        
                       />
+
+                        }
+                      />
+
                     </div>
                     <div
                       className={

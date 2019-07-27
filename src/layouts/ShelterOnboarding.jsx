@@ -17,6 +17,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Switch, Route, Redirect } from "react-router-dom";
+import Auth from "components/Auth/Auth.js"
+
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -24,7 +26,8 @@ import withStyles from "@material-ui/core/styles/withStyles";
 // core components
 import TempNavBar from "components/Navbars/TempNavBar.jsx";
 import Footer from "components/Footer/Footer.jsx";
-import Onboarding from "views/Onboarding/Onboarding.jsx"
+
+import ShelterOnboardingWizard from "views/ShelterOnboarding/Wizard.jsx";
 
 import routes from "routes.js";
 
@@ -35,45 +38,22 @@ import login from "assets/img/login.jpeg";
 import lock from "assets/img/lock.jpeg";
 import error from "assets/img/clint-mckoy.jpg";
 import pricing from "assets/img/bg-pricing.jpeg";
-import mainBG from "assets/img/bg-application.jpg"
+import application from "assets/img/bg-application3.jpg";
 
 
-class Callback extends React.Component {
-  constructor(props) {
-    super(props)
-    this.interval = setInterval(this.timeoutFunction, 1000);
-  }
+class ShelterOnboarding extends React.Component {
   wrapper = React.createRef();
 
-  timeoutFunction = () => {
-    if (localStorage.getItem('new_user') === null) return;
-    
-    const newUser = localStorage.getItem('new_user');
-    const shelter_id = localStorage.getItem('shelter_id');
-      if(newUser == "true") {
-        this.props.history.push('/callback/onboarding')
-      } 
-      else 
-      if (shelter_id != "null" && typeof(shelter_id) !== 'undefined') {
-        this.props.history.push('/admin/dashboard')
-      }  
-      else {
-        this.props.history.push('/')
-      }
-      clearInterval(this.interval);
-  }
 
   componentDidMount() {
-    
     document.body.style.overflow = "unset";
     
   }
 
 
   getBgImage = () => {
-    return mainBG;
+    return application;
   };
-
 
 
   render() {
@@ -82,11 +62,13 @@ class Callback extends React.Component {
       <div>
         <TempNavBar brandText="Pawsnfind" {...rest} />
         <div className={classes.wrapper} ref={this.wrapper}>
+          
           <div
             className={classes.fullPage}
             style={{ backgroundImage: "url(" + this.getBgImage() + ")" }}
           >
-           <Route path='/callback/onboarding' component={Onboarding}/>
+            <ShelterOnboardingWizard />
+            
             <Footer white />
           </div>
         </div>
@@ -95,8 +77,8 @@ class Callback extends React.Component {
   }
 }
 
-Callback.propTypes = {
+ShelterOnboarding.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(pagesStyle)(Callback);
+export default withStyles(pagesStyle)(ShelterOnboarding);
