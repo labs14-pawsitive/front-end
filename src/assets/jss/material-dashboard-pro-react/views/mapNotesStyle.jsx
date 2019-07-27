@@ -21,7 +21,7 @@ import {
 } from "assets/jss/material-dashboard-pro-react.jsx";
 import customCheckboxRadioSwitch from "assets/jss/material-dashboard-pro-react/customCheckboxRadioSwitch.jsx";
 
-const displayNoteStyle = {
+const mapNotesStyle = {
   ...customCheckboxRadioSwitch,
   cardIconTitle: {
     ...cardTitle,
@@ -58,12 +58,18 @@ const displayNoteStyle = {
   inputAdornmentIconError: {
     color: dangerColor[0] + "!important"
   },
+
   noteBackground: {
     background: '#edeae8',
     borderBottom: '1px solid lightgrey',
   },
-  resizeButtonText: {
-    fontSize: '20',
+  editButtonStyle: {
+    fontSize: '15px',
+    color: 'grey',
+ },
+ deleteButtonStyle: {
+  fontSize: '15px',
+  color: 'grey',
  },
  headerStyle: {
   fontWeight: "bold",
@@ -71,4 +77,4 @@ const displayNoteStyle = {
 
 };
 
-export default displayNoteStyle;
+export default mapNotesStyle;

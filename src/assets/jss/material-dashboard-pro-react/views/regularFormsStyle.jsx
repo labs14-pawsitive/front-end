@@ -58,6 +58,15 @@ const regularFormsStyle = {
   inputAdornmentIconError: {
     color: dangerColor[0] + "!important"
   },
+
+  notesSectionStyle: {
+    paddingTop: "10px",
+  },
+
+  dropdownStyle: {
+    height: "30px",
+  }
+
 };
 
 export default regularFormsStyle;

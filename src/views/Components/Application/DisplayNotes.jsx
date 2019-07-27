@@ -3,15 +3,20 @@ import { connect } from 'react-redux';
 import { addNotes, getNotes, updateNotes, deleteNotes } from '../../../actions/applicationAction';
 import MapNotes from './MapNotes';
 
-import CustomInput from "components/CustomInput/CustomInput.jsx";
+// import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
-// import buttonsStyle from "assets/jss/material-dashboard-pro-react/views/buttonsStyle.jsx";
 
-import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
+//material UI core
+import Input from '@material-ui/core/Input';
+import Typography from "@material-ui/core/Typography";
+
+// import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
+import displayNotesStyle from "assets/jss/material-dashboard-pro-react/views/displayNotesStyle";
+
 import withStyles from "@material-ui/core/styles/withStyles";
 
 class DisplayNotes extends React.Component {
@@ -76,18 +81,31 @@ class DisplayNotes extends React.Component {
 
     render() {
 
-        console.log(this.props)
+        const { classes } = this.props;
+
+        const customStyle = {
+
+            headerStyle: {
+              fontStyle: "Sans-serif",
+              fontSize: "30px",
+              paddingTop: "10px",
+            },
+      
+          }
 
         return (
             <>
+                <Typography style={ customStyle.headerStyle } >
+                    <p> Notes </p>
+                </Typography>
                 <Card>
+
                     <CardBody>
-                        <CustomInput
-                            labelText="Add a note"
+                        <Input
+                            placeholder="Add a note"
                             id="notes"
-                            formControlProps={{
-                                fullWidth: true
-                            }}
+                            fullWidth="true"
+                            disableUnderline="true"
                             inputProps={{
                                 type: "text",
                                 onChange: this.handleChanges,
@@ -98,12 +116,14 @@ class DisplayNotes extends React.Component {
                         <GridContainer
                             direction="row"
                             justify="flex-end"
+                            className="addNoteStyle"
                         >
                             <GridItem xs={3}>
                                 <Button
                                     variant="contained"
                                     color="transparent"
-                                    onClick={ this.clearField}
+                                    className={classes.buttonStyle}
+                                    onClick={this.clearField}
                                 >
                                     Cancel
                                 </Button>
@@ -113,6 +133,7 @@ class DisplayNotes extends React.Component {
                                 <Button
                                     variant="contained"
                                     color="transparent"
+                                    className={classes.buttonStyle}
                                     onClick={this.addNotes}
                                 >
                                     Submit
@@ -146,4 +167,4 @@ const mapStateToProps = state => {
     };
 }
 
-export default connect( mapStateToProps, {addNotes, getNotes, updateNotes, deleteNotes})(withStyles(regularFormsStyle)(DisplayNotes))
+export default connect( mapStateToProps, {addNotes, getNotes, updateNotes, deleteNotes})(withStyles(displayNotesStyle)(DisplayNotes))

@@ -19,7 +19,6 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import { connect } from "react-redux";
 
-
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -55,7 +54,7 @@ class ApplicationView extends React.Component {
 
       application: {},
 
-      options: [ { id: 1, status: 'Awaiting Review'}, { id : 2, status: 'Under Review'}, { id:  3, status: 'Approved'}, { id:4, status: 'Rejected' } ],
+      options: [{ id: 1, status: 'Awaiting Review' }, { id: 2, status: 'Under Review' }, { id: 3, status: 'Approved' }, { id: 4, status: 'Rejected' }],
 
       testField: '',
 
@@ -87,29 +86,29 @@ class ApplicationView extends React.Component {
   }
 
   loadOptions = async () => {
-    await axios 
-    .get(`https://staging1-pawsnfind.herokuapp.com/api/internal/paws/options`)
-    .then(options => {
-      console.log( 'options', options.data )
-      
-      this.setState({ 
-        options: options.data.application_status
+    await axios
+      .get(`https://staging1-pawsnfind.herokuapp.com/api/internal/paws/options/3`)
+      .then(options => {
+        console.log('options', options.data)
+
+        this.setState({
+          options: options.data.application_status
+        })
+        console.log('from state', this.state.options)
       })
-      console.log( 'from state', this.state.options )
-    })
-    .catch(error => {
-      console.log(error)
-    })
+      .catch(error => {
+        console.log(error)
+      })
   }
 
   componentWillMount() {
 
     this.loadApplication()
-    
+
     this.loadOptions()
 
     // this.props.getOptions()
-  
+
   }
 
   handleChange(event) {
@@ -172,13 +171,21 @@ class ApplicationView extends React.Component {
         background: '#edeae8',
         marginTop: '3%',
         marginBottom: '3%',
+        fontStyle: "Sans-serif",
+        // paddingLeft: "3%",
       },
       dropDownStyle: {
         background: '#edeae8',
         padding: '4%',
         marginTop: '3%',
         marginBottom: '3%'
-      }
+      },
+      headerStyle: {
+        fontStyle: "Sans-serif",
+        fontSize: "30px",
+        paddingTop: "10px",
+      },
+
     }
 
     // const appStatusDropdown = this.props.statusOptions.map(option => {
@@ -191,8 +198,8 @@ class ApplicationView extends React.Component {
 
           <GridItem xs={false} sm={4} md={7}>
             <GridItem xs={12} sm={12}>
-              <Typography style={ customStyle.headerStyle } >
-                <h2>Applicant Information</h2>
+              <Typography style={customStyle.headerStyle} >
+                <p>Application Information</p>
               </Typography>
               <Card>
                 <CardBody>
@@ -211,28 +218,28 @@ class ApplicationView extends React.Component {
                       id="animal_name"
                       fullWidth='true'
                       disabled='true'
-                      value = {this.state.application.animal_name}
+                      value={this.state.application.animal_name}
                       style={customStyle.textFieldStyle}
                     />
 
                     <FormControl fullWidth className={classes.selectFormControl}>
-                              <InputLabel htmlFor="application_status" className={classes.selectLabel}>
-                                Application Status 
+                      <InputLabel htmlFor="application_status" className={classes.selectLabel}>
+                        Application Status
                               </InputLabel>
+
                       <Select
-              //disabled
-                          MenuProps={{
-                            className: classes.selectMenu
-                          }}
-                          classes={{
-                            select: classes.select
-                          }}
-                          value={this.state.application.application_status}
-                          onChange={this.handleChange}
-                          name="application_status"
-                          id= "application_status"
-                        >
-                        
+                        MenuProps={{
+                          className: classes.selectMenu // <- which dir is selectMenu written in???
+                        }}
+                        classes={{
+                          select: classes.select
+                        }}
+                        value={this.state.application.application_status}
+                        onChange={this.handleChange}
+                        name="application_status"
+                        id="application_status"
+                      >
+
                         <MenuItem
                           disabled
                           classes={{
@@ -242,18 +249,16 @@ class ApplicationView extends React.Component {
                           Application Status
                         </MenuItem>
 
-                        {this.state.options.map( (status, key) => (
-                              <MenuItem
-                                classes={{ 
-                                  root: classes.selectMenuItem, 
-                                  selected: classes.selectMenuItemSelected  
-                                }}
-                        
-                                value={ status.id }
-                                
-                              > 
-                                  { status.application_status }
-                              </MenuItem> 
+                        {this.state.options.map((option, key) => (
+                          <MenuItem
+                            classes={{
+                              root: classes.selectMenuItem,
+                              selected: classes.selectMenuItemSelected
+                            }}
+                            value={option.id}
+                          >
+                            {option.application_status}
+                          </MenuItem>
                         ))}
                       </Select>
 
@@ -264,7 +269,7 @@ class ApplicationView extends React.Component {
                       id="name"
                       fullWidth='true'
                       disabled='true'
-                      value = {this.state.application.name}
+                      value={this.state.application.name}
                       style={customStyle.textFieldStyle}
                     />
 
@@ -273,7 +278,7 @@ class ApplicationView extends React.Component {
                       id="application_status"
                       fullWidth='true'
                       disabled='true'
-                      value = { moment(this.state.application.created_at).format("MMMM Do YYYY").toString() }  
+                      value={moment(this.state.application.created_at).format("MMMM Do YYYY").toString()}
                       style={customStyle.textFieldStyle}
                     />
                   </form>
@@ -282,8 +287,8 @@ class ApplicationView extends React.Component {
             </GridItem>
 
             <GridItem xs={12} sm={12}>
-              <Typography>
-                <h2>Applicant Contact Information</h2>
+              <Typography style={customStyle.headerStyle}>
+                <p>Applicant Contact Information</p>
               </Typography>
               <Card>
                 <CardBody>
@@ -292,7 +297,7 @@ class ApplicationView extends React.Component {
                     id="street_address"
                     fullWidth='true'
                     disabled='true'
-                    value = {this.state.application.street_address}
+                    value={this.state.application.street_address}
                     style={customStyle.textFieldStyle}
                   />
                   <TextField
@@ -300,7 +305,7 @@ class ApplicationView extends React.Component {
                     id="city"
                     fullWidth='true'
                     disabled='true'
-                    value = {this.state.application.city}
+                    value={this.state.application.city}
                     style={customStyle.textFieldStyle}
                   />
                   <TextField
@@ -308,7 +313,7 @@ class ApplicationView extends React.Component {
                     id="home_number"
                     fullWidth='true'
                     disabled='true'
-                    value = {this.state.application.home_phone}
+                    value={this.state.application.home_phone}
                     style={customStyle.textFieldStyle}
                   />
                   <TextField
@@ -316,7 +321,7 @@ class ApplicationView extends React.Component {
                     id="cell_number"
                     fullWidth='true'
                     disabled='true'
-                    value = {this.state.application.cell_phone}
+                    value={this.state.application.cell_phone}
                     style={customStyle.textFieldStyle}
                   />
                   <TextField
@@ -324,7 +329,7 @@ class ApplicationView extends React.Component {
                     id="name"
                     fullWidth='true'
                     disabled='true'
-                    value = {this.state.application.email}
+                    value={this.state.application.email}
                     style={customStyle.textFieldStyle}
                   />
                 </CardBody>
@@ -332,8 +337,8 @@ class ApplicationView extends React.Component {
             </GridItem>
 
             <GridItem xs={12} sm={12}>
-              <Typography>
-                <h2>Applicant References</h2>
+              <Typography style={customStyle.headerStyle}>
+                <p>Applicant References</p>
               </Typography>
 
               <Card>
@@ -343,7 +348,7 @@ class ApplicationView extends React.Component {
                     id="ref_name_1"
                     fullWidth='true'
                     disabled='true'
-                    value = {this.state.application.ref_name_1}
+                    value={this.state.application.ref_name_1}
                     style={customStyle.textFieldStyle}
                   />
 
@@ -352,7 +357,7 @@ class ApplicationView extends React.Component {
                     id="ref_phone_1"
                     fullWidth='true'
                     disabled='true'
-                    value = {this.state.application.ref_phone_1}
+                    value={this.state.application.ref_phone_1}
                     style={customStyle.textFieldStyle}
                   />
 
@@ -361,7 +366,7 @@ class ApplicationView extends React.Component {
                     id="ref_relationship_1"
                     fullWidth='true'
                     disabled='true'
-                    value = {this.state.application.ref_relationship_1}
+                    value={this.state.application.ref_relationship_1}
                     style={customStyle.textFieldStyle}
                   />
 
@@ -370,7 +375,7 @@ class ApplicationView extends React.Component {
                     id="ref_name_2"
                     fullWidth='true'
                     disabled='true'
-                    value = {this.state.application.ref_name_2}
+                    value={this.state.application.ref_name_2}
                     style={customStyle.textFieldStyle}
                   />
 
@@ -379,7 +384,7 @@ class ApplicationView extends React.Component {
                     id="ref_phone_2"
                     fullWidth='true'
                     disabled='true'
-                    value = {this.state.application.ref_phone_2}
+                    value={this.state.application.ref_phone_2}
                     style={customStyle.textFieldStyle}
                   />
 
@@ -388,7 +393,7 @@ class ApplicationView extends React.Component {
                     id="ref_relationship_2"
                     fullWidth='true'
                     disabled='true'
-                    value = {this.state.application.ref_relationship_2}
+                    value={this.state.application.ref_relationship_2}
                     style={customStyle.textFieldStyle}
                   />
 
@@ -397,8 +402,8 @@ class ApplicationView extends React.Component {
             </GridItem>
 
             <GridItem xs={12} sm={16}>
-              <Typography>
-                <h2>Applicant Signature</h2>
+              <Typography style={customStyle.headerStyle}>
+                <p>Applicant Signature</p>
               </Typography>
 
               <Card>
@@ -406,21 +411,20 @@ class ApplicationView extends React.Component {
 
                   <GridContainer style={customStyle.textFieldStyle} direction='row' justify='center' alignItems='center' >
                     <GridItem xs={10}>
-                    <TextField
-                    fullWidth='true'
-                    disabled='true'
-                    value = "I hereby certify that the information provided above is true and correct"
-                    style={customStyle.textFieldStyle}
-                  />
-           
-              
+                      <TextField
+                        fullWidth='true'
+                        disabled='true'
+                        value="I hereby certify that the information provided above is true and correct"
+                        style={customStyle.textFieldStyle}
+                      />
+
                     </GridItem>
 
                     <Checkbox
-                        style={customStyle.checkboxStyle}
-                        name="is_declaration"
-                        icon={this.state.application.is_declaration ? <Check className={classes.checkedIcon} /> : <Check className={classes.uncheckedIcon} />}
-                        disabled={true}
+                      style={customStyle.checkboxStyle}
+                      name="is_declaration"
+                      icon={this.state.application.is_declaration ? <Check className={classes.checkedIcon} /> : <Check className={classes.uncheckedIcon} />}
+                      disabled={true}
                     />
 
                   </GridContainer>
@@ -431,11 +435,7 @@ class ApplicationView extends React.Component {
             </GridItem>
           </GridItem>
 
-          <GridItem xs={12} sm={8} md={5}>
-            <Typography>
-              <h2>Admin Notes</h2>
-            </Typography>
-
+          <GridItem xs={6} sm={8} md={5} className={classes.notesSectionStyle}>
 
             <DisplayNotes application={this.state.application} application_id={this.props.match.params.id} />
 

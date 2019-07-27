@@ -9,13 +9,13 @@ import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 
-import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
-import displayNoteStyle from "assets/jss/material-dashboard-pro-react/views/DisplayNoteStyle";
-
-import Container from '@material-ui/core/Container';
-import FormLabel from "@material-ui/core/FormLabel";
+// import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
+import mapNotesStyle from "assets/jss/material-dashboard-pro-react/views/mapNotesStyle";
 
 import withStyles from "@material-ui/core/styles/withStyles";
+import Container from '@material-ui/core/Container';
+import FormLabel from "@material-ui/core/FormLabel";
+import Input from '@material-ui/core/Input';
 
 class MapNotes extends React.Component {
 constructor(props) {
@@ -79,11 +79,10 @@ constructor(props) {
         return (
             <Container className={classes.noteBackground} >
                <div style={{ paddingTop: 20 }}>
-                <CustomInput
+                <Input
                 className={classes.adjustFont}
-                formControlProps={{
-                    fullWidth: true
-                }}
+                disableUnderline="true"
+                fullWidth="true"
                 inputProps={{
                     type: "text",
                     value: this.state.isEditSelected ? this.state.value : this.props.note.notes ,
@@ -103,8 +102,8 @@ constructor(props) {
                         <Button
                             
                             color="transparent"
-                            className={ classes.resizeButtonText }
-                            onClick={ this.state.isEditSelected ? this.cancelClick : this.editSelected }
+                            className={ classes.deleteButtonStyle }
+                            onClick={ this.state.isEditSelected ? this.cancelClick : this.deleteNotes }
                         >
                              { this.state.isEditSelected? "Cancel" : "Delete" }
                         </Button>
@@ -114,7 +113,7 @@ constructor(props) {
                         <Button
                             
                             color="transparent"
-                            className={ classes.resizeButtonText }
+                            className={ classes.editButtonStyle }
                             onClick={ this.state.isEditSelected ? this.updateNotes : this.editSelected }
 
                         >
@@ -132,4 +131,4 @@ MapNotes.propTypes = {
     classes: PropTypes.object
 }
 
-export default withStyles(displayNoteStyle)(MapNotes);
+export default withStyles(mapNotesStyle)(MapNotes);

@@ -74,11 +74,12 @@ export const GET_OPTIONS_START = 'GET_OPTIONS_START';
 export const GET_OPTIONS_SUCCESS = 'GET_OPTIONS_SUCCESS';
 export const GET_OPTIONS_FAILURE = 'GET_OPTIONS_FAILURE';
 
-export const getOptions = () => dispatch => {
+export const getOptions = id => dispatch => {
     dispatch({ type: GET_OPTIONS_START })
     return axios
-    .get(`https://staging1-pawsnfind.herokuapp.com/api/internal/paws/options`)
+    .get(`https://staging1-pawsnfind.herokuapp.com/api/internal/paws/options/:id`)
     .then(res => {
+        console.log(res)
         dispatch({ type: GET_OPTIONS_SUCCESS, payload: res.data })
     })
     .catch(err => {
