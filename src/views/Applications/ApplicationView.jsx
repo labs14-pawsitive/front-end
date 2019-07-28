@@ -258,7 +258,7 @@ class ApplicationView extends React.Component {
                             value={option.id}
                           >
                             {option.application_status}
-                          </MenuItem>
+                          </MenuItem> 
                         ))}
                       </Select>
 
