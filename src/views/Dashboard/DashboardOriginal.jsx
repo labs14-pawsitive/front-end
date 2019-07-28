@@ -94,8 +94,7 @@ var mapData = {
 
 class Dashboard extends React.Component {
   state = {
-    value: 0,
-    
+    value: 0
    
   };
 

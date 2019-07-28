@@ -55,12 +55,28 @@ class ShelterOnboardingWizard extends React.Component {
       nextButton: this.props.steps.length > 1 ? true : false,
       previousButton: false,
       finishButton: this.props.steps.length === 1 ? true : false,
+     
       width: width,
       movingTabStyle: {
         transition: "transform 0s"
       },
       allStates: {},
-      ein: ''
+      ein: "",
+      shelterName: "", 
+      user_id: "",
+      shelter_id: "",
+      stepOne:false,
+      name: "",
+      email: "",
+      phone: "",
+      stepTwo: false,
+      state: "",
+      city: "",
+      zip: "",
+      street: "",
+      nickname: "",
+      stepThree: false,
+      error: ""
     };
     this.navigationStepChange = this.navigationStepChange.bind(this);
     this.refreshAnimation = this.refreshAnimation.bind(this);
@@ -134,57 +150,144 @@ class ShelterOnboardingWizard extends React.Component {
         this[this.props.steps[this.state.currentStep].stepId].sendState !==
         undefined
       ) {
-        //if all validated, then set state... button action for api calls will need to occur prior to this
-
+       
         await this.setState({
           allStates: {
             ...this.state.allStates,
             [this.props.steps[this.state.currentStep].stepId]: this[
               this.props.steps[this.state.currentStep].stepId
             ].sendState()
-          }
+          },
+          error: ""
           
         });
-        if(this.state.currentStep === 0) {
+
+        // ***** onboarding process begins after field validation  ******//
+        // step one of shelter onboarding : verifying EIN (valid EIN and no record in database), add shelter, add shelter user, and update user with shelter_user_id
+        if(this.state.currentStep === 0 && this.state.stepOne === false) {
           await this.setState({
-            ein: this.state.allStates.legal_info.ein
+            error : "",
+            ein: this.state.allStates.legal_info.ein, 
+            shelterName : this.state.allStates.legal_info.shelterName,
           })
+          await this.verifyShelter(this.state.ein, this.state.currentStep);
+        } 
+        // step two of shelter onboarding : add main contact information for shelter
+        else if(this.state.currentStep === 1 && this.state.stepTwo === false) 
+        {
+          await this.setState({
+            error: "",
+            name: this.state.allStates.contact.name,
+            email: this.state.allStates.contact.email,
+            phone: this.state.allStates.contact.phone
+          })
+          const newContact = {shelter_id: this.state.shelter_id, name: this.state.name, email: this.state.email, phone: this.state.phone}
+          await this.addContact(newContact)
+        }
+        // step three of shelter onboarding : add main location information for shelter
+        else if(this.state.currentStep === 2 && this.state.stepThree === false) {
+          await this.setState({
+            error: "",
+            street: this.state.allStates.location.street,
+            city: this.state.allStates.location.city,
+            state: this.state.allStates.location.state,
+            zip: this.state.allStates.location.zip,
+            nickname: this.state.allStates.location.nickname
+          })
+          const newLocation = {shelter_id: this.state.shelter_id, street_address: this.state.street, city: this.state.city, zipcode: this.state.zip, state_id: this.state.state, nickname: this.state.nickname, shelter_contact_id: localStorage.getItem("contact_id")}
+          await this.addLocation(newLocation)
         }
       }        
-
       console.log(this.state.allStates.legal_info.ein)
-      
+    }
+  }
+
+  settingStates = async() => {
       let key = this.state.currentStep + 1;
-
-      await this.verifyEIN(this.state.ein, key);
-
-      this.setState({
+      await this.setState({
         currentStep: key,
         nextButton: this.props.steps.length > key + 1 ? true : false,
         previousButton: key > 0 ? true : false,
         finishButton: this.props.steps.length === key + 1 ? true : false
       });
-      this.refreshAnimation(key);
-    }
+      await this.refreshAnimation(key);
   }
 
-  verifyEIN = async (ein, key) => {
-     if(key === 1) {
+  addLocation = async (newLocation) => {
+    await axios
+    .post(`http://localhost:8000/api/shelters/${localStorage.getItem('shelter_id')}/mainLocation`, newLocation)
+    .then( result => {
+      console.log('result', result)
+      localStorage.setItem("location_id", result.data.id)
+      //this.settingStates();
+      this.setState({
+        stepThree : true
+      })
+      this.submitShelter();
+    })
+    .catch (error => {
+      this.setState({
+        error: "We were unable to save your location information, please try again."
+      })
+    })
+  }
+
+  addContact = async (newContact) => {
+    await axios
+    .post(`http://localhost:8000/api/shelters/${localStorage.getItem('shelter_id')}/mainContact`, newContact )
+    .then( result => {
+        console.log('result' , result)
+        localStorage.setItem("contact_id", result.data.id)
+        this.settingStates();
+        this.setState({
+          stepTwo : true,
+        })
+    })
+    .catch( error => {
+      this.setState({
+        error: "We were unable to save your contact information, please try again."
+      })
+    })
+
+  }
+
+  verifyShelter = async (ein, currentStep) => {
+
           console.log("Step one authentication begins" )
-          await axios
-          .get('http://localhost:8000/api/ein/validate', {'ein' : ein})
-          .then(result => {
-            console.log(result)
-          })
-          .catch(error => {
-            console.log(error)
-          })
+          const newShelter = {shelter : this.state.shelterName}
           
-        } else if (this.state.currentStep === 2) {
-          console.log("Step two posting begins")
-        } else if (this.state.currentStep === 3) {
-          console.log("Step three posting begins")
-        }
+          await axios
+          .get(`http://localhost:8000/api/ein/validate/${this.state.ein}`)
+          .then(result => {
+              const shelterInfo = { shelter : this.state.shelterName, EIN: this.state.ein}
+              this.addShelter(shelterInfo) 
+          })
+          .catch(err => {
+            console.log(err.toString())
+            this.setState({
+              error: "The EIN you've entered is either invalid or already exist in our database"
+            })
+          })
+  }
+
+  addShelter = async (shelter) => {
+    await axios
+    .put(`http://localhost:8000/api/shelters/users/${localStorage.getItem('user_id')}`, shelter)
+    .then( result => {
+      console.log('result' , result)
+      localStorage.setItem("shelter_id", result.data.shelterInfo.id)
+      this.settingStates();
+      this.setState({
+        stepOne : true,
+        shelter_id : result.data.shelterInfo.id
+      })
+    })
+    .catch( error => {
+      console.log(error)
+      this.setState({
+              error: "Having trouble adding your shelter to our database"
+        })
+    })
   }
 
   previousButtonClick() {
@@ -235,15 +338,27 @@ class ShelterOnboardingWizard extends React.Component {
             ].sendState()
           }
         },
-        () => {
-          this.submitShelter(this.state.allStates);
-        }
       );
+      
+        if(this.state.stepThree === false) {
+            this.setState({
+            error: "",
+            street: this.state.allStates.location.street,
+            city: this.state.allStates.location.city,
+            state: this.state.allStates.location.state,
+            zip: this.state.allStates.location.zip,
+            nickname: this.state.allStates.location.nickname
+          })
+          const newLocation = {shelter_id: this.state.shelter_id, street_address: this.state.street, city: this.state.city, zipcode: this.state.zip, state_id: this.state.state, nickname: this.state.nickname, shelter_contact_id: localStorage.getItem("contact_id")}
+          this.addLocation(newLocation)
+          }
     }
   }
 
   submitShelter = shelter => {
-    console.log(shelter)
+    
+
+    console.log("shelter successfully added with all info")
   }
 
 
@@ -331,6 +446,9 @@ class ShelterOnboardingWizard extends React.Component {
               {steps[this.state.currentStep].stepName}
             </div>
           </div>
+
+          <div><h1>{this.state.error}</h1></div>
+
           <div className={classes.content}>
             {steps.map((prop, key) => {
               const stepContentClasses = cx({
