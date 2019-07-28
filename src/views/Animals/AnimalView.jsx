@@ -154,6 +154,8 @@ class AnimalView extends React.Component {
         age_id: this.state.animal_meta.age_id,
         profile_img_id: this.state.animal.img_id,
         shelter_location_id: this.state.animal.shelter_location_id,
+        shelter_id:this.state.animal.shelter_id,
+        animal_id:this.state.animal.id
       }
     // })
 
@@ -162,7 +164,7 @@ class AnimalView extends React.Component {
     console.log('update form editinfo: animal: ', this.state.animal)
     console.log('update form editinfo: animalInfo: ', this.state.animal_meta)
     this.props.updateAnimal(updateInfo,
-      this.state.animal_meta.id,this.state.animal.id)
+      this.state.animal.id,this.state.animal_meta.id)
       .then(res =>  console.log('update animal animal view :success ', res))
       .catch(error => console.log('update error animal view', error))
 

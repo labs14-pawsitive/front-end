@@ -12,35 +12,35 @@ import {
 import { CardActions } from '@material-ui/core';
 
 const initialState = {
-    animalID : null,
-    animalInfo:null,
-    dropdownAnimalOptions:{
-        size:[],
-        breeds:[],
-        coat_length:[],
-        subscriptions:[],
-        ages:[],
-        application_status:[],
-        species:[],
-        animal_status:[],
-        roles:[],
-        states:[],
-        locations:[],
-        contacts:[],
+    animalID: null,
+    animalInfo: null,
+    dropdownAnimalOptions: {
+        size: [],
+        breeds: [],
+        coat_length: [],
+        subscriptions: [],
+        ages: [],
+        application_status: [],
+        species: [],
+        animal_status: [],
+        roles: [],
+        states: [],
+        locations: [],
+        contacts: [],
     },
-    animalInfo:{
-        animal:[],
-        animalMeta:[],
-        animalNotes:[],
-        animalFollowers:[]
+    animalInfo: {
+        animal: [],
+        animalMeta: [],
+        animalNotes: [],
+        animalFollowers: []
     },
-    updatingAnimalInfo:false,
-    gettingDropdownOptions:false,
-    gettingAnimalInfo:false
+    updatingAnimalInfo: false,
+    gettingDropdownOptions: false,
+    gettingAnimalInfo: false
 }
 
 export const animalReducer = (state = initialState, action) => {
-    switch(action.type) {
+    switch (action.type) {
         case GET_DROPDOWN_START:
             return {
                 ...state,
@@ -52,19 +52,19 @@ export const animalReducer = (state = initialState, action) => {
             return {
                 ...state,
                 gettingDropdownOptions: false,
-                dropdownAnimalOptions:{
-                    size:action.payload.size,
-                    breeds:action.payload.breeds,
-                    coat_length:action.payload.coat_length,
-                    subscriptions:action.payload.subscriptions,
-                    ages:action.payload.ages,
-                    application_status:action.payload.application_status,
-                    species:action.payload.species,
-                    animal_status:action.payload.animal_status,
-                    roles:action.payload.roles,
-                    states:action.payload.states,
-                    locations:action.payload.locations,
-                    contacts:action.payload.contacts
+                dropdownAnimalOptions: {
+                    size: action.payload.size,
+                    breeds: action.payload.breeds,
+                    coat_length: action.payload.coat_length,
+                    subscriptions: action.payload.subscriptions,
+                    ages: action.payload.ages,
+                    application_status: action.payload.application_status,
+                    species: action.payload.species,
+                    animal_status: action.payload.animal_status,
+                    roles: action.payload.roles,
+                    states: action.payload.states,
+                    locations: action.payload.locations,
+                    contacts: action.payload.contacts
                 },
                 error: ''
             };
@@ -74,31 +74,31 @@ export const animalReducer = (state = initialState, action) => {
                 gettingDropdownOptions: false,
                 error: action.payload
             };
-            case GET_ANIMAL_START:
-                return {
-                    ...state,
-                    gettingAnimalInfo: true,
-                    error: ''
-                };
-            case GET_ANIMAL_SUCCESS:
-                console.log(action.payload)
-                return {
-                    ...state,
-                    gettingAnimalInfo: false,
-                    animalInfo:{
-                        animal:action.payload,
-                        animalMeta:action.payload.meta,
-                        animalNotes:action.payload.notes,
-                        animalFollowers:action.payload.followers
-                    },
-                    error: ''
-                };
-            case GET_ANIMAL_FAILURE:
-                return {
-                    ...state,
-                    gettingAnimalInfo: false,
-                    error: action.payload
-                };    
+        case GET_ANIMAL_START:
+            return {
+                ...state,
+                gettingAnimalInfo: true,
+                error: ''
+            };
+        case GET_ANIMAL_SUCCESS:
+            console.log(action.payload)
+            return {
+                ...state,
+                gettingAnimalInfo: false,
+                animalInfo: {
+                    animal: action.payload,
+                    animalMeta: action.payload.meta,
+                    animalNotes: action.payload.notes,
+                    animalFollowers: action.payload.followers
+                },
+                error: ''
+            };
+        case GET_ANIMAL_FAILURE:
+            return {
+                ...state,
+                gettingAnimalInfo: false,
+                error: action.payload
+            };
         case EDIT_ANIMAL_INFO_START:
             return {
                 ...state,
@@ -106,11 +106,16 @@ export const animalReducer = (state = initialState, action) => {
                 error: ''
             };
         case EDIT_ANIMAL_INFO_SUCCESS:
-            console.log(action.payload)
+            console.log('EDIT_ANIMAL_INFO_SUCCESS: action payload:  ',action.payload)
             return {
                 ...state,
                 updatingAnimalInfo: false,
-                animalInfo: action.payload,
+                animalInfo: {
+                    animal: action.payload,
+                    animalMeta: action.payload.meta,
+                    animalNotes: action.payload.notes,
+                    animalFollowers: action.payload.followers
+                },
                 error: ''
             };
         case EDIT_ANIMAL_INFO_FAILURE:
@@ -119,8 +124,8 @@ export const animalReducer = (state = initialState, action) => {
                 updatingAnimalInfo: false,
                 error: action.payload
             };
-            default:
-      return state
+        default:
+            return state
     }
 }
 

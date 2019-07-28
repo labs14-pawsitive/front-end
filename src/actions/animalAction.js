@@ -12,11 +12,11 @@ export const updateAnimal = (updateinfo,animalId,animalMetaId) => dispatch => {
     .put(`http://localhost:8000/api/animals/${animalId}/meta/${animalMetaId}`, updateinfo)
     .then(res => {
       dispatch({ type: EDIT_ANIMAL_INFO_SUCCESS, payload: res.data })
-      console.log('update animal ', res.data)
+      console.log('action updated animal ', res.data)
     })
     .catch(err => {
       dispatch({ type: EDIT_ANIMAL_INFO_FAILURE, payload: err.response })
-      console.log('update animal error: ', err.response)
+      console.log('action update animal error: ', err.response)
     })
 }
 
