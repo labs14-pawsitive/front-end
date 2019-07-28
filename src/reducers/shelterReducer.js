@@ -1,7 +1,7 @@
 //initialState set for testing
 
 const initialState = {
-    shelterID : 3,
+    shelterID : 1,
     upgraded : true,
     shelter : "We Heart Little Ones Rescue"
 }
