@@ -339,7 +339,6 @@ class ShelterOnboardingWizard extends React.Component {
           }
         },
       );
-      
         if(this.state.stepThree === false) {
             this.setState({
             error: "",
@@ -352,7 +351,7 @@ class ShelterOnboardingWizard extends React.Component {
           const newLocation = {shelter_id: this.state.shelter_id, street_address: this.state.street, city: this.state.city, zipcode: this.state.zip, state_id: this.state.state, nickname: this.state.nickname, shelter_contact_id: localStorage.getItem("contact_id")}
           this.addLocation(newLocation)
           }
-    }
+    } 
   }
 
   submitShelter = shelter => {
