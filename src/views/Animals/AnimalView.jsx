@@ -79,7 +79,13 @@ class AnimalView extends React.Component {
       animal_meta: {},
       animal_notes: [],
       animal_followers: [],
-
+      breeds: [],
+      size: [],
+      coat_length: [],
+      ages: [],
+      species: [],
+      animal_status: [],
+      locations: [],
       isEditing: false,
 
       editInfo: {
@@ -98,46 +104,18 @@ class AnimalView extends React.Component {
         is_male: false,
         size_id: '',
         animal_status_id: 0,
-        notes: '',
+        // notes: '',
         species_id: 0,
         name: '',
         nickname: '',
-        shelter_id: 0,
-        animal_id: 0,
+        // shelter_id: 0,
+        // animal_id: 0,
         age_id: 0,
         profile_img_id: 0,
         shelter_location_id: 0,
 
       },
-      // editInfo: {
-      //   breed_id: this.props.animal_meta.breed_id,
-      //   coat_length_id: this.props.animal_meta.coat_length_id,
-      //   color: this.props.animal_meta.color,
-      //   description:this.props.animal_meta.description,
-      //   health: this.props.animal_meta.health,
-      //   is_good_with_cats: this.props.animal_meta.is_good_with_cats,
-      //   is_good_with_dogs: this.props.animal_meta.is_good_with_dogs,
-      //   is_good_with_kids: this.props.animal_meta.is_good_with_kids,
-      //   is_house_trained: this.props.animal_meta.is_house_trained,
-      //   is_mixed: this.props.animal_meta.is_mixed,
-      //   is_neutered_spayed: this.props.animal_meta.is_neutered_spayed,
-      //   is_vaccinated: this.props.animal_meta.is_vaccinated,
-      //   is_male: this.props.animal_meta.is_male,
-      //   size_id: this.props.animal_meta.size_id,
-      //   animal_status_id: this.props.animal.animal_status_id,
-      //   species_id: this.props.animal.species_id,
-      //   name: this.props.animal.name,
-      //   age_id: this.props.animal_meta.age_id,
-      //   profile_img_id: this.props.animal.profile_img_id,
-      //   shelter_location_id: this.props.animal,
-      // },
-      breeds: [],
-      size: [],
-      coat_length: [],
-      ages: [],
-      species: [],
-      animal_status: [],
-      locations: [],
+
 
     };
   }
@@ -161,36 +139,14 @@ class AnimalView extends React.Component {
           coat_length: this.props.coat_length,
           animal_status: this.props.animal_status,
           locations: this.props.locations
-          // editInfo: {
-          //   // ...this.state.editInfo,
-          //   breed_id: this.props.animal_meta.breed_id,
-          //   coat_length_id: this.props.animal_meta.coat_length_id,
-          //   color: this.props.animal_meta.color,
-          //   description: this.props.animal_meta.description,
-          //   health: this.props.animal_meta.health,
-          //   is_good_with_cats: this.props.animal_meta.is_good_with_cats,
-          //   is_good_with_dogs: this.props.animal_meta.is_good_with_dogs,
-          //   is_good_with_kids: this.props.animal_meta.is_good_with_kids,
-          //   is_house_trained: this.props.animal_meta.is_house_trained,
-          //   is_mixed: this.props.animal_meta.is_mixed,
-          //   is_neutered_spayed: this.props.animal_meta.is_neutered_spayed,
-          //   is_vaccinated: this.props.animal_meta.is_vaccinated,
-          //   is_male: this.props.animal_meta.is_male,
-          //   size_id: this.props.animal_meta.size_id,
-          //   animal_status_id: this.props.animal.animal_status_id,
-          //   species_id: this.props.animal.species_id,
-          //   name: this.props.animal.name,
-          //   age_id: this.props.animal_meta.age_id,
-          //   profile_img_id: this.props.animal.img_url,
-          //   shelter_location_id: this.props.animal.shelter_location_id,
-          // }
-        }) 
-      })       
+
+        })
+      })
       .catch(error => {
         console.log('animal info error', error)
       })
- 
-}
+
+  }
 
   handleUpdate = (event) => {
     event.preventDefault()
@@ -204,102 +160,138 @@ class AnimalView extends React.Component {
 
   updateForm = () => {
     this.setState({
-      isEditing: false
+      isEditing: false,
+           editInfo: {
+        breed_id: this.state.animal_meta.breed_id,
+        coat_length_id: this.state.animal_meta.coat_length_id,
+        color: this.state.animal_meta.color,
+        description:this.state.animal_meta.description,
+        health: this.state.animal_meta.health,
+        is_good_with_cats: this.state.animal_meta.is_good_with_cats,
+        is_good_with_dogs: this.state.animal_meta.is_good_with_dogs,
+        is_good_with_kids: this.state.animal_meta.is_good_with_kids,
+        is_house_trained: this.state.animal_meta.is_house_trained,
+        is_mixed: this.state.animal_meta.is_mixed,
+        is_neutered_spayed: this.state.animal_meta.is_neutered_spayed,
+        is_vaccinated: this.state.animal_meta.is_vaccinated,
+        is_male: this.state.animal_meta.is_male,
+        size_id: this.state.animal_meta.size_id,
+        animal_status_id: this.state.animal.animal_status_id,
+        species_id: this.state.animal.species_id,
+        name: this.state.animal.name,
+        age_id: this.state.animal_meta.age_id,
+        profile_img_id: this.state.animal.img_id,
+        shelter_location_id: this.state.animal.shelter_location_id,
+      },
     })
 
-    console.log('update form editinfo : ',this.state.editInfo)
-    // this.props.updateAnimal(this.state.editInfo,
-    //   this.state.animal_meta.animal_id,this.state.animal_meta.id)
+    console.log('update form editinfo : ', this.state.editInfo)
+    this.props.updateAnimal(this.state.editInfo,
+      this.state.animal_meta.id,this.state.animal.id)
   }
 
 
 
+
+
   handleAdoption = (event) => {
-    // const val = event.target.name === "breed_id" ?
-    //   this.state.breeds : (event.target.name === "species_id" ? this.state.species
-    //     : (event.target.name === "coat_length_id" ? this.state.coat_length
-    //       : (event.target.name === "size_id" ? this.state.size
-    //         : (event.target.name === "age_id" ? this.state.ages :
-    //           (event.target.name === "animal_status_id" ? this.state.animal_status : '')))))
-    // const val = this.state.animal.breed_id ? this.props.breedsOptions.find(option => option.id == parseInt(this.state.animal.breed_id)).breed : ''
     console.log('value from drop down is ', event.target.value)
-    console.log('id from drop down is ', event.target.input)
-    // console.log('selected value state is ', val)
+
 
     let targetID = ''
     switch (event.target.name) {
       case 'breed_id':
-        targetID = this.state.breeds ? this.state.breeds.find(eachValue => eachValue.breed === event.target.value).id : ''
+        targetID = this.state.breeds ? this.state.breeds.find(eachValue => eachValue.id === event.target.value).breed : ''
+        this.setState({
+          animal_meta: {
+            ...this.state.animal_meta,
+            breed: targetID,
+            [event.target.name]: event.target.value
+          },
+          editInfo: {
+            ...this.state.editInfo,
+            [event.target.name]: event.target.value
+          }
+        })
+
         break;
       case 'animal_status_id':
-        targetID = this.state.animal_status ? this.state.animal_status.find(eachValue => eachValue.animal_status === event.target.value).id : ''
+        targetID = this.state.animal_status ? this.state.animal_status.find(eachValue => eachValue.id === event.target.value).animal_status : ''
+        console.log('inside case: animal status ', targetID)
+        this.setState({
+          animal: {
+            ...this.state.animal,
+            animal_status: targetID,
+            [event.target.name]: event.target.value
+          },
+        })
         break;
       case 'species_id':
-        targetID = this.state.species ? this.state.species.find(eachValue => eachValue.species === event.target.value).id : ''
+        targetID = this.state.species ? this.state.species.find(eachValue => eachValue.id === event.target.value).species : ''
+        this.setState({
+          animal: {
+            ...this.state.animal,
+            species: targetID,
+            [event.target.name]: event.target.value
+          },
+        })
         break;
       case 'age_id':
-        targetID = this.state.ages ? this.state.ages.find(eachValue => eachValue.age === event.target.value).id : ''
+        targetID = this.state.ages ? this.state.ages.find(eachValue => eachValue.id === event.target.value).age : ''
+        this.setState({
+          animal_meta: {
+            ...this.state.animal_meta,
+            [event.target.name]: event.target.value,
+            age: targetID
+          },
+        })
         break;
       case 'size_id':
-        targetID = this.state.size ? this.state.size.find(eachValue => eachValue.size === event.target.value).id : ''
+        targetID = this.state.size ? this.state.size.find(eachValue => eachValue.id === event.target.value).size : ''
+        this.setState({
+          animal_meta: {
+            ...this.state.animal_meta,
+            size: targetID,
+            [event.target.name]: event.target.value
+          },
+        })
         break;
       case 'coat_length_id':
-        targetID = this.state.coat_length ? this.state.coat_length.find(eachValue => eachValue.coat_length === event.target.value).id : ''
+        targetID = this.state.coat_length ? this.state.coat_length.find(eachValue => eachValue.id === event.target.value).coat_length : ''
+        this.setState({
+          animal_meta: {
+            ...this.state.animal_meta,
+            coat_length: targetID,
+            [event.target.name]: event.target.value
+          },
+        })
         break;
       case 'shelter_location_id':
-        targetID = this.state.locations ? this.state.locations.find(eachValue => eachValue.nickname === event.target.value).id : ''
-        console.log('inside case shelter location id ',targetID)
-        break;  
-      case 'is_male':
-        targetID = event.target.value === "male" ? true : false
+        targetID = this.state.locations ? this.state.locations.find(eachValue => eachValue.id === event.target.value).nickname : ''
+        console.log('inside case: shelter location nickname ', targetID)
+        this.setState({
+          animal: {
+            ...this.state.animal,
+            nickname: targetID,
+            [event.target.name]: event.target.value
+          },
+        })
         break;
-      case 'is_vaccinated':
-        targetID = event.target.value === "Yes" ? true : false
-        break;
-      case 'is_good_with_cats':
-        targetID = event.target.value === "Yes" ? true : false
-        break;
-      case 'is_good_with_dogs':
-        targetID = event.target.value === "Yes" ? true : false
-        break;
-      case 'is_good_with_kids':
-        targetID = event.target.value === "Yes" ? true : false
-        break;
-      case 'is_house_trained':
-        targetID = event.target.value === "Yes" ? true : false
-        break;
-      case 'is_neutered_spayed':
-        targetID = event.target.value === "Yes" ? true : false
-        break;
-      case 'is_mixed':
-        targetID = event.target.value === "Yes" ? true : false
-        break;
+
       default:
         targetID = event.target.value
+        this.setState({
+          animal_meta: {
+            ...this.state.animal_meta,
+            [event.target.name]: targetID
+          },
+ 
+        })
     }
 
     console.log(`target id for ${event.target.name} is ${targetID}`)
-    // const targetID = val ? val.find(eachValue => eachValue.coat_length == event.target.value).id : ''
-
     console.log('dropdown id selection ', event.target.value)
-
-    this.setState({
-      // endpointEditInfo: {
-      //   ...this.state.endpointEditInfo,
-      //   [event.target.name]: targetID
-      // },
-      animal :{
-        ...this.state.animal,
-        [event.target.name]:event.target.value
-      },
-      editInfo: {
-        ...this.state.editInfo,
-        [event.target.id]: targetID
-      }
-    })
-
-    console.log(`target id for ${event.target.name} is ${targetID}`)
-    console.log(`target id for ${event.target.name} is ${event.target.value}`)
+    console.log(`target value for ${event.target.name} is ${event.target.value}`)
   }
 
 
@@ -309,35 +301,25 @@ class AnimalView extends React.Component {
       isEditing: !this.state.isEditing,
       read: !this.state.read
     })
-    
+
   }
 
   handleTextField = (event) => {
     this.setState({
-      editInfo: {
-        ...this.state.editInfo,
-        [event.target.name]: event.target.value
-      },
       animal: {
         ...this.state.animal,
         [event.target.name]: event.target.value
       }
     })
-    // console.log('handleTextField ',this.state.editInfo)
   }
 
   handleMetaTextField = (event) => {
     this.setState({
-      editInfo: {
-        ...this.state.editInfo,
-        [event.target.name]: event.target.value
-      },
       animal_meta: {
         ...this.state.animal_meta,
         [event.target.name]: event.target.value
       }
     })
-    // console.log('handleMetaTextField ',this.state.editInfo)
   }
 
   callback = (response) => {
@@ -347,7 +329,6 @@ class AnimalView extends React.Component {
 
 
   render() {
-    // console.log('handle update ', this.state.editInfo)
     const { classes } = this.props;
 
 
@@ -485,7 +466,6 @@ class AnimalView extends React.Component {
                           label="Name"
                           // type="text"
                           className={classes.textField}
-                          // value={this.state.editInfo.name}
                           value={this.state.animal.name}
 
                           onChange={this.handleTextField}
@@ -503,7 +483,6 @@ class AnimalView extends React.Component {
                           multiline
                           rows="4"
                           className={classes.textField}
-                          // value={this.state.editInfo.description}
                           value={this.state.animal_meta.description}
 
                           onChange={this.handleMetaTextField}
@@ -513,19 +492,16 @@ class AnimalView extends React.Component {
                         <FormControl style={customStyle.form1ControlStyle} className={classes.formControl} >
                           <InputLabel htmlFor="shelter_location_id">Location</InputLabel>
                           <Select
-                            // disabled={this.state.isEditing ? false : true}
-                            // value={this.state.editInfo.nickname ? this.state.editInfo.nickname : this.state.animal.nickname}
                             value={this.state.animal.nickname}
-                            id='shelter_location_id'
-                            name='nickname'
+                            name='shelter_location_id'
                             onChange={this.handleAdoption}
                             renderValue={value => `${value}`}
-                            input={<Input  id='shelter_location_id'/>}                           
+                            input={<Input id='shelter_location_id' />}
                           >
 
                             {this.state.locations.map(status => {
                               return (
-                                <MenuItem value={status.nickname}>
+                                <MenuItem value={status.id}>
                                   {status.nickname}, {status.street_address}, {status.city}, {status.state_id}- {status.zipcode}</MenuItem>
                               )
                             })}
@@ -573,7 +549,7 @@ class AnimalView extends React.Component {
                           <InputLabel htmlFor="animal_status_id">Adoption Status</InputLabel>
                           <Select
                             disabled={this.state.isEditing ? false : true}
-                            value={this.state.editInfo.animal_status_id ? this.state.editInfo.animal_status_id : this.state.animal.animal_status}
+                            value={this.state.animal.animal_status}
                             name='animal_status_id'
                             onChange={this.handleAdoption}
                             renderValue={value => `${value}`}
@@ -582,7 +558,7 @@ class AnimalView extends React.Component {
 
                             {this.state.animal_status.map(status => {
                               return (
-                                <MenuItem value={status.animal_status}>{status.animal_status}</MenuItem>
+                                <MenuItem value={status.id}>{status.animal_status}</MenuItem>
                               )
                             })}
 
@@ -590,10 +566,10 @@ class AnimalView extends React.Component {
                         </FormControl>
 
                         <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
-                          <InputLabel >Species</InputLabel>
+                          <InputLabel htmlFor="species_id">Species</InputLabel>
                           <Select
                             disabled={this.state.isEditing ? false : true}
-                            value={this.state.editInfo.species_id ? this.state.editInfo.species_id : this.state.animal.species}
+                            value={this.state.animal.species}
                             name='species_id'
                             onChange={this.handleAdoption}
                             renderValue={value => `${value}`}
@@ -602,17 +578,17 @@ class AnimalView extends React.Component {
 
                             {this.state.species.map(status => {
                               return (
-                                <MenuItem value={status.species}>{status.species}</MenuItem>
+                                <MenuItem value={status.id}>{status.species}</MenuItem>
                               )
                             })}
                           </Select>
                         </FormControl>
 
                         <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
-                          <InputLabel >Breed</InputLabel>
+                          <InputLabel htmlFor="breed_id">Breed</InputLabel>
                           <Select
                             disabled={this.state.isEditing ? false : true}
-                            value={this.state.editInfo.breed_id ? this.state.editInfo.breed_id : this.state.animal_meta.breed}
+                            value={this.state.animal_meta.breed}
                             name='breed_id'
                             onChange={this.handleAdoption}
                             renderValue={value => `${value}`}
@@ -620,17 +596,17 @@ class AnimalView extends React.Component {
                           >
                             {this.state.breeds.map(status => {
                               return (
-                                <MenuItem value={status.breed}>{status.breed}</MenuItem>
+                                <MenuItem value={status.id}>{status.breed}</MenuItem>
                               )
                             })}
                           </Select>
                         </FormControl>
 
                         <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
-                          <InputLabel >Age</InputLabel>
+                          <InputLabel htmlFor="age_id">Age</InputLabel>
                           <Select
                             disabled={this.state.isEditing ? false : true}
-                            value={this.state.editInfo.age_id ? this.state.editInfo.age_id : this.state.animal_meta.age}
+                            value={this.state.animal_meta.age}
                             name='age_id'
                             onChange={this.handleAdoption}
                             renderValue={value => `${value}`}
@@ -638,35 +614,35 @@ class AnimalView extends React.Component {
                           >
                             {this.state.ages.map(status => {
                               return (
-                                <MenuItem value={status.age}>{status.age}</MenuItem>
+                                <MenuItem value={status.id}>{status.age}</MenuItem>
                               )
                             })}
                           </Select>
                         </FormControl>
 
                         <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
-                          <InputLabel >Size</InputLabel>
+                          <InputLabel htmlFor="size_id">Size</InputLabel>
                           <Select
                             disabled={this.state.isEditing ? false : true}
-                            value={this.state.editInfo.size ? this.state.editInfo.size : this.state.animal_meta.size}
-                            name='size'
+                            value={this.state.animal_meta.size}
+                            name='size_id'
                             onChange={this.handleAdoption}
                             renderValue={value => `${value}`}
-                            input={<Input id="size" />}
+                            input={<Input id="size_id" />}
                           >
                             {this.state.size.map(status => {
                               return (
-                                <MenuItem value={status.size}>{status.size}</MenuItem>
+                                <MenuItem value={status.id}>{status.size}</MenuItem>
                               )
                             })}
                           </Select>
                         </FormControl>
 
                         <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
-                          <InputLabel >Coat Length</InputLabel>
+                          <InputLabel htmlFor='coat_length_id'>Coat Length</InputLabel>
                           <Select
                             disabled={this.state.isEditing ? false : true}
-                            value={this.state.editInfo.coat_length_id ? this.state.editInfo.coat_length_id : this.state.animal_meta.coat_length}
+                            value={this.state.animal_meta.coat_length}
                             name='coat_length_id'
                             onChange={this.handleAdoption}
                             renderValue={value => `${value}`}
@@ -674,26 +650,25 @@ class AnimalView extends React.Component {
                           >
                             {this.state.coat_length.map(status => {
                               return (
-                                <MenuItem value={status.coat_length}>{status.coat_length}</MenuItem>
+                                <MenuItem value={status.id}>{status.coat_length}</MenuItem>
                               )
                             })}
                           </Select>
                         </FormControl>
 
                         <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
-                          <InputLabel >Gender</InputLabel>
+                          <InputLabel htmlFor='is_male'>Gender</InputLabel>
                           <Select
                             disabled={this.state.isEditing ? false : true}
-                            value={this.state.isEditing ? this.state.editInfo.is_male : (this.state.animal_meta.is_male ? 'male' : 'female')}
-                            // value={this.state.editInfo.is_male ? this.state.editInfo.is_male : this.state.animal_meta.is_male}
+                            value={this.state.animal_meta.is_male ? 'male' : 'female'}
                             name='is_male'
                             onChange={this.handleAdoption}
                             renderValue={value => `${value}`}
                             input={<Input id="is_male" />}
                           >
 
-                            <MenuItem value="male">male</MenuItem>
-                            <MenuItem value="female">female</MenuItem>
+                            <MenuItem value={true}>male</MenuItem>
+                            <MenuItem value={false}>female</MenuItem>
 
                           </Select>
                         </FormControl>
@@ -702,8 +677,6 @@ class AnimalView extends React.Component {
                           name="color"
                           label="Color"
                           className={classes.textField}
-                          // value={this.state.editInfo.color ? this.state.editInfo.color : this.state.animal_meta.color}
-
                           value={this.state.animal_meta.color}
                           onChange={this.handleMetaTextField}
                           margin="normal"
@@ -729,19 +702,16 @@ class AnimalView extends React.Component {
                           name="health"
                           label="Health"
                           className={classes.textField}
-                          // value={this.state.editInfo.color ? this.state.editInfo.color : this.state.animal_meta.color}
-
                           value={this.state.animal_meta.health}
                           onChange={this.handleMetaTextField}
                           margin="normal"
                         />
 
                         <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
-                          <InputLabel >Vaccinated?</InputLabel>
+                          <InputLabel htmlFor='is_vaccinated'>Vaccinated?</InputLabel>
                           <Select
                             disabled={this.state.isEditing ? false : true}
                             value={this.state.animal_meta.is_vaccinated ? 'Yes' : 'No'}
-                            // value={this.state.editInfo.sex ? this.state.editInfo.coat_length_id : this.state.animal_meta.coat_length}
                             name='is_vaccinated'
                             onChange={this.handleAdoption}
                             renderValue={value => `${value}`}
@@ -755,11 +725,10 @@ class AnimalView extends React.Component {
                         </FormControl>
 
                         <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
-                          <InputLabel >House trained?</InputLabel>
+                          <InputLabel htmlFor='is_house_trained'>House trained?</InputLabel>
                           <Select
                             disabled={this.state.isEditing ? false : true}
                             value={this.state.animal_meta.is_house_trained ? 'Yes' : 'No'}
-                            // value={this.state.editInfo.sex ? this.state.editInfo.coat_length_id : this.state.animal_meta.coat_length}
                             name='is_house_trained'
                             onChange={this.handleAdoption}
                             renderValue={value => `${value}`}
@@ -773,11 +742,10 @@ class AnimalView extends React.Component {
                         </FormControl>
 
                         <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
-                          <InputLabel >Good with Kids?</InputLabel>
+                          <InputLabel htmlFor='is_good_with_kids'>Good with Kids?</InputLabel>
                           <Select
                             disabled={this.state.isEditing ? false : true}
                             value={this.state.animal_meta.is_good_with_kids ? 'Yes' : 'No'}
-                            // value={this.state.editInfo.sex ? this.state.editInfo.coat_length_id : this.state.animal_meta.coat_length}
                             name='is_good_with_kids'
                             onChange={this.handleAdoption}
                             renderValue={value => `${value}`}
@@ -791,11 +759,10 @@ class AnimalView extends React.Component {
                         </FormControl>
 
                         <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
-                          <InputLabel >Good with Cats?</InputLabel>
+                          <InputLabel htmlFor='is_good_with_cats'>Good with Cats?</InputLabel>
                           <Select
                             disabled={this.state.isEditing ? false : true}
                             value={this.state.animal_meta.is_good_with_cats ? 'Yes' : 'No'}
-                            // value={this.state.editInfo.sex ? this.state.editInfo.coat_length_id : this.state.animal_meta.coat_length}
                             name='is_good_with_cats'
                             onChange={this.handleAdoption}
                             renderValue={value => `${value}`}
@@ -809,11 +776,10 @@ class AnimalView extends React.Component {
                         </FormControl>
 
                         <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
-                          <InputLabel >Good with Dogs?</InputLabel>
+                          <InputLabel htmlFor='is_good_with_dogs'>Good with Dogs?</InputLabel>
                           <Select
                             disabled={this.state.isEditing ? false : true}
                             value={this.state.animal_meta.is_good_with_dogs ? 'Yes' : 'No'}
-                            // value={this.state.editInfo.sex ? this.state.editInfo.coat_length_id : this.state.animal_meta.coat_length}
                             name='is_good_with_dogs'
                             onChange={this.handleAdoption}
                             renderValue={value => `${value}`}
@@ -827,15 +793,31 @@ class AnimalView extends React.Component {
                         </FormControl>
 
                         <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
-                          <InputLabel >Neutered/Spayed??</InputLabel>
+                          <InputLabel htmlFor='is_neutered_spayed'>Neutered/Spayed?</InputLabel>
                           <Select
                             disabled={this.state.isEditing ? false : true}
                             value={this.state.animal_meta.is_neutered_spayed ? 'Yes' : 'No'}
-                            // value={this.state.editInfo.sex ? this.state.editInfo.coat_length_id : this.state.animal_meta.coat_length}
                             name='is_neutered_spayed'
                             onChange={this.handleAdoption}
                             renderValue={value => `${value}`}
                             input={<Input id="is_neutered_spayed" />}
+                          >
+
+                            <MenuItem value={true}>Yes</MenuItem>
+                            <MenuItem value={false}>No</MenuItem>
+
+                          </Select>
+                        </FormControl>
+
+                        <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
+                          <InputLabel htmlFor='is_mixed'>Is Mixed?</InputLabel>
+                          <Select
+                            disabled={this.state.isEditing ? false : true}
+                            value={this.state.animal_meta.is_neutered_spayed ? 'Yes' : 'No'}
+                            name='is_mixed'
+                            onChange={this.handleAdoption}
+                            renderValue={value => `${value}`}
+                            input={<Input id="is_mixed" />}
                           >
 
                             <MenuItem value={true}>Yes</MenuItem>
