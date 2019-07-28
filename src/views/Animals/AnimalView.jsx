@@ -87,36 +87,6 @@ class AnimalView extends React.Component {
       animal_status: [],
       locations: [],
       isEditing: false,
-
-      editInfo: {
-        breed_id: 0,
-        coat_length_id: 0,
-        color: '',
-        description: '',
-        health: '',
-        is_good_with_cats: false,
-        is_good_with_dogs: false,
-        is_good_with_kids: false,
-        is_house_trained: false,
-        is_mixed: false,
-        is_neutered_spayed: false,
-        is_vaccinated: false,
-        is_male: false,
-        size_id: '',
-        animal_status_id: 0,
-        // notes: '',
-        species_id: 0,
-        name: '',
-        nickname: '',
-        // shelter_id: 0,
-        // animal_id: 0,
-        age_id: 0,
-        profile_img_id: 0,
-        shelter_location_id: 0,
-
-      },
-
-
     };
   }
 
@@ -158,10 +128,12 @@ class AnimalView extends React.Component {
 
 
 
-  updateForm = () => {
-    this.setState({
-      isEditing: false,
-           editInfo: {
+   updateForm = () => {
+    // this.setState({
+      // isEditing: false,
+    let updateInfo = {}
+
+    updateInfo = {
         breed_id: this.state.animal_meta.breed_id,
         coat_length_id: this.state.animal_meta.coat_length_id,
         color: this.state.animal_meta.color,
@@ -182,14 +154,22 @@ class AnimalView extends React.Component {
         age_id: this.state.animal_meta.age_id,
         profile_img_id: this.state.animal.img_id,
         shelter_location_id: this.state.animal.shelter_location_id,
-      },
-    })
+      }
+    // })
 
-    console.log('update form editinfo : ', this.state.editInfo)
-    this.props.updateAnimal(this.state.editInfo,
+    console.log('update form editinfo : ', updateInfo)
+
+    console.log('update form editinfo: animal: ', this.state.animal)
+    console.log('update form editinfo: animalInfo: ', this.state.animal_meta)
+    this.props.updateAnimal(updateInfo,
       this.state.animal_meta.id,this.state.animal.id)
-  }
+      .then(res =>  console.log('update animal animal view :success ', res))
+      .catch(error => console.log('update error animal view', error))
 
+      this.setState({
+        isEditing:false,
+      })
+  }
 
 
 
@@ -208,10 +188,6 @@ class AnimalView extends React.Component {
             breed: targetID,
             [event.target.name]: event.target.value
           },
-          editInfo: {
-            ...this.state.editInfo,
-            [event.target.name]: event.target.value
-          }
         })
 
         break;
@@ -470,11 +446,6 @@ class AnimalView extends React.Component {
 
                           onChange={this.handleTextField}
                           margin="normal"
-                        // inputProps={{
-                        //   type: "text",
-                        //   value: this.state.animal.name,
-                        //   onChange: (event) => this.handleTextField(event)
-                        // }}
                         />
 
                         <TextField
@@ -695,8 +666,8 @@ class AnimalView extends React.Component {
                     <GridItem xs={12} sm={12} md={10}>
 
                       <form
-                      // className={classes.root}
-                      // autoComplete="off" style={customStyle.adoptionStyle}>
+                      className={classes.root}
+                      autoComplete="off" style={customStyle.adoptionStyle}
                       >
                         <TextField
                           name="health"
@@ -813,7 +784,7 @@ class AnimalView extends React.Component {
                           <InputLabel htmlFor='is_mixed'>Is Mixed?</InputLabel>
                           <Select
                             disabled={this.state.isEditing ? false : true}
-                            value={this.state.animal_meta.is_neutered_spayed ? 'Yes' : 'No'}
+                            value={this.state.animal_meta.is_mixed ? 'Yes' : 'No'}
                             name='is_mixed'
                             onChange={this.handleAdoption}
                             renderValue={value => `${value}`}
