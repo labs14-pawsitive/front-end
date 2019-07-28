@@ -17,6 +17,7 @@
 import React from "react";
 import cx from "classnames";
 import PropTypes from "prop-types";
+import { NavLink, withRouter } from "react-router-dom"
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -84,12 +85,17 @@ class ShelterOnboardingWizard extends React.Component {
     this.previousButtonClick = this.previousButtonClick.bind(this);
     this.finishButtonClick = this.finishButtonClick.bind(this);
     this.updateWidth = this.updateWidth.bind(this);
+    this.goToDashBoard = this.goToDashBoard.bind(this);
   }
   wizard = React.createRef();
   
   componentDidMount() {
     this.refreshAnimation(0);
     window.addEventListener("resize", this.updateWidth);
+    if(localStorage.getItem('new_user') == "false") {
+      const {history} = this.props;
+        history.push('/')
+      } 
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateWidth);
@@ -184,7 +190,8 @@ class ShelterOnboardingWizard extends React.Component {
           const newContact = {shelter_id: this.state.shelter_id, name: this.state.name, email: this.state.email, phone: this.state.phone}
           await this.addContact(newContact)
         }
-        // step three of shelter onboarding : add main location information for shelter
+        // step three of shelter onboarding : add main location information for shelter using modified finishing button click
+        /*
         else if(this.state.currentStep === 2 && this.state.stepThree === false) {
           await this.setState({
             error: "",
@@ -197,6 +204,7 @@ class ShelterOnboardingWizard extends React.Component {
           const newLocation = {shelter_id: this.state.shelter_id, street_address: this.state.street, city: this.state.city, zipcode: this.state.zip, state_id: this.state.state, nickname: this.state.nickname, shelter_contact_id: localStorage.getItem("contact_id")}
           await this.addLocation(newLocation)
         }
+        */
       }        
       console.log(this.state.allStates.legal_info.ein)
     }
@@ -219,10 +227,12 @@ class ShelterOnboardingWizard extends React.Component {
     .then( result => {
       console.log('result', result)
       localStorage.setItem("location_id", result.data.id)
+      localStorage.setItem("new_user", false)
       //this.settingStates();
       this.setState({
         stepThree : true
       })
+      
       this.submitShelter();
     })
     .catch (error => {
@@ -248,7 +258,6 @@ class ShelterOnboardingWizard extends React.Component {
         error: "We were unable to save your contact information, please try again."
       })
     })
-
   }
 
   verifyShelter = async (ein, currentStep) => {
@@ -315,7 +324,7 @@ class ShelterOnboardingWizard extends React.Component {
       this.refreshAnimation(key);
     }
   }
-  finishButtonClick() {
+  async finishButtonClick() {
     if (
       (this.props.validate === false &&
         this.props.finishButtonClick !== undefined) ||
@@ -329,7 +338,7 @@ class ShelterOnboardingWizard extends React.Component {
             undefined) &&
         this.props.finishButtonClick !== undefined)
     ) {
-      this.setState(
+      await this.setState(
         {
           allStates: {
             ...this.state.allStates,
@@ -352,6 +361,10 @@ class ShelterOnboardingWizard extends React.Component {
           this.addLocation(newLocation)
           }
     } 
+  }
+
+  goToDashBoard() {
+    this.props.history.push('/admin/dashboard')
   }
 
   submitShelter = shelter => {
@@ -449,7 +462,8 @@ class ShelterOnboardingWizard extends React.Component {
           <div><h1>{this.state.error}</h1></div>
 
           <div className={classes.content}>
-            {steps.map((prop, key) => {
+            {this.state.stepThree === false? 
+            steps.map((prop, key) => {
               const stepContentClasses = cx({
                 [classes.stepContentActive]: this.state.currentStep === key,
                 [classes.stepContent]: this.state.currentStep !== key
@@ -462,19 +476,15 @@ class ShelterOnboardingWizard extends React.Component {
                   />
                 </div>
               );
-            })}
+            }) 
+            : 
+            <h2>You've successfully registered your shelter</h2>
+            }
+            
+            
           </div>
           <div className={classes.footer}>
-            <div className={classes.left}>
-              {this.state.previousButton ? (
-                <Button
-                  className={this.props.previousButtonClasses}
-                  onClick={() => this.previousButtonClick()}
-                >
-                  {this.props.previousButtonText}
-                </Button>
-              ) : null}
-            </div>
+           
             <div className={classes.right}>
               {this.state.nextButton ? (
                 <Button
@@ -485,7 +495,7 @@ class ShelterOnboardingWizard extends React.Component {
                   {this.props.nextButtonText}
                 </Button>
               ) : null}
-              {this.state.finishButton ? (
+              {this.state.finishButton && this.state.stepThree === false ? (
                 <Button
                   color="rose"
                   className={this.finishButtonClasses}
@@ -494,6 +504,15 @@ class ShelterOnboardingWizard extends React.Component {
                   {this.props.finishButtonText}
                 </Button>
               ) : null}
+              {this.state.stepThree === true? (
+                <NavLink to="/admin/dashboard">
+                <Button
+                  color="rose"
+                  className={this.finishButtonClasses}
+                >
+                  Go to your shelter dashboard
+                </Button></NavLink>
+              ) : null }
             </div>
             <div className={classes.clearfix} />
           </div>
@@ -544,4 +563,4 @@ ShelterOnboardingWizard.propTypes = {
   validate: PropTypes.bool
 };
 
-export default withStyles(wizardStyle)(ShelterOnboardingWizard);
+export default withRouter(withStyles(wizardStyle)(ShelterOnboardingWizard));

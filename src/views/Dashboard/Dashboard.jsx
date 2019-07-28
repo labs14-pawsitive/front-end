@@ -41,6 +41,12 @@ import Edit from "@material-ui/icons/Edit";
 import Place from "@material-ui/icons/Place";
 import ArtTrack from "@material-ui/icons/ArtTrack";
 import Language from "@material-ui/icons/Language";
+import Pets from "@material-ui/icons/Pets";
+import Money from "@material-ui/icons/Money";
+import LibraryBooks from "@material-ui/icons/LibraryBooks";
+import Face from "@material-ui/icons/Face";
+
+
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -95,13 +101,20 @@ var mapData = {
 class Dashboard extends React.Component {
   state = {
     value: 0,
-    
-   
+      labels: [],
+      series: []
   };
 
   componentDidMount() {
-    let result = getFullMonths();
-    console.log(result)
+    const months = getFullMonths();
+    console.log(months)
+    this.setState({
+      labels : months,
+      series: [[50, 30, 50, 30, 50, 30, 50, 30, 50, 10, 100, 80]]
+    })
+    //let result = getFullMonths();
+    //console.log(result)
+    console.log(this.state.labels)
   }
 
   handleChange = (event, value) => {
@@ -112,19 +125,21 @@ class Dashboard extends React.Component {
   };
   render() {
     const { classes } = this.props;
+    const donationChartData = { labels : this.state.labels, series : this.state.series }
     return (
       <div>
         <GridContainer>
-          <GridItem xs={12} sm={6} md={6} lg={3}>
+          <GridItem xs={12} sm={6} md={6} lg={4}>
             <Card>
               <CardHeader color="warning" stats icon>
                 <CardIcon color="warning">
-                  <Icon>content_copy</Icon>
+                  <Pets />
                 </CardIcon>
-                <p className={classes.cardCategory}>Used Space</p>
+                <p className={classes.cardCategory}>Current Animals</p>
                 <h3 className={classes.cardTitle}>
-                  49/50 <small>GB</small>
+                  13 <small>Dogs</small> {" / "} 25 <small>Cats</small>
                 </h3>
+                
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>
@@ -132,54 +147,56 @@ class Dashboard extends React.Component {
                     <Warning />
                   </Danger>
                   <a href="#pablo" onClick={e => e.preventDefault()}>
-                    Get more space
+                    That's a lot of animals
                   </a>
                 </div>
               </CardFooter>
             </Card>
           </GridItem>
-          <GridItem xs={12} sm={6} md={6} lg={3}>
+          <GridItem xs={12} sm={6} md={6} lg={4}>
             <Card>
               <CardHeader color="success" stats icon>
                 <CardIcon color="success">
-                  <Store />
+                 <Money />
                 </CardIcon>
-                <p className={classes.cardCategory}>Revenue</p>
-                <h3 className={classes.cardTitle}>$34,245</h3>
+                <p className={classes.cardCategory}>Recent Donations</p>
+                <h3 className={classes.cardTitle}>$300</h3>
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>
                   <DateRange />
-                  Last 24 Hours
+                  Updated in the Last 24 Hours
                 </div>
               </CardFooter>
             </Card>
           </GridItem>
+          {/* 
           <GridItem xs={12} sm={6} md={6} lg={3}>
             <Card>
               <CardHeader color="danger" stats icon>
                 <CardIcon color="danger">
-                  <Icon>info_outline</Icon>
+                  <LibraryBooks />
                 </CardIcon>
-                <p className={classes.cardCategory}>Fixed Issues</p>
-                <h3 className={classes.cardTitle}>75</h3>
+                <p className={classes.cardCategory}>Recent Applications</p>
+                <h3 className={classes.cardTitle}>5</h3>
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>
                   <LocalOffer />
-                  Tracked from Github
+                  Updated within last 24 Hours
                 </div>
               </CardFooter>
             </Card>
           </GridItem>
-          <GridItem xs={12} sm={6} md={6} lg={3}>
+          */}
+          <GridItem xs={12} sm={6} md={6} lg={4}>
             <Card>
               <CardHeader color="info" stats icon>
                 <CardIcon color="info">
-                  <i className="fab fa-twitter" />
+                  <Face />
                 </CardIcon>
                 <p className={classes.cardCategory}>Followers</p>
-                <h3 className={classes.cardTitle}>+245</h3>
+                <h3 className={classes.cardTitle}>35</h3>
               </CardHeader>
               <CardFooter stats>
                 <div className={classes.stats}>
@@ -190,6 +207,7 @@ class Dashboard extends React.Component {
             </Card>
           </GridItem>
         </GridContainer>
+        {/* 
         <GridContainer>
           <GridItem xs={12}>
             <Card>
@@ -280,14 +298,16 @@ class Dashboard extends React.Component {
             </Card>
           </GridItem>
         </GridContainer>
+        */}
         <GridContainer>
           <GridItem xs={12} sm={12} md={4}>
             <Card chart className={classes.cardHover}>
               <CardHeader color="info" className={classes.cardHeaderHover}>
                 <ChartistGraph
                   className="ct-chart-white-colors"
-                  data={dailySalesChart.data}
-                  type="Line"
+                  data={donationChartData}
+                  //type="Line"
+                  type="Bar"
                   options={dailySalesChart.options}
                   listener={dailySalesChart.animation}
                 />
@@ -315,12 +335,13 @@ class Dashboard extends React.Component {
                     </Button>
                   </Tooltip>
                 </div>
-                <h4 className={classes.cardTitle}>Daily Sales</h4>
+                <h4 className={classes.cardTitle}>Monthly Donations</h4>
                 <p className={classes.cardCategory}>
-                  <span className={classes.successText}>
+                  {/* <span className={classes.successText}>
                     <ArrowUpward className={classes.upArrowCardCategory} /> 55%
                   </span>{" "}
-                  increase in today sales.
+                  */} 
+                  A snapshot of your aggregated monthly donation for the past 12 months
                 </p>
               </CardBody>
               <CardFooter chart>
