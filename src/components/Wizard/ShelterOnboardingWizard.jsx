@@ -85,14 +85,14 @@ class ShelterOnboardingWizard extends React.Component {
     this.previousButtonClick = this.previousButtonClick.bind(this);
     this.finishButtonClick = this.finishButtonClick.bind(this);
     this.updateWidth = this.updateWidth.bind(this);
-    this.goToDashBoard = this.goToDashBoard.bind(this);
   }
   wizard = React.createRef();
   
   componentDidMount() {
     this.refreshAnimation(0);
     window.addEventListener("resize", this.updateWidth);
-    if(localStorage.getItem('new_user') == "false") {
+    const shelter_id = localStorage.getItem('shelter_id')
+    if(shelter_id != "null" && typeof(shelter_id) !== 'undefined') {
       const {history} = this.props;
         history.push('/')
       } 
@@ -191,6 +191,8 @@ class ShelterOnboardingWizard extends React.Component {
           await this.addContact(newContact)
         }
         // step three of shelter onboarding : add main location information for shelter using modified finishing button click
+        //step three now use finishing button
+
         /*
         else if(this.state.currentStep === 2 && this.state.stepThree === false) {
           await this.setState({
@@ -232,8 +234,6 @@ class ShelterOnboardingWizard extends React.Component {
       this.setState({
         stepThree : true
       })
-      
-      this.submitShelter();
     })
     .catch (error => {
       this.setState({
@@ -261,7 +261,6 @@ class ShelterOnboardingWizard extends React.Component {
   }
 
   verifyShelter = async (ein, currentStep) => {
-
           console.log("Step one authentication begins" )
           const newShelter = {shelter : this.state.shelterName}
           
@@ -362,17 +361,6 @@ class ShelterOnboardingWizard extends React.Component {
           }
     } 
   }
-
-  goToDashBoard() {
-    this.props.history.push('/admin/dashboard')
-  }
-
-  submitShelter = shelter => {
-    
-
-    console.log("shelter successfully added with all info")
-  }
-
 
   refreshAnimation(index) {
     var total = this.props.steps.length;
@@ -480,7 +468,6 @@ class ShelterOnboardingWizard extends React.Component {
             : 
             <h2>You've successfully registered your shelter</h2>
             }
-            
             
           </div>
           <div className={classes.footer}>

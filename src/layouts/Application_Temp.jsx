@@ -43,12 +43,21 @@ import application from "assets/img/bg-application3.jpg";
 
 
 class Application extends React.Component {
+
   wrapper = React.createRef();
 
   componentDidMount() {
     document.body.style.overflow = "unset";
-
+     
+      //this.setAnimalShelter();
   }
+
+  /*setAnimalShelter = async() => {
+    await this.setState({
+      animalId : this.props.match.params.animalId,
+      shelterId : this.props.match.params.shelterId
+    }) 
+  }*/
   
   getBgImage = () => {
     return application;
@@ -56,7 +65,9 @@ class Application extends React.Component {
   
   render() {
     const { classes, ...rest } = this.props;
+    
     return (
+      
       <div>
         <TempNavBar brandText="Pawsnfind" {...rest} />
 
@@ -66,7 +77,7 @@ class Application extends React.Component {
             className={classes.fullPage}
             style={{ backgroundImage: "url(" + this.getBgImage() + ")" }}
           >
-            <ApplicationWizard />
+            <ApplicationWizard animalId={this.props.match.params.animalId} shelterId={this.props.match.params.shelterId}/>
             
             <Footer white />
           </div>

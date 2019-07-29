@@ -74,13 +74,15 @@ import priceImage1 from "assets/img/card-2.jpeg";
 import priceImage2 from "assets/img/card-3.jpeg";
 import priceImage3 from "assets/img/card-1.jpeg";
 
+/*
 const us_flag = require("assets/img/flags/US.png");
 const de_flag = require("assets/img/flags/DE.png");
 const au_flag = require("assets/img/flags/AU.png");
 const gb_flag = require("assets/img/flags/GB.png");
 const ro_flag = require("assets/img/flags/RO.png");
 const br_flag = require("assets/img/flags/BR.png");
-
+*/
+/*
 var mapData = {
   AU: 760,
   BR: 550,
@@ -94,7 +96,7 @@ var mapData = {
   RU: 300,
   US: 2920
 };
-
+*/
 
 
 

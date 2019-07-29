@@ -53,10 +53,10 @@ class Step2 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      simpleSelect: "",
-      desgin: false,
-      code: false,
-      develop: false
+      is_homeowner: false,
+      is_agreement: false,
+      is_fenced: false,
+      is_homevisit: false
     };
   }
   sendState() {
@@ -68,6 +68,7 @@ class Step2 extends React.Component {
   handleChange = name => event => {
     this.setState({ [name]: event.target.checked });
   };
+
   isValidated() {
     return true;
   }
@@ -75,26 +76,26 @@ class Step2 extends React.Component {
     const { classes } = this.props;
     return (
       <div>
-        <h4 className={classes.infoText}>What are you doing? (checkboxes)</h4>
+        <h4 className={classes.infoText}>Tell us a little bit about your home</h4>
         <GridContainer justify="center">
           <GridItem xs={12} sm={12} md={12} lg={10}>
             <GridContainer>
-              <GridItem xs={12} sm={4}>
+              <GridItem xs={12} sm={3}>
                 <div className={classes.choiche}>
                   <Checkbox
                     tabIndex={-1}
-                    onClick={this.handleChange("desgin")}
+                    onClick={this.handleChange("is_homeowner")}
                     checkedIcon={
                       <i
                         className={
-                          "fas fa-pencil-alt " + classes.iconCheckboxIcon
+                          "fas fa-check " + classes.iconCheckboxIcon
                         }
                       />
                     }
                     icon={
                       <i
                         className={
-                          "fas fa-pencil-alt " + classes.iconCheckboxIcon
+                          "fas fa-check " + classes.iconCheckboxIcon
                         }
                       />
                     }
@@ -103,25 +104,25 @@ class Step2 extends React.Component {
                       root: classes.iconCheckbox
                     }}
                   />
-                  <h6>Design</h6>
+                  <h6>Do you own your home?</h6>
                 </div>
               </GridItem>
-              <GridItem xs={12} sm={4}>
+              <GridItem xs={12} sm={3}>
                 <div className={classes.choiche}>
                   <Checkbox
                     tabIndex={-1}
-                    onClick={this.handleChange("code")}
+                    onClick={this.handleChange("is_agreement")}
                     checkedIcon={
                       <i
                         className={
-                          "fas fa-terminal " + classes.iconCheckboxIcon
+                          "fas fa-check " + classes.iconCheckboxIcon
                         }
                       />
                     }
                     icon={
                       <i
                         className={
-                          "fas fa-terminal " + classes.iconCheckboxIcon
+                          "fas fa-check " + classes.iconCheckboxIcon
                         }
                       />
                     }
@@ -130,22 +131,26 @@ class Step2 extends React.Component {
                       root: classes.iconCheckbox
                     }}
                   />
-                  <h6>Code</h6>
+                  <h6>Is your family agreeing with adopting a new animal?</h6>
                 </div>
               </GridItem>
-              <GridItem xs={12} sm={4}>
+              <GridItem xs={12} sm={3}>
                 <div className={classes.choiche}>
                   <Checkbox
                     tabIndex={-1}
-                    onClick={this.handleChange("develop")}
+                    onClick={this.handleChange("is_fenced")}
                     checkedIcon={
                       <i
-                        className={"fas fa-laptop " + classes.iconCheckboxIcon}
+                        className={
+                          "fas fa-check " + classes.iconCheckboxIcon
+                        }
                       />
                     }
                     icon={
                       <i
-                        className={"fas fa-laptop " + classes.iconCheckboxIcon}
+                        className={
+                          "fas fa-check " + classes.iconCheckboxIcon
+                        }
                       />
                     }
                     classes={{
@@ -153,57 +158,32 @@ class Step2 extends React.Component {
                       root: classes.iconCheckbox
                     }}
                   />
-                  <h6>Develop</h6>
+                  <h6>Do you have a fenced yard?</h6>
                 </div>
-                <FormControl fullWidth className={classes.selectFormControl}>
-                  <InputLabel
-                    htmlFor="simple-select"
-                    className={classes.selectLabel}
-                  >
-                    Choose City
-                  </InputLabel>
-                  <Select
-                    MenuProps={{
-                      className: classes.selectMenu
-                    }}
+              </GridItem>
+              <GridItem xs={12} sm={3}>
+                <div className={classes.choiche}>
+                  <Checkbox
+                    tabIndex={-1}
+                    onClick={this.handleChange("is_homevisit")}
+                    checkedIcon={
+                      <i
+                        className={"fas fa-check " + classes.iconCheckboxIcon}
+                      />
+                    }
+                    icon={
+                      <i
+                        className={"fas fa-check " + classes.iconCheckboxIcon}
+                      />
+                    }
                     classes={{
-                      select: classes.select
+                      checked: classes.iconCheckboxChecked,
+                      root: classes.iconCheckbox
                     }}
-                    value={this.state.simpleSelect}
-                    onChange={this.handleSimple}
-                    inputProps={{
-                      name: "simpleSelect",
-                      id: "simple-select"
-                    }}
-                  >
-                    <MenuItem
-                      disabled
-                      classes={{
-                        root: classes.selectMenuItem
-                      }}
-                    >
-                      Choose City
-                    </MenuItem>
-                    <MenuItem
-                      classes={{
-                        root: classes.selectMenuItem,
-                        selected: classes.selectMenuItemSelected
-                      }}
-                      value="2"
-                    >
-                      Paris
-                    </MenuItem>
-                    <MenuItem
-                      classes={{
-                        root: classes.selectMenuItem,
-                        selected: classes.selectMenuItemSelected
-                      }}
-                      value="3"
-                    >
-                      Bucharest
-                    </MenuItem>
-                  </Select>
-                </FormControl>
+                  />
+                  <h6>Will you agree with a home visit?</h6>
+                </div>
+                
               </GridItem>
             </GridContainer>
           </GridItem>

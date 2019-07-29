@@ -61,8 +61,8 @@ ReactDOM.render(
             <Route exact path="/" component = {MainLayout} />   
             <Route path="/auth" component={AuthLayout} />
             <Route path="/callback" render={props => {handleAuthentication(props); return <Callback {...props} />}} />
-            {/* <Route path="/application/:shelterId/:animalId" component={ApplicationLayout} /> */}
-            <Route path="/application" component={ApplicationLayout} />
+            <Route path="/application/:shelterId/:animalId" component={ApplicationLayout} />
+            {/* <Route path="/application" component={ApplicationLayout} />*/}
             <Route path="/shelter-signup" component={ShelterOnboarding}/>
             <Route path="/admin" component={AdminLayout} />
             {/* <Redirect from="/" to="/admin/dashboard" />  */}

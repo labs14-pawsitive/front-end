@@ -17,7 +17,7 @@
 import React from "react";
 
 // core components
-import Wizard from "components/Wizard/Wizard.jsx";
+import Wizard from "components/Wizard/ApplicationWizard.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 
@@ -50,6 +50,8 @@ class ApplicationWizard extends React.Component {
             title="Adoption Application"
             subtitle="Please fill out this application to adopt that special animal today"
             finishButtonClick={e => alert(e)}
+            animalId={this.props.animalId}
+            shelterId={this.props.shelterId}
           />
         </GridItem>
       </GridContainer>

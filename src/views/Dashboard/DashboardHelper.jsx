@@ -13,6 +13,7 @@ function getFullMonths() {
     return result;
 }
 
+// match returned aggregated data with month data
 
 
 
