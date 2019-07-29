@@ -80,16 +80,20 @@ class LocationForm extends React.Component {
     handleSubmit = e => {
         e.preventDefault()
 
-        const location = {
+        const newLocation = {
+            shelter_id: this.props.shelterID,
             street_address: this.state.street_address,
             city: this.state.city,
             zipcode: this.state.zipcode,
             state_id: this.state.state_id,
             nickname: this.state.nickname,
+            phone_number: '7012258948',
             shelter_contact_id: this.state.shelter_contact_id
             }
 
-        this.props.addShelterLoc(this.props.shelterID, location)
+        console.log(newLocation)
+
+        this.props.addShelterLoc(this.props.shelterID, newLocation)
 
         .then( () => {
             this.props.fetchShelter(this.props.shelterID)
@@ -114,6 +118,11 @@ class LocationForm extends React.Component {
         })
     }
 
+    inputchangeHandler = e => {
+        this.setState({
+            [e.target.id] : e.target.value
+        })
+    }
 
     render() {
         const { classes } = this.props;
@@ -139,15 +148,14 @@ class LocationForm extends React.Component {
                         <CustomInput 
                         id = "nickname"
                         labelText = "Location Name"
-                        onChange = {this.changeHandler}
-                        name= "nickname"
-                        value= {this.state.nickname}
 
                         formControlProps={{
                             fullWidth: true
                             }}
                         inputProps={{
-                            type: "text"
+                            type: "text",
+                            value: this.state.nickname,
+                            onChange: (e) => this.inputchangeHandler(e)
                             }}
                         
                         />
@@ -156,11 +164,10 @@ class LocationForm extends React.Component {
                         <CustomInput 
                         id = "street_address"
                         labelText = "Street Address"
-                        onChange = {this.changeHandler}
-                        name= "street_address"
-                        value= {this.state.street_address}
                         inputProps={{
-                            type: "text"
+                            type: "text",
+                            value: this.state.street_address,
+                            onChange: (e) => this.inputchangeHandler(e)
                         }}
                         formControlProps={{
                             fullWidth: true
@@ -172,11 +179,10 @@ class LocationForm extends React.Component {
                         <CustomInput 
                         id = "city"
                         labelText = "City"
-                        onChange = {this.changeHandler}
-                        name= "city"
-                        value= {this.state.city}
                         inputProps={{
                             type: "text",
+                            value: this.state.city,
+                            onChange: (e) => this.inputchangeHandler(e)
                             }}
                         formControlProps={{
                                 fullWidth: true
@@ -227,11 +233,10 @@ class LocationForm extends React.Component {
                         <CustomInput 
                         id = "zipcode"
                         labelText = "Zipcode"
-                        onChange = {this.changeHandler}
-                        name= "zipcode"
-                        value= {this.state.zipcode}
                         inputProps={{
-                            type: "text"
+                            type: "text",
+                            value: this.state.zipcode,
+                            onChange: (e) => this.inputchangeHandler(e)
                         }}
                         
                         />

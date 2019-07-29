@@ -72,8 +72,10 @@ class ContactForm extends React.Component {
             name: this.state.name,
             email: this.state.email,
             phone: this.state.phone,
+            shelter_id: this.props.shelterID
             }
 
+        console.log(newContact)
         this.props.addShelterCon(this.props.shelterID, newContact)
 
         // .then( () => {
@@ -89,10 +91,11 @@ class ContactForm extends React.Component {
         
     }
 
+    
     changeHandler = e => {
         e.preventDefault();
         this.setState({
-            [e.target.name] : e.target.value
+            [e.target.id] : e.target.value
         })
     }
     
@@ -119,42 +122,40 @@ class ContactForm extends React.Component {
                     <DialogContent>
                         <CustomInput 
                         id = "name"
-                        onChange = {this.changeHandler}
-                        name = "name"
-                        value = {this.state.name}
-
                         labelText = "Contact Name"
                         inputProps={{
-                            type: "text"
+                            type: "text",
+                            value: this.state.name,
+                            name: "name",
+                            onChange: (e) => this.changeHandler(e)
                             }}
                         formControlProps={{
                             fullWidth: true
                             }}
                         
                         />
+
                         <CustomInput 
                         id = "email"
                         labelText = "Email Address"
-                        onChange = {this.changeHandler}
-                        name = "email"
-                        value = {this.state.email}
 
                         inputProps={{
                             type: "email",
+                            value: this.state.email,
+                            onChange: (e) => this.changeHandler(e)
                             }}
                         formControlProps={{
                             fullWidth: true
                             }}
                         />
+
                         <CustomInput 
                         id = "phone"
                         labelText = "Phone Number"
-                        onChange = {this.changeHandler}
-                        name = "phone"
-                        value = {this.state.phone}
-
                         inputProps={{
-                            type: "text"
+                            type: "text",
+                            value: this.state.phone,
+                            onChange: (e) => this.changeHandler(e)
                             }}
                         formControlProps={{
                             fullWidth: true
