@@ -18,6 +18,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { connect } from "react-redux";
+import { fetchShelter } from '../../actions/shelterAction';
 
 import LocationForm from './LocationForm';
 import ContactForm from './ContactForm';
@@ -56,18 +57,7 @@ import shelterProfileStyles from "assets/jss/material-dashboard-pro-react/views/
   }
 
   componentDidMount() {
-    axios
-    //.get(`http://localhost:8000/api/animals/shelter/${localStorage.getItem("shelter_id")}`)
-    .get(`http://localhost:8000/api/shelters/${this.props.shelterID}`)
-    .then( shelter => {
-      console.log(shelter.data)
-      this.setState({
-        shelter:shelter.data
-      })
-    })
-    .catch( error => 
-      console.log(error)
-      )
+    this.props.fetchShelter(this.props.shelterID)
   }
 
 handleFormButtonToggle = e => {
@@ -118,7 +108,7 @@ return (
                     inputProps={{
                       disabled: this.state.editMode? false : true,
                       style: customStyle.shelterDisplayView,
-                      value: this.state.shelter.shelter
+                      value: this.props.shelter.shelter
                     }}
                   />
                 </GridItem>
@@ -135,7 +125,8 @@ return (
                       fullWidth: true
                     }}
                     inputProps={{
-                      disabled: this.state.editMode? false : true
+                      disabled: this.state.editMode? false : true,
+                      value: this.props.shelter.name,
                     }}
                     style={this.state.editMode? "" : customStyle.shelterDisplayView}
 
@@ -149,7 +140,8 @@ return (
                       fullWidth: true
                     }}
                     inputProps={{
-                      disabled: this.state.editMode? false : true
+                      disabled: this.state.editMode? false : true,
+                      value: this.props.shelter.email,
                     }}
                     style={this.state.editMode? "" : customStyle.shelterDisplayView}
 
@@ -158,12 +150,13 @@ return (
                 <GridItem xs={12} sm={12} md={6}>
                   <CustomInput
                     labelText="Phone Number"
-                    id={this.state.editMode? "email-address-disabled" : "email-address"}
+                    id={this.state.editMode? "phone-number-disabled" : "phone-number"}
                     formControlProps={{
                       fullWidth: true
                     }}
                     inputProps={{
-                      disabled: this.state.editMode? false : true
+                      disabled: this.state.editMode? false : true,
+                      value: this.props.shelter.phone,
                     }}
                     style={this.state.editMode? "" : customStyle.shelterDisplayView}
 
@@ -330,7 +323,9 @@ const mapStateToProps = (state) => {
     userID : state.userReducer.userID,
     shelterID : state.shelterReducer.shelterID,
     shelterWorkerID : state.userReducer.shelterWorkerID,
-    roleID : state.userReducer.roleID
+    roleID : state.userReducer.roleID,
+    shelter: state.shelterReducer.shelter,
+    fetchingShelter: state.shelterReducer.fetchingShelter, 
   }
 }
 
@@ -340,7 +335,7 @@ ShelterProfile.propTypes = {
 
 export default connect(
   mapStateToProps,
-  {}
+  { fetchShelter }
 )(withStyles(shelterProfileStyles)(ShelterProfile))
 
 

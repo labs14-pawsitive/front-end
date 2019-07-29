@@ -69,13 +69,12 @@ class ContactForm extends React.Component {
         e.preventDefault()
 
         const newContact = {
-            shelter_id : 1, //localstorage.getItem("shelter_id")
             name: this.state.name,
             email: this.state.email,
             phone: this.state.phone,
             }
 
-        this.props.addShelterCon(newContact)
+        this.props.addShelterCon(this.props.shelterID, newContact)
 
         // .then( () => {
         //     this.props.getLocations

@@ -1,19 +1,36 @@
 import axios from 'axios';
 
 //Fetch individual shelter
-export const GETSHELTER_START = 'GETSHELTER_START';
-export const GETSHELTER_SUCCESS = 'GETSHELTER_SUCCESS';
-export const GETSHELTER_ERR = 'GETSHELTER_ERROR';
+export const GET_SHELTER_START = 'GET_SHELTER_START';
+export const GET_SHELTER_SUCCESS = 'GET_SHELTER_SUCCESS';
+export const GET_SHELTER_ERR = 'GET_SHELTER_ERROR';
 
-export const fetchShelter = id => dispatch => {
-    dispatch({ GETSHELTER_START })
+export const fetchShelter = shelterID => dispatch => {
+    dispatch({ type: GET_SHELTER_START })
     return axios
-    .get(`https://staging1-pawsnfind.herokuapp.com/api/shelters/${id}`)
+    .get(`https://staging1-pawsnfind.herokuapp.com/api/shelters/${shelterID}`)
     .then(res => {
-        dispatch({ type: GETSHELTER_SUCCESS, payload: res.data })
+        dispatch({ type: GET_SHELTER_SUCCESS, payload: res.data })
     })
     .catch(err => {
-        dispatch({ type: GETSHELTER_ERR, payload: err.response })
+        dispatch({ type: GET_SHELTER_ERR, payload: err.response })
+    })
+}
+
+export const GET_OPTIONS_START = 'GET_OPTIONS_START';
+export const GET_OPTIONS_SUCCESS = 'GET_OPTIONS_SUCCESS';
+export const GET_OPTIONS_ERR = 'GET_OPTIONS_ERR';
+
+export const fetchOptions = (shelterID) => dispatch => {
+    dispatch({ type: GET_OPTIONS_START })
+    return axios
+    .get(`https://staging1-pawsnfind.herokuapp.com/api/internal/paws/options/${shelterID}`)
+    .then(res => {
+        dispatch({ type: GET_OPTIONS_SUCCESS, payload: res.data })
+        console.log('Where is it?', res.data)
+    })
+    .catch(err => {
+        dispatch({ type: GET_OPTIONS_ERR, payload: err.response })
     })
 }
 
@@ -22,10 +39,10 @@ export const ADD_SHELTERLOC_START = 'ADD_SHELTERLOC_START';
 export const ADD_SHELTERLOC_SUCCESS = 'ADD_SHELTERLOC_SUCCESS';
 export const ADD_SHELTERLOC_ERR = 'ADD_SHELTERLOC_ERROR';
 
-export const addShelterLoc = (id, location) => dispatch => {
-    dispatch({ ADD_SHELTERLOC_START })
+export const addShelterLoc = (shelterID, location) => dispatch => {
+    dispatch({ type: ADD_SHELTERLOC_START })
     return axios
-    .post(`https://staging1-pawsnfind.herokuapp.com/api/shelters/${id}/location`, location)
+    .post(`http://localhost:8000/api/shelters/${shelterID}/location`, location)
     .then(res => {
         dispatch({ type: ADD_SHELTERLOC_SUCCESS, payload: res.data })
     })
@@ -40,9 +57,9 @@ export const UPDATE_SHELTERLOC_SUCCESS = 'UPDATE_SHELTERLOC_SUCCESS';
 export const UPDATE_SHELTERLOC_ERR = 'UPDATE_SHELTERLOC_ERROR';
 
 export const updateShelterLoc = (locationId, updatedChange) => dispatch => {
-    dispatch({ UPDATE_SHELTERLOC_START })
+    dispatch({ type: UPDATE_SHELTERLOC_START })
     return axios
-    .put(`https://staging1-pawsnfind.herokuapp.com/api/shelters/location/${locationId}`, updatedChange)
+    .put(`http://localhost:8000/api/shelters/location/${locationId}`, updatedChange)
     .then(res => {
         dispatch({ type: UPDATE_SHELTERLOC_SUCCESS, payload: res.data })
     })
@@ -57,9 +74,9 @@ export const DELETE_SHELTERLOC_SUCCESS = 'DELETE_SHELTERLOC_SUCCESS';
 export const DELETE_SHELTERLOC_ERR = 'DELETE_SHELTERLOC_ERROR';
 
 export const deleteShelterLoc = locationId => dispatch => {
-    dispatch({ DELETE_SHELTERLOC_START })
+    dispatch({ type: DELETE_SHELTERLOC_START })
     return axios
-    .put(`https://staging1-pawsnfind.herokuapp.com/api/shelters/location/${locationId}`, locationId)
+    .put(`http://localhost:8000/api/shelters/location/${locationId}`, locationId)
     .then(res => {
         dispatch({ type: DELETE_SHELTERLOC_SUCCESS, payload: res.data })
     })
@@ -73,10 +90,10 @@ export const ADD_CONTACT_START = 'ADD_CONTACT_START';
 export const ADD_CONTACT_SUCCESS = 'ADD_CONTACT_SUCCESS';
 export const ADD_CONTACT_ERR = 'ADD_CONTACT_ERROR';
 
-export const addShelterCon = (id, contact) => dispatch => {
-    dispatch({ ADD_CONTACT_START })
+export const addShelterCon = (shelterID, contact) => dispatch => {
+    dispatch({ type: ADD_CONTACT_START })
     return axios
-    .post(`https://staging1-pawsnfind.herokuapp.com/api/shelters/${id}/contact`, contact)
+    .post(`http://localhost:8000/api/shelters/${shelterID}/contact`, contact)
     .then(res => {
         dispatch({ type: ADD_CONTACT_SUCCESS, payload: res.data })
     })
@@ -91,9 +108,9 @@ export const UPDATE_CONTACT_SUCCESS = 'UPDATE_CONTACT_SUCCESS';
 export const UPDATE_CONTACT_ERR = 'UPDATE_CONTACT_ERROR';
 
 export const updateShelterCon = (contactId, change) => dispatch => {
-    dispatch({ UPDATE_CONTACT_START })
+    dispatch({ type: UPDATE_CONTACT_START })
     return axios
-    .put(`https://staging1-pawsnfind.herokuapp.com/api/shelters/contact/${contactId}`, change)
+    .put(`http://localhost:8000/api/shelters/contact/${contactId}`, change)
     .then(res => {
         dispatch({ type: UPDATE_CONTACT_SUCCESS, payload: res.data })
     })
@@ -108,9 +125,9 @@ export const DELETE_CONTACT_SUCCESS = 'DELETE_CONTACT_SUCCESS';
 export const DELETE_CONTACT_ERR = 'DELETE_CONTACT_ERROR';
 
 export const deleteShelterCon = contactId => dispatch => {
-    dispatch({ DELETE_CONTACT_START })
+    dispatch({ type: DELETE_CONTACT_START })
     return axios
-    .put(`https://staging1-pawsnfind.herokuapp.com/api/shelters/location/${contactId}`, contactId)
+    .put(`http://localhost:8000/api/shelters/location/${contactId}`, contactId)
     .then(res => {
         dispatch({ type: DELETE_CONTACT_SUCCESS, payload: res.data })
     })

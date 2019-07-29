@@ -15,10 +15,9 @@
 
 */
 import React from "react";
-import axios from "axios";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { addShelterLoc } from "../../actions/shelterAction";
+import { addShelterLoc , fetchOptions, fetchShelter  } from "../../actions/shelterAction";
 
 import shelterProfileStyles from "assets/jss/material-dashboard-pro-react/views/shelterProfileStyles.jsx";
 
@@ -55,26 +54,12 @@ class LocationForm extends React.Component {
             shelter_contact_id: '',
             open: false,
             fullWidth: true,
-            states: [],
-            contacts: [],
 
         };
     }
 
     componentDidMount(){
-       
-        axios
-        .get(`https://staging1-pawsnfind.herokuapp.com/api/internal/paws/options/1`)
-        .then(options => {
-          console.log(options.data)
-          this.setState({
-            states:options.data.states,
-            contacts: options.data.contacts
-          })
-        })
-        .catch( error => 
-          console.log(error)
-          )
+        this.props.fetchOptions(this.props.shelterID);
     }
 
 
@@ -95,8 +80,7 @@ class LocationForm extends React.Component {
     handleSubmit = e => {
         e.preventDefault()
 
-        const newLoc = {
-            shelter_id : 1, //localstorage.getItem("shelter_id")
+        const location = {
             street_address: this.state.street_address,
             city: this.state.city,
             zipcode: this.state.zipcode,
@@ -105,21 +89,21 @@ class LocationForm extends React.Component {
             shelter_contact_id: this.state.shelter_contact_id
             }
 
-        this.props.addShelterLoc(newLoc)
+        this.props.addShelterLoc(this.props.shelterID, location)
 
-        // .then( () => {
-        //     this.props.getLocations
-        // });
+        .then( () => {
+            this.props.fetchShelter(this.props.shelterID)
+        });
 
         this.handleClose()
         this.setState({
             street_address: '',
             city: '',
             zipcode: '',
-            // state_id: '',
+            state_id: '',
             phone_number: '',
             nickname: '',
-            // shelter_contact_id: '',
+            shelter_contact_id: '',
         })
         
     }
@@ -129,10 +113,6 @@ class LocationForm extends React.Component {
             [e.target.name] : e.target.value
         })
     }
-    
-    onChangeUser = newState => {
-        this.setState({ state: newState });
-      }
 
 
     render() {
@@ -227,7 +207,7 @@ class LocationForm extends React.Component {
                             name: "state_id",
                             id: "state-select"
                         }}>
-                            {this.state.states.map(state => (
+                            {this.props.stateOptions.map(state => (
                                 <MenuItem
                                 key = {state.id}
                                 classes={{
@@ -279,7 +259,7 @@ class LocationForm extends React.Component {
                             name: "shelter_contact_id",
                             id: "contact-select"
                         }}>
-                            {this.state.contacts.map(contact => (
+                            {this.props.contactOptions.map(contact => (
                                 <MenuItem
                                 key = {contact.id}
                                 classes={{
@@ -287,7 +267,7 @@ class LocationForm extends React.Component {
                                     selected: classes.selectMenuItemSelected
                                 }}
                                 value= {contact.id}>
-                                {contact.id}
+                                {contact.name}
                                 </MenuItem>
                             ))}   
                             </Select>
@@ -315,13 +295,16 @@ const mapStateToProps = (state) => {
     return {
       userID : state.userReducer.userID,
       shelterID : state.shelterReducer.shelterID,
+      stateOptions: state.shelterReducer.stateOptions,
+      contactOptions: state.shelterReducer.contactOptions,
       shelterWorkerID : state.userReducer.shelterWorkerID,
       roleID : state.userReducer.roleID
+      
     }
   }
   
   export default connect(
     mapStateToProps,
-    { addShelterLoc }
+    { addShelterLoc , fetchOptions, fetchShelter }
   )(withStyles(shelterProfileStyles)(LocationForm))
   
