@@ -12,10 +12,15 @@ class ImageUpload extends Component {
       defaultImage: null
     };
 
-
+    this.editText = this.props.editText
+      ? this.props.editText
+      : "Click to change image";
+    this.fileSizeLimit = this.props.fileSize ? this.props.fileSize : 3000000;
     const width = this.props.width ? this.props.width : "200px";
     const height = this.props.height ? this.props.height : "200px";
-    const borderRadius = this.props.borderRadius ? this.props.borderRadius : "5px";
+    const borderRadius = this.props.borderRadius
+      ? this.props.borderRadius
+      : "5px";
 
     this.styles = {
       media: {
@@ -26,7 +31,7 @@ class ImageUpload extends Component {
         overflow: "hidden",
         padding: 0
       },
-    
+
       image: {
         padding: 0,
         margin: 0,
@@ -38,25 +43,24 @@ class ImageUpload extends Component {
         position: "relative",
         borderRadius: borderRadius
       },
-    
+
       text: {
         padding: 0,
         margin: 0,
-        top: 0,
-        height: height,
-        width: width,
+        opacity: 0.9,
+        height: "25px",
+        width: "100%",
+        background: "lightgray",
         objectFit: "cover",
         overflow: "hidden",
-        position: "absolute",
-        borderRadius: borderRadius
+        position: "absolute"
       }
     };
   }
 
-  componentDidMount(){
-
+  componentDidMount() {
     if (this.props.defaultImage)
-      this.setState({defaultImage: this.props.defaultImage});
+      this.setState({ defaultImage: this.props.defaultImage });
   }
 
   handleClose() {
@@ -66,13 +70,12 @@ class ImageUpload extends Component {
   }
 
   async handleSave(files) {
- 
     await this.setState({
       files: files,
       open: false
     });
     const imageInfo = [];
-
+    // Hacky, need to build out image hosting backend to accept multiple images in one call
     await this.state.files.forEach(async (image, index, array) => {
       const formData = new FormData();
       formData.append("image", image);
@@ -98,24 +101,23 @@ class ImageUpload extends Component {
             imageInfo.push(response);
           }
         });
-        if (image === array[array.length - 1]) {
-          let response = imageInfo;
-    
-          if (this.props.callback) {
-            if (imageInfo.length === 0)
-              this.props.callback({ error: "Nothing uploaded" });
-            else {
-              this.setState({defaultImage: response[0].image.image_url});
-              this.props.callback(response);
-            }
+      if (image === array[array.length - 1]) {
+        let response = imageInfo;
+
+        if (this.props.callback) {
+          if (imageInfo.length === 0)
+            this.props.callback({ error: "Nothing uploaded" });
+          else {
+            this.setState({ defaultImage: response[0].image.image_url });
+            this.props.callback(response);
           }
         }
+      }
     });
   }
 
   handleOpen = () => {
-    if (!this.props.editable)
-    return;
+    if (!this.props.editable) return;
     this.setState({
       open: true
     });
@@ -129,19 +131,27 @@ class ImageUpload extends Component {
 
     return (
       <div>
-        <Button onClick={this.handleOpen} style={this.styles.media}>
-          {this.state.defaultImage && !this.props.editable ? (
-            <img src={this.state.defaultImage} alt="" style={this.styles.image} />
-          ) : this.props.editable && (
-            <div className="click-text"> Click to add image </div>
+        <Button
+          disabled={!this.props.editable}
+          onClick={this.handleOpen}
+          style={this.styles.media}
+        >
+          <img src={this.state.defaultImage} alt="" style={this.styles.image} />
+
+          {this.props.editable && (
+            <div className="click-text" style={this.styles.text}>
+              {" "}
+              {this.editText}
+            </div>
           )}
         </Button>
         <DropzoneDialog
           open={this.state.open}
           onSave={this.handleSave.bind(this)}
           acceptedFiles={["image/jpeg", "image/png"]}
-          showPreviews={true}
-          maxFileSize={5000000}
+          showPreviewsInDropzone={true}
+          showPreviews={false}
+          maxFileSize={this.fileSizeLimit}
           filesLimit={imageLimit}
           onClose={this.handleClose.bind(this)}
         />
