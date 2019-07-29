@@ -1,6 +1,7 @@
 import {
     ADD_ANIMAL_START,
     ADD_ANIMAL_SUCCESS,
+    ADD_ANIMAL_ERROR,
     FETCH_OPTIONS_START,
     FETCH_OPTIONS_SUCCESS,
     FETCH_OPTIONS_ERROR,
@@ -13,7 +14,10 @@ import {
     UPDATE_SPECIES,
     UPDATE_ANIMAL_STATUS,
     UPDATE_ROLES,
-    ADD_ANIMAL_ERROR
+    UPDATE_LOCATIONS
+    
+
+
 } from '../actions/animalAction'
 
 const initialState = {
@@ -29,6 +33,7 @@ const initialState = {
     updatingSpecies: false,
     updatingAnimalStatus: false,
     updatingRoles: false,
+    updatingLocations: false,
     breedsOptions: [],
     sizeOptions: [],
     subscriptionOptions: [],
@@ -38,7 +43,8 @@ const initialState = {
     speciesOptions: [],
     animalStatusOptions: [],
     rolesOptions: [],
-    error: ''
+    locationsOptions: [],
+    error: '',
 }
 
 export const animalReducer = (state = initialState, action) => {
@@ -131,6 +137,13 @@ export const animalReducer = (state = initialState, action) => {
                 updatingRoles: true,
                 rolesOptions: action.payload
             };
+        case UPDATE_LOCATIONS:
+            return {
+                ...state,
+                updatingLocations: true,
+                locationsOptions: action.payload
+            };
+       
         default: 
             return state;
     }

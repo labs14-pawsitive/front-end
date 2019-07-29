@@ -58,7 +58,7 @@ class CustomDropdown extends React.Component {
     this.setState({ open: false });
   };
   handleCloseMenu(param) {
-    if (param.props.onChange !== undefined) {
+    if (param.props && param.props.onChange !== undefined) {
       // align with handleChange in form component
       let payload = {target: { id: null, value: null }}
       payload.target.id = this.props.id

@@ -18,6 +18,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {addAnimal, fetchOptions} from '../../actions/animalAction';
+import ImageUpload from '../../components/ImageUpload/ImageUpload'
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import FormLabel from "@material-ui/core/FormLabel";
@@ -47,7 +49,7 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardText from "components/Card/CardText.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
-import ImageUpload from "components/CustomUpload/ImageUpload.jsx";
+// import ImageUpload from "components/CustomUpload/ImageUpload.jsx";
 import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
 import CustomDropdown from "components/CustomDropdown/CustomDropdown";
 
@@ -65,8 +67,15 @@ class AddAnimalForm extends React.Component {
         animal_status_id: null,
         size_id: null,
         coat_length_id: null,
-        subscriptions_id: null,
         age_id: null,
+        locations_id: null,
+        is_male: null,
+        is_house_trained: false,
+        is_neutered_spayed: false,
+        is_good_with_kids: false,
+        is_good_with_dogs: false,
+        is_good_with_cats: false,
+        is_vaccinated: false
       },
       checked: [],
     };
@@ -76,9 +85,37 @@ class AddAnimalForm extends React.Component {
   }
 
   componentDidMount () {
-    this.props.fetchOptions()
-    const { shelterId, locationId } = this.props.match.params
-    console.log(shelterId)
+    // const shelterId = localStorage.getItem('shelter_id')
+    // TODO (SL): Use fake value until auth complete
+
+    const shelterId = 1
+    this.props.fetchOptions(shelterId)
+
+    this.setState({
+      animal: {
+        name: "snowflake",
+        color: "white",
+        health: "healthy",
+        description: "happy dog",
+        species_id: 1,
+        breed_id: 4,
+        animal_status_id: 2,
+        size_id: 3,
+        coat_length_id: 3,
+        age_id: 3,
+        locations_id: 1,
+        is_male: false,
+        is_house_trained: false,
+        is_neutered_spayed: true,
+        is_good_with_kids: true,
+        is_good_with_dogs: true,
+        is_good_with_cats: false,
+        is_vaccinated: false
+      },
+      checked: [],
+    });
+
+
   }
 
   //created an empty object and merged with state.animal
@@ -126,8 +163,9 @@ class AddAnimalForm extends React.Component {
       animalAttributes[option] = true
     })
 
-    this.props.addAnimal(animalAttributes).then(() => {
-      this.props.history.push('/admin/allAnimals');
+    this.props.addAnimal(animalAttributes).then((data) => {
+      console.log(data)
+      // this.props.history.push(`/admin/animal/${this.props.params.id}`);
     });
     
     this.setState({
@@ -142,7 +180,15 @@ class AddAnimalForm extends React.Component {
         size_id: "",
         coat_length_id: "",
         subscriptions_id: "",
-        age_id: ""
+        age_id: "",
+        locations_id: "",
+        is_male: "",
+        is_house_trained: "",
+        is_neutered_spayed: "",
+        is_good_with_kids: "",
+        is_good_with_dogs: "",
+        is_good_with_cats: "",
+        is_vaccinated: "",
       },
       checked: [],
     })
@@ -150,6 +196,7 @@ class AddAnimalForm extends React.Component {
 
   render() {
     const { classes } = this.props;
+    console.log(classes)
     // Built up collection of options for the dropdown
     // given necessary data to each option (id, value)
     // the name of the attribute is on the dropdown itself
@@ -171,28 +218,51 @@ class AddAnimalForm extends React.Component {
     const agesDropdownOptions = this.props.agesOptions.map(option => {
       return <span onChange={this.handleChange} value={option.id}>{option.age}</span>
     })
+    const locationsDropdownOptions = this.props.locationsOptions.map(option => {
+      return <span onChange={this.handleChange} value={option.id}>{option.nickname}</span>
+    })
 
-   
     //Used find to go through all options to find the matching option with the id that is the same as this.state.animal.breed_id. if there is a 
     //match, display the breed.
-    const breedButtonDisplay = this.state.animal.breed_id ? this.props.breedsOptions.find(option => option.id == parseInt(this.state.animal.breed_id)).breed : 'Breed'
+    // const breedButtonDisplay = this.state.animal.breed_id ? this.props.breedsOptions.find(option => option.id == parseInt(this.state.animal.breed_id)).breed : 'Breed'
 
-    const animalStatusButtonDisplay = this.state.animal.animal_status_id ? this.props.animalStatusOptions.find(option => option.id == parseInt(this.state.animal.animal_status_id)).animal_status : 'Animal Status'
+    // const animalStatusButtonDisplay = this.state.animal.animal_status_id ? this.props.animalStatusOptions.find(option => option.id == parseInt(this.state.animal.animal_status_id)).animal_status : 'Animal Status'
 
-    const sizeButtonDisplay = this.state.animal.size_id ? this.props.sizeOptions.find(option => option.id == parseInt(this.state.animal.size_id)).size : 'Size'
+    // const sizeButtonDisplay = this.state.animal.size_id ? this.props.sizeOptions.find(option => option.id == parseInt(this.state.animal.size_id)).size : 'Size'
 
-    const coatLengthButtonDisplay = this.state.animal.coat_length_id ? this.props.coatLengthOptions.find(option => option.id == parseInt(this.state.animal.coat_length_id)).coat_length : 'Coat length'
+    // const coatLengthButtonDisplay = this.state.animal.coat_length_id ? this.props.coatLengthOptions.find(option => option.id == parseInt(this.state.animal.coat_length_id)).coat_length : 'Coat length'
 
-    const speciesButtonDisplay = this.state.animal.species_id ? this.props.speciesOptions.find(option => option.id == parseInt(this.state.animal.species_id)).species : 'Species'
+    // const speciesButtonDisplay = this.state.animal.species_id ? this.props.speciesOptions.find(option => option.id == parseInt(this.state.animal.species_id)).species : 'Species'
 
-    const agesButtonDisplay = this.state.animal.age_id ? this.props.agesOptions.find(option => option.id == parseInt(this.state.animal.age_id)).age : 'Age'
+    // const agesButtonDisplay = this.state.animal.age_id ? this.props.agesOptions.find(option => option.id == parseInt(this.state.animal.age_id)).age : 'Age'
+
+    // const locationsButtonDisplay = this.state.animal.locations_id ? this.props.locationsOptions.find(option => option.id == parseInt(this.state.animal.locations_id)).nickname : 'Shelter location'
+
+    const buttonDisplay = (animalAttribute, optionType, nameAttribute, defaultText) => {
+      const attributeId = this.state.animal[animalAttribute]
+      if(attributeId) {
+        const option = this.props[optionType].find(option => option.id == parseInt(attributeId))
+        if (option) {
+          return option[nameAttribute]
+        }  
+      }
+      return defaultText
+    }
+    const breedButtonDisplay = buttonDisplay('breed_id', 'breedsOptions', 'breed', 'Breed')
+    const animalStatusButtonDisplay = buttonDisplay('animal_status_id', 'animalStatusOptions', 'animal_status', 'Animal Status')
+    const sizeButtonDisplay = buttonDisplay('size_id', 'sizeOptions', 'size', 'Size')
+    const coatLengthButtonDisplay = buttonDisplay('coat_length_id', 'coatLengthOptions', 'coat_length', 'Coat length')
+    const speciesButtonDisplay = buttonDisplay('species_id', 'speciesOptions', 'species', 'Species')
+    const agesButtonDisplay = buttonDisplay('age_id', 'agesOptions', 'age', 'Age')
+    const locationsButtonDisplay = buttonDisplay('locations_id', 'locationsOptions', 'nickname', 'Shelter location')
 
     return (
       
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <legend>Add Animal Profile Image</legend>
-          <ImageUpload
+          <ImageUpload height="200px" width="200px" borderRadius="5px" imageLimit={1} callback={this.callback} url="https://staging1-pawsnfind.herokuapp.com/api/pictures/animal/1"/>
+          {/* <ImageUpload 
             addButtonProps={{
               color: "rose",
               round: true
@@ -205,7 +275,7 @@ class AddAnimalForm extends React.Component {
               color: "danger",
               round: true
             }}
-          />
+          /> */}
         </GridItem>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
@@ -301,6 +371,21 @@ class AddAnimalForm extends React.Component {
 
                     <FormControl>
                       <CustomDropdown 
+                        buttonText= {locationsButtonDisplay}
+                        id="locations_id"
+                        onChange={this.handleChange}
+                        externalHandleClick={this.handleChange}
+                        dropdownList={
+                          locationsDropdownOptions
+                        }
+                        dropdownHeader={
+                          locationsButtonDisplay
+                        }
+                      />
+                    </FormControl> 
+
+                    <FormControl>
+                      <CustomDropdown 
                         buttonText= {animalStatusButtonDisplay}
                         id="animal_status_id"
                         onChange={this.handleChange}
@@ -386,6 +471,7 @@ class AddAnimalForm extends React.Component {
                           <Checkbox
                             tabIndex={-1}
                             onClick={() => this.handleToggle("is_house_trained")}
+                            checked={this.state.animal.is_house_trained}
                             checkedIcon={
                               <Check className={classes.checkedIcon} />
                             }
@@ -415,6 +501,7 @@ class AddAnimalForm extends React.Component {
                           <Checkbox
                             tabIndex={-1}
                             onClick={() => this.handleToggle("is_male")}
+                            checked={this.state.animal.is_male}
                             checkedIcon={
                               <Check className={classes.checkedIcon} />
                             }
@@ -444,6 +531,7 @@ class AddAnimalForm extends React.Component {
                           <Checkbox
                             tabIndex={-1}
                             onClick={() => this.handleToggle("is_good_with_kids")}
+                            checked={this.state.animal.is_good_with_kids}
                             checkedIcon={
                               <Check className={classes.checkedIcon} />
                             }
@@ -473,6 +561,7 @@ class AddAnimalForm extends React.Component {
                           <Checkbox
                             tabIndex={-1}
                             onClick={() => this.handleToggle("is_good_with_dogs")}
+                            checked={this.state.animal.is_good_with_dogs}
                             checkedIcon={
                               <Check className={classes.checkedIcon} />
                             }
@@ -502,6 +591,7 @@ class AddAnimalForm extends React.Component {
                           <Checkbox
                             tabIndex={-1}
                             onClick={() => this.handleToggle("is_good_with_cats")}
+                            checked={this.state.animal.is_good_with_cats}
                             checkedIcon={
                               <Check className={classes.checkedIcon} />
                             }
@@ -531,6 +621,7 @@ class AddAnimalForm extends React.Component {
                           <Checkbox
                             tabIndex={-1}
                             onClick={() => this.handleToggle("is_vaccinated")}
+                            checked={this.state.animal.is_vaccinated}
                             checkedIcon={
                               <Check className={classes.checkedIcon} />
                             }
@@ -560,6 +651,7 @@ class AddAnimalForm extends React.Component {
                           <Checkbox
                             tabIndex={-1}
                             onClick={() => this.handleToggle("is_neutered_spayed")}
+                            checked={this.state.animal.is_neutered_spayed}
                             checkedIcon={
                               <Check className={classes.checkedIcon} />
                             }
@@ -589,6 +681,7 @@ class AddAnimalForm extends React.Component {
                           <Checkbox
                             tabIndex={-1}
                             onClick={() => this.handleToggle("is_mixed_breed")}
+                            checked={this.state.animal.is_mixed_breed}
                             checkedIcon={
                               <Check className={classes.checkedIcon} />
                             }
@@ -627,7 +720,8 @@ const mapStateToProps = state => {
     coatLengthOptions: state.animalReducer.coatLengthOptions,
     subscriptionOptions: state.animalReducer.subscriptionOptions,
     agesOptions: state.animalReducer.agesOptions,
-    speciesOptions: state.animalReducer.speciesOptions
+    speciesOptions: state.animalReducer.speciesOptions,
+    locationsOptions: state.animalReducer.locationsOptions
     
   }
 };

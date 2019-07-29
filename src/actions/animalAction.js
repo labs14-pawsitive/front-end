@@ -8,12 +8,14 @@ export const addAnimal  = animal => dispatch => {
     console.log(animal)
     dispatch ({type: ADD_ANIMAL_START});
     return axios
-        .post('https://staging1-pawsnfind.herokuapp.com/api/animals', animal)
+        .post('http://localhost:3000/api/animals', animal)
         .then(res => {
             dispatch ({type: ADD_ANIMAL_SUCCESS, payload: res.data})
+            return res.data
         })
         .catch(err => {
             dispatch({type: ADD_ANIMAL_ERROR, payload: err.response})
+            return err
         })
 }
 
@@ -28,15 +30,16 @@ export const UPDATE_AGES = 'UPDATE_AGES';
 export const UPDATE_APPLICATION_STATUS = 'UPDATE_APPLICATION_STATUS';
 export const UPDATE_SPECIES = 'UPDATE_SPECIES';
 export const UPDATE_ANIMAL_STATUS = 'UPDATE_ANIMAL_STATUS';
-export const UPDATE_ROLES = 'UPDATE_ROLES'
+export const UPDATE_ROLES = 'UPDATE_ROLES';
+export const UPDATE_LOCATIONS = 'UPDATE_LOCATIONS'
 
-export const fetchOptions  = animal => dispatch => {
+export const fetchOptions  = (shelterId) => dispatch => {
     dispatch ({type: FETCH_OPTIONS_START});
     // const headers = {Authorization: localStorage.getItem('token')}
     return axios
-    .get('https://staging1-pawsnfind.herokuapp.com/api/internal/paws/options', animal)
+    .get(`http://localhost:8000/api/internal/paws/options/${shelterId}`)
     .then(res => {
-        // console.log(res)
+        console.log(res)
         dispatch ({type: UPDATE_BREEDS, payload: res.data.breeds})
         dispatch ({type: UPDATE_SIZE, payload: res.data.size})
         dispatch ({type: UPDATE_SUBSCRIPTIONS, payload: res.data.subscriptions})
@@ -46,9 +49,11 @@ export const fetchOptions  = animal => dispatch => {
         dispatch ({type: UPDATE_SPECIES, payload: res.data.species})
         dispatch ({type: UPDATE_ANIMAL_STATUS, payload: res.data.animal_status})
         dispatch ({type: UPDATE_ROLES, payload: res.data.roles})
+        dispatch ({type: UPDATE_LOCATIONS, payload: res.data.locations})
         dispatch ({type: FETCH_OPTIONS_SUCCESS, payload: res.data})
     })
     .catch(err => {
         dispatch({type: FETCH_OPTIONS_ERROR, payload: err.response})
     })
 } 
+
