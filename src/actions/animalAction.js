@@ -5,17 +5,16 @@ export const ADD_ANIMAL_SUCCESS = 'ADD_ANIMAL_SUCCESS';
 export const ADD_ANIMAL_ERROR = 'ADD_ANIMAL_ERROR'
 
 export const addAnimal  = animal => dispatch => {
-    console.log(animal)
     dispatch ({type: ADD_ANIMAL_START});
+    console.log(animal)
     return axios
-        .post('http://localhost:3000/api/animals', animal)
+        .post('http://localhost:8000/api/animals', animal)
         .then(res => {
             dispatch ({type: ADD_ANIMAL_SUCCESS, payload: res.data})
             return res.data
         })
         .catch(err => {
             dispatch({type: ADD_ANIMAL_ERROR, payload: err.response})
-            return err
         })
 }
 

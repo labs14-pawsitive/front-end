@@ -68,14 +68,17 @@ class AddAnimalForm extends React.Component {
         size_id: null,
         coat_length_id: null,
         age_id: null,
-        locations_id: null,
+        shelter_location_id: null,
         is_male: null,
         is_house_trained: false,
         is_neutered_spayed: false,
         is_good_with_kids: false,
         is_good_with_dogs: false,
         is_good_with_cats: false,
-        is_vaccinated: false
+        is_vaccinated: false,
+        shelter_id: null,
+        profile_img_id: null,
+
       },
       checked: [],
     };
@@ -89,6 +92,7 @@ class AddAnimalForm extends React.Component {
     // TODO (SL): Use fake value until auth complete
 
     const shelterId = 1
+    this.setState({ animal:{ ...this.state.animal, shelter_id: shelterId}})
     this.props.fetchOptions(shelterId)
 
     this.setState({
@@ -103,21 +107,35 @@ class AddAnimalForm extends React.Component {
         size_id: 3,
         coat_length_id: 3,
         age_id: 3,
-        locations_id: 1,
+        shelter_location_id: 1,
+        shelter_id: 1,
         is_male: false,
         is_house_trained: false,
         is_neutered_spayed: true,
         is_good_with_kids: true,
         is_good_with_dogs: true,
         is_good_with_cats: false,
-        is_vaccinated: false
+        is_vaccinated: false,
+        profile_img_id: null,
+        is_mixed: 1
       },
       checked: [],
     });
-
-
   }
 
+  handleImgUploadResponse = response => {
+    if (!response.error) {
+      const { image_id } = response[0].image
+      console.log(image_id)
+      console.log(response)
+      this.setState({
+        animal: {
+          ...this.state.animal,
+          profile_img_id: image_id
+        }
+      })
+    }
+  }
   //created an empty object and merged with state.animal
   handleChange = e => {
     let selectedAttribute= {}
@@ -163,35 +181,39 @@ class AddAnimalForm extends React.Component {
       animalAttributes[option] = true
     })
 
-    this.props.addAnimal(animalAttributes).then((data) => {
-      console.log(data)
-      // this.props.history.push(`/admin/animal/${this.props.params.id}`);
+    this.props.addAnimal(animalAttributes).then((animalId) => {
+      if (animalId){
+        this.setState({
+        animal: {
+          name: "",
+          color: "",
+          health: "",
+          description: "",
+          species_id: "",
+          breed_id: "",
+          animal_status_id: "",
+          size_id: "",
+          coat_length_id: "",
+          subscriptions_id: "",
+          age_id: "",
+          shelter_location_id: "",
+          is_male: false,
+          is_house_trained: false,
+          is_neutered_spayed: false,
+          is_good_with_kids: false,
+          is_good_with_dogs: false,
+          is_good_with_cats: false,
+          is_vaccinated: false,
+          is_mixed: false
+          },
+          checked: [],
+        })
+
+        this.props.history.push(`/admin/animal/${animalId}`);
+      }
     });
     
-    this.setState({
-      animal: {
-        name: "",
-        color: "",
-        health: "",
-        description: "",
-        species_id: "",
-        breed_id: "",
-        animal_status_id: "",
-        size_id: "",
-        coat_length_id: "",
-        subscriptions_id: "",
-        age_id: "",
-        locations_id: "",
-        is_male: "",
-        is_house_trained: "",
-        is_neutered_spayed: "",
-        is_good_with_kids: "",
-        is_good_with_dogs: "",
-        is_good_with_cats: "",
-        is_vaccinated: "",
-      },
-      checked: [],
-    })
+    
   }
 
   render() {
@@ -261,7 +283,8 @@ class AddAnimalForm extends React.Component {
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <legend>Add Animal Profile Image</legend>
-          <ImageUpload height="200px" width="200px" borderRadius="5px" imageLimit={1} callback={this.callback} url="https://staging1-pawsnfind.herokuapp.com/api/pictures/animal/1"/>
+          
+          <ImageUpload height="200px" width="200px" defaultImage="https://beaglebit.com/images/8f89abcbb3d2d436a85c52a9684c55b9/c09b504addb7fd140e845a6bf7e4feea742ced57ca7329cd9c619c0bfa2df697." borderRadius="5px" imageLimit={1} editable={this.state.edit} callback={this.handleImgUploadResponse} url="https://staging1-pawsnfind.herokuapp.com/api/pictures/animal/1"/>
           {/* <ImageUpload 
             addButtonProps={{
               color: "rose",
@@ -680,7 +703,7 @@ class AddAnimalForm extends React.Component {
                         control={
                           <Checkbox
                             tabIndex={-1}
-                            onClick={() => this.handleToggle("is_mixed_breed")}
+                            onClick={() => this.handleToggle("is_mixed")}
                             checked={this.state.animal.is_mixed_breed}
                             checkedIcon={
                               <Check className={classes.checkedIcon} />
