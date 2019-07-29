@@ -56,7 +56,7 @@ class ApplicationView extends React.Component {
 
       options: [],
 
-
+      statusChanged: false,
     };
     this.handleChange = this.handleChange.bind(this);
 
@@ -78,7 +78,7 @@ class ApplicationView extends React.Component {
           this.setState({
             application: application.data,
           })
-          console.log(this.state.application)
+          console.log('app from state', this.state.application)
         }
       })
       .catch(error => {
@@ -95,27 +95,36 @@ class ApplicationView extends React.Component {
         this.setState({
           options: options.data.application_status
         })
-        console.log('from state', this.state.options)
+        console.log('options from state', this.state.options)
       })
       .catch(error => {
         console.log(error)
       })
   };
 
-  // updateStatus = () => {
 
-  //   let updatedApp = {}
-    
-  //   updatedApp = {
-  //     application_id: 3,
-  //     animal_id: 3,
-  //     shelter_id: 3,
-  //     user_id: 3,
-  //     application_status: this.state.application.application_status
-  //   }
+  updateAppStatus = async () => {
 
-  //   this.props.updateApplication(updatedApp, 3 )
-  // };
+   let updatedStatus = {           
+      animal_id: 3,         
+      shelter_id: 3, 
+      user_id: 3,
+      application_status_id: 2,
+    };
+
+    let id = 3;
+
+    await axios
+    .put(`https://staging1-pawsnfind.herokuapp.com/api/applications/${id}/status`, updatedStatus)
+    .then(updatedApp => {
+        console.log('updated app status', updatedApp.data)
+    })
+    .catch(error => {
+      console.log(error)
+    })
+
+  //  this.updateApplication(updatedStatus, 3 ) // this.state.application.application_id
+  };
 
 
   componentWillMount() {
@@ -126,16 +135,15 @@ class ApplicationView extends React.Component {
 
   };
 
-  async handleChange(event) {
+ handleChange = async (event) => {
 
-    const specialStatus = this.state.options[event.target.value - 1].application_status
+    const appStatus = this.state.options[event.target.value - 1].application_status
 
-    await this.setState({ ...this.state, application: {...this.state.application, application_status: specialStatus } });
+    await this.setState({ ...this.state, application: {...this.state.application, application_status: appStatus } });
 
-    console.log(this.state)
+    await this.updateAppStatus()
+
   };
-
-  
 
   handleChangeEnabled(event) {
     this.setState({ selectedEnabled: event.target.value });
@@ -159,10 +167,9 @@ class ApplicationView extends React.Component {
 
 
 
-
   render() {
 
-    console.log(this.state.application)
+
 
     const { classes } = this.props;
 

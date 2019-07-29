@@ -17,9 +17,9 @@ import {
     GET_APP_START,
     GET_APP_SUCCESS,
     GET_APP_FAILURE,
-    UPDATE_APP_START,
-    UPDATE_APP_SUCCESS,
-    UPDATE_APP_FAILURE,
+    UPDATE_APP_STATUS_START,
+    UPDATE_APP_STATUS_SUCCESS,
+    UPDATE_APP_STATUS_FAILURE,
 } from '../actions/applicationAction';
 // import { statement } from '@babel/template';
 // import { tumblrColor } from 'assets/jss/material-dashboard-pro-react';
@@ -61,24 +61,26 @@ export const applicationReducer = (state = initialState, action) => {
             error: action.payload
         }
 
-        case UPDATE_APP_START:
+        case UPDATE_APP_STATUS_START:
             return {
                 ...state, 
                 updatingStatus: true,
+                error: '',
             };
 
-        case UPDATE_APP_SUCCESS: 
+        case UPDATE_APP_STATUS_SUCCESS: 
         return {
             ...state, 
             updatingStatus: false,
-            application: action.payload
+            application: [...state, action.payload],
+            error: '',
         };
 
-        case UPDATE_APP_FAILURE: 
+        case UPDATE_APP_STATUS_FAILURE: 
         return {
             ...state,
             updatingStatus: false,
-            error: action.payload
+            error: action.payload,
         };
 
         case ADD_NOTES_START:

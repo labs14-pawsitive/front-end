@@ -17,20 +17,21 @@ export const getApplication = ( id ) => dispatch => {
     })
 };
 
-export const UPDATE_APP_START = 'UPDATE_APP_START';
-export const UPDATE_APP_SUCCESS = 'UPDATE_APP_SUCCESS';
-export const UPDATE_APP_FAILURE = 'UPDATE_APP_FAILURE';
+export const UPDATE_APP_STATUS_START = 'UPDATE_APP_STATUS_START';
+export const UPDATE_APP_STATUS_SUCCESS = 'UPDATE_APP_STATUS_SUCCESS';
+export const UPDATE_APP_STATUS_FAILURE = 'UPDATE_APP_STATUS_FAILURE';
 
 export const updateApplication = ( updatedStatus, id ) => dispatch => {
-    dispatch({ type: UPDATE_APP_START });
+    dispatch({ type: UPDATE_APP_STATUS_START });
     return axios
     .put(`https://staging1-pawsnfind.herokuapp.com/api/applications/${id}/status`, updatedStatus )
     .then(res => {
-        console.log(res);
-        dispatch({ type: UPDATE_APP_SUCCESS, payload: res.data })
+        dispatch({ type: UPDATE_APP_STATUS_SUCCESS, payload: res.data })
+        console.log('updated app status', res.data)
     })
     .catch(err => {
-        dispatch({ type: UPDATE_APP_FAILURE, payload: err.response })
+        dispatch({ type: UPDATE_APP_STATUS_FAILURE, payload: err.response })
+        console.log('edit app status error', err.response)
     })
 };
 
