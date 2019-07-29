@@ -99,7 +99,8 @@ class AnimalView extends React.Component {
         colorState:'',
         healthState:'',
         nameState:''
-      }
+      },
+      nameState:''
     }
   }
 
@@ -131,6 +132,17 @@ class AnimalView extends React.Component {
 
   }
 
+
+
+  componentDidUpdate(prevProps,prevState) {
+    // console.log('prev state: ', prevState.animal_notes)
+    console.log('prev props: ', prevProps.animalNotes)
+    if(this.props.animalNotes !== prevProps.animalNotes){
+      this.setState({
+        animal_notes:this.props.animalNotes
+      })
+    }
+  }
 
 
   handleNoteUpdate = (event, id) => {
@@ -298,7 +310,7 @@ class AnimalView extends React.Component {
     })
   }
 
-  submitNote = (event) => {
+  submitNote = async (event) => {
     event.preventDefault()
     console.log(this.state.note)
 
@@ -312,20 +324,23 @@ class AnimalView extends React.Component {
 
     console.log('post notes info: ', notes)
 
-    this.props.addNotes(this.state.animal.id, notes)
+    await this.props.addNotes(this.state.animal.id, notes)
       .then(
         (res) => {
           // window.location.reload()
+
           this.setState({
             note: ''
           });
         }
+        
       )
       .catch(error => {
         console.log('animal view component : add : error ', error)
       })
-
   }
+
+
 
   submitToggleAddNote = (event) => {
     event.preventDefault()
@@ -373,10 +388,7 @@ class AnimalView extends React.Component {
   }
 
   isValidated() {
-    console.log('isValidated fn: before if: descriptionState ', this.state.textState.descriptionState )
-      console.log('isValidated fn: before if: colorState ', this.state.textState.colorState )
-      console.log('isValidated fn: before if: healthState ', this.state.textState.healthState )
-      console.log('isValidated fn: before if: nameState ', this.state.textState.nameState )
+    
     if (
       this.state.textState.descriptionState === "success" &&
       this.state.textState.colorState === "success" &&
@@ -434,42 +446,28 @@ class AnimalView extends React.Component {
 
   //with validation
 
-  handleTextField = (event,stateInfo,length) => {
-    console.log(`concatenate test : ${[stateInfo+"State"]} ${{[stateInfo+"State"]:"success"}}`)
+  handleTextField =  (len) => event => {
+    let stateName = `${event.target.name}State`
 
-    if(this.verifyLength(event.target.value,length)){
-      console.log(`concatenate test : ${[stateInfo+"State"]} ${{[stateInfo+"State"]:"success"}}`)
-
-    this.setState({
-      
-        ...this.state,
-      textState: {
-        ...this.state.textState,
-        [stateInfo+"State"]: "success"
+    if(event.target.value.length>=len){
+     this.setState({
+       textState:{   
+         ...this.state.textState,   
+        [stateName]: "success"
       }
-    
       
     })
-    console.log(`${event.target.name}  valid length`)
   }
     else{
-      this.setState({
-        ...this.state,
-        textState: {
-          ...this.state.textState,
-          [stateInfo+"State"]: "error"
-        }
+       this.setState({      
+        textState:{   
+          ...this.state.textState,   
+         [stateName]: "error"
+       }       
       })
-      console.log(`${event.target.name} not valid length`)
     }
-    
-    console.log('handleTextField fn: after if/else: descriptionState ', this.state.textState.descriptionState )
-    console.log('handleTextField fn: after if/else: colorState ', this.state.textState.colorState )
-    console.log('handleTextField fn: after if/else: healthState ', this.state.textState.healthState )
-    console.log('handleTextField fn: after if/else: nameState ', this.state.textState.nameState )
 
     this.setState({
-      ...this.state,
       animal: {
         ...this.state.animal,
         [event.target.name]: event.target.value
@@ -478,26 +476,26 @@ class AnimalView extends React.Component {
   }
 
   //with validation
-  handleMetaTextField = (event,stateInfo,length) => {
-    // console.log(`concatenate test : ${[stateInfo+"State"]} ${{[stateInfo+"State"]:"success"}}`)
+  handleMetaTextField =  (length) => event => {
+    console.log(`concatenate test : [${event.target.name}State] [${event.target.name}State]:success `)
 
     if(this.verifyLength(event.target.value,length)){
       // console.log(`concatenate test : ${[stateInfo+"State"]} ${{[stateInfo+"State"]:"success"}}`)
-      this.setState({
+       this.setState({
         ...this.state,      
         textState: {
           
           ...this.state.textState,
-          [stateInfo+"State"]: "success"
+          [event.target.name+"State"]: "success"
         }
       })}
       else{
         console.log(`${event.target.name} not valid length`)
-        this.setState({
+         this.setState({
           ...this.state,
           textState: {
             ...this.state.textState,
-            [stateInfo+"State"]: "error"
+            [event.target.name+"State"]: "error"
           }
         })}
 
@@ -517,7 +515,7 @@ class AnimalView extends React.Component {
 
   handleUpdate = (event) => {
     event.preventDefault()
-    if (this.state.isEditing && this.isValidated) {
+    if (this.state.isEditing && this.isValidated()) {
       console.log('descriptionState ', this.state.textState.descriptionState )
       console.log('colorState ', this.state.textState.colorState )
       console.log('healthState ', this.state.textState.healthState )
@@ -531,7 +529,32 @@ class AnimalView extends React.Component {
     //   console.log('please enter the required length for the fields')
     // }
   }
+  else if  (this.state.isEditing && !this.isValidated()){
+    alert('your fields are not meeting the valid length')
+  }
     else this.handleToggle(event)
+  }
+
+  simpleFn = len => (event) => {
+    if(event.target.value.length>=len){
+    console.log('simple fn: ',event.target.value)
+    this.setState({
+      [event.target.name+"State"]:"success"
+    })}
+    else{
+      console.log('simple fn error')
+      this.setState({
+        [event.target.name+"State"]:"error"
+      })}
+    
+   
+      this.setState({
+        // ...this.state,
+        animal: {
+          ...this.state.animal,
+          [event.target.name]: event.target.value
+        }
+      })    
   }
 
 
@@ -693,8 +716,8 @@ class AnimalView extends React.Component {
                           // type="text"
                           className={classes.textField}
                           value={this.state.animal.name}
-                          // onChange={this.handleTextField}
-                          onChange={(event) => this.handleTextField(event,"name",3)}
+                          // onChange={this.simpleFn(4)}
+                          onChange={this.handleTextField(4)}
                           margin="normal"
                         />
 
@@ -708,7 +731,7 @@ class AnimalView extends React.Component {
                           className={classes.textField}
                           value={this.state.animal_meta.description}
                           // onChange={this.handleMetaTextField}
-                          onChange={(event) => this.handleMetaTextField(event,"description",10)}
+                          onChange={this.handleMetaTextField(10)}
                           margin="normal"
                         />
 
