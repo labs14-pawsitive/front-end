@@ -45,7 +45,7 @@ import DisplayNotes from '../Components/Application/DisplayNotes';
 
 import moment from 'moment';
 
-import { getOptions } from '../../actions/applicationAction';
+import { getOptions, updateApplication } from '../../actions/applicationAction';
 
 class ApplicationView extends React.Component {
   constructor(props) {
@@ -54,22 +54,23 @@ class ApplicationView extends React.Component {
 
       application: {},
 
-      options: [{ id: 1, status: 'Awaiting Review' }, { id: 2, status: 'Under Review' }, { id: 3, status: 'Approved' }, { id: 4, status: 'Rejected' }],
+      options: [],
 
-      testField: '',
 
     };
     this.handleChange = this.handleChange.bind(this);
+
     this.handleChangeEnabled = this.handleChangeEnabled.bind(this);
   }
 
 
   loadApplication = async () => {
+
     await axios
       // get(`http://localhost:8000/api/applications/${this.props.match.params.id}`)
       .get(`https://staging1-pawsnfind.herokuapp.com/api/applications/${this.props.match.params.id}`)
       .then(application => {
-        console.log('application', application.data)
+        console.log('application', application.data) 
 
         if (application.data.shelter !== this.props.shelter) {
           this.props.history.push('/admin/dashboard')
@@ -77,17 +78,17 @@ class ApplicationView extends React.Component {
           this.setState({
             application: application.data,
           })
-          // console.log(this.state.application)
+          console.log(this.state.application)
         }
       })
       .catch(error => {
         console.log(error)
       })
-  }
+  };
 
   loadOptions = async () => {
     await axios
-      .get(`https://staging1-pawsnfind.herokuapp.com/api/internal/paws/options/3`)
+      .get(`https://staging1-pawsnfind.herokuapp.com/api/internal/paws/options/${this.props.match.params.id}`)
       .then(options => {
         console.log('options', options.data)
 
@@ -99,7 +100,23 @@ class ApplicationView extends React.Component {
       .catch(error => {
         console.log(error)
       })
-  }
+  };
+
+  // updateStatus = () => {
+
+  //   let updatedApp = {}
+    
+  //   updatedApp = {
+  //     application_id: 3,
+  //     animal_id: 3,
+  //     shelter_id: 3,
+  //     user_id: 3,
+  //     application_status: this.state.application.application_status
+  //   }
+
+  //   this.props.updateApplication(updatedApp, 3 )
+  // };
+
 
   componentWillMount() {
 
@@ -107,18 +124,23 @@ class ApplicationView extends React.Component {
 
     this.loadOptions()
 
-    // this.props.getOptions()
+  };
 
-  }
+  async handleChange(event) {
 
-  handleChange(event) {
+    const specialStatus = this.state.options[event.target.value - 1].application_status
 
-    this.setState({ ...this.state.application, application_status: event.target.value });
-  }
+    await this.setState({ ...this.state, application: {...this.state.application, application_status: specialStatus } });
+
+    console.log(this.state)
+  };
+
+  
 
   handleChangeEnabled(event) {
     this.setState({ selectedEnabled: event.target.value });
-  }
+  };
+
   handleToggle(value) {
     const { checked } = this.state;
     const currentIndex = checked.indexOf(value);
@@ -136,9 +158,11 @@ class ApplicationView extends React.Component {
   }
 
 
+
+
   render() {
 
-    console.log(this.state.options)
+    console.log(this.state.application)
 
     const { classes } = this.props;
 
@@ -186,7 +210,7 @@ class ApplicationView extends React.Component {
         paddingTop: "10px",
       },
 
-    }
+    };
 
     // const appStatusDropdown = this.props.statusOptions.map(option => {
 
@@ -229,11 +253,12 @@ class ApplicationView extends React.Component {
 
                       <Select
                         MenuProps={{
-                          className: classes.selectMenu // <- which dir is selectMenu written in???
+                          className: classes.selectMenu 
                         }}
                         classes={{
                           select: classes.select
                         }}
+                        renderValue={value => `${value}`}
                         value={this.state.application.application_status}
                         onChange={this.handleChange}
                         name="application_status"
@@ -251,7 +276,7 @@ class ApplicationView extends React.Component {
 
                         {this.state.options.map((option, key) => (
                           <MenuItem
-                            classes={{
+                            classes={{ 
                               root: classes.selectMenuItem,
                               selected: classes.selectMenuItemSelected
                             }}

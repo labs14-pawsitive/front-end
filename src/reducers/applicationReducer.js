@@ -14,16 +14,25 @@ import {
     GET_OPTIONS_START,
     GET_OPTIONS_SUCCESS, 
     GET_OPTIONS_FAILURE,
+    GET_APP_START,
+    GET_APP_SUCCESS,
+    GET_APP_FAILURE,
+    UPDATE_APP_START,
+    UPDATE_APP_SUCCESS,
+    UPDATE_APP_FAILURE,
 } from '../actions/applicationAction';
-import { statement } from '@babel/template';
-import { tumblrColor } from 'assets/jss/material-dashboard-pro-react';
+// import { statement } from '@babel/template';
+// import { tumblrColor } from 'assets/jss/material-dashboard-pro-react';
 
 const initialState = {
+    application: {},
     notes: [],
     options: [],
-    gettingOptions: false,
+    fetchingApplication: false,
+    fetchingOptions: false,
+    updatingStatus: false,
     addingNotes: false,
-    gettingNotes: false,
+    fetchingNotes: false,
     deletingNotes: false,
     updatingNotes: false,
     error: '',
@@ -31,11 +40,52 @@ const initialState = {
 
 export const applicationReducer = (state = initialState, action) => {
     switch (action.type) {
-        case ADD_NOTES_START:
+
+        case GET_APP_START:
+        return {
+            ...state,
+            fetchingApplication: true,
+        }
+
+        case GET_APP_SUCCESS: 
+        return {
+            ...state,
+            fetchingApplication: false,
+            application: action.payload
+        }
+
+        case GET_APP_FAILURE: 
+        return {
+            ...state,
+            fetchingApplication: false,
+            error: action.payload
+        }
+
+        case UPDATE_APP_START:
             return {
-                ...state,
-                addingNotes: true
+                ...state, 
+                updatingStatus: true,
             };
+
+        case UPDATE_APP_SUCCESS: 
+        return {
+            ...state, 
+            updatingStatus: false,
+            application: action.payload
+        };
+
+        case UPDATE_APP_FAILURE: 
+        return {
+            ...state,
+            updatingStatus: false,
+            error: action.payload
+        };
+
+        case ADD_NOTES_START:
+        return {
+            ...state,
+            addingNotes: true
+        };
 
         case ADD_NOTES_SUCCESS: 
         const newState = [...state.notes, action.payload]
@@ -55,21 +105,21 @@ export const applicationReducer = (state = initialState, action) => {
         case GET_NOTES_START:
             return {
                 ...state,
-                gettingNotes: true,
+                fetchingNotes: true,
             };
 
         case GET_NOTES_SUCCESS: 
         console.log(action.payload)
         return {
             ...state,
-            gettingNotes: false,
+            fetchingNotes: false,
             notes: action.payload
         };
 
         case GET_NOTES_FAILURE: 
         return {
             ...state,
-            gettingNotes: false,
+            fetchingNotes: false,
             error: action.payload
         }
 
@@ -93,43 +143,43 @@ export const applicationReducer = (state = initialState, action) => {
                 error: action.payload
             }
 
-            case UPDATE_NOTES_START: 
+        case UPDATE_NOTES_START: 
             return {
                 ...state,
                 updatingNotes: true,
             }
 
-            case UPDATE_NOTES_SUCCESS: 
+        case UPDATE_NOTES_SUCCESS: 
             return {
                 ...state,
                 updatingNotes: false,
  
             }
 
-            case UPDATE_NOTES_FAILURE: 
+        case UPDATE_NOTES_FAILURE: 
             return {
                 ...state,
                 updatingNotes: false,
                 error: action.payload
             }
 
-            case GET_OPTIONS_START:
-                return {
-                    ...state,
-                    gettingOptions: true,
-                }
+        case GET_OPTIONS_START:
+            return {
+             ...state,
+             fetchingOptions: true,
+            }
             
-            case GET_OPTIONS_SUCCESS: 
+        case GET_OPTIONS_SUCCESS: 
             return {
                 ...state,
-                gettingOptions: false,
+                fetchingOptions: false,
                 options: action.payload
             }
 
-            case GET_OPTIONS_FAILURE:
+        case GET_OPTIONS_FAILURE:
             return {
                 ...state,
-                gettingOptions: false,
+                fetchingOptions: false,
                 error: action.payload
             }
 

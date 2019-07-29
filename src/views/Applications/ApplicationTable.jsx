@@ -19,7 +19,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 // react component for creating dynamic tables
 import ReactTable from "react-table";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import axios from 'axios';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -45,10 +45,7 @@ import CardIcon from "components/Card/CardIcon.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 // import Danger from "components/Typography/Danger.jsx";
-
-
-
-import { dataTable } from "variables/general.jsx";
+// import { dataTable } from "variables/general.jsx";
 
 import { cardTitle } from "assets/jss/material-dashboard-pro-react.jsx";
 

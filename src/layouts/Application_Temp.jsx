@@ -16,7 +16,7 @@
 */
 import React from "react";
 import PropTypes from "prop-types";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Route, } from "react-router-dom";
 import Auth from "components/Auth/Auth.js"
 
 
