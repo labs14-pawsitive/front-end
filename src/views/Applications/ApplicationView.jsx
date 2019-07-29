@@ -102,14 +102,13 @@ class ApplicationView extends React.Component {
       })
   };
 
-
-  updateAppStatus = async () => {
+  updateAppStatus = async (event) => {
 
    let updatedStatus = {           
       animal_id: 3,         
       shelter_id: 3, 
       user_id: 3,
-      application_status_id: 2,
+      application_status_id: this.state.application.application_status_id
     };
 
     let id = 3;
@@ -139,7 +138,7 @@ class ApplicationView extends React.Component {
 
     const appStatus = this.state.options[event.target.value - 1].application_status
 
-    await this.setState({ ...this.state, application: {...this.state.application, application_status: appStatus } });
+    await this.setState({ ...this.state, application: {...this.state.application, application_status: appStatus, application_status_id: event.target.value, } });
 
     await this.updateAppStatus()
 
