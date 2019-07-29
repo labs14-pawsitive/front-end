@@ -20,8 +20,8 @@ import { connect } from "react-redux";
 import axios from 'axios';
 import moment from 'moment'
 
-import { updateAnimal, getInfoByAnimalID, getAllOptions, addNotes, updateNotes, deleteNotes } 
-from '../../actions/animalAction.js'
+import { updateAnimal, getInfoByAnimalID, getAllOptions, addNotes, updateNotes, deleteNotes }
+  from '../../actions/animalAction.js'
 import NotesComponent from './NotesComponent.jsx'
 
 // react component plugin for creating a beautiful datetime dropdown picker
@@ -88,11 +88,12 @@ class AnimalView extends React.Component {
       species: [],
       animal_status: [],
       locations: [],
+      dynamicBreedDropdown: [],
       isEditing: false,
-      isPosting:false,
-      isNoteEditing:false,
-      clickedNoteID:-1,
-      note:''
+      isPosting: false,
+      isNoteEditing: false,
+      clickedNoteID: -1,
+      note: ''
     };
   }
 
@@ -132,48 +133,48 @@ class AnimalView extends React.Component {
     else this.handleToggle(event)
   }
 
-  handleNoteUpdate = (event,id) => {
+  handleNoteUpdate = (event, id) => {
     event.preventDefault()
-    if(this.state.isNoteEditing){
-      
+    if (this.state.isNoteEditing) {
+
       console.log('is updated')
     }
-    else{
+    else {
       this.state.clickedNoteID = id
-      console.log('CLICKED NOTE ID: ',this.state.clickedNoteID)
+      console.log('CLICKED NOTE ID: ', this.state.clickedNoteID)
       this.handleNoteDeleteToggle(event)
     }
   }
 
 
-   updateForm = () => {
+  updateForm = () => {
 
     let updateInfo = {}
 
     updateInfo = {
-        breed_id: this.state.animal_meta.breed_id,
-        coat_length_id: this.state.animal_meta.coat_length_id,
-        color: this.state.animal_meta.color,
-        description:this.state.animal_meta.description,
-        health: this.state.animal_meta.health,
-        is_good_with_cats: this.state.animal_meta.is_good_with_cats,
-        is_good_with_dogs: this.state.animal_meta.is_good_with_dogs,
-        is_good_with_kids: this.state.animal_meta.is_good_with_kids,
-        is_house_trained: this.state.animal_meta.is_house_trained,
-        is_mixed: this.state.animal_meta.is_mixed,
-        is_neutered_spayed: this.state.animal_meta.is_neutered_spayed,
-        is_vaccinated: this.state.animal_meta.is_vaccinated,
-        is_male: this.state.animal_meta.is_male,
-        size_id: this.state.animal_meta.size_id,
-        animal_status_id: this.state.animal.animal_status_id,
-        species_id: this.state.animal.species_id,
-        name: this.state.animal.name,
-        age_id: this.state.animal_meta.age_id,
-        profile_img_id: this.state.animal.img_id,
-        shelter_location_id: this.state.animal.shelter_location_id,
-        shelter_id:this.state.animal.shelter_id,
-        animal_id:this.state.animal.id
-      }
+      breed_id: this.state.animal_meta.breed_id,
+      coat_length_id: this.state.animal_meta.coat_length_id,
+      color: this.state.animal_meta.color,
+      description: this.state.animal_meta.description,
+      health: this.state.animal_meta.health,
+      is_good_with_cats: this.state.animal_meta.is_good_with_cats,
+      is_good_with_dogs: this.state.animal_meta.is_good_with_dogs,
+      is_good_with_kids: this.state.animal_meta.is_good_with_kids,
+      is_house_trained: this.state.animal_meta.is_house_trained,
+      is_mixed: this.state.animal_meta.is_mixed,
+      is_neutered_spayed: this.state.animal_meta.is_neutered_spayed,
+      is_vaccinated: this.state.animal_meta.is_vaccinated,
+      is_male: this.state.animal_meta.is_male,
+      size_id: this.state.animal_meta.size_id,
+      animal_status_id: this.state.animal.animal_status_id,
+      species_id: this.state.animal.species_id,
+      name: this.state.animal.name,
+      age_id: this.state.animal_meta.age_id,
+      profile_img_id: this.state.animal.img_id,
+      shelter_location_id: this.state.animal.shelter_location_id,
+      shelter_id: this.state.animal.shelter_id,
+      animal_id: this.state.animal.id
+    }
     // })
 
     console.log('update form editinfo : ', updateInfo)
@@ -181,13 +182,13 @@ class AnimalView extends React.Component {
     console.log('update form editinfo: animal: ', this.state.animal)
     console.log('update form editinfo: animalInfo: ', this.state.animal_meta)
     this.props.updateAnimal(updateInfo,
-      this.state.animal.id,this.state.animal_meta.id)
-      .then(res =>  console.log('update animal animal view :success ', res))
+      this.state.animal.id, this.state.animal_meta.id)
+      .then(res => console.log('update animal animal view :success ', res))
       .catch(error => console.log('update error animal view', error))
 
-      this.setState({
-        isEditing:false,
-      })
+    this.setState({
+      isEditing: false,
+    })
   }
 
   handleAdoption = (event) => {
@@ -219,12 +220,18 @@ class AnimalView extends React.Component {
         break;
       case 'species_id':
         targetID = this.state.species ? this.state.species.find(eachValue => eachValue.id === event.target.value).species : ''
+
+        let dynamicDropdown = this.state.breeds ? this.state.breeds.filter(eachBreed => eachBreed.species_id === event.target.value) : ''
+
+        console.log('dynamic breed list based on species selection', dynamicDropdown)
         this.setState({
           animal: {
             ...this.state.animal,
             species: targetID,
-            [event.target.name]: event.target.value
+            [event.target.name]: event.target.value,
+            
           },
+          dynamicBreedDropdown: dynamicDropdown
         })
         break;
       case 'age_id':
@@ -276,7 +283,7 @@ class AnimalView extends React.Component {
             ...this.state.animal_meta,
             [event.target.name]: targetID
           },
- 
+
         })
     }
 
@@ -287,7 +294,7 @@ class AnimalView extends React.Component {
 
   handleAddNoteChange = (event) => {
     this.setState({
-      note:event.target.value
+      note: event.target.value
     })
   }
 
@@ -295,21 +302,28 @@ class AnimalView extends React.Component {
     event.preventDefault()
     console.log(this.state.note)
 
-    let notes= {}
+    let notes = {}
 
     notes = {
-      notes:this.state.note,
-      animal_id:this.state.animal.id,
-      shelter_user_id:this.props.shelterWorkerID
+      notes: this.state.note,
+      animal_id: this.state.animal.id,
+      shelter_user_id: this.props.shelterWorkerID
     }
 
     console.log('post notes info: ', notes)
 
-    this.props.addNotes(this.state.animal.id,notes)
-
-    this.setState({
-      note:''
-    })
+    this.props.addNotes(this.state.animal.id, notes)
+      .then(
+        (res) => {
+          window.location.reload()
+          this.setState({
+            note: ''
+          });
+        }
+      )
+      .catch(error => {
+        console.log('animal view component : add : error ', error)
+      })
 
   }
 
@@ -317,7 +331,6 @@ class AnimalView extends React.Component {
     event.preventDefault()
     this.setState({
       isEditing: !this.state.isEditing,
-      // read: !this.state.read
     })
   }
 
@@ -328,13 +341,7 @@ class AnimalView extends React.Component {
     })
   }
 
-  // handleNoteToggle = (event) => {
-  //   event.preventDefault()
-  //   this.setState({
-  //     // isPosting: !this.state.isPosting,
-  //     note:''
-  //   })
-  // }
+
 
   handleTextField = (event) => {
     this.setState({
@@ -362,13 +369,13 @@ class AnimalView extends React.Component {
     let updateInfo = {
 
       profile_img_id: response[0].image.image_id,
-     
+
     }
-  
-  this.props.updateAnimal(updateInfo,
-    this.state.animal.id,this.state.animal_meta.id)
-    .then(res =>  console.log('update animal animal view :success ', res))
-    .catch(error => console.log('update error animal view', error))
+
+    this.props.updateAnimal(updateInfo,
+      this.state.animal.id, this.state.animal_meta.id)
+      .then(res => console.log('update animal animal view :success ', res))
+      .catch(error => console.log('update error animal view', error))
   }
 
 
@@ -479,8 +486,6 @@ class AnimalView extends React.Component {
                 <GridItem xs={12} sm={12} md={5}>
                   <GridList className={classes.gridList} >
                     <GridListTile key={this.state.animal.img_url} style={customStyle.imgCardStyle}>
-                      {/* <img src={this.state.animal.img_url} alt={`${this.state.animal_meta.breed} for adoption`}
-                        style={customStyle.imgStyle} /> */}
 
                       <ImageUpload height="100%" width="100%"
                         defaultImage={this.state.animal.img_url}
@@ -633,7 +638,16 @@ class AnimalView extends React.Component {
                             renderValue={value => `${value}`}
                             input={<Input id="breed_id" />}
                           >
-                            {this.state.breeds.map(status => {
+
+                            {/* {this.state.breeds
+                            .filter(breed => (breed.species_id===this.state.animal_meta.species_id))
+                            .map(status => {
+                              return (
+                                <MenuItem value={status.id}>{status.breed}</MenuItem>
+                              )
+                            })} */}
+
+                            {this.state.dynamicBreedDropdown.map(status => {
                               return (
                                 <MenuItem value={status.id}>{status.breed}</MenuItem>
                               )
@@ -720,7 +734,7 @@ class AnimalView extends React.Component {
                           onChange={this.handleMetaTextField}
                           margin="normal"
                           InputProps={{
-                            readOnly:this.state.isEditing ? false : true,
+                            readOnly: this.state.isEditing ? false : true,
                           }}
                         />
                       </form>
@@ -737,8 +751,8 @@ class AnimalView extends React.Component {
                     <GridItem xs={12} sm={12} md={10}>
 
                       <form
-                      className={classes.root}
-                      autoComplete="off" style={customStyle.adoptionStyle}
+                        className={classes.root}
+                        autoComplete="off" style={customStyle.adoptionStyle}
                       >
                         <TextField
                           name="health"
@@ -748,7 +762,7 @@ class AnimalView extends React.Component {
                           onChange={this.handleMetaTextField}
                           margin="normal"
                           InputProps={{
-                            readOnly:this.state.isEditing ? false : true,
+                            readOnly: this.state.isEditing ? false : true,
                           }}
                         />
 
@@ -888,24 +902,24 @@ class AnimalView extends React.Component {
               </CardHeader>
 
               <TextField
-               
+
                 id="standard-textarea"
                 label="Add a note"
                 value={this.state.note}
                 multiline
                 className={classes.textField}
-                onChange = {this.handleAddNoteChange}
+                onChange={this.handleAddNoteChange}
                 margin="normal"
               />
 
               <div style={customStyle.detailsContainerStyle}>
-                <Button style={customStyle.noteButtonStyle} 
-                variant="contained" color="secondary"
-                className={classes.button} onClick={this.submitToggleAddNote}>
+                <Button style={customStyle.noteButtonStyle}
+                  variant="contained" color="secondary"
+                  className={classes.button} onClick={this.submitToggleAddNote}>
                   CANCEL
                 </Button>
-                <Button style={customStyle.noteButtonStyle} 
-                variant="contained" className={classes.button} onClick={this.submitNote}>
+                <Button style={customStyle.noteButtonStyle}
+                  variant="contained" className={classes.button} onClick={this.submitNote}>
                   SUBMIT
                 </Button>
               </div>
@@ -916,11 +930,10 @@ class AnimalView extends React.Component {
               >
 
                 {this.state.animal_notes.map(note => (
-                  <NotesComponent note={note} animalID={this.state.animal.id}/>
-                  // <NotesComponent note={note} handleUpdate={this.handleNoteUpdate} 
-                  // handleDelete={this.handleNoteDeleteToggle} handleSave={this.hand}/>
+                  <NotesComponent note={note} animalID={this.state.animal.id} />
+
                 ))}
-                
+
               </List>
             </Card>
           </GridItem>
@@ -962,14 +975,14 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(
-  mapStateToProps, 
-  { 
-    updateAnimal, 
-    getAllOptions, 
+  mapStateToProps,
+  {
+    updateAnimal,
+    getAllOptions,
     getInfoByAnimalID,
     addNotes,
     updateNotes,
-    deleteNotes 
+    deleteNotes
   }
 )(withStyles(regularFormsStyle)(AnimalView))
 

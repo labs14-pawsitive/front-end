@@ -2,8 +2,8 @@ import React from 'react'
 import { connect } from "react-redux";
 import moment from 'moment'
 import PropTypes from "prop-types";
-import {updateNotes, deleteNotes } 
-from '../../actions/animalAction.js'
+import { updateNotes, deleteNotes }
+    from '../../actions/animalAction.js'
 
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -21,38 +21,36 @@ class NotesComponent extends React.Component {
         super(props)
         this.state = {
             isNoteEditing: false,
-            clickedNoteID: -1,
-            editedNote:''
+            editNoteInfo: this.props.note
         }
     }
 
 
 
-    handleNoteUpdate = (event, updatedNote) => {
+    submitNoteUpdate = (event, updatedNote) => {
         event.preventDefault()
         if (this.state.isNoteEditing) {
 
-            let updatedNotes= {}
+            this.props.updateNotes(this.props.animalID, this.state.editNoteInfo.id, this.state.editNoteInfo)
+                .then(
+                    (res) => {
+                        window.location.reload()
+                        this.setState({
+                            editNoteInfo: {
 
-            updatedNotes = {
-                notes:this.state.editedNote,
-                animal_id:this.props.animalID,
-                shelter_user_id:updatedNote.shelter_user_id
-              }
-          
-              console.log('updated notes info: ', updatedNotes)
-          
-              this.props.updateNotes(this.props.animalID,updatedNote.id,updatedNotes)
-          
-              this.setState({
-                editedNote:''
-              })
-            //   this.handleNoteToggle(event)
+                            }
+                        });
+                    }
+                )
+                .catch(error => {
+                    console.log('update notes component: error ', error)
+                })
+
             console.log('is updated')
         }
         else {
             this.setState({
-                editedNote:this.props.note.notes
+                editedNote: this.props.note.notes
             })
             this.handleNoteToggle(event)
         }
@@ -65,24 +63,26 @@ class NotesComponent extends React.Component {
         })
     }
 
-    handleUpdateNote = (event) => {
+    handleUpdateNoteChange = (event) => {
         this.setState({
-            editedNote:event.target.value
+            editNoteInfo: {
+                ...this.state.editNoteInfo,
+                [event.target.name]: event.target.value
+            }
         })
     }
 
-    handleDelete = (event,noteID) => {
+    submitDelete = (event, noteID) => {
         event.preventDefault()
-        // this.props.note.notes= ''
-        // this.props.note.shelter_user_id=''
-        // this.props.note.created_at=''
-        // this.window.location.reload()
         this.setState({
             isNoteEditing: !this.state.isNoteEditing,
-            // editedNote:''
         })
-        this.props.deleteNotes(this.props.animalID,noteID)
-    }
+        this.props.deleteNotes(this.props.animalID, noteID)
+            .then((res) => window.location.reload())
+            .catch(error => {
+                console.log('delete: notes component: error ', error)
+            }
+            )}
 
     render() {
 
@@ -108,36 +108,37 @@ class NotesComponent extends React.Component {
                 <CardContent>
                     {this.state.isNoteEditing ?
                         <TextField
+                            name="notes"
                             multiline
                             className={classes.textField}
-                            value={this.state.editedNote}
-                            onChange={this.handleUpdateNote}
+                            value={this.state.editNoteInfo.notes}
+                            onChange={this.handleUpdateNoteChange}
                             margin="normal"
 
                         /> :
                         <Typography className={classes.title} color="textSecondary" gutterBottom>
-                            {this.props.note.notes}
+                            {this.state.editNoteInfo.notes}
                         </Typography>
                     }
 
                     <span style={customStyle.noteStyle}>
                         <Typography style={customStyle.typographyStyle}
                             component="span">
-                            User:#{this.props.note.shelter_user_id}
+                            User:#{this.state.editNoteInfo.shelter_user_id}
                         </Typography>
                         {/* {moment(note.created_at).format("MMMM Do YYYY").toString()} */}
-                        {moment(this.props.note.created_at).fromNow()}
+                        {moment(this.state.editNoteInfo.created_at).fromNow()}
                     </span>
 
                 </CardContent>
                 <CardActions>
                     <span style={customStyle.runningNoteButtonStyle}>
-                        <Button size="small" className={classes.button} onClick={(event) => this.handleDelete(event,this.props.note.id)}
+                        <Button size="small" className={classes.button} onClick={(event) => this.submitDelete(event, this.state.editNoteInfo.id)}
                             style={{ display: this.state.isNoteEditing ? "block" : "none" }}>
                             DELETE
                             </Button>
                         <Button size="small" className={classes.button}
-                            onClick={(event) => this.handleNoteUpdate(event, this.props.note)}>
+                            onClick={(event) => this.submitNoteUpdate(event, this.props.note)}>
                             {this.state.isNoteEditing ? "SAVE" : "EDIT"}
                         </Button>
                     </span>
@@ -154,15 +155,15 @@ NotesComponent.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-     
-      shelterWorkerID: state.userReducer.shelterWorkerID,
+
+        shelterWorkerID: state.userReducer.shelterWorkerID,
     }
 }
 
 export default connect(
-    mapStateToProps, 
-    { 
-      updateNotes,
-      deleteNotes 
+    mapStateToProps,
+    {
+        updateNotes,
+        deleteNotes
     }
-  )(withStyles(regularFormsStyle)(NotesComponent)) 
+)(withStyles(regularFormsStyle)(NotesComponent)) 
