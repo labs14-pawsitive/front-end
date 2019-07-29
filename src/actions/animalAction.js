@@ -30,7 +30,9 @@ export const UPDATE_APPLICATION_STATUS = 'UPDATE_APPLICATION_STATUS';
 export const UPDATE_SPECIES = 'UPDATE_SPECIES';
 export const UPDATE_ANIMAL_STATUS = 'UPDATE_ANIMAL_STATUS';
 export const UPDATE_ROLES = 'UPDATE_ROLES';
-export const UPDATE_LOCATIONS = 'UPDATE_LOCATIONS'
+export const UPDATE_LOCATIONS = 'UPDATE_LOCATIONS';
+export const UPDATE_STATES = 'UPDATE_STATES'
+
 
 export const fetchOptions  = (shelterId) => dispatch => {
     dispatch ({type: FETCH_OPTIONS_START});
@@ -49,6 +51,7 @@ export const fetchOptions  = (shelterId) => dispatch => {
         dispatch ({type: UPDATE_ANIMAL_STATUS, payload: res.data.animal_status})
         dispatch ({type: UPDATE_ROLES, payload: res.data.roles})
         dispatch ({type: UPDATE_LOCATIONS, payload: res.data.locations})
+        dispatch ({type: UPDATE_STATES, payload: res.data.states})
         dispatch ({type: FETCH_OPTIONS_SUCCESS, payload: res.data})
     })
     .catch(err => {

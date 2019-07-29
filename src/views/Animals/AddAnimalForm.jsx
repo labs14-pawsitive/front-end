@@ -68,7 +68,8 @@ class AddAnimalForm extends React.Component {
         size_id: null,
         coat_length_id: null,
         age_id: null,
-        shelter_location_id: null,
+        locations_id: null,
+        states_id: null,
         is_male: null,
         is_house_trained: false,
         is_neutered_spayed: false,
@@ -78,6 +79,7 @@ class AddAnimalForm extends React.Component {
         is_vaccinated: false,
         shelter_id: null,
         profile_img_id: null,
+
 
       },
       checked: [],
@@ -107,7 +109,8 @@ class AddAnimalForm extends React.Component {
         size_id: 3,
         coat_length_id: 3,
         age_id: 3,
-        shelter_location_id: 1,
+        locations_id: 1,
+        states_id: 5,
         shelter_id: 1,
         is_male: false,
         is_house_trained: false,
@@ -126,8 +129,8 @@ class AddAnimalForm extends React.Component {
   handleImgUploadResponse = response => {
     if (!response.error) {
       const { image_id } = response[0].image
-      console.log(image_id)
-      console.log(response)
+      // console.log(image_id)
+      // console.log(response)
       this.setState({
         animal: {
           ...this.state.animal,
@@ -196,7 +199,8 @@ class AddAnimalForm extends React.Component {
           coat_length_id: "",
           subscriptions_id: "",
           age_id: "",
-          shelter_location_id: "",
+          locations_id: "",
+          states_id: "",
           is_male: false,
           is_house_trained: false,
           is_neutered_spayed: false,
@@ -243,22 +247,10 @@ class AddAnimalForm extends React.Component {
     const locationsDropdownOptions = this.props.locationsOptions.map(option => {
       return <span onChange={this.handleChange} value={option.id}>{option.nickname}</span>
     })
+    const statesDropdownOptions = this.props.statesOptions.map(option => {
+      return <span onChange={this.handleChange} value={option.id}>{option.state}</span>
+    })
 
-    //Used find to go through all options to find the matching option with the id that is the same as this.state.animal.breed_id. if there is a 
-    //match, display the breed.
-    // const breedButtonDisplay = this.state.animal.breed_id ? this.props.breedsOptions.find(option => option.id == parseInt(this.state.animal.breed_id)).breed : 'Breed'
-
-    // const animalStatusButtonDisplay = this.state.animal.animal_status_id ? this.props.animalStatusOptions.find(option => option.id == parseInt(this.state.animal.animal_status_id)).animal_status : 'Animal Status'
-
-    // const sizeButtonDisplay = this.state.animal.size_id ? this.props.sizeOptions.find(option => option.id == parseInt(this.state.animal.size_id)).size : 'Size'
-
-    // const coatLengthButtonDisplay = this.state.animal.coat_length_id ? this.props.coatLengthOptions.find(option => option.id == parseInt(this.state.animal.coat_length_id)).coat_length : 'Coat length'
-
-    // const speciesButtonDisplay = this.state.animal.species_id ? this.props.speciesOptions.find(option => option.id == parseInt(this.state.animal.species_id)).species : 'Species'
-
-    // const agesButtonDisplay = this.state.animal.age_id ? this.props.agesOptions.find(option => option.id == parseInt(this.state.animal.age_id)).age : 'Age'
-
-    // const locationsButtonDisplay = this.state.animal.locations_id ? this.props.locationsOptions.find(option => option.id == parseInt(this.state.animal.locations_id)).nickname : 'Shelter location'
 
     const buttonDisplay = (animalAttribute, optionType, nameAttribute, defaultText) => {
       const attributeId = this.state.animal[animalAttribute]
@@ -277,6 +269,7 @@ class AddAnimalForm extends React.Component {
     const speciesButtonDisplay = buttonDisplay('species_id', 'speciesOptions', 'species', 'Species')
     const agesButtonDisplay = buttonDisplay('age_id', 'agesOptions', 'age', 'Age')
     const locationsButtonDisplay = buttonDisplay('locations_id', 'locationsOptions', 'nickname', 'Shelter location')
+    const statesButtonDisplay = buttonDisplay('states_id', 'statesOptions', 'state', 'States')
 
     return (
       
@@ -388,8 +381,7 @@ class AddAnimalForm extends React.Component {
                         dropdownHeader={
                           breedButtonDisplay
                         }
-                     
-                      /> 
+                    /> 
                     </FormControl>
 
                     <FormControl>
@@ -403,6 +395,21 @@ class AddAnimalForm extends React.Component {
                         }
                         dropdownHeader={
                           locationsButtonDisplay
+                        }
+                      />
+                    </FormControl>
+
+                    <FormControl>
+                      <CustomDropdown 
+                        buttonText= {statesButtonDisplay}
+                        id="states_id"
+                        onChange={this.handleChange}
+                        externalHandleClick={this.handleChange}
+                        dropdownList={
+                          statesDropdownOptions
+                        }
+                        dropdownHeader={
+                          statesButtonDisplay
                         }
                       />
                     </FormControl> 
@@ -744,7 +751,8 @@ const mapStateToProps = state => {
     subscriptionOptions: state.animalReducer.subscriptionOptions,
     agesOptions: state.animalReducer.agesOptions,
     speciesOptions: state.animalReducer.speciesOptions,
-    locationsOptions: state.animalReducer.locationsOptions
+    locationsOptions: state.animalReducer.locationsOptions,
+    statesOptions: state.animalReducer.statesOptions
     
   }
 };

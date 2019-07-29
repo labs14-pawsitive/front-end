@@ -14,7 +14,8 @@ import {
     UPDATE_SPECIES,
     UPDATE_ANIMAL_STATUS,
     UPDATE_ROLES,
-    UPDATE_LOCATIONS
+    UPDATE_LOCATIONS,
+    UPDATE_STATES
     
 
 
@@ -34,6 +35,7 @@ const initialState = {
     updatingAnimalStatus: false,
     updatingRoles: false,
     updatingLocations: false,
+    updatingStates: false,
     breedsOptions: [],
     sizeOptions: [],
     subscriptionOptions: [],
@@ -44,6 +46,7 @@ const initialState = {
     animalStatusOptions: [],
     rolesOptions: [],
     locationsOptions: [],
+    statesOptions: [],
     error: '',
 }
 
@@ -142,6 +145,12 @@ export const animalReducer = (state = initialState, action) => {
                 ...state,
                 updatingLocations: true,
                 locationsOptions: action.payload
+            };
+        case UPDATE_STATES:
+            return {
+                ...state,
+                updatingStates: true,
+                statesOptions: action.payload
             };
        
         default: 
