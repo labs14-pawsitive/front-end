@@ -7,7 +7,16 @@ import {
     GET_DROPDOWN_FAILURE,
     GET_ANIMAL_START,
     GET_ANIMAL_SUCCESS,
-    GET_ANIMAL_FAILURE
+    GET_ANIMAL_FAILURE,
+    POST_NOTES_START,
+    POST_NOTES_SUCCESS,
+    POST_NOTES_FAILURE,
+    UPDATE_NOTES_START,
+    UPDATE_NOTES_SUCCESS,
+    UPDATE_NOTES_FAILURE,
+    DELETE_NOTES_START,
+    DELETE_NOTES_SUCCESS,
+    DELETE_NOTES_FAILURE
 } from '../actions/animalAction.js'
 import { CardActions } from '@material-ui/core';
 
@@ -36,7 +45,10 @@ const initialState = {
     },
     updatingAnimalInfo: false,
     gettingDropdownOptions: false,
-    gettingAnimalInfo: false
+    gettingAnimalInfo: false,
+    addingNotes:false,
+    updatingNotes:false,
+    deletingNotes:false,
 }
 
 export const animalReducer = (state = initialState, action) => {
@@ -124,6 +136,75 @@ export const animalReducer = (state = initialState, action) => {
                 updatingAnimalInfo: false,
                 error: action.payload
             };
+            case POST_NOTES_START:
+            return {
+                ...state,
+                addingNotes: true,
+                error: ''
+            };
+        case POST_NOTES_SUCCESS:
+            console.log('POST_NOTES_SUCCESS: action payload:  ',action.payload)
+            return {
+                ...state,
+                addingNotes: false,
+                animalInfo: {
+                    animal: action.payload,
+                    animalNotes: action.payload.notes,
+                },
+                error: ''
+            };
+        case POST_NOTES_FAILURE:
+            return {
+                ...state,
+                addingNotes: false,
+                error: action.payload
+            };
+            case UPDATE_NOTES_START:
+                return {
+                    ...state,
+                    updatingNotes: true,
+                    error: ''
+                };
+            case UPDATE_NOTES_SUCCESS:
+                console.log('POST_NOTES_SUCCESS: action payload:  ',action.payload)
+                return {
+                    ...state,
+                    updatingNotes: false,
+                    animalInfo: {
+                        animal: action.payload,
+                        animalNotes: action.payload.notes,
+                    },
+                    error: ''
+                };
+            case UPDATE_NOTES_FAILURE:
+                return {
+                    ...state,
+                    updatingNotes: false,
+                    error: action.payload
+                };
+                case DELETE_NOTES_START:
+                    return {
+                        ...state,
+                        deletingNotes: true,
+                        error: ''
+                    };
+                case DELETE_NOTES_SUCCESS:
+                    console.log('POST_NOTES_SUCCESS: action payload:  ',action.payload)
+                    return {
+                        ...state,
+                        deletingNotes: false,
+                        animalInfo: {
+                            animal: action.payload,
+                            animalNotes: action.payload.notes,
+                        },
+                        error: ''
+                    };
+                case DELETE_NOTES_FAILURE:
+                    return {
+                        ...state,
+                        deletingNotes: false,
+                        error: action.payload
+                    };
         default:
             return state
     }

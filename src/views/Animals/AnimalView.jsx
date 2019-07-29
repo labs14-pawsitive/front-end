@@ -20,7 +20,9 @@ import { connect } from "react-redux";
 import axios from 'axios';
 import moment from 'moment'
 
-import { updateAnimal, getInfoByAnimalID, getAllOptions } from '../../actions/animalAction.js'
+import { updateAnimal, getInfoByAnimalID, getAllOptions, addNotes, updateNotes, deleteNotes } 
+from '../../actions/animalAction.js'
+import NotesComponent from './NotesComponent.jsx'
 
 // react component plugin for creating a beautiful datetime dropdown picker
 import Datetime from "react-datetime";
@@ -87,6 +89,10 @@ class AnimalView extends React.Component {
       animal_status: [],
       locations: [],
       isEditing: false,
+      isPosting:false,
+      isNoteEditing:false,
+      clickedNoteID:-1,
+      note:''
     };
   }
 
@@ -126,11 +132,22 @@ class AnimalView extends React.Component {
     else this.handleToggle(event)
   }
 
+  handleNoteUpdate = (event,id) => {
+    event.preventDefault()
+    if(this.state.isNoteEditing){
+      
+      console.log('is updated')
+    }
+    else{
+      this.state.clickedNoteID = id
+      console.log('CLICKED NOTE ID: ',this.state.clickedNoteID)
+      this.handleNoteDeleteToggle(event)
+    }
+  }
 
 
    updateForm = () => {
-    // this.setState({
-      // isEditing: false,
+
     let updateInfo = {}
 
     updateInfo = {
@@ -268,15 +285,56 @@ class AnimalView extends React.Component {
     console.log(`target value for ${event.target.name} is ${event.target.value}`)
   }
 
+  handleAddNoteChange = (event) => {
+    this.setState({
+      note:event.target.value
+    })
+  }
+
+  submitNote = (event) => {
+    event.preventDefault()
+    console.log(this.state.note)
+
+    let notes= {}
+
+    notes = {
+      notes:this.state.note,
+      animal_id:this.state.animal.id,
+      shelter_user_id:this.props.shelterWorkerID
+    }
+
+    console.log('post notes info: ', notes)
+
+    this.props.addNotes(this.state.animal.id,notes)
+
+    this.setState({
+      note:''
+    })
+
+  }
+
+  submitToggleAddNote = (event) => {
+    event.preventDefault()
+    this.setState({
+      isEditing: !this.state.isEditing,
+      // read: !this.state.read
+    })
+  }
 
   handleToggle = (event) => {
     event.preventDefault()
     this.setState({
       isEditing: !this.state.isEditing,
-      read: !this.state.read
     })
-
   }
+
+  // handleNoteToggle = (event) => {
+  //   event.preventDefault()
+  //   this.setState({
+  //     // isPosting: !this.state.isPosting,
+  //     note:''
+  //   })
+  // }
 
   handleTextField = (event) => {
     this.setState({
@@ -301,16 +359,16 @@ class AnimalView extends React.Component {
     this.state.animal.img_url = response[0].image.image_url
     this.state.animal.img_id = response[0].image.image_id
 
-  //   let updateInfo = {
+    let updateInfo = {
 
-  //     profile_img_id: response[0].image.image_id,
+      profile_img_id: response[0].image.image_id,
      
-  //   }
+    }
   
-  // this.props.updateAnimal(updateInfo,
-  //   this.state.animal.id,this.state.animal_meta.id)
-  //   .then(res =>  console.log('update animal animal view :success ', res))
-  //   .catch(error => console.log('update error animal view', error))
+  this.props.updateAnimal(updateInfo,
+    this.state.animal.id,this.state.animal_meta.id)
+    .then(res =>  console.log('update animal animal view :success ', res))
+    .catch(error => console.log('update error animal view', error))
   }
 
 
@@ -424,7 +482,7 @@ class AnimalView extends React.Component {
                       {/* <img src={this.state.animal.img_url} alt={`${this.state.animal_meta.breed} for adoption`}
                         style={customStyle.imgStyle} /> */}
 
-                      <ImageUpload height="200px" width="200px"
+                      <ImageUpload height="100%" width="100%"
                         defaultImage={this.state.animal.img_url}
                         borderRadius="5px" imageLimit={1}
                         editable={this.state.isEditing} callback={this.callback}
@@ -661,6 +719,9 @@ class AnimalView extends React.Component {
                           value={this.state.animal_meta.color}
                           onChange={this.handleMetaTextField}
                           margin="normal"
+                          InputProps={{
+                            readOnly:this.state.isEditing ? false : true,
+                          }}
                         />
                       </form>
                     </GridItem>
@@ -686,6 +747,9 @@ class AnimalView extends React.Component {
                           value={this.state.animal_meta.health}
                           onChange={this.handleMetaTextField}
                           margin="normal"
+                          InputProps={{
+                            readOnly:this.state.isEditing ? false : true,
+                          }}
                         />
 
                         <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
@@ -824,18 +888,24 @@ class AnimalView extends React.Component {
               </CardHeader>
 
               <TextField
+               
                 id="standard-textarea"
                 label="Add a note"
+                value={this.state.note}
                 multiline
                 className={classes.textField}
+                onChange = {this.handleAddNoteChange}
                 margin="normal"
               />
 
               <div style={customStyle.detailsContainerStyle}>
-                <Button style={customStyle.noteButtonStyle} variant="contained" color="secondary" disabled className={classes.button}>
+                <Button style={customStyle.noteButtonStyle} 
+                variant="contained" color="secondary"
+                className={classes.button} onClick={this.submitToggleAddNote}>
                   CANCEL
                 </Button>
-                <Button style={customStyle.noteButtonStyle} variant="contained" className={classes.button}>
+                <Button style={customStyle.noteButtonStyle} 
+                variant="contained" className={classes.button} onClick={this.submitNote}>
                   SUBMIT
                 </Button>
               </div>
@@ -845,35 +915,12 @@ class AnimalView extends React.Component {
                 className={classes.root}
               >
 
-                {this.state.animal_notes.map(note => {
-                  return (
-                    <ListItem button key={note.id}>
-                      <ListItemText key={note.id} primary={note.notes}
-                        secondary={
-                          <React.Fragment>
-                            <span style={customStyle.noteStyle}>
-                              <Typography style={customStyle.typographyStyle}
-                                component="span">
-                                User:#{note.shelter_user_id}
-                              </Typography>
-                              {/* {moment(note.created_at).format("MMMM Do YYYY").toString()} */}
-                              {moment(note.created_at).fromNow()}
-                            </span>
-
-                            <span style={customStyle.runningNoteButtonStyle}>
-                              <Button size="small" disabled className={classes.button}>
-                                DELETE
-                            </Button>
-                              <Button size="small" className={classes.button}>
-                                EDIT
-                            </Button>
-                            </span>
-                          </React.Fragment>
-                        }
-                      />
-                    </ListItem>
-                  )
-                })}
+                {this.state.animal_notes.map(note => (
+                  <NotesComponent note={note} animalID={this.state.animal.id}/>
+                  // <NotesComponent note={note} handleUpdate={this.handleNoteUpdate} 
+                  // handleDelete={this.handleNoteDeleteToggle} handleSave={this.hand}/>
+                ))}
+                
               </List>
             </Card>
           </GridItem>
@@ -915,7 +962,15 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(
-  mapStateToProps, { updateAnimal, getAllOptions, getInfoByAnimalID }
+  mapStateToProps, 
+  { 
+    updateAnimal, 
+    getAllOptions, 
+    getInfoByAnimalID,
+    addNotes,
+    updateNotes,
+    deleteNotes 
+  }
 )(withStyles(regularFormsStyle)(AnimalView))
 
         //export default withStyles(extendedFormsStyle)(AnimalView);

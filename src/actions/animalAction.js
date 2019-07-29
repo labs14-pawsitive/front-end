@@ -58,3 +58,61 @@ export const getAllOptions = (shelterID) => dispatch => {
           console.log('get animal info error: ', err.response)
         })
     }  
+
+    export const POST_NOTES_START = 'POST_NOTES_START'
+    export const POST_NOTES_SUCCESS = 'POST_NOTES_SUCCESS'
+    export const POST_NOTES_FAILURE = 'POST_NOTES_FAILURE'
+    
+    export const addNotes = (animalID, note) => dispatch => {
+        
+        dispatch({ type: POST_NOTES_START })
+        return axios
+          .post(`http://localhost:8000/api/animals/${animalID}/admin`, note)
+          .then(res => {
+            dispatch({ type: POST_NOTES_SUCCESS, payload: res.data })
+            console.log('get all animal info', res.data)
+          })
+          .catch(err => {
+            dispatch({ type: POST_NOTES_FAILURE, payload: err.response })
+            console.log('get animal info error: ', err.response)
+          })
+      }
+
+      export const UPDATE_NOTES_START = 'UPDATE_NOTES_START'
+      export const UPDATE_NOTES_SUCCESS = 'UPDATE_NOTES_SUCCESS'
+      export const UPDATE_NOTES_FAILURE = 'UPDATE_NOTES_FAILURE'
+      
+      export const updateNotes = (animalID,noteID,updateNote) => dispatch => {
+          
+          dispatch({ type: UPDATE_NOTES_START })
+          return axios
+            .put(`http://localhost:8000/api/animals/${animalID}/admin/${noteID}`,updateNote)
+            .then(res => {
+              dispatch({ type: UPDATE_NOTES_SUCCESS, payload: res.data })
+              console.log('get all animal info', res.data)
+            })
+            .catch(err => {
+              dispatch({ type: UPDATE_NOTES_FAILURE, payload: err.response })
+              console.log('get animal info error: ', err.response)
+            })
+        }
+
+
+        export const DELETE_NOTES_START = 'DELETE_NOTES_START'
+        export const DELETE_NOTES_SUCCESS = 'DELETE_NOTES_SUCCESS'
+        export const DELETE_NOTES_FAILURE = 'DELETE_NOTES_FAILURE'
+        
+        export const deleteNotes = (animalID,noteID) => dispatch => {
+            
+            dispatch({ type: DELETE_NOTES_START })
+            return axios
+              .delete(`http://localhost:8000/api/animals/${animalID}/admin/${noteID}`)
+              .then(res => {
+                dispatch({ type: DELETE_NOTES_SUCCESS, payload: res.data })
+                console.log('get all animal info', res.data)
+              })
+              .catch(err => {
+                dispatch({ type: DELETE_NOTES_FAILURE, payload: err.response })
+                console.log('get animal info error: ', err.response)
+              })
+          }
