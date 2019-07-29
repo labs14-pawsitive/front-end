@@ -363,11 +363,11 @@ class AnimalView extends React.Component {
 
   verifyLength= (value,length) => {
     if(value.length>=length) {
-      console.log(`verify length fn: $[value} is valid length` )
+      console.log(`verify length fn: ${value} is valid length` )
       return true
     }
     else {
-      console.log(`verify length fn: $[value} is not valid length` )
+      console.log(`verify length fn: ${value} is not valid length` )
       return false
     }
   }
@@ -429,26 +429,8 @@ class AnimalView extends React.Component {
     return false;
   }
 
-  handleUpdate = (event) => {
-    event.preventDefault()
-    if (this.state.isEditing && this.isValidated) {
-      console.log('descriptionState ', this.state.textState.descriptionState )
-      console.log('colorState ', this.state.textState.colorState )
-      console.log('healthState ', this.state.textState.healthState )
-      console.log('nameState ', this.state.textState.nameState )
 
-      // if(this.isValidated){
 
-      this.updateForm()
-    // }
-    // else {
-    //   console.log('please enter the required length for the fields')
-    // }
-  }
-    else this.handleToggle(event)
-  }
-
-  // this.setState( { ...this.state, textState: {...this.state.textState, [stateInfo + "State"] : "success" } } );
 
   //with validation
 
@@ -481,6 +463,11 @@ class AnimalView extends React.Component {
       console.log(`${event.target.name} not valid length`)
     }
     
+    console.log('handleTextField fn: after if/else: descriptionState ', this.state.textState.descriptionState )
+    console.log('handleTextField fn: after if/else: colorState ', this.state.textState.colorState )
+    console.log('handleTextField fn: after if/else: healthState ', this.state.textState.healthState )
+    console.log('handleTextField fn: after if/else: nameState ', this.state.textState.nameState )
+
     this.setState({
       ...this.state,
       animal: {
@@ -492,13 +479,14 @@ class AnimalView extends React.Component {
 
   //with validation
   handleMetaTextField = (event,stateInfo,length) => {
-    console.log(`concatenate test : ${[stateInfo+"State"]} ${{[stateInfo+"State"]:"success"}}`)
+    // console.log(`concatenate test : ${[stateInfo+"State"]} ${{[stateInfo+"State"]:"success"}}`)
 
     if(this.verifyLength(event.target.value,length)){
-      console.log(`concatenate test : ${[stateInfo+"State"]} ${{[stateInfo+"State"]:"success"}}`)
+      // console.log(`concatenate test : ${[stateInfo+"State"]} ${{[stateInfo+"State"]:"success"}}`)
       this.setState({
+        ...this.state,      
         textState: {
-          ...this.state,
+          
           ...this.state.textState,
           [stateInfo+"State"]: "success"
         }
@@ -512,7 +500,12 @@ class AnimalView extends React.Component {
             [stateInfo+"State"]: "error"
           }
         })}
-      
+
+      console.log('handleMetaTextField fn: after if/else: descriptionState ', this.state.textState.descriptionState )
+      console.log('handleMetaTextField fn: after if/else: colorState ', this.state.textState.colorState )
+      console.log('handleMetaTextField fn: after if/else: healthState ', this.state.textState.healthState )
+      console.log('handleMetaTextField fn: after if/else: nameState ', this.state.textState.nameState )
+
     this.setState({
       ...this.state,
       animal_meta: {
@@ -522,7 +515,24 @@ class AnimalView extends React.Component {
     })
   }
 
+  handleUpdate = (event) => {
+    event.preventDefault()
+    if (this.state.isEditing && this.isValidated) {
+      console.log('descriptionState ', this.state.textState.descriptionState )
+      console.log('colorState ', this.state.textState.colorState )
+      console.log('healthState ', this.state.textState.healthState )
+      console.log('nameState ', this.state.textState.nameState )
 
+      // if(this.isValidated){
+
+      this.updateForm()
+    // }
+    // else {
+    //   console.log('please enter the required length for the fields')
+    // }
+  }
+    else this.handleToggle(event)
+  }
 
 
   callback = (response) => {
@@ -675,6 +685,9 @@ class AnimalView extends React.Component {
                     {this.state.isEditing ?
                       <form>
                         <TextField
+                        success={this.state.textState.nameState === "success"}
+                        error={this.state.textState.nameState === "error"}
+            
                           name="name"
                           label="Name"
                           // type="text"
@@ -686,6 +699,8 @@ class AnimalView extends React.Component {
                         />
 
                         <TextField
+                        success={this.state.textState.descriptionState === "success"}
+                        error={this.state.textState.descriptionState === "error"}
                           name="description"
                           label="Description"
                           multiline
@@ -891,6 +906,9 @@ class AnimalView extends React.Component {
                         </FormControl>
 
                         <TextField
+                        success={this.state.textState.colorState === "success"}
+                        error={this.state.textState.colorState === "error"}
+            
                           name="color"
                           label="Color"
                           className={classes.textField}
@@ -920,6 +938,8 @@ class AnimalView extends React.Component {
                         autoComplete="off" style={customStyle.adoptionStyle}
                       >
                         <TextField
+                        success={this.state.textState.healthState === "success"}
+                        error={this.state.textState.healthState === "error"}
                           name="health"
                           label="Health"
                           className={classes.textField}
