@@ -30,6 +30,7 @@ export const getAllOptions = (shelterID) => dispatch => {
     dispatch({ type: GET_DROPDOWN_START })
     return axios
       .get(`http://localhost:8000/api/internal/paws/options/${shelterID}`)
+      
       .then(res => {
         dispatch({ type: GET_DROPDOWN_SUCCESS, payload: res.data })
         console.log('get all animal options info', res.data)
@@ -68,6 +69,8 @@ export const getAllOptions = (shelterID) => dispatch => {
         dispatch({ type: POST_NOTES_START })
         return axios
           .post(`http://localhost:8000/api/animals/${animalID}/admin`, note)
+          .then(res => axios
+            .get(`http://localhost:8000/api/animals/${animalID}`))
           .then(res => {
             dispatch({ type: POST_NOTES_SUCCESS, payload: res.data })
             console.log('get all animal info', res.data)
@@ -87,6 +90,8 @@ export const getAllOptions = (shelterID) => dispatch => {
           dispatch({ type: UPDATE_NOTES_START })
           return axios
             .put(`http://localhost:8000/api/animals/${animalID}/admin/${noteID}`,updateNote)
+            .then(res => axios
+              .get(`http://localhost:8000/api/animals/${animalID}`))
             .then(res => {
               dispatch({ type: UPDATE_NOTES_SUCCESS, payload: res.data })
               console.log('get all animal info', res.data)
@@ -107,6 +112,8 @@ export const getAllOptions = (shelterID) => dispatch => {
             dispatch({ type: DELETE_NOTES_START })
             return axios
               .delete(`http://localhost:8000/api/animals/${animalID}/admin/${noteID}`)
+              .then(res => axios
+                .get(`http://localhost:8000/api/animals/${animalID}`))
               .then(res => {
                 dispatch({ type: DELETE_NOTES_SUCCESS, payload: res.data })
                 console.log('get all animal info', res.data)
