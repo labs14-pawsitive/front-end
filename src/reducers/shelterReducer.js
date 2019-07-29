@@ -11,6 +11,19 @@ import {
     ADD_CONTACT_START,
     ADD_CONTACT_SUCCESS,
     ADD_CONTACT_ERR,
+    UPDATE_CONTACT_START,
+    UPDATE_CONTACT_SUCCESS,
+    UPDATE_CONTACT_ERR,
+    UPDATE_SHELTERLOC_START,
+    UPDATE_SHELTERLOC_SUCCESS,
+    UPDATE_SHELTERLOC_ERR,
+    DELETE_CONTACT_START,
+    DELETE_CONTACT_SUCCESS,
+    DELETE_CONTACT_ERR,
+    DELETE_SHELTERLOC_START,
+    DELETE_SHELTERLOC_SUCCESS,
+    DELETE_SHELTERLOC_ERR,
+    
 
 } from '../actions/shelterAction'
 
@@ -26,6 +39,10 @@ const initialState = {
     fetchingOptions: false,
     addingLocation: false,
     addingContact: false,
+    updatingLocation: false,
+    updatingContact: false,
+    deletingLocation: false,
+    deletingContact: false,
     error: '',
 }
 
@@ -86,6 +103,42 @@ export const shelterReducer = (state = initialState, action) => {
                 error: action.payload
             }
 
+        //----Updating Location
+        case UPDATE_SHELTERLOC_START:
+            return {
+                ...state,
+                updatingLocation:true
+            }
+        case UPDATE_SHELTERLOC_SUCCESS:
+            return {
+                ...state,
+                updatingLocation: false
+            }
+        case UPDATE_SHELTERLOC_ERR:
+            return {
+                ...state,
+                updatingLocation: false,
+                error: action.payload
+            }
+
+        //----Deleting Location:
+        case DELETE_SHELTERLOC_START:
+            return {
+                ...state,
+                deletingLocation: true
+            }
+        case DELETE_SHELTERLOC_SUCCESS:
+            return {
+                ...state,
+                deletingLocation: false
+            }
+        case DELETE_SHELTERLOC_ERR:
+            return {
+                ...state,
+                deletingLocation: false,
+                error: action.payload,
+            }
+
         //----Adding Contact
         case ADD_CONTACT_START: 
             return {
@@ -103,7 +156,40 @@ export const shelterReducer = (state = initialState, action) => {
                 addingContact: false,
                 error: action.payload
             }
-
+        //----Updating Contact
+        case UPDATE_CONTACT_START:
+            return {
+                ...state,
+                updatingContact:true
+            }
+        case UPDATE_CONTACT_SUCCESS:
+            return {
+                ...state,
+                updatingContact: false
+            }
+        case UPDATE_CONTACT_ERR:
+            return {
+                ...state,
+                updatingContact: false,
+                error: action.payload
+            }
+        //----Deleting Contact:
+        case DELETE_CONTACT_START:
+            return {
+                ...state,
+                deletingContact: true
+            }
+        case DELETE_CONTACT_SUCCESS:
+            return {
+                ...state,
+                deletingContact: false
+            }
+        case DELETE_CONTACT_ERR:
+            return {
+                ...state,
+                deletingContact: false,
+                error: action.payload,
+            }
         default: return state;
     }
 }

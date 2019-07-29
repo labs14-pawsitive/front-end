@@ -68,6 +68,12 @@ handleFormButtonToggle = e => {
   })
 }
 
+inputchangeHandler = e => {
+  this.setState({
+      [e.target.id] : e.target.value
+  })
+}
+
 
 
 render() {
@@ -101,14 +107,15 @@ return (
                 <GridItem xs={12} sm={12} md={12}>
                   <CustomInput
                     labelText={this.state.shelter? "" : "Shelter"}
-                    id="company"
+                    id="shelter"
                     formControlProps={{
                       fullWidth: true
                     }}
                     inputProps={{
                       disabled: this.state.editMode? false : true,
                       style: customStyle.shelterDisplayView,
-                      value: this.props.shelter.shelter
+                      value: this.props.shelter.shelter,
+                      onChange: (e) => this.inputchangeHandler(e)
                     }}
                   />
                 </GridItem>
@@ -120,13 +127,14 @@ return (
                 <GridItem xs={12} sm={12} md={12}>
                   <CustomInput
                     labelText="Name"
-                    id={this.state.editMode? "username-disabled" : "username"}
+                    id={this.state.editMode? "username-disabled" : "name"}
                     formControlProps={{
                       fullWidth: true
                     }}
                     inputProps={{
                       disabled: this.state.editMode? false : true,
                       value: this.props.shelter.name,
+                      onChange: (e) => this.inputchangeHandler(e)
                     }}
                     style={this.state.editMode? "" : customStyle.shelterDisplayView}
 
@@ -135,13 +143,14 @@ return (
                 <GridItem xs={12} sm={12} md={6}>
                   <CustomInput
                     labelText="Email address"
-                    id={this.state.editMode? "email-address-disabled" : "email-address"}
+                    id={this.state.editMode? "email-address-disabled" : "email"}
                     formControlProps={{
                       fullWidth: true
                     }}
                     inputProps={{
                       disabled: this.state.editMode? false : true,
                       value: this.props.shelter.email,
+                      onChange: (e) => this.inputchangeHandler(e)
                     }}
                     style={this.state.editMode? "" : customStyle.shelterDisplayView}
 
@@ -150,13 +159,14 @@ return (
                 <GridItem xs={12} sm={12} md={6}>
                   <CustomInput
                     labelText="Phone Number"
-                    id={this.state.editMode? "phone-number-disabled" : "phone-number"}
+                    id={this.state.editMode? "phone-number-disabled" : "phone"}
                     formControlProps={{
                       fullWidth: true
                     }}
                     inputProps={{
                       disabled: this.state.editMode? false : true,
                       value: this.props.shelter.phone,
+                      onChange: (e) => this.inputchangeHandler(e)
                     }}
                     style={this.state.editMode? "" : customStyle.shelterDisplayView}
 
@@ -248,7 +258,7 @@ return (
                     inputProps={{
                       disabled: this.state.editMode? false : true,
                       style: customStyle.shelterDisplayView,
-                      value: this.state.shelter.shelter
+                      value: this.props.shelter.shelter
                     }}
                   />
                 </GridItem>

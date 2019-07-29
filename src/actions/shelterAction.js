@@ -24,7 +24,7 @@ export const GET_OPTIONS_ERR = 'GET_OPTIONS_ERR';
 export const fetchOptions = (shelterID) => dispatch => {
     dispatch({ type: GET_OPTIONS_START })
     return axios
-    .get(`https://staging1-pawsnfind.herokuapp.com/api/internal/paws/options/${shelterID}`)
+    .get(`http://localhost:8000/api/internal/paws/options/${shelterID}`)
     .then(res => {
         dispatch({ type: GET_OPTIONS_SUCCESS, payload: res.data })
         console.log('Where is it?', res.data)
