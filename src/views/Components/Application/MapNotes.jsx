@@ -39,7 +39,9 @@ constructor(props) {
     cancelClick = e => {
         e.preventDefault();
 
-        this.setState({ isEditSelected: false });
+        this.setState({ isEditSelected: false, value: this.props.note.notes });
+
+
     }
 
     deleteNotes = e => {

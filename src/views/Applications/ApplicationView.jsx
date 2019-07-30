@@ -227,7 +227,8 @@ class ApplicationView extends React.Component {
         marginTop: '3%',
         marginBottom: '3%',
         fontStyle: "Sans-serif",
-        // paddingLeft: "3%",
+        fontColor: "black",
+        
       },
       dropDownStyle: {
         background: '#edeae8',
@@ -240,6 +241,13 @@ class ApplicationView extends React.Component {
         fontSize: "30px",
         paddingTop: "10px",
       },
+      selectStyle: {
+        background: '#edeae8',
+        padding: '1%',
+      },
+      selectLabel: {
+        marginLeft: '1%',
+      }
 
     };
 
@@ -278,7 +286,7 @@ class ApplicationView extends React.Component {
                     />
 
                     <FormControl fullWidth className={classes.selectFormControl}>
-                      <InputLabel htmlFor="application_status" className={classes.selectLabel}>
+                      <InputLabel htmlFor="application_status" style={customStyle.selectLabel}>
                         Application Status
                               </InputLabel>
 
@@ -294,6 +302,7 @@ class ApplicationView extends React.Component {
                         onChange={this.handleChange}
                         name="application_status"
                         id="application_status"
+                        style={customStyle.selectStyle}
                       >
 
                         <MenuItem

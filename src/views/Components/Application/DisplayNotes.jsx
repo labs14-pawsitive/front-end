@@ -24,14 +24,9 @@ class DisplayNotes extends React.Component {
         super(props)
         this.state = {
             notes: [],
-            inputField: ''
+            inputField: '',
         };
-    }
-
-    // state = {
-    //     notes: [],
-    //     inputField: ''
-    // }
+    };
 
     handleChanges = e => {
         this.setState({
@@ -41,13 +36,13 @@ class DisplayNotes extends React.Component {
 
     clearField = e => {
         this.setState({ inputField: '' })
-    }
+    };
 
     componentDidMount() {
         const applicationId = this.props.application_id
 
         this.props.getNotes(applicationId)
-    }
+    };
 
     addNotes = e => {
 
@@ -55,18 +50,17 @@ class DisplayNotes extends React.Component {
             notes: this.state.inputField,
             shelter_user_id: 3,
             application_id: 3
-        }
+        };
 
         this.props.addNotes(newNote, 3);
-        this.setState({ inputField: '' });
-    }
 
- 
+        this.setState({ inputField: '' });
+    };
 
     deleteNotes = id => {
 
         this.props.deleteNotes(id)
-    }
+    };
 
     updateNotes = (notes, id) => {
 
@@ -77,7 +71,7 @@ class DisplayNotes extends React.Component {
 
         this.props.updateNotes(updatedNote, id )
 
-    }
+    };
 
     render() {
 
@@ -90,6 +84,9 @@ class DisplayNotes extends React.Component {
               fontSize: "30px",
               paddingTop: "10px",
             },
+            submitButtonStyle: {
+                marginLeft: "5px",
+            }
       
           }
 
@@ -135,6 +132,7 @@ class DisplayNotes extends React.Component {
                                     color="transparent"
                                     className={classes.buttonStyle}
                                     onClick={this.addNotes}
+                                    style={customStyle.submitButtonStyle}
                                 >
                                     Submit
                                 </Button>
