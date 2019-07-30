@@ -65,7 +65,7 @@ class CustomDropdown extends React.Component {
       payload.target.value = param.props.value
       
       // this is defined on the option in the Form component
-      param.props.onChange(payload)
+      param.props.onChange(payload, this.props.id, "notNull")
     }
     this.setState({ open: false });
     if (this.props && this.props.onClick) {

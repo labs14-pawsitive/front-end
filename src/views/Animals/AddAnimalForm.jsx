@@ -68,7 +68,7 @@ class AddAnimalForm extends React.Component {
         size_id: null,
         coat_length_id: null,
         age_id: null,
-        locations_id: null,
+        shelter_location_id: null,
         states_id: null,
         is_male: null,
         is_house_trained: false,
@@ -77,10 +77,12 @@ class AddAnimalForm extends React.Component {
         is_good_with_dogs: false,
         is_good_with_cats: false,
         is_vaccinated: false,
+        is_mixed: false,
         shelter_id: null,
         profile_img_id: null,
-
-
+      },
+      validation: {
+        
       },
       checked: [],
     };
@@ -109,7 +111,7 @@ class AddAnimalForm extends React.Component {
         size_id: 3,
         coat_length_id: 3,
         age_id: 3,
-        locations_id: 1,
+        shelter_location_id: 1,
         states_id: 5,
         shelter_id: 1,
         is_male: false,
@@ -122,6 +124,31 @@ class AddAnimalForm extends React.Component {
         profile_img_id: null,
         is_mixed: 1
       },
+      validation: {
+        name: true,
+        color: true,
+        health: true,
+        description: true,
+        species_id: true,
+        breed_id: true,
+        animal_status_id: true,
+        size_id: true,
+        coat_length_id: true,
+        age_id: true,
+        shelter_location_id: true,
+        states_id: true,
+        is_male: true,
+        is_house_trained: true,
+        is_neutered_spayed: true,
+        is_good_with_kids: true,
+        is_good_with_dogs: true,
+        is_good_with_cats: true,
+        is_vaccinated: true,
+        is_mixed: true,
+        shelter_id: true,
+        profile_img_id: true,
+
+      },
       checked: [],
     });
   }
@@ -129,8 +156,6 @@ class AddAnimalForm extends React.Component {
   handleImgUploadResponse = response => {
     if (!response.error) {
       const { image_id } = response[0].image
-      // console.log(image_id)
-      // console.log(response)
       this.setState({
         animal: {
           ...this.state.animal,
@@ -139,20 +164,99 @@ class AddAnimalForm extends React.Component {
       })
     }
   }
-  //created an empty object and merged with state.animal
-  handleChange = e => {
-    let selectedAttribute= {}
 
-  //updating the state based on id of the input
-    selectedAttribute[e.target.id] = e.target.value
+  verifyLength(value, length) {
+    if (value.length >= length) {
+      return true;
+    }
+    return false
+  }
 
-  //set state equal to the old state with the new value of input
-    this.setState({
-        animal: {
-          ...this.state.animal,
-          ...selectedAttribute
+  verifyNotNull(value) {
+    if (value) {
+      return true;
+    }
+    return false
+  }
+  
+  handleChange(event, stateName, type, stateNameEqualTo) {
+    switch(type) {
+      case "length":
+        if (this.verifyLength(event.target.value, stateNameEqualTo)) {
+          this.setState({ 
+            validation: {
+              ...this.state.validation,
+              [stateName]: true
+            } 
+          });
+        } else {
+          this.setState({ 
+            validation: {
+              ...this.state.validation,
+              [stateName]: false
+            } 
+          });
+
         }
+        break;
+      case "notNull":
+        if (this.verifyNotNull(event.target.value)) {
+          this.setState({ 
+            validation: {
+              ...this.state.validation,
+              [stateName]: true
+            } 
+          });
+
+        } else {
+          this.setState({ 
+            validation: {
+              ...this.state.validation,
+              [stateName]: false
+            } 
+          });
+        }
+        break;
+      default:
+        break;
+    }
+    
+    this.setState({
+      animal: {
+        ...this.state.animal, 
+        [stateName]: event.target.value
+      } 
     })
+  }  
+
+  isValidated() {
+    if (
+      this.state.validation.name &&
+      this.state.validation.color &&
+      this.state.validation.health &&
+      this.state.validation.description &&
+      this.state.validation.breed_id &&
+      this.state.validation.age_id &&
+      this.state.validation.animal_status_id &&
+      this.state.validation.coat_length_id &&
+      this.state.validation.is_good_with_cats &&
+      this.state.validation.is_good_with_dogs &&
+      this.state.validation.is_good_with_kids &&
+      this.state.validation.is_house_trained &&
+      this.state.validation.is_male &&
+      this.state.validation.is_neutered_spayed &&
+      this.state.validation.is_vaccinated &&
+      this.state.validation.is_mixed &&
+      this.state.validation.profile_img_id &&
+      this.state.validation.shelter_location_id &&
+      this.state.validation.size_id &&
+      this.state.validation.species_id &&
+      this.state.validation.states_id  &&
+      this.state.validation.shelter_id
+    ) {
+      return true
+    } 
+    return false;
   }
 
   handleChangeEnabled(event) {
@@ -177,47 +281,49 @@ class AddAnimalForm extends React.Component {
 
   submitAnimal = e => {
     e.preventDefault();
-    const { checked } = this.state
-    let animalAttributes = { ...this.state.animal }
+    if (this.isValidated()) {
+      const { checked } = this.state
+      let animalAttributes = { ...this.state.animal }
 
-    checked.map(option => {
-      animalAttributes[option] = true
-    })
+      checked.map(option => {
+        animalAttributes[option] = true
+      })
 
-    this.props.addAnimal(animalAttributes).then((animalId) => {
-      if (animalId){
-        this.setState({
-        animal: {
-          name: "",
-          color: "",
-          health: "",
-          description: "",
-          species_id: "",
-          breed_id: "",
-          animal_status_id: "",
-          size_id: "",
-          coat_length_id: "",
-          subscriptions_id: "",
-          age_id: "",
-          locations_id: "",
-          states_id: "",
-          is_male: false,
-          is_house_trained: false,
-          is_neutered_spayed: false,
-          is_good_with_kids: false,
-          is_good_with_dogs: false,
-          is_good_with_cats: false,
-          is_vaccinated: false,
-          is_mixed: false
-          },
-          checked: [],
-        })
+      this.props.addAnimal(animalAttributes).then((animalId) => {
+        if (animalId) {
+          this.setState({
+            animal: {
+              name: "",
+              color: "",
+              health: "",
+              description: "",
+              species_id: "",
+              breed_id: "",
+              animal_status_id: "",
+              size_id: "",
+              coat_length_id: "",
+              subscriptions_id: "",
+              age_id: "",
+              shelter_location_id: "",
+              states_id: "",
+              is_male: false,
+              is_house_trained: false,
+              is_neutered_spayed: false,
+              is_good_with_kids: false,
+              is_good_with_dogs: false,
+              is_good_with_cats: false,
+              is_vaccinated: false,
+              is_mixed: false
+            },
+            checked: [],
+          })
 
-        this.props.history.push(`/admin/animal/${animalId}`);
-      }
-    });
-    
-    
+          this.props.history.push(`/admin/animal/${animalId}`);
+        }
+      });
+    } else {
+      return console.log("Invalid: Fill out all required fields")
+    }
   }
 
   render() {
@@ -251,7 +357,6 @@ class AddAnimalForm extends React.Component {
       return <span onChange={this.handleChange} value={option.id}>{option.state}</span>
     })
 
-
     const buttonDisplay = (animalAttribute, optionType, nameAttribute, defaultText) => {
       const attributeId = this.state.animal[animalAttribute]
       if(attributeId) {
@@ -268,7 +373,7 @@ class AddAnimalForm extends React.Component {
     const coatLengthButtonDisplay = buttonDisplay('coat_length_id', 'coatLengthOptions', 'coat_length', 'Coat length')
     const speciesButtonDisplay = buttonDisplay('species_id', 'speciesOptions', 'species', 'Species')
     const agesButtonDisplay = buttonDisplay('age_id', 'agesOptions', 'age', 'Age')
-    const locationsButtonDisplay = buttonDisplay('locations_id', 'locationsOptions', 'nickname', 'Shelter location')
+    const locationsButtonDisplay = buttonDisplay('shelter_location_id', 'locationsOptions', 'nickname', 'Shelter location')
     const statesButtonDisplay = buttonDisplay('states_id', 'statesOptions', 'state', 'States')
 
     return (
@@ -276,7 +381,6 @@ class AddAnimalForm extends React.Component {
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <legend>Add Animal Profile Image</legend>
-          
           <ImageUpload height="200px" width="200px" defaultImage="https://beaglebit.com/images/8f89abcbb3d2d436a85c52a9684c55b9/c09b504addb7fd140e845a6bf7e4feea742ced57ca7329cd9c619c0bfa2df697." borderRadius="5px" imageLimit={1} editable={this.state.edit} callback={this.handleImgUploadResponse} url="https://staging1-pawsnfind.herokuapp.com/api/pictures/animal/1"/>
           {/* <ImageUpload 
             addButtonProps={{
@@ -302,7 +406,10 @@ class AddAnimalForm extends React.Component {
             </CardHeader>
             <CardBody>
               <form>
+              <span>{ this.state.validation.name }</span>
               <CustomInput
+                  success={this.state.validation.name}
+                  error={this.state.validation.name === false}
                   labelText="name"
                   id="name"
                   formControlProps={{
@@ -311,10 +418,12 @@ class AddAnimalForm extends React.Component {
                   inputProps={{
                     type: "text",
                     value: this.state.animal.name,
-                    onChange: (event) => this.handleChange(event),
+                    onChange: event => this.handleChange(event, "name", "length", 2),
                   }}
                 />
                 <CustomInput
+                  success={this.state.validation.color}
+                  error={this.state.validation.color === false}
                   labelText="color"
                   id="color"
                   formControlProps={{
@@ -323,10 +432,12 @@ class AddAnimalForm extends React.Component {
                   inputProps={{
                     type: "text",
                     value: this.state.animal.color,
-                    onChange: (event) => this.handleChange(event)
+                    onChange: event => this.handleChange(event, "color", "length", 2)
                   }}
                 />
                 <CustomInput
+                  success={this.state.validation.health}
+                  error={this.state.validation.health === false}
                   labelText="health"
                   id="health"
                   formControlProps={{
@@ -335,10 +446,12 @@ class AddAnimalForm extends React.Component {
                   inputProps={{
                     type: "text",
                     value: this.state.animal.health,
-                    onChange: (event) => this.handleChange(event)
+                    onChange: event => this.handleChange(event, "health", "length", 2)
                   }}
                 />
                 <CustomInput
+                  success={this.state.validation.description}
+                  error={this.state.validation.description === false}
                   labelText="description"
                   id="description"
                   formControlProps={{
@@ -347,7 +460,7 @@ class AddAnimalForm extends React.Component {
                   inputProps={{
                     type: "text",
                     value: this.state.animal.description,
-                    onChange: (event) => this.handleChange(event)
+                    onChange: event => this.handleChange(event, "description", "length", 2)
                   }}
                 />
                 
@@ -387,7 +500,7 @@ class AddAnimalForm extends React.Component {
                     <FormControl>
                       <CustomDropdown 
                         buttonText= {locationsButtonDisplay}
-                        id="locations_id"
+                        id="shelter_location_id"
                         onChange={this.handleChange}
                         externalHandleClick={this.handleChange}
                         dropdownList={
