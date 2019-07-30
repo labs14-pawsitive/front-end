@@ -11,9 +11,9 @@ import {
     UPDATE_NOTES_START,
     UPDATE_NOTES_SUCCESS,
     UPDATE_NOTES_FAILURE,
-    GET_OPTIONS_START,
-    GET_OPTIONS_SUCCESS, 
-    GET_OPTIONS_FAILURE,
+    FETCH_OPTIONS_START,
+    FETCH_OPTIONS_SUCCESS, 
+    FETCH_OPTIONS_FAILURE,
     FETCH_APP_START,
     FETCH_APP_SUCCESS,
     FETCH_APP_FAILURE,
@@ -76,7 +76,7 @@ export const applicationReducer = (state = initialState, action) => {
         return {
             ...state, 
             updatingStatus: false,
-            application: [...state, action.payload],
+            application: action.payload,
             error: '',
         };
 
@@ -168,13 +168,13 @@ export const applicationReducer = (state = initialState, action) => {
                 error: action.payload
             }
 
-        case GET_OPTIONS_START:
+        case FETCH_OPTIONS_START:
             return {
              ...state,
              fetchingOptions: true,
             }
             
-        case GET_OPTIONS_SUCCESS: 
+        case FETCH_OPTIONS_SUCCESS: 
         console.log(action.payload)
             return {
                 ...state,
@@ -182,7 +182,7 @@ export const applicationReducer = (state = initialState, action) => {
                 options: action.payload.application_status
             }
 
-        case GET_OPTIONS_FAILURE:
+        case FETCH_OPTIONS_FAILURE:
             return {
                 ...state,
                 fetchingOptions: false,

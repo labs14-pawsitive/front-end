@@ -105,19 +105,19 @@ export const updateNotes = ( updatedNote, id ) => dispatch => {
     })
 };
 
-export const GET_OPTIONS_START = 'GET_OPTIONS_START';
-export const GET_OPTIONS_SUCCESS = 'GET_OPTIONS_SUCCESS';
-export const GET_OPTIONS_FAILURE = 'GET_OPTIONS_FAILURE';
+export const FETCH_OPTIONS_START = 'GET_OPTIONS_START';
+export const FETCH_OPTIONS_SUCCESS = 'GET_OPTIONS_SUCCESS';
+export const FETCH_OPTIONS_FAILURE = 'GET_OPTIONS_FAILURE';
 
 export const fetchOptions = id => dispatch => {
-    dispatch({ type: GET_OPTIONS_START })
+    dispatch({ type: FETCH_OPTIONS_START })
     return axios
     .get(`https://staging1-pawsnfind.herokuapp.com/api/internal/paws/options/${id}`)
     .then(res => {
         console.log(res)
-        dispatch({ type: GET_OPTIONS_SUCCESS, payload: res.data })
+        dispatch({ type: FETCH_OPTIONS_SUCCESS, payload: res.data })
     })
     .catch(err => {
-        dispatch({ type: GET_OPTIONS_FAILURE, payload: err.response })
+        dispatch({ type: FETCH_OPTIONS_FAILURE, payload: err.response })
     })
 };

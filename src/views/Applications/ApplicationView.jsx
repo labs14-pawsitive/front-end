@@ -125,16 +125,16 @@ class ApplicationView extends React.Component {
 
     let id = 3;
 
-    await axios
-    .put(`https://staging1-pawsnfind.herokuapp.com/api/applications/${id}/status`, updatedStatus)
-    .then(updatedApp => {
-        console.log('updated app status', updatedApp.data)
-    })
-    .catch(error => {
-      console.log(error)
-    })
+    // await axios
+    // .put(`https://staging1-pawsnfind.herokuapp.com/api/applications/${id}/status`, updatedStatus)
+    // .then(updatedApp => {
+    //     console.log('updated app status', updatedApp.data)
+    // })
+    // .catch(error => {
+    //   console.log(error)
+    // })
 
-  //  this.updateApplication(updatedStatus, 3 ) // this.state.application.application_id
+   this.props.updateApplication(updatedStatus, this.props.application.application_id ) // this.state.application.application_id
   };
 
   componentDidMount(prevProps, prevState) {
@@ -192,8 +192,6 @@ class ApplicationView extends React.Component {
 
 
   render() {
-   
-    console.log('options from reducer', this.props.options)
 
     const { classes } = this.props;
 
