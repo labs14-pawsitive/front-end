@@ -18,18 +18,18 @@ import FormLabel from "@material-ui/core/FormLabel";
 import Input from '@material-ui/core/Input';
 
 class MapNotes extends React.Component {
-constructor(props) {
-    super(props)
-    this.state = {
-        isEditSelected: false,
-        value: this.props.note.notes
+    constructor(props) {
+        super(props)
+        this.state = {
+            isEditSelected: false,
+            value: this.props.note.notes
+        }
     }
-}
 
     handleChanges = e => {
         this.setState({
             value: e.target.value
-         })
+        })
     }
 
     clearField = e => {
@@ -51,7 +51,7 @@ constructor(props) {
     }
 
     updateNotes = e => {
-        
+
         this.props.updateNotes(this.state.value, this.props.note.id)
 
         this.props.note.notes = this.state.value
@@ -60,6 +60,7 @@ constructor(props) {
     }
 
     editSelected = () => {
+
         this.setState({ isEditSelected: !this.state.isEditSelected })
     }
 
@@ -68,61 +69,62 @@ constructor(props) {
         const { classes } = this.props;
 
         const customStyle = {
-                noteBackground: {
-                    background: '#edeae8',
-                    borderBottom: '1px solid lightgrey',
-                },
-                adjustFont: {
-                    fontSize: "20px",
-                  }
-        
+            noteBackground: {
+                background: '#edeae8',
+                borderBottom: '1px solid lightgrey',
+            },
+            adjustFont: {
+                fontSize: "20px",
+            }
+
         }
 
         return (
             <Container className={classes.noteBackground} >
-               <div style={{ paddingTop: 20 }}>
-                <Input
-                className={classes.adjustFont}
-                disableUnderline="true"
-                fullWidth="true"
-                inputProps={{
-                    type: "text",
-                    value: this.state.isEditSelected ? this.state.value : this.props.note.notes ,
-                    onChange: this.handleChanges
-                }}
-                />
+                <div style={{ paddingTop: 20 }}>
+                    <Input
+                        className={classes.adjustFont}
+                        disableUnderline="true"
+                        fullWidth="true"
+                        // readOnly={ this.state.isEditSelected ? "false" : "true" }
+                        inputProps={{
+                            type: "text",
+                            value: this.state.isEditSelected ? this.state.value : this.props.note.notes,
+                            onChange: this.handleChanges
+                        }}
+                    />
 
-               <FormLabel> <p> {this.props.application.name} . { moment(this.props.note.created_at).format("MMMM Do YYYY").toString() } </p> </FormLabel>
+                    <FormLabel> <p> {this.props.application.name} . {moment(this.props.note.created_at).format("MMMM Do YYYY").toString()} </p> </FormLabel>
                 </div>
-    
+
                 <GridContainer
                     direction="row"
                     justify="flex-end"
                 >
-    
+
                     <GridItem xs={3} >
                         <Button
-                            
+
                             color="transparent"
-                            className={ classes.deleteButtonStyle }
-                            onClick={ this.state.isEditSelected ? this.cancelClick : this.deleteNotes }
+                            className={classes.deleteButtonStyle}
+                            onClick={this.state.isEditSelected ? this.cancelClick : this.deleteNotes}
                         >
-                             { this.state.isEditSelected? "Cancel" : "Delete" }
+                            {this.state.isEditSelected ? "Cancel" : "Delete"}
                         </Button>
                     </GridItem>
-    
+
                     <GridItem>
                         <Button
-                            
+
                             color="transparent"
-                            className={ classes.editButtonStyle }
-                            onClick={ this.state.isEditSelected ? this.updateNotes : this.editSelected }
+                            className={classes.editButtonStyle}
+                            onClick={this.state.isEditSelected ? this.updateNotes : this.editSelected}
 
                         >
-                            { this.state.isEditSelected? "Save" : "Edit" }
+                            {this.state.isEditSelected ? "Save" : "Edit"}
                         </Button>
                     </GridItem>
-    
+
                 </GridContainer>
             </Container>
         )

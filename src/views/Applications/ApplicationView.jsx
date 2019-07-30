@@ -189,7 +189,12 @@ class ApplicationView extends React.Component {
     });
   }
 
-
+verifyLength(value, length) {
+  if (value.length >= length) {
+    return true;
+  }
+  return false;
+}
 
   render() {
 
@@ -286,9 +291,12 @@ class ApplicationView extends React.Component {
                     />
 
                     <FormControl fullWidth className={classes.selectFormControl}>
-                      <InputLabel htmlFor="application_status" style={customStyle.selectLabel}>
+                      <InputLabel 
+                      htmlFor="application_status" 
+                      // style={customStyle.selectLabel}
+                      >
                         Application Status
-                              </InputLabel>
+                      </InputLabel>
 
                       <Select
                         MenuProps={{
@@ -302,7 +310,7 @@ class ApplicationView extends React.Component {
                         onChange={this.handleChange}
                         name="application_status"
                         id="application_status"
-                        style={customStyle.selectStyle}
+                        // style={customStyle.selectStyle}
                       >
 
                         <MenuItem
