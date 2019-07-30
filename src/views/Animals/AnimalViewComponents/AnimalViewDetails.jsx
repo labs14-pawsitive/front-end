@@ -103,14 +103,14 @@ class AnimalViewDetails extends React.Component {
                                     disabled={this.props.isEditing ? false : true}
                                     value={this.props.animal.species}
                                     name='species_id'
-                                    onChange={this.propshandleAdoption}
+                                    onChange={this.props.handleAdoption}
                                     renderValue={value => `${value}`}
                                     input={<Input id="species_id" />}
                                 >
 
                                     {this.props.species.map(status => {
                                         return (
-                                            <MenuItem value={status.id}>{status.species}</MenuItem>
+                                            <MenuItem key={status.id} value={status.id}>{status.species}</MenuItem>
                                         )
                                     })}
                                 </Select>
@@ -135,11 +135,22 @@ class AnimalViewDetails extends React.Component {
                               )
                             })} */}
 
-                                    {this.props.dynamicBreedDropdown.map(status => {
+                                    {this.props.dynamicBreedDropdown.length===0 ? 
+
+                                    this.props.breeds.filter(breed => {
+                                        return breed.species_id===this.props.animal.species_id})
+                                    .map(status => {
                                         return (
-                                            <MenuItem value={status.id}>{status.breed}</MenuItem>
+                                            <MenuItem key={status.id} value={status.id}>{status.breed}</MenuItem>
                                         )
-                                    })}
+                                    })
+                                    :
+                                    this.props.dynamicBreedDropdown.map(status => {
+                                        return (
+                                            <MenuItem key={status.id} value={status.id}>{status.breed}</MenuItem>
+                                        )
+                                    })
+                                   }
                                 </Select>
                             </FormControl>
 
@@ -246,12 +257,12 @@ AnimalViewDetails.propTypes = {
 const mapStateToProps = (state) => {
     return {
         locations: state.animalReducer.dropdownAnimalOptions.locations,
-        // breeds: state.animalReducer.dropdownAnimalOptions.breeds,
+        breeds: state.animalReducer.dropdownAnimalOptions.breeds,
         size: state.animalReducer.dropdownAnimalOptions.size,
         coat_length: state.animalReducer.dropdownAnimalOptions.coat_length,
         ages: state.animalReducer.dropdownAnimalOptions.ages,
         animal_status: state.animalReducer.dropdownAnimalOptions.animal_status,
-        // species: state.animalReducer.dropdownAnimalOptions.species,
+        species: state.animalReducer.dropdownAnimalOptions.species,
     }
 }
 

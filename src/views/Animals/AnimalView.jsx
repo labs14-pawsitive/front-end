@@ -464,7 +464,7 @@ class AnimalView extends React.Component {
       console.log('healthState ', this.state.textState.healthState)
       console.log('nameState ', this.state.textState.nameState)
 
-      if (this.isValidated()) {
+      if (this.isValidated() && this.state.animal_meta.breed !== 'select a breed') {
 
         this.updateForm()
       }
@@ -636,8 +636,8 @@ class AnimalView extends React.Component {
                   dynamicBreedDropdown={this.state.dynamicBreedDropdown}
                   textState={this.state.textState}
                   breedState={this.state.breedState}
-                  species={this.state.species}
-                  breeds={this.state.breeds} />
+                  speciesProps={this.state.species}
+                  breedsProps={this.state.breeds} />
 
                 <AnimalViewHealth
                   textState={this.state.textState}
