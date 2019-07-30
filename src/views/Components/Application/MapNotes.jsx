@@ -117,7 +117,7 @@ class MapNotes extends React.Component {
                     justify="flex-end"
                 >
 
-                    <GridItem xs={3} >
+                    <GridItem xs={4} >
                         <Button
                             color="transparent"
                             className={classes.deleteButtonStyle}
@@ -127,7 +127,7 @@ class MapNotes extends React.Component {
                         </Button>
                     </GridItem>
 
-                    <GridItem>
+                    <GridItem xs={3}>
                         <Button
 
                             color="transparent"

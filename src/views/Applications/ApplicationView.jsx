@@ -208,7 +208,7 @@ class ApplicationView extends React.Component {
       },
       checkBoxStyle: {
         float: "right",
-        color: "#000"
+        color: "#000",
       },
       inputStyle: {
         background: '#edeae8',
@@ -219,11 +219,11 @@ class ApplicationView extends React.Component {
       },
       textFieldStyle: {
         background: '#edeae8',
+        padding: '1%',
         marginTop: '3%',
         marginBottom: '3%',
         fontStyle: "Sans-serif",
         fontColor: "black",
-        
       },
       dropDownStyle: {
         background: '#edeae8',
@@ -242,13 +242,16 @@ class ApplicationView extends React.Component {
       },
       selectLabel: {
         marginLeft: '1%',
-      }
+      },
+      signatureSectionStyle: {
+      
+      },
+      signatureTextStyle: {
+        background: '#edeae8',
+
+      },
 
     };
-
-    // const appStatusDropdown = this.props.statusOptions.map(option => {
-
-    // })
 
     return (
       <>
@@ -269,6 +272,7 @@ class ApplicationView extends React.Component {
                       disabled='true'
                       value={this.state.application.application_id}
                       style={customStyle.textFieldStyle}
+                      
                     />
 
                     <TextField
@@ -281,9 +285,11 @@ class ApplicationView extends React.Component {
                     />
 
                     <FormControl fullWidth className={classes.selectFormControl}>
+
+                      <div style={customStyle.selectStyle}>
                       <InputLabel 
                       htmlFor="application_status" 
-                      // style={customStyle.selectLabel}
+                      style={customStyle.selectLabel}
                       >
                         Application Status
                       </InputLabel>
@@ -300,8 +306,10 @@ class ApplicationView extends React.Component {
                         onChange={this.handleChange}
                         name="application_status"
                         id="application_status"
+                        fullWidth="true"
                         // style={customStyle.selectStyle}
                       >
+                        
 
                         <MenuItem
                           disabled
@@ -324,6 +332,7 @@ class ApplicationView extends React.Component {
                           </MenuItem> 
                         ))}
                       </Select>
+                      </div>
 
                     </FormControl>
 
@@ -527,13 +536,14 @@ class ApplicationView extends React.Component {
               <Card>
                 <CardBody>
 
-                  <GridContainer style={customStyle.textFieldStyle} direction='row' justify='center' alignItems='center' >
+                  <GridContainer style={customStyle.signatureSectionStyle} direction='row' justify='center' alignItems='center' >
                     <GridItem xs={10}>
                       <TextField
                         fullWidth='true'
                         disabled='true'
                         value="I hereby certify that the information provided above is true and correct"
-                        style={customStyle.textFieldStyle}
+                        
+                        style={customStyle.signatureTextStyle}
                       />
 
                     </GridItem>

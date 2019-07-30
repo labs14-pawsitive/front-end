@@ -30,7 +30,6 @@ class CreateNotes extends React.Component {
             inputFieldState: '',
         };
     };
-    
 
     handleChanges = e => {
         this.setState({
@@ -42,33 +41,14 @@ class CreateNotes extends React.Component {
         this.setState({ inputField: '' })
     };
 
-    // function TextMaskCustom(props) {
-    //     const { inputRef, ...others } = props;
-
-    //     return (
-    //         <MaskedInput
-    //         {...other}
-    //         ref={ref => {
-    //             inputRef(ref? ref.inputElement : null );
-    //         }}
-    //         mask={}
-    //         placeholderChar={'\u2000'}
-    //         />
-    //     )
-    // }
-
-    // TextMaskCustom.propTypes = {
-    //     inputRef: PropTypes.func.isRequired,
-    // }
-
-// verifies if string has given length or not
+    // verifies if string has given length or not
     verifyLength(value, len) {
         if (value.length >= len) {
 
-          return true;
+            return true;
         }
         return false;
-      };
+    };
 
     isValidated() {
         if (
@@ -83,46 +63,32 @@ class CreateNotes extends React.Component {
         return false;
     }
 
-    // change(event, inputField, event.target.value.length, stateNameEqualTo) {
-    //     switch (event.target.value.length >= len) {
-    //         case "length": 
-    //         if (this.verifyLength(event.target.value, stateNameEqualTo)) {
-    //             this.setState({ inputFieldState: "success" })
-    //         } else {
-    //             this.setState({ inputFieldState: "error" })
-    //         }
-    //         default: break;
-    //     }
-    //     this.setState({ inputField: event.target.value })
-    // };
-
     handleInputField = (len) => event => {
         let stateName = `${event.target.name} State`
 
-        if(event.target.value.length>=len) {
+        if (event.target.value.length >= len) {
             this.setState({
                 inputFieldState: {
                     ...this.state.inputFieldState,
                     [stateName]: "success"
                 }
-               
+
             })
         }
         else {
-            this.setState({ 
+            this.setState({
                 inputFieldState: {
                     ...this.state.inputFieldState,
                     [stateName]: "error"
                 }
             })
-        }   
+        }
 
         this.setState({
             inputField: event.target.value
         })
 
     };
-
 
     componentDidMount() {
         const applicationId = this.props.application_id
@@ -155,7 +121,7 @@ class CreateNotes extends React.Component {
 
         }
 
-        this.props.updateNotes(updatedNote, id )
+        this.props.updateNotes(updatedNote, id)
 
     };
 
@@ -168,24 +134,31 @@ class CreateNotes extends React.Component {
         const customStyle = {
 
             headerStyle: {
-              fontStyle: "Sans-serif",
-              fontSize: "30px",
-              paddingTop: "10px",
+                fontStyle: "Sans-serif",
+                fontSize: "30px",
+                paddingTop: "10px",
             },
             submitButtonStyle: {
                 marginLeft: "5px",
-            }
-      
-          }
+            },
+            addSectionStyle: {
+                borderBottom: "1px solid lightgrey",
+            },
+            notesMarginStyle: {
+                marginTop: "7%",
+            },
+
+        }
 
         return (
             <>
-                <Typography style={ customStyle.headerStyle } >
+                <Typography style={customStyle.headerStyle} >
                     <p> Notes </p>
                 </Typography>
                 <Card>
 
                     <CardBody>
+                        <div style={customStyle.addSectionStyle}>
                         <Input
                             success={this.state.inputFieldState === "success"}
                             error={this.state.inputFieldState === "error"}
@@ -196,7 +169,7 @@ class CreateNotes extends React.Component {
                             inputProps={{
                                 type: "text",
                                 onChange: this.handleInputField(1),
-                                value: this.state.inputField, 
+                                value: this.state.inputField,
                             }}
                         />
 
@@ -228,8 +201,9 @@ class CreateNotes extends React.Component {
                                 </Button>
                             </GridItem>
                         </GridContainer>
+                        </div>
 
-                        <div>
+                        <div style={customStyle.notesMarginStyle}>
                             {this.props.notes && this.props.notes.map(note => (
                                 <MapNotes
                                     note={note}
@@ -255,4 +229,4 @@ const mapStateToProps = state => {
     };
 }
 
-export default connect( mapStateToProps, {addNotes, getNotes, updateNotes, deleteNotes})(withStyles(displayNotesStyle)(CreateNotes))
+export default connect(mapStateToProps, { addNotes, getNotes, updateNotes, deleteNotes })(withStyles(displayNotesStyle)(CreateNotes))
