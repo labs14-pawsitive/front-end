@@ -134,7 +134,7 @@ class ApplicationView extends React.Component {
     //   console.log(error)
     // })
 
-   this.props.updateApplication(updatedStatus, this.props.application.application_id ) // this.state.application.application_id
+   this.props.updateApplication(updatedStatus, this.props.application.application_id ) 
   };
 
   componentDidMount(prevProps, prevState) {
@@ -192,6 +192,8 @@ class ApplicationView extends React.Component {
 
 
   render() {
+
+    console.log(this.props)
 
     const { classes } = this.props;
 
@@ -332,7 +334,7 @@ class ApplicationView extends React.Component {
                       id="application_status"
                       fullWidth='true'
                       disabled='true'
-                      value={moment(this.state.application.created_at).format("MMMM Do YYYY").toString()}
+                      value={moment(this.props.application.created_at).format("MMMM Do YYYY").toString()}
                       style={customStyle.textFieldStyle}
                     />
                   </form>
@@ -455,6 +457,61 @@ class ApplicationView extends React.Component {
               </Card>
             </GridItem>
 
+            <GridItem xs={12} sm={12}>
+              <Typography style={customStyle.headerStyle}>
+                <p>Pet Habitation</p>
+              </Typography>
+
+              <Card>
+                <CardBody>
+                  <TextField
+                  label="Applicant is 18 Years Old or Older"
+                  id=""
+                  fullWidth="true"
+                  disabled="true"
+                  value={this.state.application.is_over_18 ? 'Yes' : 'No' }
+                  style={customStyle.textFieldStyle}
+                   />
+
+                  <TextField 
+                  label="Applicant Owns Current Residence"
+                  id=""
+                  fullWidth="true"
+                  disabled="true"
+                  value={this.state.application.is_homeowner ? 'Yes' : 'No' }
+                  style={customStyle.textFieldStyle}
+                  />
+
+                  <TextField
+                  label="All Residents Agree to Adopt a New Animal"
+                  id=""
+                  fullWidth="true"
+                  disabled="true"
+                  value={this.state.application.is_in_agreement ? 'Yes' : 'No' }
+                  style={customStyle.textFieldStyle}
+                  />
+
+                  <TextField 
+                  label="Residency Inspection Allowed"
+                  id=""
+                  fullWidth="true"
+                  disabled="true"
+                  value={ this.state.application.is_homevisit_allowed ? 'Yes' : 'No' }
+                  style={customStyle.textFieldStyle}
+                  />
+
+                  <TextField
+                  label="Has a Fenced in Yard"
+                  id=""
+                  fullWidth="true"
+                  disabled="true"
+                  value={this.state.application.is_fenced ? 'Yes' : 'No' }
+                  style={customStyle.textFieldStyle}
+                   />
+                </CardBody>
+              </Card>
+            </GridItem>
+
             <GridItem xs={12} sm={16}>
               <Typography style={customStyle.headerStyle}>
                 <p>Applicant Signature</p>
@@ -487,6 +544,7 @@ class ApplicationView extends React.Component {
               </Card>
 
             </GridItem>
+
           </GridItem>
 
           <GridItem xs={6} sm={8} md={5} className={classes.notesSectionStyle}>
