@@ -41,7 +41,6 @@ class MapNotes extends React.Component {
 
         this.setState({ isEditSelected: false, value: this.props.note.notes });
 
-
     }
 
     deleteNotes = e => {
@@ -62,7 +61,20 @@ class MapNotes extends React.Component {
     editSelected = () => {
 
         this.setState({ isEditSelected: !this.state.isEditSelected })
+
     }
+
+    componentDidUpdate(prevProps, prevState) {
+
+        if (this.props.note.notes !== prevProps.note.notes) {
+    
+          this.setState({
+            ...this.state, 
+            value: this.props.note.notes,
+           })
+        } 
+    
+      };
 
     render() {
 
@@ -89,11 +101,11 @@ class MapNotes extends React.Component {
                         className={classes.adjustFont}
                         disableUnderline="true"
                         fullWidth="true"
-                        readOnly={ this.state.isEditSelected ? "false" : "true" }
                         inputProps={{
                             type: "text",
                             value: this.state.isEditSelected ? this.state.value : this.props.note.notes,
-                            onChange: this.handleChanges
+                            onChange: this.handleChanges,
+                            readOnly: this.state.isEditSelected ? false : true
                         }}
                     />
 
