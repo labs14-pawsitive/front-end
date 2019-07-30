@@ -115,7 +115,6 @@ export const applicationReducer = (state = initialState, action) => {
             };
 
         case GET_NOTES_SUCCESS: 
-        console.log(action.payload)
         return {
             ...state,
             fetchingNotes: false,
@@ -180,7 +179,7 @@ export const applicationReducer = (state = initialState, action) => {
             return {
                 ...state,
                 fetchingOptions: false,
-                options: action.payload
+                options: action.payload.application_status
             }
 
         case GET_OPTIONS_FAILURE:

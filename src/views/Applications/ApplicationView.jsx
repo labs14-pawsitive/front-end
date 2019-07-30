@@ -112,7 +112,6 @@ class ApplicationView extends React.Component {
 
     await this.props.fetchOptions(this.props.match.params.id)
 
-    this.forceUpdate()
   };
 
   updateAppStatus = async (event) => {
@@ -144,15 +143,18 @@ class ApplicationView extends React.Component {
 
     this.loadOptions()
 
-
   };
 
 
   componentDidUpdate(prevProps, prevState) {
 
-    if (this.props.application !== prevProps.application) {
+    if (this.props.application !== prevProps.application && this.props.options !== prevProps.application) {
 
-      this.setState({...this.state, application: this.props.application, })
+      this.setState({
+        ...this.state, 
+        application: this.props.application,
+        options: this.props.options,
+       })
     } 
 
   };
@@ -303,7 +305,7 @@ class ApplicationView extends React.Component {
                           Application Status
                         </MenuItem>
 
-                        {this.props.options.application_status.map( (option, key) => (
+                        {this.props.options.map( (option, key) => (
                           <MenuItem
                             classes={{ 
                               root: classes.selectMenuItem,
