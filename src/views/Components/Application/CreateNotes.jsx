@@ -19,14 +19,18 @@ import displayNotesStyle from "assets/jss/material-dashboard-pro-react/views/dis
 
 import withStyles from "@material-ui/core/styles/withStyles";
 
-class DisplayNotes extends React.Component {
+import MaskedInput from 'react-text-mask';
+
+class CreateNotes extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             notes: [],
             inputField: '',
+            inputFieldState: '',
         };
     };
+    
 
     handleChanges = e => {
         this.setState({
@@ -37,6 +41,88 @@ class DisplayNotes extends React.Component {
     clearField = e => {
         this.setState({ inputField: '' })
     };
+
+    // function TextMaskCustom(props) {
+    //     const { inputRef, ...others } = props;
+
+    //     return (
+    //         <MaskedInput
+    //         {...other}
+    //         ref={ref => {
+    //             inputRef(ref? ref.inputElement : null );
+    //         }}
+    //         mask={}
+    //         placeholderChar={'\u2000'}
+    //         />
+    //     )
+    // }
+
+    // TextMaskCustom.propTypes = {
+    //     inputRef: PropTypes.func.isRequired,
+    // }
+
+// verifies if string has given length or not
+    verifyLength(value, len) {
+        if (value.length >= len) {
+
+          return true;
+        }
+        return false;
+      };
+
+    isValidated() {
+        if (
+            this.state.inputFieldState === "success"
+        ) {
+            return true;
+        } else {
+            if (this.state.inputFieldState !== "success") {
+                this.setState({ inputFieldState: "error" })
+            }
+        }
+        return false;
+    }
+
+    // change(event, inputField, event.target.value.length, stateNameEqualTo) {
+    //     switch (event.target.value.length >= len) {
+    //         case "length": 
+    //         if (this.verifyLength(event.target.value, stateNameEqualTo)) {
+    //             this.setState({ inputFieldState: "success" })
+    //         } else {
+    //             this.setState({ inputFieldState: "error" })
+    //         }
+    //         default: break;
+    //     }
+    //     this.setState({ inputField: event.target.value })
+    // };
+
+    handleInputField = (len) => event => {
+        let stateName = `${event.target.name} State`
+
+        if(event.target.value.length>=len) {
+            this.setState({
+                inputFieldState: {
+                    ...this.state.inputFieldState,
+                    [stateName]: "success"
+                }
+               
+            })
+        }
+        else {
+            this.setState({ 
+                inputFieldState: {
+                    ...this.state.inputFieldState,
+                    [stateName]: "error"
+                }
+            })
+        }   
+
+        this.setState({
+            inputField: event.target.value
+        })
+
+    };
+
 
     componentDidMount() {
         const applicationId = this.props.application_id
@@ -75,6 +161,8 @@ class DisplayNotes extends React.Component {
 
     render() {
 
+        console.log('STATE', this.state)
+
         const { classes } = this.props;
 
         const customStyle = {
@@ -99,14 +187,16 @@ class DisplayNotes extends React.Component {
 
                     <CardBody>
                         <Input
+                            success={this.state.inputFieldState === "success"}
+                            error={this.state.inputFieldState === "error"}
                             placeholder="Add a note"
                             id="notes"
                             fullWidth="true"
                             disableUnderline="true"
                             inputProps={{
                                 type: "text",
-                                onChange: this.handleChanges,
-                                value: this.state.inputField,
+                                onChange: this.handleInputField(1),
+                                value: this.state.inputField, 
                             }}
                         />
 
@@ -165,4 +255,4 @@ const mapStateToProps = state => {
     };
 }
 
-export default connect( mapStateToProps, {addNotes, getNotes, updateNotes, deleteNotes})(withStyles(displayNotesStyle)(DisplayNotes))
+export default connect( mapStateToProps, {addNotes, getNotes, updateNotes, deleteNotes})(withStyles(displayNotesStyle)(CreateNotes))

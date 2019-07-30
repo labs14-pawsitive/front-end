@@ -66,6 +66,9 @@ class MapNotes extends React.Component {
 
     render() {
 
+        console.log('EDIT SELECT STATUS', this.state.isEditSelected ) 
+  
+
         const { classes } = this.props;
 
         const customStyle = {
@@ -86,7 +89,7 @@ class MapNotes extends React.Component {
                         className={classes.adjustFont}
                         disableUnderline="true"
                         fullWidth="true"
-                        // readOnly={ this.state.isEditSelected ? "false" : "true" }
+                        readOnly={ this.state.isEditSelected ? "false" : "true" }
                         inputProps={{
                             type: "text",
                             value: this.state.isEditSelected ? this.state.value : this.props.note.notes,
@@ -104,12 +107,11 @@ class MapNotes extends React.Component {
 
                     <GridItem xs={3} >
                         <Button
-
                             color="transparent"
                             className={classes.deleteButtonStyle}
                             onClick={this.state.isEditSelected ? this.cancelClick : this.deleteNotes}
                         >
-                            {this.state.isEditSelected ? "Cancel" : "Delete"}
+                            {this.state.isEditSelected ? "Cancel" : "Delete" }
                         </Button>
                     </GridItem>
 
@@ -121,7 +123,7 @@ class MapNotes extends React.Component {
                             onClick={this.state.isEditSelected ? this.updateNotes : this.editSelected}
 
                         >
-                            {this.state.isEditSelected ? "Save" : "Edit"}
+                            {this.state.isEditSelected ? "Save" : "Edit" }
                         </Button>
                     </GridItem>
 

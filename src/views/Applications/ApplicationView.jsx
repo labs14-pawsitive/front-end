@@ -16,7 +16,6 @@
 */
 import React from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
 import { connect } from "react-redux";
 
 // @material-ui/core components
@@ -41,7 +40,7 @@ import CardBody from "components/Card/CardBody.jsx";
 
 import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
 
-import DisplayNotes from '../Components/Application/DisplayNotes';
+import CreateNotes from '../Components/Application/CreateNotes';
 
 import moment from 'moment';
 
@@ -189,16 +188,7 @@ class ApplicationView extends React.Component {
     });
   }
 
-verifyLength(value, length) {
-  if (value.length >= length) {
-    return true;
-  }
-  return false;
-}
-
   render() {
-
-    console.log(this.props)
 
     const { classes } = this.props;
 
@@ -566,7 +556,7 @@ verifyLength(value, length) {
 
           <GridItem xs={6} sm={8} md={5} className={classes.notesSectionStyle}>
 
-            <DisplayNotes application={this.state.application} application_id={this.props.match.params.id} />
+            <CreateNotes application={this.state.application} application_id={this.props.match.params.id} />
 
           </GridItem>
 
