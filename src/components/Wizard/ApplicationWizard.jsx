@@ -247,7 +247,8 @@ class ApplicationWizard extends React.Component {
       this.setState({
         isSuccess : true
       })
-      console.log(app)
+      localStorage.removeItem('animalId');
+      localStorage.removeItem('shelterId');
     })
     .catch(error => {
       this.setState({
@@ -341,7 +342,11 @@ class ApplicationWizard extends React.Component {
               {steps[this.state.currentStep].stepName}
             </div>
           </div>
-          <div className={classes.content}>
+          {this.state.isSuccess? 
+          <div><h1>Your application has been successfully submitted</h1></div> 
+          : 
+          
+           <div className={classes.content}>
             {steps.map((prop, key) => {
               const stepContentClasses = cx({
                 [classes.stepContentActive]: this.state.currentStep === key,
@@ -357,9 +362,13 @@ class ApplicationWizard extends React.Component {
               );
             })}
           </div>
+          
+          
+          }
+         
           <div className={classes.footer}>
             <div className={classes.left}>
-              {this.state.previousButton ? (
+              {this.state.previousButton && !this.state.isSuccess ? (
                 <Button
                   className={this.props.previousButtonClasses}
                   onClick={() => this.previousButtonClick()}
@@ -369,7 +378,7 @@ class ApplicationWizard extends React.Component {
               ) : null}
             </div>
             <div className={classes.right}>
-              {this.state.nextButton ? (
+              {this.state.nextButton && !this.state.isSuccess ? (
                 <Button
                   color="rose"
                   className={this.props.nextButtonClasses}
@@ -378,7 +387,7 @@ class ApplicationWizard extends React.Component {
                   {this.props.nextButtonText}
                 </Button>
               ) : null}
-              {this.state.finishButton ? (
+              {this.state.finishButton && !this.state.isSuccess ? (
                 <Button
                   color="rose"
                   className={this.finishButtonClasses}

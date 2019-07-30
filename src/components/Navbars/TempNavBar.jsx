@@ -94,21 +94,22 @@ class TempNavBar extends React.Component {
             />
           </NavLink>
         </ListItem>
-        <ListItem className={classes.listItem}>
+        
+        {/*<ListItem className={classes.listItem}>
           <NavLink
            to={`/application/`} 
             className={cx(classes.navLink, {
               [classes.navLinkActive]: this.activeRoute("/application")
             })}
           >
-           <LibraryBooks className={classes.listItemIcon} />
+          <LibraryBooks className={classes.listItemIcon} />
             <ListItemText
               primary={"Got an application invite?"}
               disableTypography={true}
               className={classes.listItemText}
             />
           </NavLink>
-        </ListItem>
+        </ListItem> */} 
 
         <AuthView {...this.props}/>
         

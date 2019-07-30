@@ -233,7 +233,6 @@ class Step1 extends React.Component {
       this.state.zipState === "success" && 
       this.state.phoneState === "success" && 
       this.state.emailState === "success" 
-   
     ) {
       return true;
     } else {
@@ -267,30 +266,16 @@ class Step1 extends React.Component {
     this.setState({
       over18: !this.state.over18
     })
-    /*
-    const { checked } = this.state;
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    this.setState({
-      checked: newChecked
-    });
-    */
+   
   }
 
   render() {
     const { classes } = this.props;
-    //let hideDropdown = editMode? disabled : null;
     const customStyle = {
       centerAlign: {
         textAlign:"center"
       }
+     
     }
     return (
       <GridContainer justify="center">
@@ -313,7 +298,6 @@ class Step1 extends React.Component {
 
             inputProps={{
               onChange: event => this.change(event, "name", "length", 5),
-              
             }}
 
           />
@@ -391,7 +375,7 @@ class Step1 extends React.Component {
        
         <GridItem xs={12} sm={3}>
           <FormControl fullWidth className={classes.selectFormControl}>
-            <InputLabel htmlFor="state" className={classes.selectLabel}>
+            <InputLabel htmlFor="state" className={this.state.stateState !== "error" ? classes.selectLabel : classes.selectLabelError}  >
               Choose State
             </InputLabel>
             <Select
@@ -427,26 +411,7 @@ class Step1 extends React.Component {
                 {state.state}
               </MenuItem>
               ))}
-              {/* 
-              <MenuItem
-                classes={{
-                  root: classes.selectMenuItem,
-                  selected: classes.selectMenuItemSelected
-                }}
-                value="2"
-              >
-                France
-              </MenuItem>
-              <MenuItem
-                classes={{
-                  root: classes.selectMenuItem,
-                  selected: classes.selectMenuItemSelected
-                }}
-                value="3"
-              >
-                Romania
-              </MenuItem>
-              */}
+              
             </Select>
           </FormControl>
         </GridItem>
@@ -472,21 +437,7 @@ class Step1 extends React.Component {
             
             }}
           />
-          {/* 
-          <CustomInput
-            success={this.state.zipState === "success"}
-            error={this.state.zipState === "error"}
-            labelText="ZipCode"
-            id="zip"
-            formControlProps={{
-              fullWidth: true
-            }}
-            inputProps={{
-              onChange: event => this.change(event, "zip", "digit-only", 5),
-              
-            }}
-          />
-          */}
+          
         </GridItem>
         <GridItem xs={12} sm={5}>
         
@@ -545,7 +496,7 @@ class Step1 extends React.Component {
 
               )
             }}
-/>
+          />
 
         </GridItem>
         <GridItem xs={12} sm={5}>

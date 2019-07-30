@@ -25,7 +25,10 @@ import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import reducer from './reducers';
 
-import Auth from 'components/Auth/Auth.js'
+import Auth from 'components/Auth/Auth.js';
+import PrivateRoute from 'PrivateRoute.js';
+import PrivateRouteShelter from 'PrivateRouteShelter.js';
+import PrivateRouteApplication from 'PrivateRouteApplication.js';
 
 import AuthLayout from "layouts/Auth.jsx";
 import RtlLayout from "layouts/RTL.jsx";
@@ -54,6 +57,8 @@ const handleAuthentication = ({ location }) => {
 }
 
 
+
+
 ReactDOM.render(
     <Provider store = {store} >
         <Router history={hist}>
@@ -62,9 +67,9 @@ ReactDOM.render(
             <Route path="/auth" component={AuthLayout} />
             <Route path="/callback" render={props => {handleAuthentication(props); return <Callback {...props} />}} />
             <Route path="/application/:shelterId/:animalId" component={ApplicationLayout} />
-            {/* <Route path="/application" component={ApplicationLayout} />*/}
-            <Route path="/shelter-signup" component={ShelterOnboarding}/>
-            <Route path="/admin" component={AdminLayout} />
+            <Route path="/application" component={ApplicationLayout} />
+            <PrivateRoute path="/shelter-signup" component={ShelterOnboarding}/>
+            <PrivateRouteShelter path="/admin" component={AdminLayout} />
             {/* <Redirect from="/" to="/admin/dashboard" />  */}
             </Switch>
         </Router>

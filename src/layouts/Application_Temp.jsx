@@ -18,7 +18,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Auth from "components/Auth/Auth.js"
-
+import SweetAlert from "react-bootstrap-sweetalert";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -31,7 +31,7 @@ import ApplicationWizard from "views/Application_Temp/Wizard.jsx";
 
 import routes from "routes.js";
 
-import pagesStyle from "assets/jss/material-dashboard-pro-react/layouts/authStyle.jsx";
+import applicationTempStyle from "assets/jss/material-dashboard-pro-react/layouts/applicationTempStyle.jsx";
 
 import register from "assets/img/register.jpeg";
 import login from "assets/img/login.jpeg";
@@ -40,25 +40,84 @@ import error from "assets/img/clint-mckoy.jpg";
 import pricing from "assets/img/bg-pricing.jpeg";
 import application from "assets/img/bg-application3.jpg";
 
-
+const auth = new Auth();
 
 class Application extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state={
+      alert: null,
+      show: false
+    }
+  }
 
   wrapper = React.createRef();
 
-  componentDidMount() {
-    document.body.style.overflow = "unset";
-     
-      //this.setAnimalShelter();
+  componentWillMount() {
+    if(this.props.match.params.animalId && this.props.match.params.shelterId) {
+      localStorage.setItem('animalId', this.props.match.params.animalId )
+      localStorage.setItem('shelterId', this.props.match.params.shelterId) 
+    } 
   }
 
-  /*setAnimalShelter = async() => {
-    await this.setState({
-      animalId : this.props.match.params.animalId,
-      shelterId : this.props.match.params.shelterId
-    }) 
-  }*/
-  
+ componentDidMount() {
+    document.body.style.overflow = "unset";
+    this.setAlert();
+  }
+
+  setAlert = () => {
+    if (!localStorage.getItem('animalId') && !localStorage.getItem('shelterId')) {
+      this.dangerAlert();
+    } else if(!localStorage.getItem('id_token') && !localStorage.getItem('user_id')) {
+      this.warningAlert();
+    } else {
+      this.hideAlert();
+    }
+  }
+
+  dangerAlert() {
+    this.setState({
+      alert: (
+       <SweetAlert
+          danger
+          style={{ display: "block", marginTop: "-100px", color: "#777" }}
+          title="You've entered an invalid link"
+          onConfirm={() => this.hideAlert()}
+          confirmBtnCssClass={
+            this.props.classes.button + " " + this.props.classes.success
+          }
+          confirmBtnText="OK"
+        >
+          Please try again or request a valid link from your shelter.
+          </SweetAlert>
+      )
+    });
+  }
+
+  warningAlert() {
+    this.setState({
+      alert: (
+       <SweetAlert
+          warning
+          style={{ display: "block", marginTop: "-100px", color: "#777" }}
+          title="You need to login / signup in order to continue with application process"
+          onConfirm={() => auth.login()}
+          confirmBtnCssClass={
+            this.props.classes.button + " " + this.props.classes.success
+          }
+          confirmBtnText="Signup / Login"
+        >
+          </SweetAlert>
+      )
+    });
+  }
+
+  hideAlert() {
+    this.setState({
+      alert: null
+    });
+  }
+
   getBgImage = () => {
     return application;
   };
@@ -67,7 +126,6 @@ class Application extends React.Component {
     const { classes, ...rest } = this.props;
     
     return (
-      
       <div>
         <TempNavBar brandText="Pawsnfind" {...rest} />
 
@@ -77,8 +135,13 @@ class Application extends React.Component {
             className={classes.fullPage}
             style={{ backgroundImage: "url(" + this.getBgImage() + ")" }}
           >
-            <ApplicationWizard animalId={this.props.match.params.animalId} shelterId={this.props.match.params.shelterId}/>
-            
+            {this.state.alert}
+            {localStorage.getItem('animalId') && localStorage.getItem('shelterId') && localStorage.getItem('id_token') && localStorage.getItem('user_id')
+            ? 
+            <ApplicationWizard animalId={localStorage.getItem('animalId')} shelterId={localStorage.getItem('shelterId')}/>
+            : 
+            null
+            } 
             <Footer white />
           </div>
         </div>
@@ -91,4 +154,4 @@ Application.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(pagesStyle)(Application);
+export default withStyles(applicationTempStyle)(Application);

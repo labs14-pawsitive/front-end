@@ -56,7 +56,11 @@ class Callback extends React.Component {
       else 
       if (shelter_id != "null" && typeof(shelter_id) !== 'undefined') {
         this.props.history.push('/admin/dashboard')
-      }  
+      } 
+      else 
+      if (localStorage.getItem('animalId') && localStorage.getItem('shelterId')) { 
+        this.props.history.push(`/application/${localStorage.getItem('shelterId')}/${localStorage.getItem('animalId')}`)
+      }
       else {
         this.props.history.push('/')
       }
