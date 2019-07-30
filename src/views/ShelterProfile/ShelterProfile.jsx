@@ -16,9 +16,9 @@
 */
 import React from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
 import { connect } from "react-redux";
 import { fetchShelter } from '../../actions/shelterAction';
+import Locations from './Locations';
 
 import LocationForm from './LocationForm';
 import ContactForm from './ContactForm';
@@ -52,12 +52,23 @@ import shelterProfileStyles from "assets/jss/material-dashboard-pro-react/views/
     super(props);
     this.state = {
       editMode : false,
-      shelter : {}
+      shelter : {},
+      locations: []
     };
   }
 
   componentDidMount() {
     this.props.fetchShelter(this.props.shelterID)
+    .then( () => {
+      this.setState({
+        shelter: this.props.shelter,
+        locations: this.props.shelter.location
+      })
+      console.log('WHERE ARE LOCATIONS', this.state.locations)
+    })
+    .catch( err => {
+      console.log('setting state error', err)
+     })
   }
 
 handleFormButtonToggle = e => {
@@ -67,6 +78,7 @@ handleFormButtonToggle = e => {
     editMode : !this.state.editMode
   })
 }
+
 
 inputchangeHandler = e => {
   this.setState({
@@ -114,7 +126,7 @@ return (
                     inputProps={{
                       disabled: this.state.editMode? false : true,
                       style: customStyle.shelterDisplayView,
-                      value: this.props.shelter.shelter,
+                      value: this.state.shelter.shelter,
                       onChange: (e) => this.inputchangeHandler(e)
                     }}
                   />
@@ -133,7 +145,7 @@ return (
                     }}
                     inputProps={{
                       disabled: this.state.editMode? false : true,
-                      value: this.props.shelter.name,
+                      value: this.state.shelter.name,
                       onChange: (e) => this.inputchangeHandler(e)
                     }}
                     style={this.state.editMode? "" : customStyle.shelterDisplayView}
@@ -149,7 +161,7 @@ return (
                     }}
                     inputProps={{
                       disabled: this.state.editMode? false : true,
-                      value: this.props.shelter.email,
+                      value: this.state.shelter.email,
                       onChange: (e) => this.inputchangeHandler(e)
                     }}
                     style={this.state.editMode? "" : customStyle.shelterDisplayView}
@@ -165,7 +177,7 @@ return (
                     }}
                     inputProps={{
                       disabled: this.state.editMode? false : true,
-                      value: this.props.shelter.phone,
+                      value: this.state.shelter.phone,
                       onChange: (e) => this.inputchangeHandler(e)
                     }}
                     style={this.state.editMode? "" : customStyle.shelterDisplayView}
@@ -174,9 +186,9 @@ return (
                 </GridItem>
               </GridContainer>
               
-              <Button color="rose" className={classes.updateProfileButton} onClick={this.handleFormButtonToggle}>
+              {/* <Button color="rose" className={classes.updateProfileButton} onClick={this.handleFormButtonToggle}>
                 {this.state.editMode? "Save Changes" : "Update Profile"}
-              </Button>
+              </Button> */}
               <Clearfix />
             </CardBody>
           </Card>
@@ -247,7 +259,54 @@ return (
             <h3 className={classes.cardTitle}>Locations</h3>
             </CardHeader>
             <CardBody>
-            <GridContainer>
+                    {this.state.shelter && this.state.locations.map(location => (
+                    <Locations
+                        location ={location}
+                        classes = {this.props.classes}
+                    />
+                    ))}
+
+
+            
+            </CardBody>
+          </Card>
+        </GridItem>
+      </GridContainer>
+
+
+     
+    </div>
+  );
+  }
+
+}
+
+
+  
+  
+
+const mapStateToProps = (state) => {
+  return {
+    userID : state.userReducer.userID,
+    shelterID : state.shelterReducer.shelterID,
+    shelterWorkerID : state.userReducer.shelterWorkerID,
+    roleID : state.userReducer.roleID,
+    shelter: state.shelterReducer.shelter,
+    fetchingShelter: state.shelterReducer.fetchingShelter, 
+  }
+}
+
+ShelterProfile.propTypes = {
+  classes: PropTypes.object
+};
+
+export default connect(
+  mapStateToProps,
+  { fetchShelter }
+)(withStyles(shelterProfileStyles)(ShelterProfile))
+
+
+{/* <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
                   <CustomInput
                     labelText={this.state.shelter? "Location Name" : "Location"}
@@ -310,42 +369,4 @@ return (
                 {this.state.editMode? "Save Changes" : "Update"}
               </Button>  
             </GridItem>
-            </GridContainer>
-            </CardBody>
-          </Card>
-        </GridItem>
-      </GridContainer>
-
-
-     
-    </div>
-  );
-  }
-
-}
-
-
-  
-  
-
-const mapStateToProps = (state) => {
-  return {
-    userID : state.userReducer.userID,
-    shelterID : state.shelterReducer.shelterID,
-    shelterWorkerID : state.userReducer.shelterWorkerID,
-    roleID : state.userReducer.roleID,
-    shelter: state.shelterReducer.shelter,
-    fetchingShelter: state.shelterReducer.fetchingShelter, 
-  }
-}
-
-ShelterProfile.propTypes = {
-  classes: PropTypes.object
-};
-
-export default connect(
-  mapStateToProps,
-  { fetchShelter }
-)(withStyles(shelterProfileStyles)(ShelterProfile))
-
-
+            </GridContainer> */}

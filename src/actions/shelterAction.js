@@ -8,7 +8,7 @@ export const GET_SHELTER_ERR = 'GET_SHELTER_ERROR';
 export const fetchShelter = shelterID => dispatch => {
     dispatch({ type: GET_SHELTER_START })
     return axios
-    .get(`https://staging1-pawsnfind.herokuapp.com/api/shelters/${shelterID}`)
+    .get(`http://localhost:8000/api/shelters/${shelterID}`)
     .then(res => {
         dispatch({ type: GET_SHELTER_SUCCESS, payload: res.data })
     })
