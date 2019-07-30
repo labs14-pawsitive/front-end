@@ -264,7 +264,7 @@ class LocationForm extends React.Component {
                             name: "shelter_contact_id",
                             id: "contact-select"
                         }}>
-                            {this.props.contactOptions.map(contact => (
+                            {this.props.contacts.map(contact => (
                                 <MenuItem
                                 key = {contact.id}
                                 classes={{

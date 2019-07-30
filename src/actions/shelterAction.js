@@ -76,7 +76,7 @@ export const DELETE_SHELTERLOC_ERR = 'DELETE_SHELTERLOC_ERROR';
 export const deleteShelterLoc = locationId => dispatch => {
     dispatch({ type: DELETE_SHELTERLOC_START })
     return axios
-    .put(`http://localhost:8000/api/shelters/location/${locationId}`, locationId)
+    .delete(`http://localhost:8000/api/shelters/location/${locationId}`, locationId)
     .then(res => {
         dispatch({ type: DELETE_SHELTERLOC_SUCCESS, payload: res.data })
     })
@@ -127,7 +127,7 @@ export const DELETE_CONTACT_ERR = 'DELETE_CONTACT_ERROR';
 export const deleteShelterCon = contactId => dispatch => {
     dispatch({ type: DELETE_CONTACT_START })
     return axios
-    .put(`http://localhost:8000/api/shelters/location/${contactId}`, contactId)
+    .delete(`http://localhost:8000/api/shelters/contact/${contactId}`, contactId)
     .then(res => {
         dispatch({ type: DELETE_CONTACT_SUCCESS, payload: res.data })
     })

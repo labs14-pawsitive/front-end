@@ -17,7 +17,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { addShelterCon } from "../../actions/shelterAction";
+import { addShelterCon, fetchShelter } from "../../actions/shelterAction";
 
 import shelterProfileStyles from "assets/jss/material-dashboard-pro-react/views/shelterProfileStyles.jsx";
 
@@ -78,9 +78,9 @@ class ContactForm extends React.Component {
         console.log(newContact)
         this.props.addShelterCon(this.props.shelterID, newContact)
 
-        // .then( () => {
-        //     this.props.getLocations
-        // });
+        .then( () => {
+            this.props.fetchShelter(this.props.shelterID)
+        });
 
         this.handleClose()
         this.setState({
@@ -190,5 +190,5 @@ const mapStateToProps = (state) => {
   
   export default connect(
     mapStateToProps,
-    { addShelterCon }
+    { addShelterCon, fetchShelter }
   )(withStyles(shelterProfileStyles)(ContactForm))

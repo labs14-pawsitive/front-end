@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
-import { fetchOptions, fetchShelter ,updateShelterLoc, deleteShelterLoc } from '../../actions/shelterAction';
+import { fetchOptions, fetchShelter ,updateShelterCon, deleteShelterCon } from '../../actions/shelterAction';
 
 
 // @material-ui/core components
@@ -15,7 +15,7 @@ import CustomInput from "components/CustomInput/ShelterCustomInput.jsx";
 
 import shelterProfileStyles from "assets/jss/material-dashboard-pro-react/views/shelterProfileStyles.jsx";
 
-class Locations extends Component {
+class Contacts extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -24,9 +24,9 @@ class Locations extends Component {
 
     }
 
-deleteLocation = e => {
+deleteContact = e => {
     e.preventDefault()
-    this.props.deleteShelterLoc(this.props.location.id)
+    this.props.deleteShelterCon(this.props.contact.id)
     .then( () => {
         this.props.fetchShelter(this.props.shelterID)
     })
@@ -41,101 +41,72 @@ deleteLocation = e => {
           const { classes } = this.props;
         return (
             <>
-                <GridContainer>
+               <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
                   <CustomInput
-                    labelText="Nickname"
-                    id="location"
+                    labelText="Name"
+                    id={this.state.editMode? "name-disabled" : "name"}
                     formControlProps={{
                       fullWidth: true
                     }}
                     inputProps={{
                       disabled: this.state.editMode? false : true,
-                      style: customStyle.shelterDisplayView,
-                      value: this.props.location.nickname
+                      value: this.props.contact.name
                     }}
+                    style={this.state.editMode? "" : customStyle.shelterDisplayView}
+
                   />
                 </GridItem>
-              </GridContainer>
-            <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-                <CustomInput
-                    labelText="Street Address"
-                    id={this.state.editMode? "street-address-disabled" : "street-address"}
+                <GridItem xs={12} sm={12} md={6}>
+                  <CustomInput
+                    labelText="Email address"
+                    id={this.state.editMode? "email-address-disabled" : "email"}
                     formControlProps={{
-                      fullWidth: true
+                      fullWidth: true,
                     }}
                     inputProps={{
                       disabled: this.state.editMode? false : true,
-                      value: this.props.location.street_address
+                      value: this.props.contact.email
                     }}
                     style={this.state.editMode? "" : customStyle.shelterDisplayView}
 
                   />
-              </GridItem>
-               <GridItem xs={12} sm={12} md={6}>
-               <CustomInput
-                    labelText="City"
-                    id={this.state.editMode? "city-disabled" : "city"}
+                </GridItem>
+                <GridItem xs={12} sm={12} md={6}>
+                  <CustomInput
+                    labelText="Phone Number"
+                    id={this.state.editMode? "phone-disabled" : "phone"}
                     formControlProps={{
                       fullWidth: true
                     }}
                     inputProps={{
                       disabled: this.state.editMode? false : true,
-                      value: this.props.location.city
+                      value: this.props.contact.phone
+
                     }}
                     style={this.state.editMode? "" : customStyle.shelterDisplayView}
-                  />  
-              </GridItem>
-              <GridItem xs={12} sm={12} md={2}>
-              <CustomInput
-                    labelText="State"
-                    id={this.state.editMode? "city-disabled" : "city"}
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      disabled: this.state.editMode? false : true,
-                      value: this.props.location.state
-                    }}
-                    style={this.state.editMode? "" : customStyle.shelterDisplayView}
+
                   />
-            </GridItem>
-            <GridItem xs={12} sm={12} md={4}>
-              <CustomInput
-                    labelText="Zipcode"
-                    id={this.state.editMode? "zipcode-disabled" : "zipcode"}
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      disabled: this.state.editMode? false : true,
-                      value: this.props.location.zipcode
-                    }}
-                    style={this.state.editMode? "" : customStyle.shelterDisplayView}
-                  />
-            </GridItem>
+                </GridItem>
             <GridItem xs={12} sm={12} md={7}></GridItem>
             <GridItem xs={12} sm={12} md={5}>
-            <Button size= "sm" 
-                color="danger" 
-                onClick={this.deleteLocation} >
+              <Button size= "sm" 
+              color="danger" 
+              className={classes.updateProfileButton}
+               onClick={this.deleteContact}>
                 Delete
               </Button>
-
-              <Button size= "sm" color="rose" >
+              <Button size= "sm" color="rose" className={classes.updateProfileButton} onClick={this.handleFormButtonToggle}>
                 {this.state.editMode? "Save Changes" : "Update"}
               </Button>
             </GridItem>
-            </GridContainer>
+              </GridContainer>
             </>
         );
     }
 }
 
-Locations.propTypes = {
 
-};
 
 const mapStateToProps = (state) => {
     return {
@@ -151,6 +122,6 @@ const mapStateToProps = (state) => {
   
   export default connect(
     mapStateToProps,
-    { fetchOptions, updateShelterLoc, deleteShelterLoc, fetchShelter }
-  )(withStyles(shelterProfileStyles)(Locations))
+    { fetchOptions, updateShelterCon, deleteShelterCon, fetchShelter }
+  )(withStyles(shelterProfileStyles)(Contacts))
   

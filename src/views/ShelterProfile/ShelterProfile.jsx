@@ -17,7 +17,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { fetchShelter } from '../../actions/shelterAction';
+import { fetchShelter , deleteShelterLoc, deleteShelterCon } from '../../actions/shelterAction';
 import Locations from './Locations';
 
 import LocationForm from './LocationForm';
@@ -45,6 +45,7 @@ import CardIcon from "components/Card/CardIcon.jsx";
 import CardAvatar from "components/Card/CardAvatar.jsx";
 
 import shelterProfileStyles from "assets/jss/material-dashboard-pro-react/views/shelterProfileStyles.jsx";
+import Contacts from "./Contacts";
 
 
  class ShelterProfile extends React.Component {
@@ -53,7 +54,8 @@ import shelterProfileStyles from "assets/jss/material-dashboard-pro-react/views/
     this.state = {
       editMode : false,
       shelter : {},
-      locations: []
+      locations: [],
+      contacts: []
     };
   }
 
@@ -62,9 +64,9 @@ import shelterProfileStyles from "assets/jss/material-dashboard-pro-react/views/
     .then( () => {
       this.setState({
         shelter: this.props.shelter,
-        locations: this.props.shelter.location
+        locations: this.props.shelter.location,
+        contacts: this.props.shelter.contacts,
       })
-      console.log('WHERE ARE LOCATIONS', this.state.locations)
     })
     .catch( err => {
       console.log('setting state error', err)
@@ -87,6 +89,25 @@ inputchangeHandler = e => {
 }
 
 
+deleteShelterLoc = locationId => {
+  this.props.deleteShelterLoc(locationId)
+}
+
+deleteShelterCon = contactId => {
+  this.props.deleteShelterCon(contactId)
+}
+
+componentDidUpdate(prevProps, prevState){
+  if (this.props.shelter.location !== prevProps.shelter.location ||
+      this.props.shelter.contacts !== prevProps.shelter.contacts 
+    ) {
+    this.setState({
+      locations : this.props.shelter.location,
+      contacts: this.props.shelter.contacts,
+
+    })
+  }
+}
 
 render() {
       const { classes } = this.props;
@@ -99,7 +120,7 @@ return (
     <div>
       <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
-              <LocationForm />
+              <LocationForm contacts={this.state.contacts} />
               <ContactForm />
       </GridItem>
       </GridContainer>
@@ -199,56 +220,13 @@ return (
               </h3>
             </CardHeader>
             <CardBody>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-                  <CustomInput
-                    labelText="Name"
-                    id={this.state.editMode? "username-disabled" : "username"}
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      disabled: this.state.editMode? false : true
-                    }}
-                    style={this.state.editMode? "" : customStyle.shelterDisplayView}
-
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={6}>
-                  <CustomInput
-                    labelText="Email address"
-                    id={this.state.editMode? "email-address-disabled" : "email-address"}
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      disabled: this.state.editMode? false : true
-                    }}
-                    style={this.state.editMode? "" : customStyle.shelterDisplayView}
-
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={6}>
-                  <CustomInput
-                    labelText="Phone Number"
-                    id={this.state.editMode? "email-address-disabled" : "email-address"}
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      disabled: this.state.editMode? false : true
-                    }}
-                    style={this.state.editMode? "" : customStyle.shelterDisplayView}
-
-                  />
-                </GridItem>
-              </GridContainer>
-              <Button size= "sm" color="danger" className={classes.updateProfileButton} onClick={this.handleFormButtonToggle}>
-                Delete
-              </Button>
-              <Button size= "sm" color="rose" className={classes.updateProfileButton} onClick={this.handleFormButtonToggle}>
-                {this.state.editMode? "Save Changes" : "Update"}
-              </Button>
+                      {this.state.shelter && this.state.contacts.map(contact => (
+                    <Contacts
+                        contact ={contact}
+                        classes = {this.props.classes}
+                        deleteShelterCon = {this.deleteShelterCon}
+                    />
+                    ))}
               <Clearfix />
             </CardBody>
           </Card>
@@ -263,10 +241,9 @@ return (
                     <Locations
                         location ={location}
                         classes = {this.props.classes}
+                        deleteShelterLoc = {this.deleteShelterLoc}
                     />
                     ))}
-
-
             
             </CardBody>
           </Card>
@@ -302,7 +279,7 @@ ShelterProfile.propTypes = {
 
 export default connect(
   mapStateToProps,
-  { fetchShelter }
+  { fetchShelter, deleteShelterLoc, deleteShelterCon }
 )(withStyles(shelterProfileStyles)(ShelterProfile))
 
 
