@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import NotesComponent from './NotesComponent.jsx'
 
-import { addNotes } from '../../actions/animalAction.js'
+import { addNotes } from '../../../actions/animalAction.js'
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -128,7 +128,7 @@ class AnimalNotes extends React.Component {
 
                         {this.props.animalNotes.map(note => {
                             console.log('note info ', note)
-                            return < NotesComponent note={note} />
+                            return < NotesComponent key={note.id} note={note} />
 
                         })}
 

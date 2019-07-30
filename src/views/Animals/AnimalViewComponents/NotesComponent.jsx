@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import moment from 'moment'
 import PropTypes from "prop-types";
 import { updateNotes, deleteNotes }
-    from '../../actions/animalAction.js'
+    from '../../../actions/animalAction.js'
 
 // import ListItem from '@material-ui/core/ListItem';
 // import ListItemText from '@material-ui/core/ListItemText';
