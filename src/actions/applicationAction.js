@@ -1,19 +1,20 @@
 import axios from 'axios';
 // axios.defaults.withCredentials = true;
 
-export const GET_APP_START = 'GET_APP_START';
-export const GET_APP_SUCCESS = 'GET_APP_SUCCESS';
-export const GET_APP_FAILURE = 'GET_APP_FAILURE';
+export const FETCH_APP_START = 'FETCH_APP_START';
+export const FETCH_APP_SUCCESS = 'FETCH_APP_SUCCESS';
+export const FETCH_APP_FAILURE = 'FETCH_APP_FAILURE';
 
-export const getApplication = ( id ) => dispatch => {
-    dispatch({ type: GET_APP_START });
+export const fetchApplication = id => dispatch => {
+    dispatch({ type: FETCH_APP_START });
     return axios
     .get(`https://staging1-pawsnfind.herokuapp.com/api/applications/${id}`)
     .then(res => {
-        dispatch({ type: GET_APP_SUCCESS, payload: res.data })
+        console.log('fetched application', res.data)
+        dispatch({ type: FETCH_APP_SUCCESS, payload: res.data })
     })
     .catch(err => {
-        dispatch({ type: GET_APP_FAILURE, payload: err.response })
+        dispatch({ type: FETCH_APP_FAILURE, payload: err.response })
     })
 };
 
@@ -108,10 +109,10 @@ export const GET_OPTIONS_START = 'GET_OPTIONS_START';
 export const GET_OPTIONS_SUCCESS = 'GET_OPTIONS_SUCCESS';
 export const GET_OPTIONS_FAILURE = 'GET_OPTIONS_FAILURE';
 
-export const getOptions = id => dispatch => {
+export const fetchOptions = id => dispatch => {
     dispatch({ type: GET_OPTIONS_START })
     return axios
-    .get(`https://staging1-pawsnfind.herokuapp.com/api/internal/paws/options/:id`)
+    .get(`https://staging1-pawsnfind.herokuapp.com/api/internal/paws/options/${id}`)
     .then(res => {
         console.log(res)
         dispatch({ type: GET_OPTIONS_SUCCESS, payload: res.data })

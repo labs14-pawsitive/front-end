@@ -14,9 +14,9 @@ import {
     GET_OPTIONS_START,
     GET_OPTIONS_SUCCESS, 
     GET_OPTIONS_FAILURE,
-    GET_APP_START,
-    GET_APP_SUCCESS,
-    GET_APP_FAILURE,
+    FETCH_APP_START,
+    FETCH_APP_SUCCESS,
+    FETCH_APP_FAILURE,
     UPDATE_APP_STATUS_START,
     UPDATE_APP_STATUS_SUCCESS,
     UPDATE_APP_STATUS_FAILURE,
@@ -41,20 +41,24 @@ const initialState = {
 export const applicationReducer = (state = initialState, action) => {
     switch (action.type) {
 
-        case GET_APP_START:
+        case FETCH_APP_START:
         return {
             ...state,
             fetchingApplication: true,
         }
 
-        case GET_APP_SUCCESS: 
-        return {
+        case FETCH_APP_SUCCESS: 
+
+        const oddState = {
             ...state,
             fetchingApplication: false,
-            application: action.payload
+            application: action.payload,
         }
 
-        case GET_APP_FAILURE: 
+        console.log(oddState)
+        return oddState
+
+        case FETCH_APP_FAILURE: 
         return {
             ...state,
             fetchingApplication: false,
@@ -172,6 +176,7 @@ export const applicationReducer = (state = initialState, action) => {
             }
             
         case GET_OPTIONS_SUCCESS: 
+        console.log(action.payload)
             return {
                 ...state,
                 fetchingOptions: false,
@@ -186,5 +191,6 @@ export const applicationReducer = (state = initialState, action) => {
             }
 
     }
+    console.log()
     return state;
 }

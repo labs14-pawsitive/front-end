@@ -45,7 +45,7 @@ import DisplayNotes from '../Components/Application/DisplayNotes';
 
 import moment from 'moment';
 
-import { getOptions, updateApplication } from '../../actions/applicationAction';
+import { fetchOptions, fetchApplication, updateApplication } from '../../actions/applicationAction';
 
 class ApplicationView extends React.Component {
   constructor(props) {
@@ -64,42 +64,55 @@ class ApplicationView extends React.Component {
   }
 
 
+  // loadApplication = async () => {
+
+  //   await axios
+  //     // get(`http://localhost:8000/api/applications/${this.props.match.params.id}`)
+  //     .get(`https://staging1-pawsnfind.herokuapp.com/api/applications/${this.props.match.params.id}`)
+  //     .then(application => {
+  //       console.log('application', application.data) 
+
+  //       if (application.data.shelter !== this.props.shelter) {
+  //         this.props.history.push('/admin/dashboard')
+  //       } else {
+  //         this.setState({
+  //           application: application.data,
+  //         })
+  //         console.log('app from state', this.state.application)
+  //       }
+  //     })
+  //     .catch(error => {
+  //       console.log(error)
+  //     })
+  // };
+
   loadApplication = async () => {
 
-    await axios
-      // get(`http://localhost:8000/api/applications/${this.props.match.params.id}`)
-      .get(`https://staging1-pawsnfind.herokuapp.com/api/applications/${this.props.match.params.id}`)
-      .then(application => {
-        console.log('application', application.data) 
+    await this.props.fetchApplication(this.props.match.params.id)
 
-        if (application.data.shelter !== this.props.shelter) {
-          this.props.history.push('/admin/dashboard')
-        } else {
-          this.setState({
-            application: application.data,
-          })
-          console.log('app from state', this.state.application)
-        }
-      })
-      .catch(error => {
-        console.log(error)
-      })
   };
 
-  loadOptions = async () => {
-    await axios
-      .get(`https://staging1-pawsnfind.herokuapp.com/api/internal/paws/options/${this.props.match.params.id}`)
-      .then(options => {
-        console.log('options', options.data)
+  // loadOptions = async () => {
+  //   await axios
+  //     .get(`https://staging1-pawsnfind.herokuapp.com/api/internal/paws/options/${this.props.match.params.id}`)
+  //     .then(options => {
+  //       console.log('options', options.data)
 
-        this.setState({
-          options: options.data.application_status
-        })
-        console.log('options from state', this.state.options)
-      })
-      .catch(error => {
-        console.log(error)
-      })
+  //       this.setState({
+  //         options: options.data.application_status
+  //       })
+  //       console.log('options from state', this.state.options)
+  //     })
+  //     .catch(error => {
+  //       console.log(error)
+  //     })
+  // };
+
+  loadOptions = async () => {
+
+    await this.props.fetchOptions(this.props.match.params.id)
+
+    this.forceUpdate()
   };
 
   updateAppStatus = async (event) => {
@@ -108,7 +121,7 @@ class ApplicationView extends React.Component {
       animal_id: 3,         
       shelter_id: 3, 
       user_id: 3,
-      application_status_id: this.state.application.application_status_id
+      application_status_id: this.state.application.application_status_id,
     };
 
     let id = 3;
@@ -125,18 +138,28 @@ class ApplicationView extends React.Component {
   //  this.updateApplication(updatedStatus, 3 ) // this.state.application.application_id
   };
 
-
-  componentWillMount() {
+  componentDidMount(prevProps, prevState) {
 
     this.loadApplication()
 
     this.loadOptions()
 
+
+  };
+
+
+  componentDidUpdate(prevProps, prevState) {
+
+    if (this.props.application !== prevProps.application) {
+
+      this.setState({...this.state, application: this.props.application, })
+    } 
+
   };
 
  handleChange = async (event) => {
 
-    const appStatus = this.state.options[event.target.value - 1].application_status
+    const appStatus = this.props.options[event.target.value - 1].application_status
 
     await this.setState({ ...this.state, application: {...this.state.application, application_status: appStatus, application_status_id: event.target.value, } });
 
@@ -167,8 +190,8 @@ class ApplicationView extends React.Component {
 
 
   render() {
-
-
+   
+    console.log('options from reducer', this.props.options)
 
     const { classes } = this.props;
 
@@ -280,7 +303,7 @@ class ApplicationView extends React.Component {
                           Application Status
                         </MenuItem>
 
-                        {this.state.options.map((option, key) => (
+                        {this.props.options.application_status.map( (option, key) => (
                           <MenuItem
                             classes={{ 
                               root: classes.selectMenuItem,
@@ -487,6 +510,7 @@ ApplicationView.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
+    application: state.applicationReducer.application,
     userID: state.userReducer.userID,
     shelterID: state.shelterReducer.shelterID,
     shelterWorkerID: state.userReducer.shelterWorkerID,
@@ -498,7 +522,7 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps,
-  { getOptions }
+  { fetchOptions, fetchApplication, updateApplication }
 )(withStyles(regularFormsStyle)(ApplicationView))
 
 {/* <GridItem xs={12} sm={12} md={8}>
