@@ -10,6 +10,8 @@ export const updateAnimal = (updateinfo,animalId,animalMetaId) => dispatch => {
   dispatch({ type: EDIT_ANIMAL_INFO_START })
   return axios
     .put(`http://localhost:8000/api/animals/${animalId}/meta/${animalMetaId}`, updateinfo)
+    .then(res => axios
+      .get(`http://localhost:8000/api/animals/${animalId}`))
     .then(res => {
       dispatch({ type: EDIT_ANIMAL_INFO_SUCCESS, payload: res.data })
       console.log('action updated animal ', res.data)
@@ -33,11 +35,11 @@ export const getAllOptions = (shelterID) => dispatch => {
       
       .then(res => {
         dispatch({ type: GET_DROPDOWN_SUCCESS, payload: res.data })
-        console.log('get all animal options info', res.data)
+        console.log('action: get all animal options info', res.data)
       })
       .catch(err => {
         dispatch({ type: GET_DROPDOWN_FAILURE, payload: err.response })
-        console.log('get animal info error: ', err.response)
+        console.log('action: get animal info error: ', err.response)
       })
   }
 
@@ -52,18 +54,22 @@ export const getAllOptions = (shelterID) => dispatch => {
         .get(`http://localhost:8000/api/animals/${animalID}`)
         .then(res => {
           dispatch({ type: GET_ANIMAL_SUCCESS, payload: res.data })
-          console.log('get all animal info', res.data)
+          console.log('action: get all animal info', res.data)
         })
         .catch(err => {
           dispatch({ type: GET_ANIMAL_FAILURE, payload: err.response })
-          console.log('get animal info error: ', err.response)
+          console.log('action: get animal info error: ', err.response)
         })
     }  
 
     export const POST_NOTES_START = 'POST_NOTES_START'
     export const POST_NOTES_SUCCESS = 'POST_NOTES_SUCCESS'
     export const POST_NOTES_FAILURE = 'POST_NOTES_FAILURE'
-    
+
+    export const GET_NOTES_BY_ANIMAL_START = 'GET_NOTES_BY_ANIMAL_START'
+    export const GET_NOTES_BY_ANIMAL_SUCCESS = 'GET_NOTES_BY_ANIMAL_SUCCESS'
+    export const GET_NOTES_BY_ANIMAL_FAILURE = 'GET_NOTES_BY_ANIMAL_FAILURE'
+
     export const addNotes = (animalID, note) => dispatch => {
         
         dispatch({ type: POST_NOTES_START })
@@ -72,12 +78,18 @@ export const getAllOptions = (shelterID) => dispatch => {
           .then(res => axios
             .get(`http://localhost:8000/api/animals/${animalID}`))
           .then(res => {
-            dispatch({ type: POST_NOTES_SUCCESS, payload: res.data })
-            console.log('get all animal info', res.data)
+            dispatch({ type: GET_ANIMAL_SUCCESS, payload: res.data })
+            console.log('action: update notes info', res.data)
           })
+          // .then(res => axios
+          //   .get(`http://localhost:8000/api/animals/${animalID}/admin`))
+          // .then(res => {
+          //   dispatch({ type: GET_NOTES_BY_ANIMAL_SUCCESS, payload: res.data })
+          //   console.log('action :get notes info', res.data)
+          // })
           .catch(err => {
             dispatch({ type: POST_NOTES_FAILURE, payload: err.response })
-            console.log('get animal info error: ', err.response)
+            console.log('action: get notes info error: ', err.response)
           })
       }
 
@@ -94,11 +106,11 @@ export const getAllOptions = (shelterID) => dispatch => {
               .get(`http://localhost:8000/api/animals/${animalID}`))
             .then(res => {
               dispatch({ type: UPDATE_NOTES_SUCCESS, payload: res.data })
-              console.log('get all animal info', res.data)
+              console.log('action: update notes info', res.data)
             })
             .catch(err => {
               dispatch({ type: UPDATE_NOTES_FAILURE, payload: err.response })
-              console.log('get animal info error: ', err.response)
+              console.log('action: update notes error: ', err.response)
             })
         }
 
@@ -116,10 +128,10 @@ export const getAllOptions = (shelterID) => dispatch => {
                 .get(`http://localhost:8000/api/animals/${animalID}`))
               .then(res => {
                 dispatch({ type: DELETE_NOTES_SUCCESS, payload: res.data })
-                console.log('get all animal info', res.data)
+                console.log('action: delete notes info', res.data)
               })
               .catch(err => {
                 dispatch({ type: DELETE_NOTES_FAILURE, payload: err.response })
-                console.log('get animal info error: ', err.response)
+                console.log('action: delete notes error: ', err.response)
               })
           }

@@ -11,6 +11,9 @@ import {
     POST_NOTES_START,
     POST_NOTES_SUCCESS,
     POST_NOTES_FAILURE,
+    GET_NOTES_BY_ANIMAL_START,
+    GET_NOTES_BY_ANIMAL_SUCCESS,
+    GET_NOTES_BY_ANIMAL_FAILURE,
     UPDATE_NOTES_START,
     UPDATE_NOTES_SUCCESS,
     UPDATE_NOTES_FAILURE,
@@ -48,6 +51,7 @@ const initialState = {
     addingNotes: false,
     updatingNotes: false,
     deletingNotes: false,
+    gettingNotesByAnimal:false
 }
 
 export const animalReducer = (state = initialState, action) => {
@@ -97,6 +101,7 @@ export const animalReducer = (state = initialState, action) => {
                 ...state,
                 gettingAnimalInfo: false,
                 animalInfo: {
+                    ...state.animalInfo,
                     animal: action.payload,
                     animalMeta: action.payload.meta,
                     animalNotes: action.payload.notes,
@@ -160,6 +165,29 @@ export const animalReducer = (state = initialState, action) => {
             return {
                 ...state,
                 addingNotes: false,
+                error: action.payload
+            };
+            case GET_NOTES_BY_ANIMAL_START:
+            return {
+                ...state,
+                gettingNotesByAnimal: true,
+                error: ''
+            };
+        case GET_NOTES_BY_ANIMAL_SUCCESS:
+            console.log('GET_NOTES_BY_ANIMAL_SUCCESS: action payload:  ', action.payload)
+            return {
+                ...state,
+                gettingNotesByAnimal: false,
+                animalInfo: {
+                    ...state.animalInfo,
+                    animalNotes: action.payload.notes,                    
+                },
+                error: ''
+            };
+        case GET_NOTES_BY_ANIMAL_FAILURE:
+            return {
+                ...state,
+                gettingNotesByAnimal: false,
                 error: action.payload
             };
         case UPDATE_NOTES_START:

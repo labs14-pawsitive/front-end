@@ -5,8 +5,8 @@ import PropTypes from "prop-types";
 import { updateNotes, deleteNotes }
     from '../../actions/animalAction.js'
 
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+// import ListItem from '@material-ui/core/ListItem';
+// import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
 import Button from '@material-ui/core/Button';
@@ -21,24 +21,26 @@ class NotesComponent extends React.Component {
         super(props)
         this.state = {
             isNoteEditing: false,
-            editNoteInfo: this.props.note
+            editNoteInfo: this.props.note,
+            
         }
     }
 
 
 
     submitNoteUpdate = (event, updatedNote) => {
-        event.preventDefault()
         if (this.state.isNoteEditing) {
 
-            this.props.updateNotes(this.props.animalID, this.state.editNoteInfo.id, this.state.editNoteInfo)
+            this.props.updateNotes(this.state.editNoteInfo.animal_id, this.state.editNoteInfo.id, updatedNote)
                 .then(
                     (res) => {
-                        window.location.reload()
+                        // window.location.reload()
                         this.setState({
-                            editNoteInfo: {
+                            isNoteEditing: false,
+                            // editNoteInfo: this.props.note.notes
+                            // editNoteInfo: {
 
-                            }
+                            // }
                         });
                     }
                 )
@@ -50,14 +52,13 @@ class NotesComponent extends React.Component {
         }
         else {
             this.setState({
-                editedNote: this.props.note.notes
+                editNoteInfo: this.props.note.notes
             })
             this.handleNoteToggle(event)
         }
     }
 
     handleNoteToggle = (event) => {
-        event.preventDefault()
         this.setState({
             isNoteEditing: !this.state.isNoteEditing,
         })
@@ -74,15 +75,33 @@ class NotesComponent extends React.Component {
 
     submitDelete = (event, noteID) => {
         event.preventDefault()
-        this.setState({
-            isNoteEditing: !this.state.isNoteEditing,
-        })
-        this.props.deleteNotes(this.props.animalID, noteID)
-            .then((res) => window.location.reload())
+       
+        this.props.deleteNotes(this.state.editNoteInfo.animal_id, noteID)
+            .then((res) =>
+                // window.location.reload()
+                {
+                    console.log(res)
+                this.setState({
+                    isNoteEditing: false,
+                })
+            }
+            )
             .catch(error => {
                 console.log('delete: notes component: error ', error)
             }
-            )}
+            )
+    }
+
+    handleButton = (event) => {
+        event.preventDefault()
+
+        if (this.state.isNoteEditing) {
+            this.submitNoteUpdate(event, this.state.editNoteInfo)
+        }
+        else {
+            this.handleNoteToggle()
+        }
+    }
 
     render() {
 
@@ -133,12 +152,13 @@ class NotesComponent extends React.Component {
                 </CardContent>
                 <CardActions>
                     <span style={customStyle.runningNoteButtonStyle}>
-                        <Button size="small" className={classes.button} onClick={(event) => this.submitDelete(event, this.state.editNoteInfo.id)}
+                        <Button size="small" className={classes.button} 
+                        onClick={(event) => this.submitDelete(event, this.state.editNoteInfo.id)}
                             style={{ display: this.state.isNoteEditing ? "block" : "none" }}>
                             DELETE
                             </Button>
                         <Button size="small" className={classes.button}
-                            onClick={(event) => this.submitNoteUpdate(event, this.props.note)}>
+                            onClick={this.handleButton}>
                             {this.state.isNoteEditing ? "SAVE" : "EDIT"}
                         </Button>
                     </span>
