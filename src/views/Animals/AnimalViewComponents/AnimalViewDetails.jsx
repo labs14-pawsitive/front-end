@@ -49,7 +49,8 @@ class AnimalViewDetails extends React.Component {
             formControlStyle: {
                 width: "auto",
                 marginRight: "7%",
-                paddingBottom:"10%"
+                paddingBottom:"10%",
+               
             },
             form1ControlStyle: {
                 width: "64%",
@@ -62,6 +63,9 @@ class AnimalViewDetails extends React.Component {
             },
             textStyle:{
                 margin:"0px"
+            },
+            colorStyle:{
+                color:"rgba(0, 0, 0, 0.87)"
             }
         }
 
@@ -80,8 +84,8 @@ class AnimalViewDetails extends React.Component {
                             autoComplete="off" style={customStyle.adoptionStyle}>
                                 <GridItem xs={12} sm={12} md={6} >
                             <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
-                                <InputLabel htmlFor="animal_status_id">Adoption Status</InputLabel>
-                                <Select
+                                <InputLabel style={customStyle.colorStyle} htmlFor="animal_status_id">Adoption Status</InputLabel>
+                                <Select style={customStyle.colorStyle}
                                     disabled={this.props.isEditing ? false : true}
                                     value={this.props.animal.animal_status}
                                     name='animal_status_id'
@@ -102,8 +106,8 @@ class AnimalViewDetails extends React.Component {
 
                             <GridItem xs={12} sm={12} md={6} >
                             <FormControl style={customStyle.form2ControlStyle} className={classes.formControl} >
-                                <InputLabel htmlFor="species_id">Species</InputLabel>
-                                <Select
+                                <InputLabel style={customStyle.colorStyle} htmlFor="species_id">Species</InputLabel>
+                                <Select style={customStyle.colorStyle}
                                     disabled={this.props.isEditing ? false : true}
                                     value={this.props.animal.species}
                                     name='species_id'
@@ -123,8 +127,8 @@ class AnimalViewDetails extends React.Component {
 
                             <GridItem xs={12} sm={12} md={6} >
                             <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
-                                <InputLabel htmlFor="breed_id">Breed</InputLabel>
-                                <Select
+                                <InputLabel style={customStyle.colorStyle} htmlFor="breed_id">Breed</InputLabel>
+                                <Select style={customStyle.colorStyle}
                                     disabled={this.props.isEditing ? false : true}
                                     value={this.props.animal_meta.breed}
                                     name='breed_id'
@@ -156,8 +160,8 @@ class AnimalViewDetails extends React.Component {
 
                             <GridItem xs={12} sm={12} md={6} >
                             <FormControl style={customStyle.form2ControlStyle} className={classes.formControl} >
-                                <InputLabel htmlFor="age_id">Age</InputLabel>
-                                <Select
+                                <InputLabel style={customStyle.colorStyle} htmlFor="age_id">Age</InputLabel>
+                                <Select style={customStyle.colorStyle}
                                     disabled={this.props.isEditing ? false : true}
                                     value={this.props.animal_meta.age}
                                     name='age_id'
@@ -177,8 +181,8 @@ class AnimalViewDetails extends React.Component {
 
                             <GridItem xs={12} sm={12} md={6} >
                             <FormControl style={customStyle.form2ControlStyle} className={classes.formControl} >
-                                <InputLabel htmlFor="size_id">Size</InputLabel>
-                                <Select
+                                <InputLabel style={customStyle.colorStyle} htmlFor="size_id">Size</InputLabel>
+                                <Select style={customStyle.colorStyle}
                                     disabled={this.props.isEditing ? false : true}
                                     value={this.props.animal_meta.size}
                                     name='size_id'
@@ -197,8 +201,8 @@ class AnimalViewDetails extends React.Component {
 
                             <GridItem xs={12} sm={12} md={6} >
                             <FormControl style={customStyle.form1ControlStyle} className={classes.formControl} >
-                                <InputLabel htmlFor='coat_length_id'>Coat Length</InputLabel>
-                                <Select
+                                <InputLabel style={customStyle.colorStyle} htmlFor='coat_length_id'>Coat Length</InputLabel>
+                                <Select style={customStyle.colorStyle}
                                     disabled={this.props.isEditing ? false : true}
                                     value={this.props.animal_meta.coat_length}
                                     name='coat_length_id'
@@ -217,8 +221,8 @@ class AnimalViewDetails extends React.Component {
 
                             <GridItem xs={12} sm={12} md={6} >
                             <FormControl style={customStyle.form2ControlStyle} className={classes.formControl} >
-                                <InputLabel htmlFor='is_male'>Gender</InputLabel>
-                                <Select
+                                <InputLabel style={customStyle.colorStyle} htmlFor='is_male'>Gender</InputLabel>
+                                <Select style={customStyle.colorStyle}
                                     disabled={this.props.isEditing ? false : true}
                                     value={this.props.animal_meta.is_male ? 'male' : 'female'}
                                     name='is_male'
