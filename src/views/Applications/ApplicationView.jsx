@@ -27,6 +27,7 @@ import Select from "@material-ui/core/Select";
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import { FormControlLabel } from '@material-ui/core';
 
 // @material-ui/icons
 import Check from "@material-ui/icons/Check";
@@ -199,7 +200,7 @@ class ApplicationView extends React.Component {
       },
       checkBoxStyle: {
         float: "right",
-        color: "#000",
+        color: "#228B22",
       },
       inputStyle: {
         background: '#edeae8',
@@ -210,7 +211,6 @@ class ApplicationView extends React.Component {
       },
       textFieldStyle: {
         background: '#edeae8',
-        padding: '1%',
         marginTop: '2%',
         marginBottom: '2%',
         fontStyle: "Sans-serif",
@@ -219,7 +219,6 @@ class ApplicationView extends React.Component {
       },
       textFieldStyle2: {
         background: '#edeae8',
-        padding: '1%',
         marginTop: '2%',
         marginBottom: '4%',
         fontStyle: "Sans-serif",
@@ -227,7 +226,6 @@ class ApplicationView extends React.Component {
       },
       textFieldStyle3: {
         background: '#edeae8',
-        padding: '1%',
         marginTop: '4%',
         marginBottom: '2%',
         fontStyle: "Sans-serif",
@@ -246,17 +244,21 @@ class ApplicationView extends React.Component {
       },
       selectStyle: {
         background: '#edeae8',
-        padding: '1%',
+        padding: '1.5%',
       },
       selectLabel: {
         padding: '18px 12px',
       },
       signatureSectionStyle: {
-        padding: '1%',
+        background: '#edeae8',
+        paddingTop: '1%',
+        paddingBottom: '1%',
+        
       },
       signatureTextStyle: {
         background: '#edeae8',
         padding: '1%',
+      
       },
     
     };
@@ -281,9 +283,15 @@ class ApplicationView extends React.Component {
                       value={this.state.application.application_id}
                       style={customStyle.textFieldStyle}
                       className={classes.margins} 
+                      InputProps={{
+                        style: {
+                          paddingLeft: '2%',
+                          paddingTop: '2%',
+                        }
+                      }}
                       InputLabelProps={{
                         style: {
-                          padding: '18px 12px 0',
+                          padding: '18px 12px',
                           
                         }
                       }}
@@ -296,6 +304,12 @@ class ApplicationView extends React.Component {
                       disabled='true'
                       value={this.state.application.animal_name}
                       style={customStyle.textFieldStyle2}
+                      InputProps={{
+                        style: {
+                          paddingLeft: '2%',
+                          paddingTop: '2%',
+                        }
+                      }}
                       InputLabelProps={{
                         style: {
                           padding: '18px 12px',
@@ -315,7 +329,8 @@ class ApplicationView extends React.Component {
 
                       <Select
                         MenuProps={{
-                          className: classes.selectMenu 
+                          className: classes.selectMenu
+                          
                         }}
                         classes={{
                           select: classes.select
@@ -326,10 +341,10 @@ class ApplicationView extends React.Component {
                         name="application_status"
                         id="application_status"
                         fullWidth="true"
+                        
                         // style={customStyle.selectStyle}
                       >
                         
-
                         <MenuItem
                           disabled
                           classes={{
@@ -362,6 +377,12 @@ class ApplicationView extends React.Component {
                       disabled='true'
                       value={this.state.application.name}
                       style={customStyle.textFieldStyle3}
+                      InputProps={{
+                        style: {
+                          paddingLeft: '2%',
+                          paddingTop: '2%',
+                        }
+                      }}
                       InputLabelProps={{
                         style: {
                           padding: '18px 12px',
@@ -376,6 +397,12 @@ class ApplicationView extends React.Component {
                       disabled='true'
                       value={moment(this.props.application.created_at).format("MMMM Do YYYY").toString()}
                       style={customStyle.textFieldStyle}
+                      InputProps={{
+                        style: {
+                          paddingLeft: '2%',
+                          paddingTop: '2%',
+                        }
+                      }}
                       InputLabelProps={{
                         style: {
                           padding: '18px 12px',
@@ -400,6 +427,12 @@ class ApplicationView extends React.Component {
                     disabled='true'
                     value={this.state.application.street_address}
                     style={customStyle.textFieldStyle}
+                    InputProps={{
+                      style: {
+                        paddingLeft: '2%',
+                        paddingTop: '2%',
+                      }
+                    }}
                     InputLabelProps={{
                       style: {
                         padding: '18px 12px',
@@ -413,6 +446,12 @@ class ApplicationView extends React.Component {
                     disabled='true'
                     value={this.state.application.city}
                     style={customStyle.textFieldStyle}
+                    InputProps={{
+                      style: {
+                        paddingLeft: '2%',
+                        paddingTop: '2%',
+                      }
+                    }}
                     InputLabelProps={{
                       style: {
                         paddingLeft: '1%'
@@ -426,6 +465,12 @@ class ApplicationView extends React.Component {
                     disabled='true'
                     value={this.state.application.home_phone}
                     style={customStyle.textFieldStyle}
+                    InputProps={{
+                      style: {
+                        paddingLeft: '2%',
+                        paddingTop: '2%',
+                      }
+                    }}
                     InputLabelProps={{
                       style: {
                         padding: '18px 12px',
@@ -439,6 +484,12 @@ class ApplicationView extends React.Component {
                     disabled='true'
                     value={this.state.application.cell_phone}
                     style={customStyle.textFieldStyle}
+                    InputProps={{
+                      style: {
+                        paddingLeft: '2%',
+                        paddingTop: '2%',
+                      }
+                    }}
                     InputLabelProps={{
                       style: {
                         padding: '18px 12px',
@@ -452,6 +503,12 @@ class ApplicationView extends React.Component {
                     disabled='true'
                     value={this.state.application.email}
                     style={customStyle.textFieldStyle}
+                    InputProps={{
+                      style: {
+                        paddingLeft: '2%',
+                        paddingTop: '2%',
+                      }
+                    }}
                     InputLabelProps={{
                       style: {
                         padding: '18px 12px',
@@ -476,6 +533,12 @@ class ApplicationView extends React.Component {
                     disabled='true'
                     value={this.state.application.ref_name_1}
                     style={customStyle.textFieldStyle}
+                    InputProps={{
+                      style: {
+                        paddingLeft: '2%',
+                        paddingTop: '2%',
+                      }
+                    }}
                     InputLabelProps={{
                       style: {
                         padding: '18px 12px',
@@ -490,6 +553,12 @@ class ApplicationView extends React.Component {
                     disabled='true'
                     value={this.state.application.ref_phone_1}
                     style={customStyle.textFieldStyle}
+                    InputProps={{
+                      style: {
+                        paddingLeft: '2%',
+                        paddingTop: '2%',
+                      }
+                    }}
                     InputLabelProps={{
                       style: {
                         padding: '18px 12px',
@@ -504,6 +573,12 @@ class ApplicationView extends React.Component {
                     disabled='true'
                     value={this.state.application.ref_relationship_1}
                     style={customStyle.textFieldStyle}
+                    InputProps={{
+                      style: {
+                        paddingLeft: '2%',
+                        paddingTop: '2%',
+                      }
+                    }}
                     InputLabelProps={{
                       style: {
                         padding: '18px 12px',
@@ -518,6 +593,12 @@ class ApplicationView extends React.Component {
                     disabled='true'
                     value={this.state.application.ref_name_2}
                     style={customStyle.textFieldStyle}
+                    InputProps={{
+                      style: {
+                        paddingLeft: '2%',
+                        paddingTop: '2%',
+                      }
+                    }}
                     InputLabelProps={{
                       style: {
                         padding: '18px 12px',
@@ -532,6 +613,12 @@ class ApplicationView extends React.Component {
                     disabled='true'
                     value={this.state.application.ref_phone_2}
                     style={customStyle.textFieldStyle}
+                    InputProps={{
+                      style: {
+                        paddingLeft: '2%',
+                        paddingTop: '2%',
+                      }
+                    }}
                     InputLabelProps={{
                       style: {
                         padding: '18px 12px',
@@ -546,6 +633,12 @@ class ApplicationView extends React.Component {
                     disabled='true'
                     value={this.state.application.ref_relationship_2}
                     style={customStyle.textFieldStyle}
+                    InputProps={{
+                      style: {
+                        paddingLeft: '2%',
+                        paddingTop: '2%',
+                      }
+                    }}
                     InputLabelProps={{
                       style: {
                         padding: '18px 12px',
@@ -571,6 +664,12 @@ class ApplicationView extends React.Component {
                   disabled="true"
                   value={this.state.application.is_over_18 ? 'Yes' : 'No' }
                   style={customStyle.textFieldStyle}
+                  InputProps={{
+                    style: {
+                      paddingLeft: '2%',
+                      paddingTop: '2%',
+                    }
+                  }}
                   InputLabelProps={{
                     style: {
                       padding: '18px 12px',
@@ -585,6 +684,12 @@ class ApplicationView extends React.Component {
                   disabled="true"
                   value={this.state.application.is_homeowner ? 'Yes' : 'No' }
                   style={customStyle.textFieldStyle}
+                  InputProps={{
+                    style: {
+                      paddingLeft: '2%',
+                      paddingTop: '2%',
+                    }
+                  }}
                   InputLabelProps={{
                     style: {
                       padding: '18px 12px',
@@ -599,6 +704,12 @@ class ApplicationView extends React.Component {
                   disabled="true"
                   value={this.state.application.is_in_agreement ? 'Yes' : 'No' }
                   style={customStyle.textFieldStyle}
+                  InputProps={{
+                    style: {
+                      paddingLeft: '2%',
+                      paddingTop: '2%',
+                    }
+                  }}
                   InputLabelProps={{
                     style: {
                       padding: '18px 12px',
@@ -613,6 +724,12 @@ class ApplicationView extends React.Component {
                   disabled="true"
                   value={ this.state.application.is_homevisit_allowed ? 'Yes' : 'No' }
                   style={customStyle.textFieldStyle}
+                  InputProps={{
+                    style: {
+                      paddingLeft: '2%',
+                      paddingTop: '2%',
+                    }
+                  }}
                   InputLabelProps={{
                     style: {
                       padding: '18px 12px',
@@ -627,6 +744,12 @@ class ApplicationView extends React.Component {
                   disabled="true"
                   value={this.state.application.is_fenced ? 'Yes' : 'No' }
                   style={customStyle.textFieldStyle}
+                  InputProps={{
+                    style: {
+                      paddingLeft: '2%',
+                      paddingTop: '2%',
+                    }
+                  }}
                   InputLabelProps={{
                     style: {
                       padding: '18px 12px',
@@ -645,28 +768,44 @@ class ApplicationView extends React.Component {
               <Card>
                 <CardBody>
 
-                  <GridContainer style={customStyle.signatureSectionStyle} direction='row' justify='center' alignItems='center' >
-                    <GridItem xs={10}>
-                      <TextField
-                        fullWidth='true'
-                        disabled='true'
-                        value="I hereby certify that the information provided above is true and correct"
-                        style={customStyle.signatureTextStyle}
-                        InputLabelProps={{
-                          style: {
-                            padding: '18px 12px',
-                          }
-                        }}
-                      />
+                  <GridContainer style={customStyle.signatureSectionStyle} direction='row' justify='space-between' alignItems='center' >
 
-                    </GridItem>
-
-                    <Checkbox
+                  <FormControlLabel
+                  label="I hereby certify that the information provided above is true and correct"
+                  labelPlacement="start"
+                      control={ <Checkbox
                       style={customStyle.checkboxStyle}
                       name="is_declaration"
                       icon={this.state.application.is_declaration ? <Check className={classes.checkedIcon} /> : <Check className={classes.uncheckedIcon} />}
                       disabled={true}
-                    />
+                  />}
+                    
+                  />
+
+                    {/* <GridItem xs={10}>
+                      <TextField
+                        fullWidth='true'
+                        disabled='true'
+                        value="I hereby certify that the information provided above is true and correct"
+
+                        style={customStyle.signatureTextStyle}
+
+                        InputProps={{
+                          style: {
+                            fontSize: '12px'
+                          }
+                        }}
+                      />
+                    </GridItem>
+
+                    <GridItem>
+                      <Checkbox
+                        style={customStyle.checkboxStyle}
+                        name="is_declaration"
+                        icon={this.state.application.is_declaration ? <Check className={classes.checkedIcon} /> : <Check className={classes.uncheckedIcon} />}
+                        disabled={true}
+                      />
+                    </GridItem> */}
 
                   </GridContainer>
 
