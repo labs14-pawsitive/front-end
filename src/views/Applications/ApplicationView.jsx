@@ -244,7 +244,7 @@ class ApplicationView extends React.Component {
                       disabled="true"
                       value={this.state.application.application_id}
                       style={customStyle.textFieldStyle}
-                      className={classes.underlineStyle}
+                      // className={classes.underlineStyle}
                       InputProps={{
                         style: {
                           paddingLeft: "2%",
