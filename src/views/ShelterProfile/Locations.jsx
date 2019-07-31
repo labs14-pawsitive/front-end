@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
-import { fetchOptions, fetchShelter ,updateShelterLoc, deleteShelterLoc } from '../../actions/shelterAction';
+import { fetchShelter ,updateShelterLoc, deleteShelterLoc } from '../../actions/shelterAction';
 
 
 // @material-ui/core components
@@ -19,10 +19,32 @@ class Locations extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            editMode: false
+            editMode: false,
+            location: this.props.location
         }
 
     }
+
+
+handleFormButtonToggle = e => {
+      e.preventDefault();
+      this.setState({
+        editMode : !this.state.editMode
+      })
+}
+
+changeHandler = e => {
+  this.setState({
+      location: {
+      ...this.state.location,
+      [e.target.id] : e.target.value
+      }
+  })
+}
+
+updateLocation = e => {
+  e.preventDefault()
+}
 
 deleteLocation = e => {
     e.preventDefault()
@@ -45,14 +67,15 @@ deleteLocation = e => {
                 <GridItem xs={12} sm={12} md={12}>
                   <CustomInput
                     labelText="Nickname"
-                    id="location"
+                    id= "nickname"
                     formControlProps={{
                       fullWidth: true
                     }}
                     inputProps={{
                       disabled: this.state.editMode? false : true,
                       style: customStyle.shelterDisplayView,
-                      value: this.props.location.nickname
+                      value: this.state.location.nickname,
+                      onChange: (e) => this.changeHandler(e)
                     }}
                   />
                 </GridItem>
@@ -61,13 +84,14 @@ deleteLocation = e => {
                 <GridItem xs={12} sm={12} md={12}>
                 <CustomInput
                     labelText="Street Address"
-                    id={this.state.editMode? "street-address-disabled" : "street-address"}
+                    id="street_address"
                     formControlProps={{
                       fullWidth: true
                     }}
                     inputProps={{
                       disabled: this.state.editMode? false : true,
-                      value: this.props.location.street_address
+                      value: this.state.location.street_address,
+                      onChange: (e) => this.changeHandler(e)
                     }}
                     style={this.state.editMode? "" : customStyle.shelterDisplayView}
 
@@ -76,13 +100,14 @@ deleteLocation = e => {
                <GridItem xs={12} sm={12} md={6}>
                <CustomInput
                     labelText="City"
-                    id={this.state.editMode? "city-disabled" : "city"}
+                    id="city"
                     formControlProps={{
                       fullWidth: true
                     }}
                     inputProps={{
                       disabled: this.state.editMode? false : true,
-                      value: this.props.location.city
+                      value: this.state.location.city,
+                      onChange: (e) => this.changeHandler(e)
                     }}
                     style={this.state.editMode? "" : customStyle.shelterDisplayView}
                   />  
@@ -90,13 +115,14 @@ deleteLocation = e => {
               <GridItem xs={12} sm={12} md={2}>
               <CustomInput
                     labelText="State"
-                    id={this.state.editMode? "city-disabled" : "city"}
+                    id="state"
                     formControlProps={{
                       fullWidth: true
                     }}
                     inputProps={{
                       disabled: this.state.editMode? false : true,
-                      value: this.props.location.state
+                      value: this.state.location.state,
+                      onChange: (e) => this.changeHandler(e)
                     }}
                     style={this.state.editMode? "" : customStyle.shelterDisplayView}
                   />
@@ -104,13 +130,14 @@ deleteLocation = e => {
             <GridItem xs={12} sm={12} md={4}>
               <CustomInput
                     labelText="Zipcode"
-                    id={this.state.editMode? "zipcode-disabled" : "zipcode"}
+                    id="zipcode"
                     formControlProps={{
                       fullWidth: true
                     }}
                     inputProps={{
                       disabled: this.state.editMode? false : true,
-                      value: this.props.location.zipcode
+                      value: this.state.location.zipcode,
+                      onChange: (e) => this.changeHandler(e)
                     }}
                     style={this.state.editMode? "" : customStyle.shelterDisplayView}
                   />
@@ -118,14 +145,21 @@ deleteLocation = e => {
             <GridItem xs={12} sm={12} md={7}></GridItem>
             <GridItem xs={12} sm={12} md={5}>
             <Button size= "sm" 
+              color="rose" 
+              className={classes.updateProfileButton}
+              onClick={this.handleFormButtonToggle}
+            >
+                {this.state.editMode? "Save" : "Update"}
+              </Button>
+              
+            <Button size= "sm" 
                 color="danger" 
-                onClick={this.deleteLocation} >
+                onClick={this.deleteLocation}
+                className={classes.updateProfileButton} >
                 Delete
               </Button>
 
-              <Button size= "sm" color="rose" >
-                {this.state.editMode? "Save Changes" : "Update"}
-              </Button>
+              
             </GridItem>
             </GridContainer>
             </>
@@ -151,6 +185,6 @@ const mapStateToProps = (state) => {
   
   export default connect(
     mapStateToProps,
-    { fetchOptions, updateShelterLoc, deleteShelterLoc, fetchShelter }
+    { updateShelterLoc, deleteShelterLoc, fetchShelter }
   )(withStyles(shelterProfileStyles)(Locations))
   
