@@ -206,7 +206,7 @@ class ApplicationView extends React.Component {
         padding: "1%",
       },
       selectLabel: {
-        padding: "0px 16px",
+        padding: "12px 10px",
       },
       signatureSectionStyle: {
         background: "#edeae8",
