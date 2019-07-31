@@ -124,15 +124,6 @@ class ApplicationView extends React.Component {
 
     let id = 3;
 
-    // await axios
-    // .put(`https://staging1-pawsnfind.herokuapp.com/api/applications/${id}/status`, updatedStatus)
-    // .then(updatedApp => {
-    //     console.log('updated app status', updatedApp.data)
-    // })
-    // .catch(error => {
-    //   console.log(error)
-    // })
-
    this.props.updateApplication(updatedStatus, this.props.application.application_id ) 
   };
 
@@ -144,7 +135,7 @@ class ApplicationView extends React.Component {
 
   };
 
-
+  
   componentDidUpdate(prevProps, prevState) {
 
     if (this.props.application !== prevProps.application && this.props.options !== prevProps.application) {
@@ -220,8 +211,25 @@ class ApplicationView extends React.Component {
       textFieldStyle: {
         background: '#edeae8',
         padding: '1%',
-        marginTop: '3%',
-        marginBottom: '3%',
+        marginTop: '2%',
+        marginBottom: '2%',
+        fontStyle: "Sans-serif",
+        fontColor: "black",
+        
+      },
+      textFieldStyle2: {
+        background: '#edeae8',
+        padding: '1%',
+        marginTop: '2%',
+        marginBottom: '4%',
+        fontStyle: "Sans-serif",
+        fontColor: "black",
+      },
+      textFieldStyle3: {
+        background: '#edeae8',
+        padding: '1%',
+        marginTop: '4%',
+        marginBottom: '2%',
         fontStyle: "Sans-serif",
         fontColor: "black",
       },
@@ -241,16 +249,16 @@ class ApplicationView extends React.Component {
         padding: '1%',
       },
       selectLabel: {
-        marginLeft: '1%',
+        paddingLeft: '1%',
       },
       signatureSectionStyle: {
-      
+        padding: '1%',
       },
       signatureTextStyle: {
         background: '#edeae8',
-
+        padding: '1%',
       },
-
+    
     };
 
     return (
@@ -272,7 +280,11 @@ class ApplicationView extends React.Component {
                       disabled='true'
                       value={this.state.application.application_id}
                       style={customStyle.textFieldStyle}
-                      
+                      InputLabelProps={{
+                        style: {
+                          paddingLeft: '1%',
+                        }
+                      }}
                     />
 
                     <TextField
@@ -281,7 +293,12 @@ class ApplicationView extends React.Component {
                       fullWidth='true'
                       disabled='true'
                       value={this.state.application.animal_name}
-                      style={customStyle.textFieldStyle}
+                      style={customStyle.textFieldStyle2}
+                      InputLabelProps={{
+                        style: {
+                          paddingLeft: '1%'
+                        }
+                      }}
                     />
 
                     <FormControl fullWidth className={classes.selectFormControl}>
@@ -342,7 +359,12 @@ class ApplicationView extends React.Component {
                       fullWidth='true'
                       disabled='true'
                       value={this.state.application.name}
-                      style={customStyle.textFieldStyle}
+                      style={customStyle.textFieldStyle3}
+                      InputLabelProps={{
+                        style: {
+                          paddingLeft: '1%'
+                        }
+                      }}
                     />
 
                     <TextField
@@ -352,6 +374,11 @@ class ApplicationView extends React.Component {
                       disabled='true'
                       value={moment(this.props.application.created_at).format("MMMM Do YYYY").toString()}
                       style={customStyle.textFieldStyle}
+                      InputLabelProps={{
+                        style: {
+                          paddingLeft: '1%'
+                        }
+                      }}
                     />
                   </form>
                 </CardBody>
@@ -371,6 +398,11 @@ class ApplicationView extends React.Component {
                     disabled='true'
                     value={this.state.application.street_address}
                     style={customStyle.textFieldStyle}
+                    InputLabelProps={{
+                      style: {
+                        paddingLeft: '1%'
+                      }
+                    }}
                   />
                   <TextField
                     label="City / State / Zip"
@@ -379,6 +411,11 @@ class ApplicationView extends React.Component {
                     disabled='true'
                     value={this.state.application.city}
                     style={customStyle.textFieldStyle}
+                    InputLabelProps={{
+                      style: {
+                        paddingLeft: '1%'
+                      }
+                    }}
                   />
                   <TextField
                     label="Home Phone Number"
@@ -387,6 +424,11 @@ class ApplicationView extends React.Component {
                     disabled='true'
                     value={this.state.application.home_phone}
                     style={customStyle.textFieldStyle}
+                    InputLabelProps={{
+                      style: {
+                        paddingLeft: '1%'
+                      }
+                    }}
                   />
                   <TextField
                     label="Cell Phone Number"
@@ -395,6 +437,11 @@ class ApplicationView extends React.Component {
                     disabled='true'
                     value={this.state.application.cell_phone}
                     style={customStyle.textFieldStyle}
+                    InputLabelProps={{
+                      style: {
+                        paddingLeft: '1%'
+                      }
+                    }}
                   />
                   <TextField
                     label="Email"
@@ -403,6 +450,11 @@ class ApplicationView extends React.Component {
                     disabled='true'
                     value={this.state.application.email}
                     style={customStyle.textFieldStyle}
+                    InputLabelProps={{
+                      style: {
+                        paddingLeft: '1%'
+                      }
+                    }}
                   />
                 </CardBody>
               </Card>
@@ -422,6 +474,11 @@ class ApplicationView extends React.Component {
                     disabled='true'
                     value={this.state.application.ref_name_1}
                     style={customStyle.textFieldStyle}
+                    InputLabelProps={{
+                      style: {
+                        paddingLeft: '1%'
+                      }
+                    }}
                   />
 
                   <TextField
@@ -431,6 +488,11 @@ class ApplicationView extends React.Component {
                     disabled='true'
                     value={this.state.application.ref_phone_1}
                     style={customStyle.textFieldStyle}
+                    InputLabelProps={{
+                      style: {
+                        paddingLeft: '1%'
+                      }
+                    }}
                   />
 
                   <TextField
@@ -440,6 +502,11 @@ class ApplicationView extends React.Component {
                     disabled='true'
                     value={this.state.application.ref_relationship_1}
                     style={customStyle.textFieldStyle}
+                    InputLabelProps={{
+                      style: {
+                        paddingLeft: '1%'
+                      }
+                    }}
                   />
 
                   <TextField
@@ -449,6 +516,11 @@ class ApplicationView extends React.Component {
                     disabled='true'
                     value={this.state.application.ref_name_2}
                     style={customStyle.textFieldStyle}
+                    InputLabelProps={{
+                      style: {
+                        paddingLeft: '1%'
+                      }
+                    }}
                   />
 
                   <TextField
@@ -458,6 +530,11 @@ class ApplicationView extends React.Component {
                     disabled='true'
                     value={this.state.application.ref_phone_2}
                     style={customStyle.textFieldStyle}
+                    InputLabelProps={{
+                      style: {
+                        paddingLeft: '1%'
+                      }
+                    }}
                   />
 
                   <TextField
@@ -467,6 +544,11 @@ class ApplicationView extends React.Component {
                     disabled='true'
                     value={this.state.application.ref_relationship_2}
                     style={customStyle.textFieldStyle}
+                    InputLabelProps={{
+                      style: {
+                        paddingLeft: '1%'
+                      }
+                    }}
                   />
 
                 </CardBody>
@@ -487,6 +569,11 @@ class ApplicationView extends React.Component {
                   disabled="true"
                   value={this.state.application.is_over_18 ? 'Yes' : 'No' }
                   style={customStyle.textFieldStyle}
+                  InputLabelProps={{
+                    style: {
+                      paddingLeft: '1%'
+                    }
+                  }}
                    />
 
                   <TextField 
@@ -496,6 +583,11 @@ class ApplicationView extends React.Component {
                   disabled="true"
                   value={this.state.application.is_homeowner ? 'Yes' : 'No' }
                   style={customStyle.textFieldStyle}
+                  InputLabelProps={{
+                    style: {
+                      paddingLeft: '1%'
+                    }
+                  }}
                   />
 
                   <TextField
@@ -505,6 +597,11 @@ class ApplicationView extends React.Component {
                   disabled="true"
                   value={this.state.application.is_in_agreement ? 'Yes' : 'No' }
                   style={customStyle.textFieldStyle}
+                  InputLabelProps={{
+                    style: {
+                      paddingLeft: '1%'
+                    }
+                  }}
                   />
 
                   <TextField 
@@ -514,6 +611,11 @@ class ApplicationView extends React.Component {
                   disabled="true"
                   value={ this.state.application.is_homevisit_allowed ? 'Yes' : 'No' }
                   style={customStyle.textFieldStyle}
+                  InputLabelProps={{
+                    style: {
+                      paddingLeft: '1%'
+                    }
+                  }}
                   />
 
                   <TextField
@@ -523,6 +625,11 @@ class ApplicationView extends React.Component {
                   disabled="true"
                   value={this.state.application.is_fenced ? 'Yes' : 'No' }
                   style={customStyle.textFieldStyle}
+                  InputLabelProps={{
+                    style: {
+                      paddingLeft: '1%'
+                    }
+                  }}
                    />
                 </CardBody>
               </Card>
@@ -542,8 +649,12 @@ class ApplicationView extends React.Component {
                         fullWidth='true'
                         disabled='true'
                         value="I hereby certify that the information provided above is true and correct"
-                        
                         style={customStyle.signatureTextStyle}
+                        InputLabelProps={{
+                          style: {
+                            paddingLeft: '1%',
+                          }
+                        }}
                       />
 
                     </GridItem>

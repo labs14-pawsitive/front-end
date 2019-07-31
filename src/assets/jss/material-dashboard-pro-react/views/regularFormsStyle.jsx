@@ -65,6 +65,9 @@ const regularFormsStyle = {
 
   dropdownStyle: {
     height: "30px",
+  },
+  textFieldLabelStyle: {
+    marginLeft: '5%',
   }
 
 };
