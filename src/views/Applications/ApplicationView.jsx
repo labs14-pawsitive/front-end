@@ -249,7 +249,7 @@ class ApplicationView extends React.Component {
         padding: '1%',
       },
       selectLabel: {
-        paddingLeft: '1%',
+        padding: '18px 12px',
       },
       signatureSectionStyle: {
         padding: '1%',
@@ -280,9 +280,11 @@ class ApplicationView extends React.Component {
                       disabled='true'
                       value={this.state.application.application_id}
                       style={customStyle.textFieldStyle}
+                      className={classes.margins} 
                       InputLabelProps={{
                         style: {
-                          paddingLeft: '1%',
+                          padding: '18px 12px 0',
+                          
                         }
                       }}
                     />
@@ -296,7 +298,7 @@ class ApplicationView extends React.Component {
                       style={customStyle.textFieldStyle2}
                       InputLabelProps={{
                         style: {
-                          paddingLeft: '1%'
+                          padding: '18px 12px',
                         }
                       }}
                     />
@@ -362,7 +364,7 @@ class ApplicationView extends React.Component {
                       style={customStyle.textFieldStyle3}
                       InputLabelProps={{
                         style: {
-                          paddingLeft: '1%'
+                          padding: '18px 12px',
                         }
                       }}
                     />
@@ -376,7 +378,7 @@ class ApplicationView extends React.Component {
                       style={customStyle.textFieldStyle}
                       InputLabelProps={{
                         style: {
-                          paddingLeft: '1%'
+                          padding: '18px 12px',
                         }
                       }}
                     />
@@ -400,7 +402,7 @@ class ApplicationView extends React.Component {
                     style={customStyle.textFieldStyle}
                     InputLabelProps={{
                       style: {
-                        paddingLeft: '1%'
+                        padding: '18px 12px',
                       }
                     }}
                   />
@@ -426,7 +428,7 @@ class ApplicationView extends React.Component {
                     style={customStyle.textFieldStyle}
                     InputLabelProps={{
                       style: {
-                        paddingLeft: '1%'
+                        padding: '18px 12px',
                       }
                     }}
                   />
@@ -439,7 +441,7 @@ class ApplicationView extends React.Component {
                     style={customStyle.textFieldStyle}
                     InputLabelProps={{
                       style: {
-                        paddingLeft: '1%'
+                        padding: '18px 12px',
                       }
                     }}
                   />
@@ -452,7 +454,7 @@ class ApplicationView extends React.Component {
                     style={customStyle.textFieldStyle}
                     InputLabelProps={{
                       style: {
-                        paddingLeft: '1%'
+                        padding: '18px 12px',
                       }
                     }}
                   />
@@ -476,7 +478,7 @@ class ApplicationView extends React.Component {
                     style={customStyle.textFieldStyle}
                     InputLabelProps={{
                       style: {
-                        paddingLeft: '1%'
+                        padding: '18px 12px',
                       }
                     }}
                   />
@@ -490,7 +492,7 @@ class ApplicationView extends React.Component {
                     style={customStyle.textFieldStyle}
                     InputLabelProps={{
                       style: {
-                        paddingLeft: '1%'
+                        padding: '18px 12px',
                       }
                     }}
                   />
@@ -504,7 +506,7 @@ class ApplicationView extends React.Component {
                     style={customStyle.textFieldStyle}
                     InputLabelProps={{
                       style: {
-                        paddingLeft: '1%'
+                        padding: '18px 12px',
                       }
                     }}
                   />
@@ -518,7 +520,7 @@ class ApplicationView extends React.Component {
                     style={customStyle.textFieldStyle}
                     InputLabelProps={{
                       style: {
-                        paddingLeft: '1%'
+                        padding: '18px 12px',
                       }
                     }}
                   />
@@ -532,7 +534,7 @@ class ApplicationView extends React.Component {
                     style={customStyle.textFieldStyle}
                     InputLabelProps={{
                       style: {
-                        paddingLeft: '1%'
+                        padding: '18px 12px',
                       }
                     }}
                   />
@@ -546,7 +548,7 @@ class ApplicationView extends React.Component {
                     style={customStyle.textFieldStyle}
                     InputLabelProps={{
                       style: {
-                        paddingLeft: '1%'
+                        padding: '18px 12px',
                       }
                     }}
                   />
@@ -571,7 +573,7 @@ class ApplicationView extends React.Component {
                   style={customStyle.textFieldStyle}
                   InputLabelProps={{
                     style: {
-                      paddingLeft: '1%'
+                      padding: '18px 12px',
                     }
                   }}
                    />
@@ -585,7 +587,7 @@ class ApplicationView extends React.Component {
                   style={customStyle.textFieldStyle}
                   InputLabelProps={{
                     style: {
-                      paddingLeft: '1%'
+                      padding: '18px 12px',
                     }
                   }}
                   />
@@ -599,7 +601,7 @@ class ApplicationView extends React.Component {
                   style={customStyle.textFieldStyle}
                   InputLabelProps={{
                     style: {
-                      paddingLeft: '1%'
+                      padding: '18px 12px',
                     }
                   }}
                   />
@@ -613,7 +615,7 @@ class ApplicationView extends React.Component {
                   style={customStyle.textFieldStyle}
                   InputLabelProps={{
                     style: {
-                      paddingLeft: '1%'
+                      padding: '18px 12px',
                     }
                   }}
                   />
@@ -627,7 +629,7 @@ class ApplicationView extends React.Component {
                   style={customStyle.textFieldStyle}
                   InputLabelProps={{
                     style: {
-                      paddingLeft: '1%'
+                      padding: '18px 12px',
                     }
                   }}
                    />
@@ -652,7 +654,7 @@ class ApplicationView extends React.Component {
                         style={customStyle.signatureTextStyle}
                         InputLabelProps={{
                           style: {
-                            paddingLeft: '1%',
+                            padding: '18px 12px',
                           }
                         }}
                       />

@@ -68,6 +68,9 @@ const regularFormsStyle = {
   },
   textFieldLabelStyle: {
     marginLeft: '5%',
+  },
+  margins: {
+    margin: 'dense',
   }
 
 };
