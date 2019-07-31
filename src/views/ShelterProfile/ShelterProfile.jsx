@@ -220,7 +220,7 @@ return (
               </h3>
             </CardHeader>
             <CardBody>
-                      {this.state.shelter && this.state.contacts.map(contact => (
+                      {this.state.contacts && this.state.contacts.map(contact => (
                     <Contacts
                         contact ={contact}
                         classes = {this.props.classes}
@@ -236,16 +236,16 @@ return (
             <CardHeader>
             <h3 className={classes.cardTitle}>Locations</h3>
             </CardHeader>
-            <CardBody>
-                    {this.state.shelter && this.state.locations.map(location => (
-                    <Locations
-                        location ={location}
-                        classes = {this.props.classes}
-                        deleteShelterLoc = {this.deleteShelterLoc}
-                    />
-                    ))}
-            
-            </CardBody>
+              <CardBody>
+                      {this.state.locations && this.state.locations.map(location => (
+                      <Locations
+                          location ={location}
+                          classes = {this.props.classes}
+                          deleteShelterLoc = {this.deleteShelterLoc}
+                      />
+                      ))}
+              
+              </CardBody>
           </Card>
         </GridItem>
       </GridContainer>
