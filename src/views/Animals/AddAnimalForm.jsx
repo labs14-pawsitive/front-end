@@ -70,7 +70,7 @@ class AddAnimalForm extends React.Component {
         age_id: null,
         shelter_location_id: null,
         states_id: null,
-        is_male: null,
+        is_male: false,
         is_house_trained: false,
         is_neutered_spayed: false,
         is_good_with_kids: false,
@@ -82,6 +82,14 @@ class AddAnimalForm extends React.Component {
         profile_img_id: null,
       },
       validation: {
+        is_male: true,
+        is_house_trained: true,
+        is_neutered_spayed: true,
+        is_good_with_kids: true,
+        is_good_with_dogs: true,
+        is_good_with_cats: true,
+        is_vaccinated: true,
+        is_mixed: true,
         
       },
       checked: [],
@@ -96,61 +104,70 @@ class AddAnimalForm extends React.Component {
     // TODO (SL): Use fake value until auth complete
 
     const shelterId = 1
-    this.setState({ animal:{ ...this.state.animal, shelter_id: shelterId}})
-    this.props.fetchOptions(shelterId)
-
     this.setState({
       animal: {
-        name: "snowflake",
-        color: "white",
-        health: "healthy",
-        description: "happy dog",
-        species_id: 1,
-        breed_id: 4,
-        animal_status_id: 2,
-        size_id: 3,
-        coat_length_id: 3,
-        age_id: 3,
-        shelter_location_id: 1,
-        states_id: 5,
-        shelter_id: 1,
-        is_male: false,
-        is_house_trained: false,
-        is_neutered_spayed: true,
-        is_good_with_kids: true,
-        is_good_with_dogs: true,
-        is_good_with_cats: false,
-        is_vaccinated: false,
-        profile_img_id: null,
-        is_mixed: 1
+        ...this.state.animal,
+        shelter_id: shelterId
       },
       validation: {
-        name: true,
-        color: true,
-        health: true,
-        description: true,
-        species_id: true,
-        breed_id: true,
-        animal_status_id: true,
-        size_id: true,
-        coat_length_id: true,
-        age_id: true,
-        shelter_location_id: true,
-        states_id: true,
-        is_male: true,
-        is_house_trained: true,
-        is_neutered_spayed: true,
-        is_good_with_kids: true,
-        is_good_with_dogs: true,
-        is_good_with_cats: true,
-        is_vaccinated: true,
-        is_mixed: true,
-        shelter_id: true,
-        profile_img_id: true,
+        ...this.state.validation,
+        shelter_id: true
+      }
+    })
+    this.props.fetchOptions(shelterId)
 
-      },
-      checked: [],
-    });
+    // this.setState({
+    //   animal: {
+    //     name: "snowflake",
+    //     color: "white",
+    //     health: "healthy",
+    //     description: "happy dog",
+    //     species_id: 1,
+    //     breed_id: 4,
+    //     animal_status_id: 2,
+    //     size_id: 3,
+    //     coat_length_id: 3,
+    //     age_id: 3,
+    //     shelter_location_id: 1,
+    //     states_id: 5,
+    //     shelter_id: 1,
+    //     is_male: false,
+    //     is_house_trained: false,
+    //     is_neutered_spayed: true,
+    //     is_good_with_kids: true,
+    //     is_good_with_dogs: true,
+    //     is_good_with_cats: false,
+    //     is_vaccinated: false,
+    //     profile_img_id: null,
+    //     is_mixed: 1
+    //   },
+    //   validation: {
+    //     name: true,
+    //     color: true,
+    //     health: true,
+    //     description: true,
+    //     species_id: true,
+    //     breed_id: true,
+    //     animal_status_id: true,
+    //     size_id: true,
+    //     coat_length_id: true,
+    //     age_id: true,
+    //     shelter_location_id: true,
+    //     states_id: true,
+    //     is_male: true,
+    //     is_house_trained: true,
+    //     is_neutered_spayed: true,
+    //     is_good_with_kids: true,
+    //     is_good_with_dogs: true,
+    //     is_good_with_cats: true,
+    //     is_vaccinated: true,
+    //     is_mixed: true,
+    //     shelter_id: true,
+    //     profile_img_id: true,
+
+    //   },
+    //   checked: [],
+    // });
   }
 
   handleImgUploadResponse = response => {
@@ -196,7 +213,6 @@ class AddAnimalForm extends React.Component {
               [stateName]: false
             } 
           });
-
         }
         break;
       case "notNull":
@@ -207,7 +223,6 @@ class AddAnimalForm extends React.Component {
               [stateName]: true
             } 
           });
-
         } else {
           this.setState({ 
             validation: {
@@ -218,6 +233,12 @@ class AddAnimalForm extends React.Component {
         }
         break;
       default:
+      this.setState({ 
+        validation: {
+          ...this.state.validation,
+          [stateName]: false
+        } 
+      });
         break;
     }
     
@@ -247,7 +268,7 @@ class AddAnimalForm extends React.Component {
       this.state.validation.is_neutered_spayed &&
       this.state.validation.is_vaccinated &&
       this.state.validation.is_mixed &&
-      this.state.validation.profile_img_id &&
+      this.state.animal.profile_img_id &&
       this.state.validation.shelter_location_id &&
       this.state.validation.size_id &&
       this.state.validation.species_id &&
@@ -275,7 +296,12 @@ class AddAnimalForm extends React.Component {
     }
 
     this.setState({
-      checked: newChecked
+      checked: newChecked,
+      animal:{
+        ...this.state.animal,
+        [value]: !this.state.animal[value]
+      },
+      
     });
   }
 
@@ -284,11 +310,6 @@ class AddAnimalForm extends React.Component {
     if (this.isValidated()) {
       const { checked } = this.state
       let animalAttributes = { ...this.state.animal }
-
-      checked.map(option => {
-        animalAttributes[option] = true
-      })
-
       this.props.addAnimal(animalAttributes).then((animalId) => {
         if (animalId) {
           this.setState({
@@ -328,11 +349,25 @@ class AddAnimalForm extends React.Component {
 
   render() {
     const { classes } = this.props;
-    console.log(classes)
-    // Built up collection of options for the dropdown
-    // given necessary data to each option (id, value)
-    // the name of the attribute is on the dropdown itself
-    const breedsDropdownOptions = this.props.breedsOptions.map(option => {
+
+    const styles = {
+      gridItem: {
+        textAlign: "center"
+      },
+      formControl: {
+        padding: "8%"
+      }
+    }
+
+    const filterBreedOptions = this.props.breedsOptions.filter(breed => {
+      if (this.state.animal.species_id) {
+        return breed.species_id === this.state.animal.species_id
+      } else {
+        return true
+      }
+    })
+
+    const breedsDropdownOptions = filterBreedOptions.map(option => {
       return <span onChange={this.handleChange} value={option.id}>{option.breed}</span>
     })
     const animalStatusDropdownOptions = this.props.animalStatusOptions.map(option => {
@@ -379,23 +414,21 @@ class AddAnimalForm extends React.Component {
     return (
       
       <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
+        <GridItem 
+          xs={12} sm={12} md={12}
+          style={styles.gridItem}
+        >
           <legend>Add Animal Profile Image</legend>
-          <ImageUpload height="200px" width="200px" defaultImage="https://beaglebit.com/images/8f89abcbb3d2d436a85c52a9684c55b9/c09b504addb7fd140e845a6bf7e4feea742ced57ca7329cd9c619c0bfa2df697." borderRadius="5px" imageLimit={1} editable={this.state.edit} callback={this.handleImgUploadResponse} url="https://staging1-pawsnfind.herokuapp.com/api/pictures/animal/1"/>
-          {/* <ImageUpload 
-            addButtonProps={{
-              color: "rose",
-              round: true
-            }}
-            changeButtonProps={{
-              color: "rose",
-              round: true
-            }}
-            removeButtonProps={{
-              color: "danger",
-              round: true
-            }}
-          /> */}
+          <ImageUpload 
+            height="300px" 
+            width="300px" 
+            defaultImage="https://beaglebit.com/images/8f89abcbb3d2d436a85c52a9684c55b9/c09b504addb7fd140e845a6bf7e4feea742ced57ca7329cd9c619c0bfa2df697." 
+            borderRadius="5px" 
+            imageLimit={1} 
+            editable={this.state.edit} 
+            callback={this.handleImgUploadResponse} 
+            url="https://staging1-pawsnfind.herokuapp.com/api/pictures/animal/1"
+          />
         </GridItem>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
@@ -407,34 +440,43 @@ class AddAnimalForm extends React.Component {
             <CardBody>
               <form>
               <span>{ this.state.validation.name }</span>
-              <CustomInput
-                  success={this.state.validation.name}
-                  error={this.state.validation.name === false}
-                  labelText="name"
-                  id="name"
-                  formControlProps={{
-                    fullWidth: true
-                  }}
-                  inputProps={{
-                    type: "text",
-                    value: this.state.animal.name,
-                    onChange: event => this.handleChange(event, "name", "length", 2),
-                  }}
-                />
-                <CustomInput
-                  success={this.state.validation.color}
-                  error={this.state.validation.color === false}
-                  labelText="color"
-                  id="color"
-                  formControlProps={{
-                    fullWidth: true
-                  }}
-                  inputProps={{
-                    type: "text",
-                    value: this.state.animal.color,
-                    onChange: event => this.handleChange(event, "color", "length", 2)
-                  }}
-                />
+
+              <GridContainer>
+                <GridItem xs={12} sm={12} md={6}>
+                  <CustomInput
+                    success={this.state.validation.name}
+                    error={this.state.validation.name === false}
+                    labelText="name"
+                    id="name"
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                    inputProps={{
+                      type: "text",
+                      value: this.state.animal.name,
+                      onChange: event => this.handleChange(event, "name", "length", 2),
+                    }}
+                  />
+                </GridItem>
+
+                <GridItem xs={12} sm={12} md={6}>
+                  <CustomInput
+                    success={this.state.validation.color}
+                    error={this.state.validation.color === false}
+                    labelText="color"
+                    id="color"
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                    inputProps={{
+                      type: "text",
+                      value: this.state.animal.color,
+                      onChange: event => this.handleChange(event, "color", "length", 2)
+                    }}
+                  />
+                </GridItem>
+
+                </GridContainer>
                 <CustomInput
                   success={this.state.validation.health}
                   error={this.state.validation.health === false}
@@ -465,9 +507,12 @@ class AddAnimalForm extends React.Component {
                 />
                 
                 <GridContainer>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <FormControl>
-                      <CustomDropdown 
+                  <GridItem
+                    xs={12} sm={6} md={3} 
+                    style={styles.gridItem}
+                  >
+                    <FormControl style={styles.formControl}>
+                      <CustomDropdown
                         buttonText= {speciesButtonDisplay}
                         id="species_id"
                         onChange={this.handleChange}
@@ -480,11 +525,15 @@ class AddAnimalForm extends React.Component {
                         }
                       />
                     </FormControl>
-
-                    <FormControl>
-                      <CustomDropdown 
+                  </GridItem>
+                    
+                  <GridItem
+                    xs={12} sm={6} md={3} 
+                    style={styles.gridItem}
+                  >
+                    <FormControl style={styles.formControl}>
+                      <CustomDropdown
                         buttonText= {breedButtonDisplay}
-                        // buttonText= "breed"
                         id="breed_id"
                         onChange={this.handleChange}
                         externalHandleClick={this.handleChange}
@@ -494,11 +543,16 @@ class AddAnimalForm extends React.Component {
                         dropdownHeader={
                           breedButtonDisplay
                         }
-                    /> 
+                      /> 
                     </FormControl>
+                  </GridItem>
 
-                    <FormControl>
-                      <CustomDropdown 
+                  <GridItem 
+                    xs={12} sm={6} md={3}
+                    style={styles.gridItem}
+                  >
+                    <FormControl style={styles.formControl}>
+                      <CustomDropdown
                         buttonText= {locationsButtonDisplay}
                         id="shelter_location_id"
                         onChange={this.handleChange}
@@ -511,9 +565,15 @@ class AddAnimalForm extends React.Component {
                         }
                       />
                     </FormControl>
+                  </GridItem>
 
-                    <FormControl>
-                      <CustomDropdown 
+                  <GridItem 
+                    xs={12} sm={6} md={3}
+                    style={styles.gridItem}
+                  >
+                    <FormControl style={styles.formControl}>
+                      <CustomDropdown
+                        hoverColor= "rose"
                         buttonText= {statesButtonDisplay}
                         id="states_id"
                         onChange={this.handleChange}
@@ -525,9 +585,14 @@ class AddAnimalForm extends React.Component {
                           statesButtonDisplay
                         }
                       />
-                    </FormControl> 
+                    </FormControl>
+                  </GridItem>
 
-                    <FormControl>
+                  <GridItem
+                    xs={12} sm={6} md={3}
+                    style={styles.gridItem}
+                  > 
+                    <FormControl style={styles.formControl}>
                       <CustomDropdown 
                         buttonText= {animalStatusButtonDisplay}
                         id="animal_status_id"
@@ -541,8 +606,13 @@ class AddAnimalForm extends React.Component {
                         }
                       /> 
                     </FormControl>
+                  </GridItem>
 
-                    <FormControl>
+                  <GridItem
+                    xs={12} sm={6} md={3}
+                    style={styles.gridItem}
+                  > 
+                    <FormControl style={styles.formControl}>
                       <CustomDropdown 
                         buttonText= {sizeButtonDisplay}
                         id="size_id"
@@ -556,8 +626,13 @@ class AddAnimalForm extends React.Component {
                         }
                       /> 
                     </FormControl>
+                  </GridItem>
 
-                    <FormControl>
+                  <GridItem
+                    xs={12} sm={6} md={3}
+                    style={styles.gridItem}
+                  > 
+                    <FormControl style={styles.formControl}>
                       <CustomDropdown 
                         buttonText= {agesButtonDisplay}
                         id="age_id"
@@ -571,8 +646,13 @@ class AddAnimalForm extends React.Component {
                         }
                       /> 
                     </FormControl>
+                  </GridItem>
 
-                    <FormControl>
+                  <GridItem
+                    xs={12} sm={6} md={3}
+                    style={styles.gridItem}
+                  > 
+                    <FormControl style={styles.formControl}>
                       <CustomDropdown 
                         buttonText= {coatLengthButtonDisplay}
                         id="coat_length_id"
