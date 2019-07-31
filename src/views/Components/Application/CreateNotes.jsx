@@ -100,11 +100,13 @@ class CreateNotes extends React.Component {
 
         const newNote = {
             notes: this.state.inputField,
-            shelter_user_id: this.props.application.shelter_user_id,
-            application_id: this.props.application.application_id,
+            shelter_user_id: this.props.application.user_id,
+            application_id: this.props.application_id,
         };
 
-        this.props.addNotes(newNote, this.props.application.application_id);
+        const id = this.props.application_id;
+
+        this.props.addNotes(newNote, id);
 
         this.setState({ inputField: '' });
     };
@@ -124,6 +126,9 @@ class CreateNotes extends React.Component {
     };
 
     render() {
+
+        console.log('PROPS APPLICATION', this.props.application)
+        console.log('SHELTER USER ID', this.props.application.shelter_user_id)
 
         const { classes } = this.props;
 
@@ -164,7 +169,7 @@ class CreateNotes extends React.Component {
                                 disableUnderline="true"
                                 inputProps={{
                                     type: "text",
-                                    onChange: this.handleInputField(4),
+                                    onChange: this.handleInputField(1),
                                     value: this.state.inputField,
                                 }}
                             />

@@ -26,7 +26,7 @@ const regularFormsStyle = {
   cardIconTitle: {
     ...cardTitle,
     marginTop: "15px",
-    marginBottom: "0px"
+    marginBottom: "0px",
   },
   staticFormGroup: {
     marginLeft: "0",
@@ -36,7 +36,7 @@ const regularFormsStyle = {
     position: "relative",
     "&:before,&:after": {
       display: "table",
-      content: '" "'
+      content: '" "',
     },
     "&:after": {
       clear: "both"
@@ -58,18 +58,21 @@ const regularFormsStyle = {
   inputAdornmentIconError: {
     color: dangerColor[0] + "!important"
   },
-
   notesSectionStyle: {
     paddingTop: "10px",
   },
-
   dropdownStyle: {
     height: "30px",
   },
-  
   menuOptionStyle: {
-    marginLeft: '5px'
+    marginLeft: '5px',
+  },
+  underlineStyle: {
+    
+    borderBottom: '1px solid black',
   }
+
+
 
 };
 

@@ -77,13 +77,11 @@ class ApplicationView extends React.Component {
   updateAppStatus = async (event) => {
 
     let updatedStatus = {
-      animal_id: 3,
-      shelter_id: 3,
-      user_id: 3,
+      animal_id: this.state.application.animal_id,
+      shelter_id: this.state.application.shelter_id,
+      user_id: this.state.application.user_id,
       application_status_id: this.state.application.application_status_id,
     };
-
-    let id = 3;
 
     this.props.updateApplication(updatedStatus, this.props.application.application_id)
   };
@@ -246,11 +244,12 @@ class ApplicationView extends React.Component {
                       disabled="true"
                       value={this.state.application.application_id}
                       style={customStyle.textFieldStyle}
-                      className={classes.margins}
+                      className={classes.underlineStyle}
                       InputProps={{
                         style: {
                           paddingLeft: "2%",
                           paddingTop: "2%",
+                          
                         }
                       }}
                       InputLabelProps={{
@@ -742,7 +741,7 @@ class ApplicationView extends React.Component {
               <Card>
                 <CardBody>
 
-                  <GridContainer style={customStyle.signatureSectionStyle} direction="row" justify="space-between" alignItems="center" >
+                  <GridContainer style={customStyle.signatureSectionStyle} direction="row" justify="center" alignItems="center" >
 
                     <FormControlLabel
                       label="I hereby certify that the information provided above is true and correct. "
