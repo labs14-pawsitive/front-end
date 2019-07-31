@@ -118,6 +118,19 @@ class ApplicationTable extends React.Component {
     })
   }
 
+  componentDidUpdate(prevProps, prevState) {
+
+    if (this.props.application !== prevProps.application && this.props.options !== prevProps.application) {
+
+      this.setState({
+        ...this.state,
+        application: this.props.application,
+        options: this.props.options,
+      })
+    }
+  };
+  
+
   render() {
     const { classes } = this.props;
     const card_category = {

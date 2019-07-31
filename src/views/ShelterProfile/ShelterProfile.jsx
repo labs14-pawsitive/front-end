@@ -64,18 +64,24 @@ import MaskedInput from 'react-text-mask';
   }
 
   componentDidMount() {
-    this.props.fetchShelter(this.props.shelterID)
-    .then( () => {
-      this.setState({
-        shelter: this.props.shelter,
-        locations: this.props.location,
-        contacts: this.props.contacts,
-      })
-    })
-    .catch( err => {
-      console.log('setting state error', err)
-     })
+    this.updateShelter();
   }
+
+updateShelter = () => {
+  this.props.fetchShelter(this.props.shelterID)
+  .then( () => {
+    this.setState({
+      shelter: this.props.shelter,
+      locations: this.props.location,
+      contacts: this.props.contacts,
+    })
+  })
+  .catch( err => {
+    console.log('setting state error', err)
+   })
+}
+
+ 
 
 handleFormButtonToggle = e => {
   e.preventDefault();
@@ -108,19 +114,6 @@ deleteShelterCon = contactId => {
 
 
 
-componentDidUpdate(prevProps, prevState){
-  if (this.props.shelter !== prevProps.shelter ||
-      this.props.contacts !== prevProps.contacts
-    ) {
-    this.setState({
-      locations : this.props.shelter.location,
-      contacts: this.props.shelter.contacts
-
-    })
-  } else {
-    console.log('components are the same')
-  }
-}
 
 render() {
       const { classes } = this.props;
@@ -129,12 +122,7 @@ render() {
           color:"#333333 !important",
         }
       }
-      if (this.props.fetchingShelter)
-            return (
-              <>      
-              <CircularProgress className={classes.progress} color="secondary" />
-              </>
-            );
+  
 return (
     <div>
       <GridContainer>
@@ -235,8 +223,9 @@ return (
               </h3>
             </CardHeader>
             <CardBody>
-                      {this.state.shelter && this.state.contacts.map(contact => (
-                    <Contacts
+                      {this.state.contacts && this.state.contacts.map(contact => (
+                    <Contacts 
+                        updateShelter={this.updateShelter}
                         contact ={contact}
                         key = {contact.id}
                         classes = {this.props.classes}
@@ -255,7 +244,7 @@ return (
             <h3 className={classes.cardTitle}>Locations</h3>
             </CardHeader>
             <CardBody>
-                    {this.state.shelter && this.state.locations.map(location => (
+                    {this.state.locations && this.state.locations.map(location => (
                     <Locations
                         location ={location}
                         key = {location.id}

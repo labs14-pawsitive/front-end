@@ -25,7 +25,7 @@ class Contacts extends Component {
 
     }
 
-
+ 
 handleFormButtonToggle = e => {
         e.preventDefault();
         this.setState({
@@ -66,9 +66,19 @@ updateSubmit = e => {
 
     this.props.updateShelterCon(this.props.contact.id, updatedContact)
     .then( (res) => {
-        this.props.fetchShelter(this.props.shelterID)
-        console.log('UPDATESHELTERLOCATION:', res)
+        this.props.updateShelter();
+        console.log('UPDATESHELTERLOCATION:',this.props.shelterID)
+    })
+    .then( (res) => {
+      console.log('update shelter location shelter:', res)
+  })
+    .catch(err => {
+      console.log('WHATS THE PROBLEM',err)
     });
+    this.setState({
+      editMode : !this.state.editMode
+    })
+
     
 }
 
