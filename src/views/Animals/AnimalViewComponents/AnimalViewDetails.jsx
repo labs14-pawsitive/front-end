@@ -45,7 +45,8 @@ class AnimalViewDetails extends React.Component {
             },
             adoptionStyle: {
                 paddingTop: "3%",
-                // width: "43%",
+
+                // width: "auto",
                 // marginRight: "7%",
                 display: "flex",
                 flexWrap: 'wrap',
@@ -53,12 +54,18 @@ class AnimalViewDetails extends React.Component {
             formControlStyle: {
                 // display:"flex",
                 // flexWrap: 'wrap',
-                width: "50%",
-                // marginRight: "1%",
+                width: "auto",
+                marginRight: "7%",
+                paddingBottom:"10%"
             },
             form1ControlStyle: {
-                width: "50%",
-                marginRight: "1%",
+                width: "auto",
+                marginRight: "10%",
+                // paddingBottom:"10%"
+            },
+            textStyle:{
+                // paddingBottom:"10%",
+                margin:"0px"
             }
 
         }
@@ -76,8 +83,8 @@ class AnimalViewDetails extends React.Component {
                         <form
                             className={classes.root}
                             autoComplete="off" style={customStyle.adoptionStyle}>
-
-                            <FormControl style={customStyle.form1ControlStyle} className={classes.formControl} >
+                                <GridItem xs={12} sm={12} md={6} >
+                            <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
                                 <InputLabel htmlFor="animal_status_id">Adoption Status</InputLabel>
                                 <Select
                                     disabled={this.props.isEditing ? false : true}
@@ -96,7 +103,9 @@ class AnimalViewDetails extends React.Component {
 
                                 </Select>
                             </FormControl>
+                            </GridItem>
 
+                            <GridItem xs={12} sm={12} md={6} >
                             <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
                                 <InputLabel htmlFor="species_id">Species</InputLabel>
                                 <Select
@@ -115,7 +124,9 @@ class AnimalViewDetails extends React.Component {
                                     })}
                                 </Select>
                             </FormControl>
+                            </GridItem>
 
+                            <GridItem xs={12} sm={12} md={6} >
                             <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
                                 <InputLabel htmlFor="breed_id">Breed</InputLabel>
                                 <Select
@@ -135,25 +146,28 @@ class AnimalViewDetails extends React.Component {
                               )
                             })} */}
 
-                                    {this.props.dynamicBreedDropdown.length===0 ? 
+                                    {this.props.dynamicBreedDropdown.length === 0 ?
 
-                                    this.props.breeds.filter(breed => {
-                                        return breed.species_id===this.props.animal.species_id})
-                                    .map(status => {
-                                        return (
-                                            <MenuItem key={status.id} value={status.id}>{status.breed}</MenuItem>
-                                        )
-                                    })
-                                    :
-                                    this.props.dynamicBreedDropdown.map(status => {
-                                        return (
-                                            <MenuItem key={status.id} value={status.id}>{status.breed}</MenuItem>
-                                        )
-                                    })
-                                   }
+                                        this.props.breeds.filter(breed => {
+                                            return breed.species_id === this.props.animal.species_id
+                                        })
+                                            .map(status => {
+                                                return (
+                                                    <MenuItem key={status.id} value={status.id}>{status.breed}</MenuItem>
+                                                )
+                                            })
+                                        :
+                                        this.props.dynamicBreedDropdown.map(status => {
+                                            return (
+                                                <MenuItem key={status.id} value={status.id}>{status.breed}</MenuItem>
+                                            )
+                                        })
+                                    }
                                 </Select>
                             </FormControl>
+                            </GridItem>
 
+                            <GridItem xs={12} sm={12} md={6} >
                             <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
                                 <InputLabel htmlFor="age_id">Age</InputLabel>
                                 <Select
@@ -171,7 +185,10 @@ class AnimalViewDetails extends React.Component {
                                     })}
                                 </Select>
                             </FormControl>
+                            </GridItem>
 
+
+                            <GridItem xs={12} sm={12} md={6} >
                             <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
                                 <InputLabel htmlFor="size_id">Size</InputLabel>
                                 <Select
@@ -189,8 +206,10 @@ class AnimalViewDetails extends React.Component {
                                     })}
                                 </Select>
                             </FormControl>
+                            </GridItem>
 
-                            <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
+                            <GridItem xs={12} sm={12} md={6} >
+                            <FormControl style={customStyle.form1ControlStyle} className={classes.formControl} >
                                 <InputLabel htmlFor='coat_length_id'>Coat Length</InputLabel>
                                 <Select
                                     disabled={this.props.isEditing ? false : true}
@@ -207,7 +226,9 @@ class AnimalViewDetails extends React.Component {
                                     })}
                                 </Select>
                             </FormControl>
+                            </GridItem>
 
+                            <GridItem xs={12} sm={12} md={6} >
                             <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
                                 <InputLabel htmlFor='is_male'>Gender</InputLabel>
                                 <Select
@@ -224,8 +245,10 @@ class AnimalViewDetails extends React.Component {
 
                                 </Select>
                             </FormControl>
+                            </GridItem>
 
-                            <TextField
+                            <GridItem xs={12} sm={12} md={6} >
+                            <TextField style={customStyle.textStyle}
                                 success={this.props.textState.colorState === "success"}
                                 error={this.props.textState.colorState === "error"}
 
@@ -242,6 +265,8 @@ class AnimalViewDetails extends React.Component {
 
                                 }}
                             />
+                            </GridItem>
+
                         </form>
                     </GridItem>
                 </GridContainer>

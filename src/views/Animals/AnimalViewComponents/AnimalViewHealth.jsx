@@ -38,17 +38,19 @@ class AnimalViewHealth extends React.Component {
             },
             adoptionStyle: {
                 paddingTop: "3%",
-                // width: "43%",
-                // marginRight: "7%",
+
                 display: "flex",
                 flexWrap: 'wrap',
             },
             formControlStyle: {
-                // display:"flex",
-                // flexWrap: 'wrap',
-                width: "50%",
-                // marginRight: "1%",
+                width: "43%",
+                paddingTop: "3%",
+                // marginRight: "7%",
+                paddingBottom:"10%"
             },
+            inputLabelStyle :{
+                width:"130%"
+            }
 
         }
 
@@ -59,17 +61,19 @@ class AnimalViewHealth extends React.Component {
             </div>
 
             <GridContainer style={customStyle.detailsContainerStyle}>
-              <GridItem xs={12} sm={12} md={10}>
+              {/* <GridItem xs={12} sm={12} md={10}> */}
 
                 <form
                   className={classes.root}
                   autoComplete="off" style={customStyle.adoptionStyle}
                 >
+                    <GridItem xs={12} sm={12} md={10}>
                   <TextField
                     success={this.props.textState.healthState === "success"}
                     error={this.props.textState.healthState === "error"}
                     name="health"
                     label="Health"
+                    multiline
                     className={classes.textField}
                     value={this.props.animal_meta.health}
                     onChange={this.props.handleMetaTextField(10)}
@@ -80,9 +84,11 @@ class AnimalViewHealth extends React.Component {
                       // onChange:(event) => this.handleMetaTextField(event,10)
                     }}
                   />
+                  </GridItem>
 
+                  <GridItem xs={12} sm={12} md={6}>
                   <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
-                    <InputLabel htmlFor='is_vaccinated'>Vaccinated?</InputLabel>
+                    <InputLabel style={customStyle.inputLabelStyle} htmlFor='is_vaccinated'>Vaccinated?</InputLabel>
                     <Select
                       disabled={this.props.isEditing ? false : true}
                       value={this.props.animal_meta.is_vaccinated ? 'Yes' : 'No'}
@@ -97,9 +103,11 @@ class AnimalViewHealth extends React.Component {
 
                     </Select>
                   </FormControl>
+                  </GridItem>
 
+                  <GridItem xs={12} sm={12} md={6}>
                   <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
-                    <InputLabel htmlFor='is_house_trained'>House trained?</InputLabel>
+                    <InputLabel style={customStyle.inputLabelStyle} htmlFor='is_house_trained'>House trained?</InputLabel>
                     <Select
                       disabled={this.props.isEditing ? false : true}
                       value={this.props.animal_meta.is_house_trained ? 'Yes' : 'No'}
@@ -114,9 +122,11 @@ class AnimalViewHealth extends React.Component {
 
                     </Select>
                   </FormControl>
+                  </GridItem>
 
+                  <GridItem xs={12} sm={12} md={6}>
                   <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
-                    <InputLabel htmlFor='is_good_with_kids'>Good with Kids?</InputLabel>
+                    <InputLabel style={customStyle.inputLabelStyle} htmlFor='is_good_with_kids'>Good with Kids?</InputLabel>
                     <Select
                       disabled={this.props.isEditing ? false : true}
                       value={this.props.animal_meta.is_good_with_kids ? 'Yes' : 'No'}
@@ -131,9 +141,11 @@ class AnimalViewHealth extends React.Component {
 
                     </Select>
                   </FormControl>
+                  </GridItem>
 
+                  <GridItem xs={12} sm={12} md={6}>
                   <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
-                    <InputLabel htmlFor='is_good_with_cats'>Good with Cats?</InputLabel>
+                    <InputLabel style={customStyle.inputLabelStyle} htmlFor='is_good_with_cats'>Good with Cats?</InputLabel>
                     <Select
                       disabled={this.props.isEditing ? false : true}
                       value={this.props.animal_meta.is_good_with_cats ? 'Yes' : 'No'}
@@ -148,9 +160,11 @@ class AnimalViewHealth extends React.Component {
 
                     </Select>
                   </FormControl>
+                  </GridItem>
 
+                  <GridItem xs={12} sm={12} md={6}>
                   <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
-                    <InputLabel htmlFor='is_good_with_dogs'>Good with Dogs?</InputLabel>
+                    <InputLabel style={customStyle.inputLabelStyle} htmlFor='is_good_with_dogs'>Good with Dogs?</InputLabel>
                     <Select
                       disabled={this.props.isEditing ? false : true}
                       value={this.props.animal_meta.is_good_with_dogs ? 'Yes' : 'No'}
@@ -165,9 +179,11 @@ class AnimalViewHealth extends React.Component {
 
                     </Select>
                   </FormControl>
+                  </GridItem>
 
+                  <GridItem xs={12} sm={12} md={6}>
                   <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
-                    <InputLabel htmlFor='is_neutered_spayed'>Neutered/Spayed?</InputLabel>
+                    <InputLabel style={customStyle.inputLabelStyle} htmlFor='is_neutered_spayed'>Neutered/Spayed?</InputLabel>
                     <Select
                       disabled={this.props.isEditing ? false : true}
                       value={this.props.animal_meta.is_neutered_spayed ? 'Yes' : 'No'}
@@ -182,9 +198,12 @@ class AnimalViewHealth extends React.Component {
 
                     </Select>
                   </FormControl>
+                  </GridItem>
 
+
+                  <GridItem xs={12} sm={12} md={6}>
                   <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
-                    <InputLabel htmlFor='is_mixed'>Is Mixed?</InputLabel>
+                    <InputLabel style={customStyle.inputLabelStyle} htmlFor='is_mixed'>Is Mixed?</InputLabel>
                     <Select
                       disabled={this.props.isEditing ? false : true}
                       value={this.props.animal_meta.is_mixed ? 'Yes' : 'No'}
@@ -199,9 +218,10 @@ class AnimalViewHealth extends React.Component {
 
                     </Select>
                   </FormControl>
+                  </GridItem>
 
                 </form>
-              </GridItem>
+              {/* </GridItem> */}
             </GridContainer>
 
           </GridItem>

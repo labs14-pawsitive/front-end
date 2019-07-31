@@ -59,7 +59,7 @@ class AnimalViewTop extends React.Component {
                     <GridList className={classes.gridList} >
                         <GridListTile key={this.props.animal.img_url} style={customStyle.imgCardStyle} >
 
-                            <ImageUpload height="224px" width="224px"
+                            <ImageUpload height="100%" width="100%"
                                 defaultImage={this.props.animal.img_url}
                                 borderRadius="5px" imageLimit={1}
                                 editable={this.props.isEditing} callback={this.props.callback}

@@ -34,13 +34,8 @@ class NotesComponent extends React.Component {
             this.props.updateNotes(this.state.editNoteInfo.animal_id, this.state.editNoteInfo.id, updatedNote)
                 .then(
                     (res) => {
-                        // window.location.reload()
                         this.setState({
                             isNoteEditing: false,
-                            // editNoteInfo: this.props.note.notes
-                            // editNoteInfo: {
-
-                            // }
                         });
                     }
                 )
@@ -78,7 +73,6 @@ class NotesComponent extends React.Component {
        
         this.props.deleteNotes(this.state.editNoteInfo.animal_id, noteID)
             .then((res) =>
-                // window.location.reload()
                 {
                     console.log(res)
                 this.setState({
