@@ -17,7 +17,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { fetchShelter , deleteShelterLoc, deleteShelterCon } from '../../actions/shelterAction';
+import { fetchShelter , deleteShelterLoc, deleteShelterCon, updateShelterCon } from '../../actions/shelterAction';
 import Locations from './Locations';
 
 import LocationForm from './LocationForm';
@@ -26,6 +26,8 @@ import ContactForm from './ContactForm';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import InputLabel from "@material-ui/core/InputLabel";
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 // @material-ui/icons
 import PermIdentity from "@material-ui/icons/PermIdentity";
@@ -42,7 +44,7 @@ import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
-import CardAvatar from "components/Card/CardAvatar.jsx";
+
 
 import shelterProfileStyles from "assets/jss/material-dashboard-pro-react/views/shelterProfileStyles.jsx";
 import Contacts from "./Contacts";
@@ -64,8 +66,8 @@ import Contacts from "./Contacts";
     .then( () => {
       this.setState({
         shelter: this.props.shelter,
-        locations: this.props.shelter.location,
-        contacts: this.props.shelter.contacts,
+        locations: this.props.location,
+        contacts: this.props.contacts,
       })
     })
     .catch( err => {
@@ -93,19 +95,30 @@ deleteShelterLoc = locationId => {
   this.props.deleteShelterLoc(locationId)
 }
 
+updateShelterCon = (contactId, change) => {
+  this.props.updateShelterCon(contactId, change)
+  
+} 
+
 deleteShelterCon = contactId => {
   this.props.deleteShelterCon(contactId)
 }
 
+
+
 componentDidUpdate(prevProps, prevState){
-  if (this.props.shelter.location !== prevProps.shelter.location ||
-      this.props.shelter.contacts !== prevProps.shelter.contacts 
+  if (this.props.shelter !== prevProps.shelter ||
+    this.props.location !== prevProps.location ||
+    this.props.location.length !== prevProps.location.length
+
     ) {
     this.setState({
       locations : this.props.shelter.location,
       contacts: this.props.shelter.contacts,
 
     })
+  } else {
+    console.log('components are the same')
   }
 }
 
@@ -116,6 +129,12 @@ render() {
           color:"#333333 !important",
         }
       }
+      if (this.props.fetchingShelter)
+            return (
+              <>      
+              <CircularProgress className={classes.progress} color="secondary" />
+              </>
+            );
 return (
     <div>
       <GridContainer>
@@ -206,10 +225,6 @@ return (
                   />
                 </GridItem>
               </GridContainer>
-              
-              {/* <Button color="rose" className={classes.updateProfileButton} onClick={this.handleFormButtonToggle}>
-                {this.state.editMode? "Save Changes" : "Update Profile"}
-              </Button> */}
               <Clearfix />
             </CardBody>
           </Card>
@@ -223,8 +238,11 @@ return (
                       {this.state.shelter && this.state.contacts.map(contact => (
                     <Contacts
                         contact ={contact}
+                        key = {contact.id}
                         classes = {this.props.classes}
                         deleteShelterCon = {this.deleteShelterCon}
+                        updateShelterCon = {this.updateShelterCon}
+                        onChange = {this.inputchangeHandler}
                     />
                     ))}
               <Clearfix />
@@ -240,6 +258,7 @@ return (
                     {this.state.shelter && this.state.locations.map(location => (
                     <Locations
                         location ={location}
+                        key = {location.id}
                         classes = {this.props.classes}
                         deleteShelterLoc = {this.deleteShelterLoc}
                     />
@@ -269,6 +288,8 @@ const mapStateToProps = (state) => {
     shelterWorkerID : state.userReducer.shelterWorkerID,
     roleID : state.userReducer.roleID,
     shelter: state.shelterReducer.shelter,
+    location: state.shelterReducer.location,
+    contacts: state.shelterReducer.contacts,
     fetchingShelter: state.shelterReducer.fetchingShelter, 
   }
 }
@@ -279,71 +300,6 @@ ShelterProfile.propTypes = {
 
 export default connect(
   mapStateToProps,
-  { fetchShelter, deleteShelterLoc, deleteShelterCon }
+  { fetchShelter, deleteShelterLoc, deleteShelterCon, updateShelterCon }
 )(withStyles(shelterProfileStyles)(ShelterProfile))
 
-
-{/* <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-                  <CustomInput
-                    labelText={this.state.shelter? "Location Name" : "Location"}
-                    id="location"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      disabled: this.state.editMode? false : true,
-                      style: customStyle.shelterDisplayView,
-                      value: this.props.shelter.shelter
-                    }}
-                  />
-                </GridItem>
-              </GridContainer>
-            <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-                <CustomInput
-                    labelText="Street Address"
-                    id={this.state.editMode? "street-address-disabled" : "street-address"}
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      disabled: this.state.editMode? false : true
-                    }}
-                    style={this.state.editMode? "" : customStyle.shelterDisplayView}
-
-                  />
-              </GridItem>
-               <GridItem xs={12} sm={12} md={6}>
-               <CustomInput
-                    labelText="City"
-                    id={this.state.editMode? "city-disabled" : "city"}
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      disabled: this.state.editMode? false : true
-                    }}
-                    style={this.state.editMode? "" : customStyle.shelterDisplayView}
-                  />  
-              </GridItem>
-              <GridItem xs={12} sm={12} md={6}>
-              <CustomInput
-                    labelText="State"
-                    id={this.state.editMode? "city-disabled" : "city"}
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      disabled: this.state.editMode? false : true
-                    }}
-                    style={this.state.editMode? "" : customStyle.shelterDisplayView}
-                  />
-                <Button size= "sm" color="danger" className={classes.updateProfileButton} onClick={this.handleFormButtonToggle}>
-                Delete
-              </Button>
-              <Button size= "sm" color="rose" className={classes.updateProfileButton} onClick={this.handleFormButtonToggle}>
-                {this.state.editMode? "Save Changes" : "Update"}
-              </Button>  
-            </GridItem>
-            </GridContainer> */}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
-import { fetchOptions, fetchShelter ,updateShelterCon, deleteShelterCon } from '../../actions/shelterAction';
+import { fetchShelter ,updateShelterCon, deleteShelterCon } from '../../actions/shelterAction';
 
 
 // @material-ui/core components
@@ -19,10 +19,29 @@ class Contacts extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            editMode: false
+            editMode: false,
+            contact : this.props.contact
         }
 
     }
+
+
+handleFormButtonToggle = e => {
+        e.preventDefault();
+        this.setState({
+          editMode : !this.state.editMode
+        })
+}
+
+changeHandler = e => {
+    this.setState({
+        contact: {
+        ...this.state.contact,
+        [e.target.id] : e.target.value
+        }
+    })
+  }
+      
 
 deleteContact = e => {
     e.preventDefault()
@@ -30,6 +49,33 @@ deleteContact = e => {
     .then( () => {
         this.props.fetchShelter(this.props.shelterID)
     })
+}
+
+updateSubmit = e => {
+    e.preventDefault()
+
+    const updatedContact = {
+        name: this.state.contact.name,
+        email: this.state.contact.email,
+        phone: this.state.contact.phone,
+        shelter_id: this.props.shelterID
+    }
+
+    console.log('UPDATECHANGE', updatedContact)
+
+
+    this.props.updateShelterCon(this.props.contact.id, updatedContact)
+    .then( (res) => {
+        this.props.fetchShelter(this.props.shelterID)
+        console.log('UPDATESHELTERLOCATION:', res)
+    })
+    .then( (res) => {
+      console.log('update shelter location shelter:', res)
+  })
+    .catch(err => {
+      console.log('WHATS THE PROBLEM',err)
+    });
+    
 }
 
     render() {
@@ -45,13 +91,14 @@ deleteContact = e => {
                 <GridItem xs={12} sm={12} md={12}>
                   <CustomInput
                     labelText="Name"
-                    id={this.state.editMode? "name-disabled" : "name"}
+                    id="name"
                     formControlProps={{
                       fullWidth: true
                     }}
                     inputProps={{
                       disabled: this.state.editMode? false : true,
-                      value: this.props.contact.name
+                      value: this.state.contact.name,
+                      onChange: (e) => this.changeHandler(e)
                     }}
                     style={this.state.editMode? "" : customStyle.shelterDisplayView}
 
@@ -60,13 +107,14 @@ deleteContact = e => {
                 <GridItem xs={12} sm={12} md={6}>
                   <CustomInput
                     labelText="Email address"
-                    id={this.state.editMode? "email-address-disabled" : "email"}
+                    id="email"
                     formControlProps={{
                       fullWidth: true,
                     }}
                     inputProps={{
                       disabled: this.state.editMode? false : true,
-                      value: this.props.contact.email
+                      value: this.state.contact.email,
+                      onChange: (e) => this.changeHandler(e)
                     }}
                     style={this.state.editMode? "" : customStyle.shelterDisplayView}
 
@@ -75,14 +123,14 @@ deleteContact = e => {
                 <GridItem xs={12} sm={12} md={6}>
                   <CustomInput
                     labelText="Phone Number"
-                    id={this.state.editMode? "phone-disabled" : "phone"}
+                    id="phone"
                     formControlProps={{
                       fullWidth: true
                     }}
                     inputProps={{
                       disabled: this.state.editMode? false : true,
-                      value: this.props.contact.phone
-
+                      value: this.state.contact.phone,
+                      onChange: (e) => this.changeHandler(e)
                     }}
                     style={this.state.editMode? "" : customStyle.shelterDisplayView}
 
@@ -90,15 +138,23 @@ deleteContact = e => {
                 </GridItem>
             <GridItem xs={12} sm={12} md={7}></GridItem>
             <GridItem xs={12} sm={12} md={5}>
+            <Button 
+                size= "sm" 
+                color="rose" 
+                className={classes.updateProfileButton}
+                onClick={this.state.editMode? this.updateSubmit : this.handleFormButtonToggle}
+              >
+                {this.state.editMode? "Save" : "Update"}
+              </Button>
+
+
               <Button size= "sm" 
               color="danger" 
               className={classes.updateProfileButton}
                onClick={this.deleteContact}>
                 Delete
               </Button>
-              <Button size= "sm" color="rose" className={classes.updateProfileButton} onClick={this.handleFormButtonToggle}>
-                {this.state.editMode? "Save Changes" : "Update"}
-              </Button>
+              
             </GridItem>
               </GridContainer>
             </>
@@ -122,6 +178,6 @@ const mapStateToProps = (state) => {
   
   export default connect(
     mapStateToProps,
-    { fetchOptions, updateShelterCon, deleteShelterCon, fetchShelter }
+    { updateShelterCon, deleteShelterCon, fetchShelter }
   )(withStyles(shelterProfileStyles)(Contacts))
   

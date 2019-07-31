@@ -33,6 +33,8 @@ const initialState = {
     shelterID : 3,
     upgraded : true,
     shelter: {},
+    location: [],
+    contacts: [],
     stateOptions: [],
     contactOptions: [],
     fetchingShelter: false,
@@ -58,7 +60,9 @@ export const shelterReducer = (state = initialState, action) => {
             return {
                 ...state,
                 fetchingShelter: false,
-                shelter: action.payload
+                shelter: action.payload,
+                location: action.payload.location,
+                contacts: action.payload.contacts,
             }
         case GET_SHELTER_ERR:
             return {
@@ -165,6 +169,9 @@ export const shelterReducer = (state = initialState, action) => {
         case UPDATE_CONTACT_SUCCESS:
             return {
                 ...state,
+                // shelter: action.payload,
+                // location: action.payload.location,
+                // contacts: action.payload.contacts,
                 updatingContact: false
             }
         case UPDATE_CONTACT_ERR:
