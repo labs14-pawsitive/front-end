@@ -201,7 +201,7 @@ class ApplicationView extends React.Component {
       },
       selectStyle: {
         background: "#edeae8",
-        padding: "1%",
+        // padding: "1%",
       },
       selectLabel: {
         padding: "12px 10px",
@@ -210,8 +210,8 @@ class ApplicationView extends React.Component {
         background: "#edeae8",
         paddingTop: "1%",
         paddingBottom: "1%",
-        borderBottom: "1px solid lightgrey"
-
+        borderBottom: "1px solid black",
+        paddingRight: '5%',
       },
       signatureTextStyle: {
         background: "#edeae8",
@@ -221,7 +221,7 @@ class ApplicationView extends React.Component {
       dropDownValueStyle: {
         // paddingLeft: '2%',
         paddingTop: "4%",
-      }
+      },
 
     };
 
@@ -241,15 +241,17 @@ class ApplicationView extends React.Component {
                       label="Application ID"
                       id="application_id"
                       fullWidth="true"
-                      disabled="true"
                       value={this.state.application.application_id}
                       style={customStyle.textFieldStyle}
-                      // className={classes.underlineStyle}
+                      inputProps={{
+                        disabled: true,
+                        disableUnderline: true,
+                      }}
                       InputProps={{
                         style: {
                           paddingLeft: "2%",
                           paddingTop: "2%",
-                          
+                          disableUnderline: true,
                         }
                       }}
                       InputLabelProps={{
@@ -264,13 +266,17 @@ class ApplicationView extends React.Component {
                       label="Animal Name"
                       id="animal_name"
                       fullWidth="true"
-                      disabled="true"
                       value={this.state.application.animal_name}
                       style={customStyle.textFieldStyle2}
+                      inputProps={{
+                        disabled: true,
+                        disableUnderline: true,
+                      }}
                       InputProps={{
                         style: {
                           paddingLeft: "2%",
                           paddingTop: "2%",
+                          disableUnderline: true,
                         }
                       }}
                       InputLabelProps={{
@@ -292,18 +298,13 @@ class ApplicationView extends React.Component {
 
 
                         <Select
-                          // SelectDisplayProps={{
-                          //   fontHeight: '2%',
-                          // }}
-
-                          // InputProps={{
-                          //   style: {
-                          //     paddingLeft: '2%',
-                          //   }
-                          // }}
+                          SelectDisplayProps={{
+                            style: {
+                              padding: "12px 6px",
+                            }
+                          }}
                           MenuProps={{
                             className: classes.menuOptionStyle
-
                           }}
                           renderValue={value => `${value}`}
                           value={this.state.application.application_status}
@@ -311,8 +312,6 @@ class ApplicationView extends React.Component {
                           name="application_status"
                           id="application_status"
                           fullWidth="true"
-
-                        // style={customStyle.selectStyle}
                         >
 
 
@@ -346,13 +345,17 @@ class ApplicationView extends React.Component {
                       label="Applicant Name"
                       id="name"
                       fullWidth="true"
-                      disabled="true"
                       value={this.state.application.name}
                       style={customStyle.textFieldStyle3}
+                      inputProps={{
+                        disabled: true,
+                        disableUnderline: true,
+                      }}
                       InputProps={{
                         style: {
                           paddingLeft: "2%",
                           paddingTop: "2%",
+                          disableUnderline: true,
                         }
                       }}
                       InputLabelProps={{
@@ -366,13 +369,17 @@ class ApplicationView extends React.Component {
                       label="Submission Date"
                       id="application_status"
                       fullWidth="true"
-                      disabled="true"
                       value={moment(this.props.application.created_at).format("MMMM Do YYYY").toString()}
                       style={customStyle.textFieldStyle}
+                      inputProps={{
+                        disabled: true,
+                        disableUnderline: true,
+                      }}
                       InputProps={{
                         style: {
                           paddingLeft: "2%",
                           paddingTop: "2%",
+                          disableUnderline: true,
                         }
                       }}
                       InputLabelProps={{
@@ -396,13 +403,17 @@ class ApplicationView extends React.Component {
                     label="Street Address"
                     id="street_address"
                     fullWidth="true"
-                    disabled="true"
                     value={this.state.application.street_address}
                     style={customStyle.textFieldStyle}
+                    inputProps={{
+                      disabled: true,
+                      disableUnderline: true,
+                    }}
                     InputProps={{
                       style: {
                         paddingLeft: "2%",
                         paddingTop: "2%",
+                        disableUnderline: true,
                       }
                     }}
                     InputLabelProps={{
@@ -415,13 +426,17 @@ class ApplicationView extends React.Component {
                     label="City / State / Zip"
                     id="city"
                     fullWidth="true"
-                    disabled="true"
                     value={this.state.application.city}
                     style={customStyle.textFieldStyle}
+                    inputProps={{
+                      disabled: true,
+                      disableUnderline: true,
+                    }}
                     InputProps={{
                       style: {
                         paddingLeft: "2%",
                         paddingTop: "2%",
+                        disableUnderline: true,
                       }
                     }}
                     InputLabelProps={{
@@ -434,13 +449,17 @@ class ApplicationView extends React.Component {
                     label="Home Phone Number"
                     id="home_number"
                     fullWidth="true"
-                    disabled="true"
                     value={this.state.application.home_phone}
                     style={customStyle.textFieldStyle}
+                    inputProps={{
+                      disabled: true,
+                      disableUnderline: true,
+                    }}
                     InputProps={{
                       style: {
                         paddingLeft: "2%",
                         paddingTop: "2%",
+                        disableUnderline: true,
                       }
                     }}
                     InputLabelProps={{
@@ -453,13 +472,17 @@ class ApplicationView extends React.Component {
                     label="Cell Phone Number"
                     id="cell_number"
                     fullWidth="true"
-                    disabled="true"
                     value={this.state.application.cell_phone}
                     style={customStyle.textFieldStyle}
+                    inputProps={{
+                      disabled: true,
+                      disableUnderline: true,
+                    }}
                     InputProps={{
                       style: {
                         paddingLeft: "2%",
                         paddingTop: "2%",
+                        disableUnderline: true,
                       }
                     }}
                     InputLabelProps={{
@@ -472,13 +495,17 @@ class ApplicationView extends React.Component {
                     label="Email"
                     id="name"
                     fullWidth="true"
-                    disabled="true"
                     value={this.state.application.email}
                     style={customStyle.textFieldStyle}
+                    inputProps={{
+                      disabled: true,
+                      disableUnderline: true,
+                    }}
                     InputProps={{
                       style: {
                         paddingLeft: "2%",
                         paddingTop: "2%",
+                        disableUnderline: true,
                       }
                     }}
                     InputLabelProps={{
@@ -502,13 +529,17 @@ class ApplicationView extends React.Component {
                     label="Reference 1"
                     id="ref_name_1"
                     fullWidth="true"
-                    disabled="true"
                     value={this.state.application.ref_name_1}
                     style={customStyle.textFieldStyle}
+                    inputProps={{
+                      disabled: true,
+                      disableUnderline: true,
+                    }}
                     InputProps={{
                       style: {
                         paddingLeft: "2%",
                         paddingTop: "2%",
+                        disableUnderline: true,
                       }
                     }}
                     InputLabelProps={{
@@ -522,13 +553,17 @@ class ApplicationView extends React.Component {
                     label="Reference 1 Phone Number"
                     id="ref_phone_1"
                     fullWidth="true"
-                    disabled="true"
                     value={this.state.application.ref_phone_1}
                     style={customStyle.textFieldStyle}
+                    inputProps={{
+                      disabled: true,
+                      disableUnderline: true,
+                    }}
                     InputProps={{
                       style: {
                         paddingLeft: "2%",
                         paddingTop: "2%",
+                        disableUnderline: true,
                       }
                     }}
                     InputLabelProps={{
@@ -542,13 +577,17 @@ class ApplicationView extends React.Component {
                     label="Reference 1 Relationship"
                     id="ref_relationship_1"
                     fullWidth="true"
-                    disabled="true"
                     value={this.state.application.ref_relationship_1}
                     style={customStyle.textFieldStyle}
+                    inputProps={{
+                      disabled: true,
+                      disableUnderline: true,
+                    }}
                     InputProps={{
                       style: {
                         paddingLeft: "2%",
                         paddingTop: "2%",
+                        disableUnderline: true,
                       }
                     }}
                     InputLabelProps={{
@@ -562,13 +601,17 @@ class ApplicationView extends React.Component {
                     label="Reference 2"
                     id="ref_name_2"
                     fullWidth="true"
-                    disabled="true"
                     value={this.state.application.ref_name_2}
                     style={customStyle.textFieldStyle}
+                    inputProps={{
+                      disabled: true,
+                      disableUnderline: true,
+                    }}
                     InputProps={{
                       style: {
                         paddingLeft: "2%",
                         paddingTop: "2%",
+                        disableUnderline: true,
                       }
                     }}
                     InputLabelProps={{
@@ -582,13 +625,17 @@ class ApplicationView extends React.Component {
                     label="Reference 2 Phone Number"
                     id="ref_phone_2"
                     fullWidth="true"
-                    disabled="true"
                     value={this.state.application.ref_phone_2}
                     style={customStyle.textFieldStyle}
+                    inputProps={{
+                      disabled: true,
+                      disableUnderline: true,
+                    }}
                     InputProps={{
                       style: {
                         paddingLeft: "2%",
                         paddingTop: "2%",
+                        disableUnderline: true,
                       }
                     }}
                     InputLabelProps={{
@@ -602,13 +649,17 @@ class ApplicationView extends React.Component {
                     label="Reference 2 Relationship"
                     id="ref_relationship_2"
                     fullWidth="true"
-                    disabled="true"
                     value={this.state.application.ref_relationship_2}
                     style={customStyle.textFieldStyle}
+                    inputProps={{
+                      disabled: true,
+                      disableUnderline: true,
+                    }}
                     InputProps={{
                       style: {
                         paddingLeft: "2%",
                         paddingTop: "2%",
+                        disableUnderline: true,
                       }
                     }}
                     InputLabelProps={{
@@ -633,13 +684,17 @@ class ApplicationView extends React.Component {
                     label="Applicant is 18 Years Old or Older"
                     id="is_over_18"
                     fullWidth="true"
-                    disabled="true"
                     value={this.state.application.is_over_18 ? "Yes" : "No"}
                     style={customStyle.textFieldStyle}
+                    inputProps={{
+                      disabled: true,
+                      disableUnderline: true,
+                    }}
                     InputProps={{
                       style: {
                         paddingLeft: "2%",
                         paddingTop: "2%",
+                        disableUnderline: true,
                       }
                     }}
                     InputLabelProps={{
@@ -653,13 +708,17 @@ class ApplicationView extends React.Component {
                     label="Applicant Owns Current Residence"
                     id="is_homeowner"
                     fullWidth="true"
-                    disabled="true"
                     value={this.state.application.is_homeowner ? "Yes" : "No"}
                     style={customStyle.textFieldStyle}
+                    inputProps={{
+                      disabled: true,
+                      disableUnderline: true,
+                    }}
                     InputProps={{
                       style: {
                         paddingLeft: "2%",
                         paddingTop: "2%",
+                        disableUnderline: true,
                       }
                     }}
                     InputLabelProps={{
@@ -673,13 +732,17 @@ class ApplicationView extends React.Component {
                     label="All Residents Agree to Adopt a New Animal"
                     id="is_in_agreement"
                     fullWidth="true"
-                    disabled="true"
-                    value={this.state.application.is_in_agreement ? "Yes" : "No" }
+                    value={this.state.application.is_in_agreement ? "Yes" : "No"}
                     style={customStyle.textFieldStyle}
+                    inputProps={{
+                      disabled: true,
+                      disableUnderline: true,
+                    }}
                     InputProps={{
                       style: {
                         paddingLeft: "2%",
                         paddingTop: "2%",
+                        disableUnderline: true,
                       }
                     }}
                     InputLabelProps={{
@@ -693,13 +756,17 @@ class ApplicationView extends React.Component {
                     label="Residency Inspection Allowed"
                     id="is_homevisit_allowed"
                     fullWidth="true"
-                    disabled="true"
-                    value={this.state.application.is_homevisit_allowed ? "Yes" : "No" }
+                    value={this.state.application.is_homevisit_allowed ? "Yes" : "No"}
                     style={customStyle.textFieldStyle}
+                    inputProps={{
+                      disabled: true,
+                      disableUnderline: true,
+                    }}
                     InputProps={{
                       style: {
                         paddingLeft: "2%",
                         paddingTop: "2%",
+                        disableUnderline: true,
                       }
                     }}
                     InputLabelProps={{
@@ -713,13 +780,17 @@ class ApplicationView extends React.Component {
                     label="Has a Fenced in Yard"
                     id="is_fenced"
                     fullWidth="true"
-                    disabled="true"
                     value={this.state.application.is_fenced ? "Yes" : "No"}
                     style={customStyle.textFieldStyle}
+                    inputProps={{
+                      disabled: true,
+                      disableUnderline: true,
+                    }}
                     InputProps={{
                       style: {
                         paddingLeft: "2%",
                         paddingTop: "2%",
+                        disableUnderline: true,
                       }
                     }}
                     InputLabelProps={{
