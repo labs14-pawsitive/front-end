@@ -18,7 +18,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { createBrowserHistory } from "history";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 
 import thunk from 'redux-thunk';
@@ -39,7 +39,11 @@ import "assets/scss/material-dashboard-pro-react.scss?v=1.7.0";
 
 const store = createStore(
     reducer,
-    applyMiddleware(thunk, logger)
+    compose(
+        applyMiddleware(thunk, logger),
+        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+        
+    )
 );
 
 const hist = createBrowserHistory();
