@@ -204,21 +204,21 @@ class AnimalView extends React.Component {
       case 'breed_id':
         targetID = this.state.breeds ? this.state.breeds.find(eachValue => eachValue.id === event.target.value).breed : ''
 
-        if (event.target.value !== "select a breed") {
+        // if (event.target.value !== "select a breed") {
           this.setState({
             animal_meta: {
               ...this.state.animal_meta,
               breed: targetID,
               [event.target.name]: event.target.value
             },
-            breedState: "success"
+            // breedState: "success"
           })
-        }
-        else {
-          this.setState({
-            breedState: "error"
-          })
-        }
+        // }
+        // else {
+        //   this.setState({
+        //     breedState: "error"
+        //   })
+        // }
 
         break;
       case 'animal_status_id':

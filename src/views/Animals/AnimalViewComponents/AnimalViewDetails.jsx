@@ -46,14 +46,10 @@ class AnimalViewDetails extends React.Component {
             adoptionStyle: {
                 paddingTop: "3%",
 
-                // width: "auto",
-                // marginRight: "7%",
                 display: "flex",
                 flexWrap: 'wrap',
             },
             formControlStyle: {
-                // display:"flex",
-                // flexWrap: 'wrap',
                 width: "auto",
                 marginRight: "7%",
                 paddingBottom:"10%"
@@ -61,10 +57,8 @@ class AnimalViewDetails extends React.Component {
             form1ControlStyle: {
                 width: "auto",
                 marginRight: "10%",
-                // paddingBottom:"10%"
             },
             textStyle:{
-                // paddingBottom:"10%",
                 margin:"0px"
             }
 

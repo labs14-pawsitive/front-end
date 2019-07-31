@@ -21,7 +21,8 @@ class NotesComponent extends React.Component {
         super(props)
         this.state = {
             isNoteEditing: false,
-            editNoteInfo: this.props.note,
+            editNoteInfo: this.props.note,           
+            updateNoteState:"success"
             
         }
     }
@@ -31,6 +32,7 @@ class NotesComponent extends React.Component {
     submitNoteUpdate = (event, updatedNote) => {
         if (this.state.isNoteEditing) {
 
+            if(this.state.editNoteInfo.notes.length >= 10){
             this.props.updateNotes(this.state.editNoteInfo.animal_id, this.state.editNoteInfo.id, updatedNote)
                 .then(
                     (res) => {
@@ -43,7 +45,10 @@ class NotesComponent extends React.Component {
                     console.log('update notes component: error ', error)
                 })
 
-            console.log('is updated')
+            console.log('is updated')}
+            else {
+                console.log('please enter the required length')
+            }
         }
         else {
             this.setState({
@@ -121,6 +126,8 @@ class NotesComponent extends React.Component {
                 <CardContent>
                     {this.state.isNoteEditing ?
                         <TextField
+                        success={this.state.updateNoteState === "success"}
+                        error={this.state.updateNoteState === "error"}
                             name="notes"
                             multiline
                             className={classes.textField}

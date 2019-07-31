@@ -24,7 +24,8 @@ class AnimalNotes extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            note: this.props.animalNotes
+            note: this.props.animalNotes,
+            addNoteState:"error",
         }
     }
 
@@ -56,6 +57,7 @@ class AnimalNotes extends React.Component {
 
         console.log('post notes info: ', notes)
 
+        if(this.state.note.length>=10){
          this.props.addNotes(notes.animal_id, notes)
             .then(
                 (res) => {
@@ -65,7 +67,10 @@ class AnimalNotes extends React.Component {
                 })
             .catch(error => {
                 console.log('animal view component : add : error ', error)
-            })
+            })}
+            else{
+                console.log('please enter the required length')
+            }
     }
 
     render() {
@@ -95,7 +100,8 @@ class AnimalNotes extends React.Component {
                     </CardHeader>
 
                     <TextField
-
+                        success={this.state.addNoteState === "success"}
+                        error={this.state.addNoteState === "error"}
                         id="standard-textarea"
                         label="Add a note"
                         value={this.state.note}
