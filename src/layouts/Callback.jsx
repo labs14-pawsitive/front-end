@@ -25,15 +25,15 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import TempNavBar from "components/Navbars/TempNavBar.jsx";
 import Footer from "components/Footer/Footer.jsx";
 
-import routes from "routes.js";
+// import routes from "routes.js";
 
 import pagesStyle from "assets/jss/material-dashboard-pro-react/layouts/authStyle.jsx";
 
-import register from "assets/img/register.jpeg";
-import login from "assets/img/login.jpeg";
-import lock from "assets/img/lock.jpeg";
-import error from "assets/img/clint-mckoy.jpg";
-import pricing from "assets/img/bg-pricing.jpeg";
+// import register from "assets/img/register.jpeg";
+// import login from "assets/img/login.jpeg";
+// import lock from "assets/img/lock.jpeg";
+// import error from "assets/img/clint-mckoy.jpg";
+// import pricing from "assets/img/bg-pricing.jpeg";
 import mainBG from "assets/img/bg-application.jpg"
 
 

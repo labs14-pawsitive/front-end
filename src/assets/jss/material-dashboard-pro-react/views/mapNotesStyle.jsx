@@ -21,12 +21,12 @@ import {
 } from "assets/jss/material-dashboard-pro-react.jsx";
 import customCheckboxRadioSwitch from "assets/jss/material-dashboard-pro-react/customCheckboxRadioSwitch.jsx";
 
-const regularFormsStyle = {
+const mapNotesStyle = {
   ...customCheckboxRadioSwitch,
   cardIconTitle: {
     ...cardTitle,
     marginTop: "15px",
-    marginBottom: "0px",
+    marginBottom: "0px"
   },
   staticFormGroup: {
     marginLeft: "0",
@@ -36,7 +36,7 @@ const regularFormsStyle = {
     position: "relative",
     "&:before,&:after": {
       display: "table",
-      content: '" "',
+      content: '" "'
     },
     "&:after": {
       clear: "both"
@@ -58,22 +58,23 @@ const regularFormsStyle = {
   inputAdornmentIconError: {
     color: dangerColor[0] + "!important"
   },
-  notesSectionStyle: {
-    paddingTop: "10px",
-  },
-  dropdownStyle: {
-    height: "30px",
-  },
-  menuOptionStyle: {
-    marginLeft: '5px',
-  },
-  underlineStyle: {
-    
-    borderBottom: '1px solid black',
-  }
 
-
+  noteBackground: {
+    background: '#edeae8',
+    borderBottom: '1px solid lightgrey',
+  },
+  editButtonStyle: {
+    fontSize: '15px',
+    color: 'grey',
+ },
+ deleteButtonStyle: {
+  fontSize: '15px',
+  color: 'grey',
+ },
+ headerStyle: {
+  fontWeight: "bold",
+},
 
 };
 
-export default regularFormsStyle;
+export default mapNotesStyle;
