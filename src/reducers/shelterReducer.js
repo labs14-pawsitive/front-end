@@ -169,9 +169,6 @@ export const shelterReducer = (state = initialState, action) => {
         case UPDATE_CONTACT_SUCCESS:
             return {
                 ...state,
-                // shelter: action.payload,
-                // location: action.payload.location,
-                // contacts: action.payload.contacts,
                 updatingContact: false
             }
         case UPDATE_CONTACT_ERR:

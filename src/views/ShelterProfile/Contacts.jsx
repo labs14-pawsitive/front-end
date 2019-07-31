@@ -68,12 +68,6 @@ updateSubmit = e => {
     .then( (res) => {
         this.props.fetchShelter(this.props.shelterID)
         console.log('UPDATESHELTERLOCATION:', res)
-    })
-    .then( (res) => {
-      console.log('update shelter location shelter:', res)
-  })
-    .catch(err => {
-      console.log('WHATS THE PROBLEM',err)
     });
     
 }

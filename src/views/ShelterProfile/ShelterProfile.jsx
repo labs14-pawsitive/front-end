@@ -48,6 +48,8 @@ import CardIcon from "components/Card/CardIcon.jsx";
 
 import shelterProfileStyles from "assets/jss/material-dashboard-pro-react/views/shelterProfileStyles.jsx";
 import Contacts from "./Contacts";
+import MaskedInput from 'react-text-mask';
+
 
 
  class ShelterProfile extends React.Component {
@@ -108,13 +110,11 @@ deleteShelterCon = contactId => {
 
 componentDidUpdate(prevProps, prevState){
   if (this.props.shelter !== prevProps.shelter ||
-    this.props.location !== prevProps.location ||
-    this.props.location.length !== prevProps.location.length
-
+      this.props.contacts !== prevProps.contacts
     ) {
     this.setState({
       locations : this.props.shelter.location,
-      contacts: this.props.shelter.contacts,
+      contacts: this.props.shelter.contacts
 
     })
   } else {
