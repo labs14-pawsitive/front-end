@@ -32,7 +32,7 @@ class AnimalViewHealth extends React.Component {
                 flexWrap: 'wrap',
             },
             gridStyle: {
-                margin: "40px 40px",
+                // margin: "40px 40px",
                 borderTop: "1px solid lightgray",
 
             },
@@ -45,11 +45,13 @@ class AnimalViewHealth extends React.Component {
             formControlStyle: {
                 width: "43%",
                 paddingTop: "3%",
-                // marginRight: "7%",
                 paddingBottom:"10%"
             },
             inputLabelStyle :{
                 width:"130%"
+            },
+            healthTextStyle:{
+                width:"72%"
             }
 
         }
@@ -61,14 +63,13 @@ class AnimalViewHealth extends React.Component {
             </div>
 
             <GridContainer style={customStyle.detailsContainerStyle}>
-              {/* <GridItem xs={12} sm={12} md={10}> */}
 
                 <form
                   className={classes.root}
                   autoComplete="off" style={customStyle.adoptionStyle}
                 >
-                    <GridItem xs={12} sm={12} md={10}>
-                  <TextField
+                    <GridItem xs={12} sm={12} md={12}>
+                  <TextField style={customStyle.healthTextStyle}
                     success={this.props.textState.healthState === "success"}
                     error={this.props.textState.healthState === "error"}
                     name="health"
@@ -77,11 +78,9 @@ class AnimalViewHealth extends React.Component {
                     className={classes.textField}
                     value={this.props.animal_meta.health}
                     onChange={this.props.handleMetaTextField(10)}
-                    // onChange={(event) => this.handleMetaTextField(event, "health", 10)}
                     margin="normal"
                     InputProps={{
                       readOnly: this.props.isEditing ? false : true,
-                      // onChange:(event) => this.handleMetaTextField(event,10)
                     }}
                   />
                   </GridItem>
@@ -221,7 +220,6 @@ class AnimalViewHealth extends React.Component {
                   </GridItem>
 
                 </form>
-              {/* </GridItem> */}
             </GridContainer>
 
           </GridItem>

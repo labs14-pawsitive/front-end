@@ -499,96 +499,15 @@ class AnimalView extends React.Component {
 
 
     const customStyle = {
-      titleStyle: {
-        padding: "10% 0px 0px 0px"
-      },
-      imgCardStyle: {
-        padding: "0px 15px",
-        width: "224px",
-        height: "224px"
-      },
-      imgStyle: {
-        borderRadius: "4px",
-      },
-      animalInfoStyle: {
-        padding: "20px 0px"
-      },
-      buttonStyle: {
-        margin: "0px 10px 10px 0px"
-      },
-      noteButtonStyle: {
-        margin: "0px 10px 10px 15px",
-        width: "40%"
-      },
+     
       containerStyle: {
         padding: "3%"
-      },
-      textFieldStyle: {
-        width: "43%",
-        marginRight: "7%"
-      },
-      textFieldNote: {
-        padding: "0px 3%"
-      },
-      oneTextFieldStyle: {
-        width: 300,
-        marginRight: "150px"
-      },
-      detailsContainerStyle: {
-        display: 'flex',
-        flexWrap: 'wrap',
-      },
-      gridItemStyle: {
-        display: 'flex',
-        flexWrap: 'wrap',
-      },
-      gridStyle: {
-        margin: "40px 40px",
-        borderTop: "1px solid lightgray",
-
-      },
+      },      
       animalButtonStyle: {
         display: 'flex',
         justifyContent: 'flex-end',
         paddingRight: '12%'
-      },
-      runningNoteButtonStyle: {
-        display: 'flex',
-        justifyContent: 'flex-end',
-      },
-      imgTitle: {
-        background:
-          'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
-        opacity: 0.8,
-        fontSize: "26px",
-        fontWeight: "bold"
-      },
-      noteStyle: {
-        color: "lightgray",
-        display: 'flex',
-        flexWrap: 'wrap',
-      },
-      typographyStyle: {
-        marginRight: "7%",
-      },
-      adoptionStyle: {
-        paddingTop: "3%",
-        // width: "43%",
-        // marginRight: "7%",
-        display: "flex",
-        flexWrap: 'wrap',
-      },
-      formControlStyle: {
-        // display:"flex",
-        // flexWrap: 'wrap',
-        width: "50%",
-        // marginRight: "1%",
-      },
-      form1ControlStyle: {
-        width: "50%",
-        marginRight: "1%",
-      }
-
+      },      
     }
 
     return (
@@ -597,7 +516,6 @@ class AnimalView extends React.Component {
           <GridItem xs={12} sm={12} md={8}>
             <Card>
               <GridContainer style={customStyle.containerStyle}>
-                {/* <GridContainer xs={12} sm={12} md={12}> */}
                 <AnimalViewTop
                   animal={this.state.animal}
                   animal_meta={this.state.animal_meta}
@@ -608,7 +526,6 @@ class AnimalView extends React.Component {
                   handleTextField={this.handleTextField}
                   handleAdoption={this.handleAdoption}
                   paramsId={this.props.match.params.id} />
-                {/* </GridContainer> */}
 
                 <GridItem xs={12} sm={12} md={12}>
                   <div style={customStyle.animalButtonStyle}>
@@ -623,8 +540,6 @@ class AnimalView extends React.Component {
                       </Button>
 
                   </div>
-
-
                 </GridItem>
 
                 <AnimalViewDetails
@@ -650,9 +565,7 @@ class AnimalView extends React.Component {
               </GridContainer>
             </Card>
           </GridItem>
-
           <AnimalNotes />
-
         </GridContainer>
       </div >
     );

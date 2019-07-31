@@ -27,12 +27,52 @@ class NotesComponent extends React.Component {
         }
     }
 
+    handleNoteToggle = (event) => {
+        this.setState({
+            isNoteEditing: !this.state.isNoteEditing,
+        })
+    }
 
+    handleUpdateNoteChange = (len) => (event) => {
+        if (this.state.editNoteInfo.notes.length >= len) {
+            this.setState({
+                updateNoteState: "success"
+            })
+        }
+        else {
+            this.setState({
+                updateNoteState: "error"
+            })
+        }
+        this.setState({
+            editNoteInfo: {
+                ...this.state.editNoteInfo,
+                [event.target.name]: event.target.value
+            }
+        })
+    }
+
+    isValidated() {
+
+        if (this.state.updateNoteState === "success") {
+            console.log("isValidated fn : is true")
+            return true;
+        }
+        else {
+            if (this.state.updateNoteState !== "success") {
+                this.setState({
+                    updateNoteState: "error"
+                });
+            }
+            console.log("isValidated is false")
+            return false;
+        }
+    }
 
     submitNoteUpdate = (event, updatedNote) => {
         if (this.state.isNoteEditing) {
 
-            if(this.state.editNoteInfo.notes.length >= 10){
+            if(this.isValidated()){
             this.props.updateNotes(this.state.editNoteInfo.animal_id, this.state.editNoteInfo.id, updatedNote)
                 .then(
                     (res) => {
@@ -58,20 +98,7 @@ class NotesComponent extends React.Component {
         }
     }
 
-    handleNoteToggle = (event) => {
-        this.setState({
-            isNoteEditing: !this.state.isNoteEditing,
-        })
-    }
 
-    handleUpdateNoteChange = (event) => {
-        this.setState({
-            editNoteInfo: {
-                ...this.state.editNoteInfo,
-                [event.target.name]: event.target.value
-            }
-        })
-    }
 
     submitDelete = (event, noteID) => {
         event.preventDefault()
@@ -132,7 +159,7 @@ class NotesComponent extends React.Component {
                             multiline
                             className={classes.textField}
                             value={this.state.editNoteInfo.notes}
-                            onChange={this.handleUpdateNoteChange}
+                            onChange={this.handleUpdateNoteChange(10)}
                             margin="normal"
 
                         /> :

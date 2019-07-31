@@ -27,7 +27,6 @@ class AnimalViewTop extends React.Component {
 
         const customStyle = {
             imgCardStyle: {
-                // padding: "0px 15px",
                 paddingTop:"2px",
                 width: "210px",
                 height: "200px"
@@ -67,7 +66,6 @@ class AnimalViewTop extends React.Component {
 
 
                             <GridListTileBar style={customStyle.imgTitle}
-                                // title={this.state.animal.name}
                                 subtitle={<span>#{this.props.animal.id}</span>}
                                 classes={{
                                     root: classes.titleBar,
@@ -88,10 +86,8 @@ class AnimalViewTop extends React.Component {
 
                                     name="name"
                                     label="Name"
-                                    // type="text"
                                     className={classes.textField}
                                     value={this.props.animal.name}
-                                    // onChange={this.simpleFn(4)}
                                     onChange={this.props.handleTextField(4)}
                                     margin="normal"
                                 />
@@ -103,10 +99,8 @@ class AnimalViewTop extends React.Component {
                                     name="description"
                                     label="Description"
                                     multiline
-                                    // rows="4"
                                     className={classes.textField}
                                     value={this.props.animal_meta.description}
-                                    // onChange={this.handleMetaTextField}
                                     onChange={this.props.handleMetaTextField(10)}
                                     margin="normal"
                                 />

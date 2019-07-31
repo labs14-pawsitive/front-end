@@ -39,13 +39,10 @@ class AnimalViewDetails extends React.Component {
                 flexWrap: 'wrap',
             },
             gridStyle: {
-                margin: "40px 40px",
                 borderTop: "1px solid lightgray",
-
             },
             adoptionStyle: {
                 paddingTop: "3%",
-
                 display: "flex",
                 flexWrap: 'wrap',
             },
@@ -55,13 +52,17 @@ class AnimalViewDetails extends React.Component {
                 paddingBottom:"10%"
             },
             form1ControlStyle: {
-                width: "auto",
+                width: "64%",
                 marginRight: "10%",
+            },
+            form2ControlStyle: {
+                width: "64%",
+                marginRight: "7%",
+                paddingBottom:"10%"
             },
             textStyle:{
                 margin:"0px"
             }
-
         }
 
         return (
@@ -100,7 +101,7 @@ class AnimalViewDetails extends React.Component {
                             </GridItem>
 
                             <GridItem xs={12} sm={12} md={6} >
-                            <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
+                            <FormControl style={customStyle.form2ControlStyle} className={classes.formControl} >
                                 <InputLabel htmlFor="species_id">Species</InputLabel>
                                 <Select
                                     disabled={this.props.isEditing ? false : true}
@@ -132,14 +133,6 @@ class AnimalViewDetails extends React.Component {
                                     input={<Input id="breed_id" />}
                                 >
 
-                                    {/* {this.state.breeds
-                            .filter(breed => (breed.species_id===this.state.animal_meta.species_id))
-                            .map(status => {
-                              return (
-                                <MenuItem value={status.id}>{status.breed}</MenuItem>
-                              )
-                            })} */}
-
                                     {this.props.dynamicBreedDropdown.length === 0 ?
 
                                         this.props.breeds.filter(breed => {
@@ -162,7 +155,7 @@ class AnimalViewDetails extends React.Component {
                             </GridItem>
 
                             <GridItem xs={12} sm={12} md={6} >
-                            <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
+                            <FormControl style={customStyle.form2ControlStyle} className={classes.formControl} >
                                 <InputLabel htmlFor="age_id">Age</InputLabel>
                                 <Select
                                     disabled={this.props.isEditing ? false : true}
@@ -183,7 +176,7 @@ class AnimalViewDetails extends React.Component {
 
 
                             <GridItem xs={12} sm={12} md={6} >
-                            <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
+                            <FormControl style={customStyle.form2ControlStyle} className={classes.formControl} >
                                 <InputLabel htmlFor="size_id">Size</InputLabel>
                                 <Select
                                     disabled={this.props.isEditing ? false : true}
@@ -223,7 +216,7 @@ class AnimalViewDetails extends React.Component {
                             </GridItem>
 
                             <GridItem xs={12} sm={12} md={6} >
-                            <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
+                            <FormControl style={customStyle.form2ControlStyle} className={classes.formControl} >
                                 <InputLabel htmlFor='is_male'>Gender</InputLabel>
                                 <Select
                                     disabled={this.props.isEditing ? false : true}
@@ -251,11 +244,9 @@ class AnimalViewDetails extends React.Component {
                                 className={classes.textField}
                                 value={this.props.animal_meta.color}
                                 onChange={this.props.handleMetaTextField(3)}
-                                // onChange={(event) => this.handleMetaTextField(event, "color", 3)}
                                 margin="normal"
                                 InputProps={{
                                     readOnly: this.props.isEditing ? false : true,
-                                    // onChange:(event) => this.handleMetaTextField(event,3)
 
                                 }}
                             />

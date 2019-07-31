@@ -25,7 +25,7 @@ class AnimalNotes extends React.Component {
         super(props)
         this.state = {
             note: this.props.animalNotes,
-            addNoteState:"error",
+            addNoteState: "error",
         }
     }
 
@@ -37,13 +37,42 @@ class AnimalNotes extends React.Component {
         })
     }
 
-    handleAddNoteChange = (event) => {
+    handleAddNoteChange = (len) => (event) => {
+
+        if (this.state.note.length >= len) {
+            this.setState({
+                addNoteState: "success"
+            })
+        }
+        else {
+            this.setState({
+                addNoteState: "error"
+            })
+        }
         this.setState({
-            note: event.target.value
+            note: event.target.value,
         })
+
     }
 
-    submitNote =  (event) => {
+    isValidated() {
+
+        if (this.state.addNoteState === "success") {
+            console.log("isValidated fn : is true")
+            return true;
+        }
+        else {
+            if (this.state.addNoteState !== "success") {
+                this.setState({
+                    addNoteState: "error"
+                });
+            }
+            console.log("isValidated is false")
+            return false;
+        }
+    }
+
+    submitNote = (event) => {
         event.preventDefault()
         console.log(this.state.note)
 
@@ -57,21 +86,23 @@ class AnimalNotes extends React.Component {
 
         console.log('post notes info: ', notes)
 
-        if(this.state.note.length>=10){
-         this.props.addNotes(notes.animal_id, notes)
-            .then(
-                (res) => {
-                    this.setState({
-                        note: ''
-                    });
+        if (this.isValidated()) {
+            this.props.addNotes(notes.animal_id, notes)
+                .then((res) => {
+                        this.setState({
+                            note: ''
+                        });
+                    })
+                .catch(error => {
+                    console.log('animal view component : add : error ', error)
                 })
-            .catch(error => {
-                console.log('animal view component : add : error ', error)
-            })}
-            else{
-                console.log('please enter the required length')
-            }
+        }
+        else {
+            console.log('please enter the required length')
+        }
     }
+
+
 
     render() {
 
@@ -107,7 +138,7 @@ class AnimalNotes extends React.Component {
                         value={this.state.note}
                         multiline
                         className={classes.textField}
-                        onChange={this.handleAddNoteChange}
+                        onChange={this.handleAddNoteChange(10)}
                         margin="normal"
                     />
 
