@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addNotes, getNotes, updateNotes, deleteNotes } from '../../../actions/applicationAction';
 import MapNotes from './MapNotes';
+import { addNotes, getNotes, updateNotes, deleteNotes } from '../../../actions/applicationAction';
 
 // import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
@@ -13,13 +13,11 @@ import GridItem from "components/Grid/GridItem.jsx";
 //material UI core
 import Input from '@material-ui/core/Input';
 import Typography from "@material-ui/core/Typography";
+import withStyles from "@material-ui/core/styles/withStyles";
 
 // import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
 import displayNotesStyle from "assets/jss/material-dashboard-pro-react/views/displayNotesStyle";
 
-import withStyles from "@material-ui/core/styles/withStyles";
-
-import MaskedInput from 'react-text-mask';
 
 class CreateNotes extends React.Component {
     constructor(props) {
@@ -34,11 +32,13 @@ class CreateNotes extends React.Component {
     handleChanges = e => {
         this.setState({
             inputField: e.target.value
-        })
+        });
     };
 
-    clearField = e => {
-        this.setState({ inputField: '' })
+    clearField = event => {
+        event.preventDefault();
+
+        this.setState({ inputField: '' });
     };
 
     // verifies if string has given length or not
@@ -61,7 +61,7 @@ class CreateNotes extends React.Component {
             }
         }
         return false;
-    }
+    };
 
     handleInputField = (len) => event => {
         let stateName = `${event.target.name} State`
@@ -82,11 +82,11 @@ class CreateNotes extends React.Component {
                     [stateName]: "error"
                 }
             })
-        }
+        };
 
         this.setState({
             inputField: event.target.value
-        })
+        });
 
     };
 
@@ -100,11 +100,11 @@ class CreateNotes extends React.Component {
 
         const newNote = {
             notes: this.state.inputField,
-            shelter_user_id: 3,
-            application_id: 3
+            shelter_user_id: this.props.application.shelter_user_id,
+            application_id: this.props.application.application_id,
         };
 
-        this.props.addNotes(newNote, 3);
+        this.props.addNotes(newNote, this.props.application.application_id);
 
         this.setState({ inputField: '' });
     };
@@ -120,14 +120,10 @@ class CreateNotes extends React.Component {
             notes: notes,
 
         }
-
-        this.props.updateNotes(updatedNote, id)
-
+        this.props.updateNotes(updatedNote, id);
     };
 
     render() {
-
-        console.log('STATE', this.state)
 
         const { classes } = this.props;
 
@@ -148,7 +144,7 @@ class CreateNotes extends React.Component {
                 marginTop: "7%",
             },
 
-        }
+        };
 
         return (
             <>
@@ -159,48 +155,48 @@ class CreateNotes extends React.Component {
 
                     <CardBody>
                         <div style={customStyle.addSectionStyle}>
-                        <Input
-                            success={this.state.inputFieldState === "success"}
-                            error={this.state.inputFieldState === "error"}
-                            placeholder="Add a note"
-                            id="notes"
-                            fullWidth="true"
-                            disableUnderline="true"
-                            inputProps={{
-                                type: "text",
-                                onChange: this.handleInputField(1),
-                                value: this.state.inputField,
-                            }}
-                        />
+                            <Input
+                                success={this.state.inputFieldState === "success"}
+                                error={this.state.inputFieldState === "error"}
+                                placeholder="Add a note"
+                                id="notes"
+                                fullWidth="true"
+                                disableUnderline="true"
+                                inputProps={{
+                                    type: "text",
+                                    onChange: this.handleInputField(4),
+                                    value: this.state.inputField,
+                                }}
+                            />
 
-                        <GridContainer
-                            direction="row"
-                            justify="flex-end"
-                            className="addNoteStyle"
-                        >
-                            <GridItem xs={3}>
-                                <Button
-                                    variant="contained"
-                                    color="transparent"
-                                    className={classes.buttonStyle}
-                                    onClick={this.clearField}
-                                >
-                                    Cancel
+                            <GridContainer
+                                direction="row"
+                                justify="flex-end"
+                                className="addNoteStyle"
+                            >
+                                <GridItem xs={3}>
+                                    <Button
+                                        variant="contained"
+                                        color="transparent"
+                                        className={classes.buttonStyle}
+                                        onClick={this.clearField}
+                                    >
+                                        Cancel
                                 </Button>
-                            </GridItem>
+                                </GridItem>
 
-                            <GridItem>
-                                <Button
-                                    variant="contained"
-                                    color="transparent"
-                                    className={classes.buttonStyle}
-                                    onClick={this.addNotes}
-                                    style={customStyle.submitButtonStyle}
-                                >
-                                    Submit
+                                <GridItem>
+                                    <Button
+                                        variant="contained"
+                                        color="transparent"
+                                        className={classes.buttonStyle}
+                                        style={customStyle.submitButtonStyle}
+                                        onClick={this.addNotes}
+                                    >
+                                        Submit
                                 </Button>
-                            </GridItem>
-                        </GridContainer>
+                                </GridItem>
+                            </GridContainer>
                         </div>
 
                         <div style={customStyle.notesMarginStyle}>
@@ -227,6 +223,6 @@ const mapStateToProps = state => {
     return {
         notes: state.applicationReducer.notes
     };
-}
+};
 
-export default connect(mapStateToProps, { addNotes, getNotes, updateNotes, deleteNotes })(withStyles(displayNotesStyle)(CreateNotes))
+export default connect(mapStateToProps, { addNotes, getNotes, updateNotes, deleteNotes })(withStyles(displayNotesStyle)(CreateNotes));

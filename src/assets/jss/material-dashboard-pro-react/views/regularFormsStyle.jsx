@@ -66,11 +66,9 @@ const regularFormsStyle = {
   dropdownStyle: {
     height: "30px",
   },
-  textFieldLabelStyle: {
-    marginLeft: '5%',
-  },
-  margins: {
-    margin: 'dense',
+  
+  menuOptionStyle: {
+    marginLeft: '5px'
   }
 
 };

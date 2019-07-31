@@ -1,21 +1,20 @@
 import React from 'react';
 import PropTypes from "prop-types";
-import { withRouter } from 'react-router-dom';
 import moment from 'moment';
-import { connect } from "react-redux";
 
+// jsx components
 import Button from "components/CustomButtons/Button.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
-import CustomInput from "components/CustomInput/CustomInput.jsx";
 
-// import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
-import mapNotesStyle from "assets/jss/material-dashboard-pro-react/views/mapNotesStyle";
-
+// material-UI core
 import withStyles from "@material-ui/core/styles/withStyles";
 import Container from '@material-ui/core/Container';
 import FormLabel from "@material-ui/core/FormLabel";
 import Input from '@material-ui/core/Input';
+
+import mapNotesStyle from "assets/jss/material-dashboard-pro-react/views/mapNotesStyle";
+
 
 class MapNotes extends React.Component {
     constructor(props) {
@@ -24,30 +23,30 @@ class MapNotes extends React.Component {
             isEditSelected: false,
             value: this.props.note.notes
         }
-    }
+    };
 
     handleChanges = e => {
         this.setState({
             value: e.target.value
         })
-    }
+    };
 
     clearField = e => {
         this.setState({ inputField: '' })
-    }
+    };
 
     cancelClick = e => {
         e.preventDefault();
 
         this.setState({ isEditSelected: false, value: this.props.note.notes });
 
-    }
+    };
 
     deleteNotes = e => {
         e.preventDefault();
 
         this.props.deleteNotes(this.props.note.id)
-    }
+    };
 
     updateNotes = e => {
 
@@ -56,43 +55,40 @@ class MapNotes extends React.Component {
         this.props.note.notes = this.state.value
 
         this.setState({ isEditSelected: !this.state.isEditSelected })
-    }
+    };
 
     editSelected = () => {
 
         this.setState({ isEditSelected: !this.state.isEditSelected })
 
-    }
+    };
 
     componentDidUpdate(prevProps, prevState) {
 
         if (this.props.note.notes !== prevProps.note.notes) {
-    
-          this.setState({
-            ...this.state, 
-            value: this.props.note.notes,
-           })
-        } 
-    
-      };
+
+            this.setState({
+                ...this.state,
+                value: this.props.note.notes,
+            })
+        }
+
+    };
 
     render() {
-
-        console.log('EDIT SELECT STATUS', this.state.isEditSelected ) 
-  
 
         const { classes } = this.props;
 
         const customStyle = {
             noteBackground: {
-                background: '#edeae8',
-                borderBottom: '1px solid lightgrey',
+                background: "#edeae8",
+                borderBottom: "1px solid lightgrey",
             },
             adjustFont: {
                 fontSize: "20px",
             }
 
-        }
+        };
 
         return (
             <Container className={classes.noteBackground} >
@@ -123,7 +119,7 @@ class MapNotes extends React.Component {
                             className={classes.deleteButtonStyle}
                             onClick={this.state.isEditSelected ? this.cancelClick : this.deleteNotes}
                         >
-                            {this.state.isEditSelected ? "Cancel" : "Delete" }
+                            {this.state.isEditSelected ? "Cancel" : "Delete"}
                         </Button>
                     </GridItem>
 
@@ -135,7 +131,7 @@ class MapNotes extends React.Component {
                             onClick={this.state.isEditSelected ? this.updateNotes : this.editSelected}
 
                         >
-                            {this.state.isEditSelected ? "Save" : "Edit" }
+                            {this.state.isEditSelected ? "Save" : "Edit"}
                         </Button>
                     </GridItem>
 
@@ -147,6 +143,6 @@ class MapNotes extends React.Component {
 
 MapNotes.propTypes = {
     classes: PropTypes.object
-}
+};
 
 export default withStyles(mapNotesStyle)(MapNotes);
