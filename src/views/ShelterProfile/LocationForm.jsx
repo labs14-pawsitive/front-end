@@ -102,7 +102,6 @@ class LocationForm extends React.Component {
             zipcode: this.state.zipcode,
             state_id: this.state.state_id,
             nickname: this.state.nickname,
-            phone_number: '7012258948',
             shelter_contact_id: this.state.shelter_contact_id
             }
 

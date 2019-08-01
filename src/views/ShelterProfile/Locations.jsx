@@ -395,7 +395,8 @@ isValidated() {
                   onChange={this.selectChangeHandler}
                   inputProps={{
                       name: "shelter_contact_id",
-                      id: "shelter_contact_id"
+                      id: "shelter_contact_id",
+                      style: selectStyle.underline,
                   }}>
                       {this.props.contacts && this.props.contacts.map(contact => (
                           <MenuItem
