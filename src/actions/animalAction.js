@@ -9,7 +9,7 @@ export const addAnimal  = animal => dispatch => {
     dispatch ({type: ADD_ANIMAL_START});
     console.log(animal)
     return axios
-        .post('http://localhost:8000/api/animals', animal)
+        .post('https://staging1-pawsnfind.herokuapp.com/api/animals', animal)
         .then(res => {
             dispatch ({type: ADD_ANIMAL_SUCCESS, payload: res.data})
             return res.data
@@ -39,7 +39,7 @@ export const fetchOptions  = (shelterId) => dispatch => {
     dispatch ({type: FETCH_OPTIONS_START});
     // const headers = {Authorization: localStorage.getItem('token')}
     return axios
-    .get(`http://localhost:8000/api/internal/paws/options/${shelterId}`)
+    .get(`https://staging1-pawsnfind.herokuapp.com/api/internal/paws/options/${shelterId}`)
     .then(res => {
         console.log(res)
         dispatch ({type: UPDATE_BREEDS, payload: res.data.breeds})
@@ -71,9 +71,9 @@ export const updateAnimal = (updateinfo,animalId,animalMetaId) => dispatch => {
  
   dispatch({ type: EDIT_ANIMAL_INFO_START })
   return axios
-    .put(`http://localhost:8000/api/animals/${animalId}/meta/${animalMetaId}`, updateinfo)
+    .put(`https://staging1-pawsnfind.herokuapp.com/api/animals/${animalId}/meta/${animalMetaId}`, updateinfo)
     .then(res => axios
-      .get(`http://localhost:8000/api/animals/${animalId}`))
+      .get(`https://staging1-pawsnfind.herokuapp.com/api/animals/${animalId}`))
     .then(res => {
       dispatch({ type: EDIT_ANIMAL_INFO_SUCCESS, payload: res.data })
       console.log('action updated animal ', res.data)
@@ -93,7 +93,7 @@ export const getAllOptions = (shelterID) => dispatch => {
     
     dispatch({ type: GET_DROPDOWN_START })
     return axios
-      .get(`http://localhost:8000/api/internal/paws/options/${shelterID}`)
+      .get(`https://staging1-pawsnfind.herokuapp.com/api/internal/paws/options/${shelterID}`)
       
       .then(res => {
         dispatch({ type: GET_DROPDOWN_SUCCESS, payload: res.data })
@@ -113,7 +113,7 @@ export const getAllOptions = (shelterID) => dispatch => {
       
       dispatch({ type: GET_ANIMAL_START })
       return axios
-        .get(`http://localhost:8000/api/animals/${animalID}`)
+        .get(`https://staging1-pawsnfind.herokuapp.com/api/animals/${animalID}`)
         .then(res => {
           dispatch({ type: GET_ANIMAL_SUCCESS, payload: res.data })
           console.log('action: get all animal info', res.data)
@@ -136,9 +136,9 @@ export const getAllOptions = (shelterID) => dispatch => {
         
         dispatch({ type: POST_NOTES_START })
         return axios
-          .post(`http://localhost:8000/api/animals/${animalID}/admin`, note)
+          .post(`https://staging1-pawsnfind.herokuapp.com/api/animals/${animalID}/admin`, note)
           .then(res => axios
-            .get(`http://localhost:8000/api/animals/${animalID}`))
+            .get(`https://staging1-pawsnfind.herokuapp.com/api/animals/${animalID}`))
           .then(res => {
             dispatch({ type: GET_ANIMAL_SUCCESS, payload: res.data })
             console.log('action: update notes info', res.data)
@@ -163,9 +163,9 @@ export const getAllOptions = (shelterID) => dispatch => {
           
           dispatch({ type: UPDATE_NOTES_START })
           return axios
-            .put(`http://localhost:8000/api/animals/${animalID}/admin/${noteID}`,updateNote)
+            .put(`https://staging1-pawsnfind.herokuapp.com/api/animals/${animalID}/admin/${noteID}`,updateNote)
             .then(res => axios
-              .get(`http://localhost:8000/api/animals/${animalID}`))
+              .get(`https://staging1-pawsnfind.herokuapp.com/api/animals/${animalID}`))
             .then(res => {
               dispatch({ type: UPDATE_NOTES_SUCCESS, payload: res.data })
               console.log('action: update notes info', res.data)
@@ -185,9 +185,9 @@ export const getAllOptions = (shelterID) => dispatch => {
             
             dispatch({ type: DELETE_NOTES_START })
             return axios
-              .delete(`http://localhost:8000/api/animals/${animalID}/admin/${noteID}`)
+              .delete(`https://staging1-pawsnfind.herokuapp.com/api/animals/${animalID}/admin/${noteID}`)
               .then(res => axios
-                .get(`http://localhost:8000/api/animals/${animalID}`))
+                .get(`https://staging1-pawsnfind.herokuapp.com/api/animals/${animalID}`))
               .then(res => {
                 dispatch({ type: DELETE_NOTES_SUCCESS, payload: res.data })
                 console.log('action: delete notes info', res.data)
