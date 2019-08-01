@@ -50,6 +50,25 @@ import shelterProfileStyles from "assets/jss/material-dashboard-pro-react/views/
 import Contacts from "./Contacts";
 import MaskedInput from 'react-text-mask';
 
+function TextMaskCustom(props) {
+  const { inputRef, ...other } = props;
+
+  return (
+    <MaskedInput
+      {...other}
+      ref={ref => {
+        inputRef(ref ? ref.inputElement : null);
+      }}
+      mask={['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+      placeholderChar={'\u2000'}
+      //showMask
+    />
+  );
+}
+
+TextMaskCustom.propTypes = {
+  inputRef: PropTypes.func.isRequired,
+};
 
 
  class ShelterProfile extends React.Component {
@@ -210,7 +229,8 @@ return (
                     inputProps={{
                       disabled: this.state.editMode? false : true,
                       value: this.state.shelter.phone,
-                      onChange: (e) => this.inputchangeHandler(e)
+                      onChange: (e) => this.inputchangeHandler(e),
+                      inputComponent : TextMaskCustom,
                     }}
                     style={this.state.editMode? "" : customStyle.shelterDisplayView}
 

@@ -216,6 +216,68 @@ class LocationForm extends React.Component {
 
     render() {
         const { classes } = this.props;
+        const selectStyle = {
+          underline: {
+            "&:hover:not($disabled):before,&:before": {
+              borderColor: "#D2D2D2 !important",
+              borderWidth: "1px !important"
+            },
+            "&:after": {
+              borderColor: "#9c27b0"
+            },
+            "& + p": {
+              fontWeight: "300"
+            }
+          },
+          
+          labelRoot: {
+            fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+            fontWeight: "300",
+            lineHeight: "1.5em",
+            color: "#333333",
+            fontWeight: "400",
+            fontSize: "14px",
+            lineHeight: "1.42857",
+            top: "10px",
+            letterSpacing: "unset",
+            "& + $underline": {
+              marginTop: "0px"
+            }
+          },
+
+          formControl: {
+            margin: "0 0 17px 0",
+            paddingTop: "12px",
+            position: "relative",
+            verticalAlign: "unset",
+            "& svg,& .fab,& .far,& .fal,& .fas,& .material-icons": {
+            color: "#495057",
+            }
+          },
+
+          input: {
+            color: "#495057",
+            height: "unset",
+            fontSize: "14px",
+            fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+            fontWeight: "400",
+            lineHeight: "1.42857",
+            underline: {
+              "&:hover:not($disabled):before,&:before": {
+                borderColor: "#D2D2D2 !important",
+                borderWidth: "1px !important"
+              },
+              "&:after": {
+                borderColor: "#9c27b0"
+              },
+              "& + p": {
+                fontWeight: "300"
+              }
+            },
+          
+          },
+
+        }
         return (
             <div>
                 <Button className={classes.addButton} size="lg" color="rose" onClick={this.handleClickOpen}>
@@ -294,10 +356,12 @@ class LocationForm extends React.Component {
                         <GridItem xs={12} sm={12} md={3}>
                         <FormControl
                         fullWidth
-                        className={classes.selectFormControl}>
+                        className={classes.selectFormControl}
+                        style={selectStyle.formControl}>
                         <InputLabel
                         htmlFor="states"
-                        className={classes.selectLabel}>
+                        className={classes.selectLabel}
+                        style={selectStyle.labelRoot}>
                         States
                         </InputLabel>
                         <Select
@@ -308,6 +372,7 @@ class LocationForm extends React.Component {
                             select: classes.select
                         }}
                         value={this.state.state_id}
+                        style={selectStyle.input}
                         onChange={this.changeHandler}
                         inputProps={{
                             name: "state_id",
@@ -348,10 +413,12 @@ class LocationForm extends React.Component {
                         <GridItem xs={12} sm={12} md={6}>
                         <FormControl
                         fullWidth
-                        className={classes.selectFormControl}>
+                        className={classes.selectFormControl}
+                        style={selectStyle.formControl}>
                         <InputLabel
                         htmlFor="contacts"
-                        className={classes.selectLabel}>
+                        className={classes.selectLabel}
+                        style={selectStyle.labelRoot}>
                         Contact Person
                         </InputLabel>
                         <Select
@@ -362,8 +429,8 @@ class LocationForm extends React.Component {
                             select: classes.select
                         }}
                         value={this.state.shelter_contact_id}
+                        style={selectStyle.input}
                         onChange={this.changeHandler}
-                        //callback to pass up the parents
                         inputProps={{
                             name: "shelter_contact_id",
                             id: "contact-select"
