@@ -49,12 +49,13 @@ export default class Auth {
 
         const config = {
             headers : {
-                Authorization: `Bearer ${localStorage.getItem('id_token')}`
+                Authorization: `Bearer ${localStorage.getItem('id_token')}`,
+                withCredentials: true 
             }
         }
 
         const addUser = await axios.post(
-            process.env.REACT_APP_BACKEND_URL + 'auth',
+            'https://staging1-pawsnfind.herokuapp.com/api/auth',
             user,
             config
         ).then( user => {

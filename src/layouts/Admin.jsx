@@ -64,7 +64,7 @@ class Dashboard extends React.Component {
     //window.onpopstate = this.onBackButtonEvent;
 
     axios
-    .get(`http://localhost:8000/api/shelters/${this.props.shelterID}`)
+    .get(`https://staging1-pawsnfind.herokuapp.com/api/shelters/${this.props.shelterID}`)
       .then( shelter => {
       console.log(shelter.data)
       this.setState({

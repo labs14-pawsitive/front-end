@@ -215,7 +215,7 @@ class ShelterOnboardingWizard extends React.Component {
 
   addLocation = async (newLocation) => {
     await axios
-    .post(`http://localhost:8000/api/shelters/${localStorage.getItem('shelter_id')}/mainLocation`, newLocation)
+    .post(`https://staging1-pawsnfind.herokuapp.com/api/shelters/${localStorage.getItem('shelter_id')}/mainLocation`, newLocation)
     .then( result => {
       console.log('result', result)
       localStorage.setItem("location_id", result.data.id)
@@ -234,7 +234,7 @@ class ShelterOnboardingWizard extends React.Component {
 
   addContact = async (newContact) => {
     await axios
-    .post(`http://localhost:8000/api/shelters/${localStorage.getItem('shelter_id')}/mainContact`, newContact )
+    .post(`https://staging1-pawsnfind.herokuapp.com/api/shelters/${localStorage.getItem('shelter_id')}/mainContact`, newContact )
     .then( result => {
         console.log('result' , result)
         localStorage.setItem("contact_id", result.data.id)
@@ -255,7 +255,7 @@ class ShelterOnboardingWizard extends React.Component {
           const newShelter = {shelter : this.state.shelterName}
           
           await axios
-          .get(`http://localhost:8000/api/ein/validate/${this.state.ein}`)
+          .get(`https://staging1-pawsnfind.herokuapp.com/api/ein/validate/${this.state.ein}`)
           .then(result => {
               const shelterInfo = { shelter : this.state.shelterName, EIN: this.state.ein}
               this.addShelter(shelterInfo) 
@@ -270,7 +270,7 @@ class ShelterOnboardingWizard extends React.Component {
 
   addShelter = async (shelter) => {
     await axios
-    .put(`http://localhost:8000/api/shelters/users/${localStorage.getItem('user_id')}`, shelter)
+    .put(`https://staging1-pawsnfind.herokuapp.com/api/shelters/users/${localStorage.getItem('user_id')}`, shelter)
     .then( result => {
       console.log('result' , result)
       localStorage.setItem("shelter_id", result.data.shelterInfo.id)

@@ -55,7 +55,7 @@ import avatar from "assets/img/faces/marc.jpg";
 
   componentDidMount() {
     axios
-    //.get(`http://localhost:8000/api/animals/shelter/${localStorage.getItem("shelter_id")}`)
+    //.get(`https://staging1-pawsnfind.herokuapp.com/api/animals/shelter/${localStorage.getItem("shelter_id")}`)
     .get(`https://staging1-pawsnfind.herokuapp.com/api/shelters/${this.props.shelterID}`)
     .then( shelter => {
       console.log(shelter.data)

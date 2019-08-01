@@ -240,7 +240,7 @@ class ApplicationWizard extends React.Component {
     }
     console.log(application)
     
-    axios.post('http://localhost:8000/api/applications/', application)
+    axios.post('https://staging1-pawsnfind.herokuapp.com//api/applications/', application)
     .then(app => {
       this.setState({
         isSuccess : true
