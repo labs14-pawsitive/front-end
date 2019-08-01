@@ -438,6 +438,7 @@ class AddAnimalForm extends React.Component {
             callback={this.handleImgUploadResponse} 
             url="https://staging1-pawsnfind.herokuapp.com/api/pictures/animal/1"
           />
+          
         </GridItem>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
