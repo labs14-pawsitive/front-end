@@ -47,10 +47,14 @@ class LocationForm extends React.Component {
         super(props)
         this.state = {
             street_address: '',
+            street_addressState: '',
             city: '',
+            cityState: '',
             zipcode: '',
+            zipcodeState: '',
             state_id: '',
             nickname: '',
+            nicknameState: '',
             shelter_contact_id: '',
             open: false,
             fullWidth: true,
@@ -71,7 +75,19 @@ class LocationForm extends React.Component {
       };
 
     handleClose = () => {
-        this.setState({ open: false });
+        this.setState({
+            street_address: '',
+            street_addressState: '',
+            city: '',
+            cityState: '',
+            zipcode: '',
+            zipcodeState: '',
+            state_id: '',
+            nickname: '',
+            nicknameState: '',
+            shelter_contact_id: '', 
+            open: false 
+        });
     };
 
 //
@@ -101,11 +117,14 @@ class LocationForm extends React.Component {
         this.handleClose()
         this.setState({
             street_address: '',
+            street_addressState: '',
             city: '',
+            cityState: '',
             zipcode: '',
+            zipcodeState: '',
             state_id: '',
-            phone_number: '',
             nickname: '',
+            nicknameState: '',
             shelter_contact_id: '',
         })
         
@@ -122,6 +141,78 @@ class LocationForm extends React.Component {
             [e.target.id] : e.target.value
         })
     }
+
+    //---------Verification for fields:
+    verifyLength(value, lengthNumber) {
+        if (value.length >= lengthNumber) {
+          return true;
+        }
+        return false;
+      }
+    
+      verifyExactLen(value, length) {
+        if( value.length === length) {
+          return true;
+        }
+        return false
+      }
+    
+      verifyDigitOnly(value, length) {
+        let digits = value.replace(/\D/g,'');
+        if(digits.length === length) {
+          return true;
+        } 
+        return false
+      }
+    
+      change(event, stateName, type, stateNameEqualTo) {
+        switch (type) {
+          case "length":
+            if (this.verifyLength(event.target.value, stateNameEqualTo)) {
+              this.setState({ [stateName + "State"]: "success" });
+            } else {
+              this.setState({ [stateName + "State"]: "error" });
+            }
+            break;
+          case "exact-length":
+            if (this.verifyExactLen(event.target.value, stateNameEqualTo)) {
+              this.setState({ [stateName + "State"]: "success" });
+            } else {
+              this.setState({ [stateName + "State"]: "error" });
+            }
+            break;
+          case "digit-only":
+            if (this.verifyDigitOnly(event.target.value, stateNameEqualTo)) {
+              this.setState({ [stateName + "State"]: "success" });
+            } else {
+              this.setState({ [stateName + "State"]: "error" });
+            }
+          default:
+            break;
+        }
+        this.setState({ [stateName]: event.target.value });
+      }
+    
+      isValidated() {
+        if (
+          this.state.nameState === "success" &&
+          this.state.phoneState === "success" &&
+          this.state.emailState === "success"
+        ) {
+          return true;
+        } else {
+          if (this.state.nameState !== "success") {
+            this.setState({ nameState: "error" });
+          }
+          if (this.state.phoneState !== "success") {
+            this.setState({ phoneState: "error" });
+          }
+          if (this.state.emailState !== "success") {
+            this.setState({ emailState: "error" });
+          }
+        }
+        return false;
+      }
 
     render() {
         const { classes } = this.props;
@@ -147,14 +238,16 @@ class LocationForm extends React.Component {
                         <CustomInput 
                         id = "nickname"
                         labelText = "Location Name"
-
+                        success={this.state.nicknameState === "success"}
+                        error={this.state.nicknameState === "error"}
                         formControlProps={{
                             fullWidth: true
                             }}
                         inputProps={{
-                            type: "text",
-                            value: this.state.nickname,
-                            onChange: (e) => this.inputchangeHandler(e)
+                            // type: "text",
+                            // value: this.state.nickname,
+                            // onChange: (e) => this.inputchangeHandler(e)
+                            onChange: event => this.change(event, "nickname", "length", 4)
                             }}
                         
                         />
@@ -163,10 +256,14 @@ class LocationForm extends React.Component {
                         <CustomInput 
                         id = "street_address"
                         labelText = "Street Address"
+                        success={this.state.street_addressState === "success"}
+                        error={this.state.street_addressState === "error"}
+
                         inputProps={{
-                            type: "text",
-                            value: this.state.street_address,
-                            onChange: (e) => this.inputchangeHandler(e)
+                            // type: "text",
+                            // value: this.state.street_address,
+                            // onChange: (e) => this.inputchangeHandler(e)
+                            onChange: event => this.change(event, "street_address", "length", 5),
                         }}
                         formControlProps={{
                             fullWidth: true
@@ -178,10 +275,15 @@ class LocationForm extends React.Component {
                         <CustomInput 
                         id = "city"
                         labelText = "City"
+                        success={this.state.cityState === "success"}
+                        error={this.state.cityState === "error"}
+
                         inputProps={{
-                            type: "text",
-                            value: this.state.city,
-                            onChange: (e) => this.inputchangeHandler(e)
+                            // type: "text",
+                            // value: this.state.city,
+                            // onChange: (e) => this.inputchangeHandler(e)
+                            onChange: event => this.change(event, "city", "length", 3),
+
                             }}
                         formControlProps={{
                                 fullWidth: true
@@ -231,10 +333,14 @@ class LocationForm extends React.Component {
                         <CustomInput 
                         id = "zipcode"
                         labelText = "Zipcode"
+                        success={this.state.zipcodeState === "success"}
+                        error={this.state.zipcodeState === "error"}
+
                         inputProps={{
-                            type: "text",
-                            value: this.state.zipcode,
-                            onChange: (e) => this.inputchangeHandler(e)
+                            // type: "text",
+                            // value: this.state.zipcode,
+                            // onChange: (e) => this.inputchangeHandler(e)
+                            onChange: event => this.change(event, "zipcode", "digit-only", 5),
                         }}
                         
                         />

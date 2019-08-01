@@ -38,16 +38,58 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
+import MaskedInput from 'react-text-mask';
+
+//verification and mask up here
+
+function moveCursor(event) {
+    let digits = event.target.value.replace(/\D/g,'').length;
+    if(digits <= 3){
+        event.target.setSelectionRange(digits +1, digits+1);
+    } else if (digits > 3 && digits <= 6) {
+        event.target.setSelectionRange(digits+3, digits+3);
+    } else if (digits > 6 && digits <= 10){
+      event.target.setSelectionRange(digits+4, digits+4)
+    }
+  }
+  
+  
+//mask for phone number
+function TextMaskCustom(props) {
+    const { inputRef, ...other } = props;
+  
+    return (
+      <MaskedInput
+        {...other}
+        ref={ref => {
+          inputRef(ref ? ref.inputElement : null);
+        }}
+        mask={['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+        placeholderChar={'\u2000'}
+        //showMask
+      />
+    );
+  }
+
+
+  TextMaskCustom.propTypes = {
+    inputRef: PropTypes.func.isRequired,
+  };
+  
 
 class ContactForm extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             name: '',
+            nameState: '',
             email: '',
-            phone: '',
+            emailState: '',
+            phone: '(   )    -    ',
+            phoneState: '',
             open: false,
             fullWidth: true,
+            isValidatedState: false,
         };
     }
 
@@ -60,14 +102,23 @@ class ContactForm extends React.Component {
       };
 
     handleClose = () => {
-        this.setState({ open: false });
+        this.setState({ 
+            name: '',
+            nameState: '',
+            email: '',
+            emailState: '',
+            phone: '(   )    -    ',
+            phoneState: '',
+            open: false,
+        });
+
     };
 
 //
 
     handleSubmit = e => {
-        e.preventDefault()
-
+        if (this.isValidated) 
+        {e.preventDefault()
         const newContact = {
             name: this.state.name,
             email: this.state.email,
@@ -85,10 +136,13 @@ class ContactForm extends React.Component {
         this.handleClose()
         this.setState({
             name: '',
+            nameState: '',
             email: '',
-            phone: '',
+            emailState: '',
+            phone: '(   )    -    ',
+            phoneState: '',
         })
-        
+       } else{ console.log('Not validated')}
     }
 
     
@@ -99,7 +153,94 @@ class ContactForm extends React.Component {
         })
     }
     
+//---------Verification for fields:
 
+
+    verifyEmail(value) {
+        var emailRex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (emailRex.test(value)) {
+        return true;
+        }
+        return false;
+    }
+
+    verifyLength(value, lengthNumber) {
+        if (value.length >= lengthNumber) {
+          return true;
+        }
+        return false;
+      }
+      
+    verifyExactLength(value, lengthNumber) {
+        if( value.length === lengthNumber) {
+          return true;
+        }
+        return false
+      }
+    
+    verifyDigitOnly(value, lengthNumber) {
+        let digits = value.replace(/\D/g,'');
+        if(digits.length === lengthNumber) {
+          return true;
+        } 
+        return false
+      }
+
+    change(event, stateName, type, stateNameEqualTo) {
+        switch (type) {
+          case "email":
+            if (this.verifyEmail(event.target.value)) {
+              this.setState({ [stateName + "State"]: "success" });
+            } else {
+              this.setState({ [stateName + "State"]: "error" });
+            }
+            break;
+          case "length":
+            if (this.verifyLength(event.target.value, stateNameEqualTo)) {
+              this.setState({ [stateName + "State"]: "success" });
+            } else {
+              this.setState({ [stateName + "State"]: "error" });
+            }
+            break;
+          case "exact-length":
+            if (this.verifyExactLength(event.target.value, stateNameEqualTo)) {
+              this.setState({ [stateName + "State"]: "success" });
+            } else {
+              this.setState({ [stateName + "State"]: "error" });
+            }
+            break;
+          case "digit-only":
+            if (this.verifyDigitOnly(event.target.value, stateNameEqualTo)) {
+              this.setState({ [stateName + "State"]: "success" });
+            } else {
+              this.setState({ [stateName + "State"]: "error" });
+            }
+          default:
+            break;
+        }
+        this.setState({ [stateName]: event.target.value });
+      }
+    
+    isValidated() {
+        if (
+          this.state.nameState === "success" &&
+          this.state.phoneState === "success" &&
+          this.state.emailState === "success"
+        ) {
+          return true;
+        } else {
+          if (this.state.nameState !== "success") {
+            this.setState({ nameState: "error" });
+          }
+          if (this.state.phoneState !== "success") {
+            this.setState({ phoneState: "error" });
+          }
+          if (this.state.emailState !== "success") {
+            this.setState({ emailState: "error" });
+          }
+        }
+        return false;
+      }
 
     render() {
         const { classes } = this.props;
@@ -121,28 +262,32 @@ class ContactForm extends React.Component {
                     </DialogContentText>
                     <DialogContent>
                         <CustomInput 
+                        success={this.state.nameState === "success"}
+                        error={this.state.nameState === "error"}
                         id = "name"
                         labelText = "Contact Name"
                         inputProps={{
-                            type: "text",
-                            value: this.state.name,
-                            name: "name",
-                            onChange: (e) => this.changeHandler(e)
+                            // type: "text",
+                            // value: this.state.name,
+                            // onChange: (e) => this.changeHandler(e)
+                            onChange: event => this.change(event, "name", "length", 3),
                             }}
                         formControlProps={{
                             fullWidth: true
                             }}
-                        
                         />
 
                         <CustomInput 
                         id = "email"
                         labelText = "Email Address"
+                        success={this.state.emailState === "success"}
+                        error={this.state.emailState === "error"}
 
                         inputProps={{
-                            type: "email",
-                            value: this.state.email,
-                            onChange: (e) => this.changeHandler(e)
+                            // type: "email",
+                            // value: this.state.email,
+                            // onChange: (e) => this.changeHandler(e)
+                            onChange: event => this.change(event, "email", "email"),
                             }}
                         formControlProps={{
                             fullWidth: true
@@ -152,11 +297,19 @@ class ContactForm extends React.Component {
                         <CustomInput 
                         id = "phone"
                         labelText = "Phone Number"
+                        success={this.state.phoneState === "success"}
+                        error={this.state.phoneState === "error"}
+
                         inputProps={{
-                            type: "text",
-                            value: this.state.phone,
-                            onChange: (e) => this.changeHandler(e)
+                            // type: "text",
+                            // value: this.state.phone,
+                            // onChange: (e) => this.changeHandler(e)
+                            onChange : event => this.change(event, 'phone', 'digit-only', 10) ,
+                            onClick: event => moveCursor(event),
+                            onFocus: event => moveCursor(event),
+                            inputComponent : TextMaskCustom,
                             }}
+
                         formControlProps={{
                             fullWidth: true
                             }}
@@ -169,7 +322,10 @@ class ContactForm extends React.Component {
                         <Button onClick={this.handleClose} color="primary">
                             Cancel
                         </Button>
-                        <Button onClick={this.handleSubmit} color="primary" >
+                        <Button
+                    
+                        onClick={this.handleSubmit} 
+                        color="primary" >
                             Add New Contact
                         </Button>
                     </DialogActions>
