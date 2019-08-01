@@ -1,4 +1,3 @@
 [build]
- base="pawsnfind"
  publish = "build"
  command="npm run-script build"
