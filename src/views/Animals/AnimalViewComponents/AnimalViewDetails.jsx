@@ -200,7 +200,7 @@ class AnimalViewDetails extends React.Component {
                             </GridItem>
 
                             <GridItem xs={12} sm={12} md={6} >
-                            <FormControl style={customStyle.form1ControlStyle} className={classes.formControl} >
+                            <FormControl style={customStyle.form2ControlStyle} className={classes.formControl} >
                                 <InputLabel style={customStyle.colorStyle} htmlFor='coat_length_id'>Coat Length</InputLabel>
                                 <Select style={customStyle.colorStyle}
                                     disabled={this.props.isEditing ? false : true}

@@ -69,7 +69,6 @@ class AddAnimalForm extends React.Component {
         coat_length_id: null,
         age_id: null,
         shelter_location_id: null,
-        states_id: null,
         is_male: false,
         is_house_trained: false,
         is_neutered_spayed: false,
@@ -219,7 +218,6 @@ class AddAnimalForm extends React.Component {
       this.state.validation.shelter_location_id &&
       this.state.validation.size_id &&
       this.state.validation.species_id &&
-      this.state.validation.states_id  &&
       this.state.validation.shelter_id
     ) {
       return true
@@ -379,12 +377,11 @@ class AddAnimalForm extends React.Component {
           <ImageUpload 
             height="250px" 
             width="250px" 
-            defaultImage="https://beaglebit.com/images/8f89abcbb3d2d436a85c52a9684c55b9/c09b504addb7fd140e845a6bf7e4feea742ced57ca7329cd9c619c0bfa2df697." 
             borderRadius="5px" 
             imageLimit={1} 
-            editable={this.state.edit} 
+            editable={true} 
             callback={this.handleImgUploadResponse} 
-            url="https://staging1-pawsnfind.herokuapp.com/api/pictures/animal/1"
+            url="https://staging1-pawsnfind.herokuapp.com/api/pictures"
           />
         </GridItem>
         <GridItem xs={12} sm={12} md={12}>
