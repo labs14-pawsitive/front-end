@@ -80,7 +80,7 @@ class ReactTables extends React.Component {
     axios
  
     
-    .get(`http://localhost:8000/api/animals/shelter/${localStorage.getItem("shelter_id")}`)
+    .get(`https://staging1-pawsnfind.herokuapp.com/api/animals/shelter/${localStorage.getItem("shelter_id")}`)
  
     .then(animals => {
       const picStyle = { width: '100%' }
