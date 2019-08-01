@@ -432,10 +432,9 @@ class AddAnimalForm extends React.Component {
           <ImageUpload 
             height="250px" 
             width="250px" 
-            defaultImage="https://beaglebit.com/images/8f89abcbb3d2d436a85c52a9684c55b9/c09b504addb7fd140e845a6bf7e4feea742ced57ca7329cd9c619c0bfa2df697." 
             borderRadius="5px" 
             imageLimit={1} 
-            editable={this.state.edit} 
+            editable={true} 
             callback={this.handleImgUploadResponse} 
             url="https://staging1-pawsnfind.herokuapp.com/api/pictures/animal/1"
           />
