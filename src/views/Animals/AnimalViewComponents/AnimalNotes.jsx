@@ -24,7 +24,8 @@ class AnimalNotes extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            note: this.props.animalNotes,
+            // note: this.props.animalNotes,
+            note: '',
             addNoteState: "error",
         }
     }
