@@ -291,8 +291,7 @@ isValidated() {
 
                   />
                 </GridItem>
-            <GridItem xs={12} sm={12} md={7}></GridItem>
-            <GridItem xs={12} sm={12} md={5}>
+            <GridItem xs={12} sm={12} md={12}>
             
             <Button 
                 size= "sm" 
@@ -300,16 +299,16 @@ isValidated() {
                 className={classes.updateProfileButton}
                 onClick={this.state.editMode? this.updateSubmit : this.handleFormButtonToggle}
               >
-                {this.state.editMode? "Save" : "Update"}
+                {this.state.editMode? "Save" : "Edit"}
               </Button>
 
 
-              <Button size= "sm" 
+              {this.state.editMode && <Button size= "sm" 
               color="rose" 
               className={classes.updateProfileButton}
                onClick={this.deleteContact}>
                 Delete
-              </Button>
+                  </Button> }
               
             </GridItem>
               </GridContainer>
