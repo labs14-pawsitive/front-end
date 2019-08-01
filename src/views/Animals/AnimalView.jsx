@@ -69,7 +69,7 @@ class AnimalView extends React.Component {
   componentDidMount() {
 
     axios.
-    get(`http://localhost:8000/api/animals/${this.props.match.params.id}`)
+    get(`https://staging1-pawsnfind.herokuapp.com/api/animals/${this.props.match.params.id}`)
     .then( animal => {
      
       console.log('animal', animal.data)
