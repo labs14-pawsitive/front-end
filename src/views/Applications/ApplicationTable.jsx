@@ -13,7 +13,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 // react component for creating dynamic tables
 import ReactTable from "react-table";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import axios from 'axios';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -23,11 +23,11 @@ import Icon from "@material-ui/core/Icon";
 import Update from "@material-ui/icons/Update";
 
 import Assignment from "@material-ui/icons/Assignment";
-import Dvr from "@material-ui/icons/Dvr";
+// import Dvr from "@material-ui/icons/Dvr";
 import Search from "@material-ui/icons/Search";
-import Favorite from "@material-ui/icons/Favorite";
-import Close from "@material-ui/icons/Close";
-import Warning from "@material-ui/icons/Warning";
+// import Favorite from "@material-ui/icons/Favorite";
+// import Close from "@material-ui/icons/Close";
+// import Warning from "@material-ui/icons/Warning";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -38,11 +38,8 @@ import CardBody from "components/Card/CardBody.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
-import Danger from "components/Typography/Danger.jsx";
-
-
-
-import { dataTable } from "variables/general.jsx";
+// import Danger from "components/Typography/Danger.jsx";
+// import { dataTable } from "variables/general.jsx";
 
 import { cardTitle } from "assets/jss/material-dashboard-pro-react.jsx";
 
@@ -72,7 +69,8 @@ class ApplicationTable extends React.Component {
 
   componentDidMount() {
     axios
-    //.get(`https://staging1-pawsnfind.herokuapp.com/api/animals/shelter/${localStorage.getItem("shelter_id")}`)
+    //.get(`http://localhost:8000/api/animals/shelter/${localStorage.getItem("shelter_id")}`)
+    // .get(`http://localhost:8000/api/applications/shelter/${this.props.shelterID}`)
     .get(`https://staging1-pawsnfind.herokuapp.com/api/applications/shelter/${this.props.shelterID}`)
     .then(applications => {
       console.log(applications)

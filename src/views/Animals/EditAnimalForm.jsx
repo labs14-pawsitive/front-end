@@ -1,18 +1,12 @@
 /*!
-
 =========================================================
 * Material Dashboard PRO React - v1.7.0
 =========================================================
-
 * Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
 * Copyright 2019 Creative Tim (https://www.creative-tim.com)
-
 * Coded by Creative Tim
-
 =========================================================
-
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
 */
 import React from "react";
 import PropTypes from "prop-types";
@@ -52,8 +46,7 @@ class EditAnimalForm extends React.Component {
     this.state = {
       checked: [24, 22],
       selectedValue: null,
-      selectedEnabled: "b",
-      editMode: true
+      selectedEnabled: "b"
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeEnabled = this.handleChangeEnabled.bind(this);
@@ -83,9 +76,9 @@ class EditAnimalForm extends React.Component {
     const { classes } = this.props;
     return (
       <GridContainer>
-        <GridItem xs={12} sm={12} md={6}>
+        <GridItem xs={12} sm={12} md={12}>
           <legend>Edit Animal Profile Image</legend>
-          {this.state.editMode? <ImageUpload
+          <ImageUpload
             addButtonProps={{
               color: "rose",
               round: true
@@ -100,10 +93,8 @@ class EditAnimalForm extends React.Component {
             }}
             defaultImage="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0nMNVVbLEFXWF2HsRQ3veNxJnR-htnJ5cxQyYTFuu6lzX2Qz-nA"
 
-          /> : null}
-          
+          />
         </GridItem>
-       
         <GridItem xs={12} sm={12} md={6}>
           <Card>
             <CardHeader color="rose" icon>

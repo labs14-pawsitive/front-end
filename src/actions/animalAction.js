@@ -144,7 +144,7 @@ export const getAllOptions = (shelterID) => dispatch => {
             console.log('action: update notes info', res.data)
           })
           // .then(res => axios
-          //   .get(`http://localhost:8000/api/animals/${animalID}/admin`))
+          //   .get(`https://staging1-pawsnfind.herokuapp.com/api/animals/${animalID}/admin`))
           // .then(res => {
           //   dispatch({ type: GET_NOTES_BY_ANIMAL_SUCCESS, payload: res.data })
           //   console.log('action :get notes info', res.data)

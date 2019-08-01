@@ -10,631 +10,232 @@
 */
 import React from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
 import { connect } from "react-redux";
+// react component for creating dynamic tables
+import ReactTable from "react-table";
+import { NavLink } from "react-router-dom";
+import axios from 'axios';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-import FormLabel from "@material-ui/core/FormLabel";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import Radio from "@material-ui/core/Radio";
-import Checkbox from "@material-ui/core/Checkbox";
+import Icon from "@material-ui/core/Icon";
 
 // @material-ui/icons
-import MailOutline from "@material-ui/icons/MailOutline";
-import Check from "@material-ui/icons/Check";
-import Clear from "@material-ui/icons/Clear";
-import Contacts from "@material-ui/icons/Contacts";
-import FiberManualRecord from "@material-ui/icons/FiberManualRecord";
+import Update from "@material-ui/icons/Update";
+
+import Assignment from "@material-ui/icons/Assignment";
+// import Dvr from "@material-ui/icons/Dvr";
+import Search from "@material-ui/icons/Search";
+// import Favorite from "@material-ui/icons/Favorite";
+// import Close from "@material-ui/icons/Close";
+// import Warning from "@material-ui/icons/Warning";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
-import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
-import CardHeader from "components/Card/CardHeader.jsx";
-import CardText from "components/Card/CardText.jsx";
-import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
+import CardIcon from "components/Card/CardIcon.jsx";
+import CardHeader from "components/Card/CardHeader.jsx";
+import CardFooter from "components/Card/CardFooter.jsx";
+// import Danger from "components/Typography/Danger.jsx";
+// import { dataTable } from "variables/general.jsx";
 
-import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
+import { cardTitle } from "assets/jss/material-dashboard-pro-react.jsx";
 
-class AppliationView extends React.Component {
+const styles = {
+  cardIconTitle: {
+    ...cardTitle,
+    marginTop: "15px",
+    marginBottom: "0px",
+  },
+  cardCategory: {
+    color: "#333333",
+    fontSize: "14px",
+    paddingTop: "10px",
+    marginBottom: "0",
+    marginTop: "0",
+    margin: "0"
+  },
+};
+
+class ApplicationTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      
-      application: {}
+      applications: [],
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleChangeEnabled = this.handleChangeEnabled.bind(this);
   }
 
   componentDidMount() {
-
-    axios.
-    get(`https://staging1-pawsnfind.herokuapp.com/api/applications/${this.props.match.params.id}`)
-    .then( application => {
-     
-      console.log('application', application.data)
-      if(application.data.shelter !== this.props.shelter)  {
-        this.props.history.push('/admin/dashboard')
-      } else {
-        this.setState({
-                application: application.data,
-              })
-              console.log(this.state.application)
-      }
+    axios
+    //.get(`http://localhost:8000/api/animals/shelter/${localStorage.getItem("shelter_id")}`)
+    // .get(`http://localhost:8000/api/applications/shelter/${this.props.shelterID}`)
+    .get(`https://staging1-pawsnfind.herokuapp.com/api/applications/shelter/${this.props.shelterID}`)
+    .then(applications => {
+      console.log(applications)
       
+     this.setState({
+        applications : applications.data.map((application, key) => {
+        return {
+          id: key,
+          applicationID: application.id,
+          
+          name: application.animal_name,
+          
+          status: application.application_status,
+          applicant_email: application.email,
+          actions: (
+            <div className="actions-right">
+              <NavLink to={`/admin/application/${application.id}`}>
+                <Button
+                  justIcon
+                  round
+                  simple
+                  color="info"
+                  className="view"
+                >
+                  <Search />
+                </Button>
+              </NavLink>{" "}
+            </div>
+          )
+        };
+      })
+      })
+      console.log("state" , this.state.applications)
     })
-    .catch( error => {
+    .catch(error => {
       console.log(error)
     })
-
-
   }
-
-
-  handleChange(event) {
-    this.setState({ selectedValue: event.target.value });
-  }
-  handleChangeEnabled(event) {
-    this.setState({ selectedEnabled: event.target.value });
-  }
-  handleToggle(value) {
-    const { checked } = this.state;
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    this.setState({
-      checked: newChecked
-    });
-  }
-
 
   render() {
     const { classes } = this.props;
-
-    const customStyle = {
-      titleStyle: {
-        padding: "0px 15px"
-      },
-      imgCardStyle:{
-        padding: "0px 15px"
-      },
-      imgStyle: {
-        borderRadius: "4px"
-      },
-      labelStyle : {
-        color: "#333333",
-        paddingTop: "33px"
-      },
-      checkBoxStyle : {
-        float: "right"
-      }
+    const card_category = {
+      color: "#999",
+      margin: "0",
+      fontSize: "14px",
+      marginTop: "0",
+      paddingTop: "10px",
+      marginBottom: "0"
+    }
+    const card_title = {
+      fontSize: "1.825em",
+      lineHeight: "1.4em",
+      color: "#3C4858",
+      minHeight: "auto",
+      fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+      textDecoration: "none",
+      textAlign: "right"
     }
 
     return (
-      <>
-      <GridContainer>
-      <GridItem xs={12} sm={12} md={8}>
-          <Card>
-            <CardHeader color="rose" icon>
-              <CardIcon color="rose">
-                <MailOutline />
-              </CardIcon>
-              <h4 className={classes.cardIconTitle}>Application Information</h4>
-            </CardHeader>
-            <CardBody>
-              <form>
-                <CustomInput
-                  labelText="Application ID"
-                  id="application_id"
-                  formControlProps={{
-                    fullWidth: true
-                  }}
-                  inputProps={{
-                    type: "text" ,
-                    disabled: true, 
-                    value : this.state.application.application_id,
-                  }}
 
-                />
-                <CustomInput
-                  labelText="Animal Name"
-                  id="animal_name"
-                  formControlProps={{
-                    fullWidth: true
-                  }}
-                  inputProps={{
-                    type: "text" ,
-                    disabled: true, 
-                    value : this.state.application.animal_name,
-                  }}
-
-                />
-                <CustomInput
-                  labelText="Password"
-                  id="password"
-                  formControlProps={{
-                    fullWidth: true
-                  }}
-                  inputProps={{
-                    type: "password",
-                    autoComplete: "off"
-                  }}
-                />
-                <div className={classes.checkboxAndRadio}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        tabIndex={-1}
-                        onClick={() => this.handleToggle(2)}
-                        checkedIcon={<Check className={classes.checkedIcon} />}
-                        icon={<Check className={classes.uncheckedIcon} />}
-                        classes={{
-                          checked: classes.checked,
-                          root: classes.checkRoot
-                        }}
-                      />
-                    }
-                    classes={{
-                      label: classes.label,
-                      root: classes.labelRoot
-                    }}
-                    label="Subscribe to newsletter"
-                  />
+      <GridContainer>     
+         <GridItem xs={12} sm={6} md={6} lg={3}>
+            <Card>
+              <CardHeader color="warning" stats icon>
+                <CardIcon color="warning">
+                  <Icon>pets</Icon>
+                </CardIcon>
+                <p className={classes.cardCategory} style={card_category}>Total Applications</p>
+                <h3 className={classes.cardTitle} style={card_title}>
+                  {this.state.applications.length} <small>Applications</small>
+                </h3>
+              </CardHeader>
+              <CardFooter stats>
+                <div className={classes.stats} style={card_category}>
+                <Update />
+                  Just Updated
                 </div>
-                <Button color="rose">Submit</Button>
-              </form>
-            </CardBody>
-          </Card>
-        </GridItem>
-
-        <GridItem xs={12} sm={12} md={4}>
+              </CardFooter>
+            </Card>
+          </GridItem>
+        <GridItem xs={12}>
           <Card>
-            <CardHeader>
-            <legend>Application Notes</legend>
+            <CardHeader color="primary" icon>
+              <CardIcon color="primary">
+                <Assignment />
+              </CardIcon>
+              <h4 className={classes.cardIconTitle}>Applications</h4>
             </CardHeader>
-          </Card>
-        </GridItem>
 
-        <GridItem xs={12} sm={12} md={8}>
-          <Card>
-            <CardHeader color="rose" text>
-              <CardText color="rose">
-                <h4 className={classes.cardTitle}>Application for {this.state.application.animal_name}</h4>
-              </CardText>
-            </CardHeader>
+      
+
             <CardBody>
-                <GridContainer>
-                  <GridItem xs={12} sm={3}>
-                    <FormLabel className={classes.labelHorizontal} style={customStyle.labelStyle}>
-                      Application ID
-                    </FormLabel>
-                  </GridItem>
-                  <GridItem xs={12} sm={9}>
-                    <CustomInput
-                      id="application_id"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        type: "text" ,
-                        disabled: true, 
-                        value : this.state.application.application_id
-                      }} 
-                    />
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={3}>
-                    <FormLabel className={classes.labelHorizontal} style={customStyle.labelStyle}>
-                      Application Status
-                    </FormLabel>
-                  </GridItem>
-                  <GridItem xs={12} sm={9}>
-                    <CustomInput
-                      id="application_status"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        type: "text" ,
-                        disabled: true, 
-                        value : this.state.application.application_status
-                      }} 
-                    />
-                  </GridItem>
-                </GridContainer>
-                
-                <GridContainer>
-                 
-                  <GridItem xs={12} sm={3}>
-                    <div
-                      className={
-                        classes.checkboxAndRadio +
-                        " " +
-                        classes.checkboxAndRadioHorizontal
-                      }
-                    >
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            style={customStyle.checkBoxStyle}
-                            tabIndex={-1}
-                            value={this.state.application.is_over_18}
-                            checkedIcon={
-                              <Check className={classes.checkedIcon} />
-                            }
-                            icon={<Check className={classes.uncheckedIcon} />}
-                            classes={{
-                              checked: classes.checked,
-                              root: classes.checkRoot
-                            }}
-                          />
-                        }
-                        classes={{
-                          label: classes.label,
-                          root: classes.labelRoot
-                        }}
-                        
-                      />
-                    </div>
-                    
-                    
-                  </GridItem>
-                 <GridItem xs={12} sm={9}>
-                    <FormLabel
-                      className={
-                        classes.labelHorizontal +
-                        " " +
-                        classes.labelHorizontalRadioCheckbox
-                      }
-                    >
-                      Applicant is over 18 years of age
-                    </FormLabel>
-                  </GridItem>
-                  </GridContainer>
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                <GridContainer>
-                  <GridItem xs={12} sm={3}>
-                    <FormLabel className={classes.labelHorizontal}>
-                      Password
-                    </FormLabel>
-                  </GridItem>
-                  <GridItem xs={12} sm={9}>
-                    <CustomInput
-                      id="pass"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        type: "password",
-                        autoComplete: "off"
-                      }}
-                    />
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={3}>
-                    <FormLabel className={classes.labelHorizontal}>
-                      Placeholder
-                    </FormLabel>
-                  </GridItem>
-                  <GridItem xs={12} sm={9}>
-                    <CustomInput
-                      id="placeholder"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        placeholder: "placeholder"
-                      }}
-                    />
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={3}>
-                    <FormLabel className={classes.labelHorizontal}>
-                      Disabled
-                    </FormLabel>
-                  </GridItem>
-                  <GridItem xs={12} sm={9}>
-                    <CustomInput
-                      id="disabled"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        placeholder: "Disabled",
-                        disabled: true
-                      }}
-                    />
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={3}>
-                    <FormLabel className={classes.labelHorizontal}>
-                      Static control
-                    </FormLabel>
-                  </GridItem>
-                  <GridItem xs={12} sm={9}>
-                    <div className={classes.staticFormGroup}>
-                      <p className={classes.staticFormControl}>
-                        hello@creative-tim.com
-                      </p>
-                    </div>
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={3}>
-                    <FormLabel
-                      className={
-                        classes.labelHorizontal +
-                        " " +
-                        classes.labelHorizontalRadioCheckbox
-                      }
-                    >
-                      Checkboxes and radios
-                    </FormLabel>
-                  </GridItem>
-                  <GridItem xs={12} sm={9}>
-                    <div
-                      className={
-                        classes.checkboxAndRadio +
-                        " " +
-                        classes.checkboxAndRadioHorizontal
-                      }
-                    >
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            tabIndex={-1}
-                            onClick={() => this.handleToggle(3)}
-                            checkedIcon={
-                              <Check className={classes.checkedIcon} />
-                            }
-                            icon={<Check className={classes.uncheckedIcon} />}
-                            classes={{
-                              checked: classes.checked,
-                              root: classes.checkRoot
-                            }}
-                          />
-                        }
-                        classes={{
-                          label: classes.label,
-                          root: classes.labelRoot
-                        }}
-                        label="First Checkbox"
-                      />
-                    </div>
-                    <div
-                      className={
-                        classes.checkboxAndRadio +
-                        " " +
-                        classes.checkboxAndRadioHorizontal
-                      }
-                    >
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            tabIndex={-1}
-                            onClick={() => this.handleToggle(4)}
-                            checkedIcon={
-                              <Check className={classes.checkedIcon} />
-                            }
-                            icon={<Check className={classes.uncheckedIcon} />}
-                            classes={{
-                              checked: classes.checked,
-                              root: classes.checkRoot
-                            }}
-                          />
-                        }
-                        classes={{
-                          label: classes.label,
-                          root: classes.labelRoot
-                        }}
-                        label="Second Checkbox"
-                      />
-                    </div>
-                    <div
-                      className={
-                        classes.checkboxAndRadio +
-                        " " +
-                        classes.checkboxAndRadioHorizontal
-                      }
-                    >
-                      <FormControlLabel
-                        control={
-                          <Radio
-                            checked={this.state.selectedValue === "a"}
-                            onChange={this.handleChange}
-                            value="a"
-                            name="radio button demo"
-                            aria-label="A"
-                            icon={
-                              <FiberManualRecord
-                                className={classes.radioUnchecked}
-                              />
-                            }
-                            checkedIcon={
-                              <FiberManualRecord
-                                className={classes.radioChecked}
-                              />
-                            }
-                            classes={{
-                              checked: classes.radio,
-                              root: classes.radioRoot
-                            }}
-                          />
-                        }
-                        classes={{
-                          label: classes.label,
-                          root: classes.labelRoot
-                        }}
-                        label="First Radio"
-                      />
-                    </div>
-                    <div
-                      className={
-                        classes.checkboxAndRadio +
-                        " " +
-                        classes.checkboxAndRadioHorizontal
-                      }
-                    >
-                      <FormControlLabel
-                        control={
-                          <Radio
-                            checked={this.state.selectedValue === "b"}
-                            onChange={this.handleChange}
-                            value="b"
-                            name="radio button demo"
-                            aria-label="B"
-                            icon={
-                              <FiberManualRecord
-                                className={classes.radioUnchecked}
-                              />
-                            }
-                            checkedIcon={
-                              <FiberManualRecord
-                                className={classes.radioChecked}
-                              />
-                            }
-                            classes={{
-                              checked: classes.radio,
-                              root: classes.radioRoot
-                            }}
-                          />
-                        }
-                        classes={{
-                          label: classes.label,
-                          root: classes.labelRoot
-                        }}
-                        label="Second Radio"
-                      />
-                    </div>
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={2}>
-                    <FormLabel
-                      className={
-                        classes.labelHorizontal +
-                        " " +
-                        classes.labelHorizontalRadioCheckbox
-                      }
-                    >
-                      Inline checkboxes
-                    </FormLabel>
-                  </GridItem>
-                  <GridItem xs={12} sm={10}>
-                    <div className={classes.inlineChecks}>
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            tabIndex={-1}
-                            onClick={() => this.handleToggle(10)}
-                            checkedIcon={
-                              <Check className={classes.checkedIcon} />
-                            }
-                            icon={<Check className={classes.uncheckedIcon} />}
-                            classes={{
-                              checked: classes.checked,
-                              root: classes.checkRoot
-                            }}
-                          />
-                        }
-                        classes={{
-                          label: classes.label,
-                          root: classes.labelRoot
-                        }}
-                        label="a"
-                      />
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            tabIndex={-1}
-                            onClick={() => this.handleToggle(11)}
-                            checkedIcon={
-                              <Check className={classes.checkedIcon} />
-                            }
-                            icon={<Check className={classes.uncheckedIcon} />}
-                            classes={{
-                              checked: classes.checked,
-                              root: classes.checkRoot
-                            }}
-                          />
-                        }
-                        classes={{
-                          label: classes.label,
-                          root: classes.labelRoot
-                        }}
-                        label="b"
-                      />
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            tabIndex={-1}
-                            onClick={() => this.handleToggle(12)}
-                            checkedIcon={
-                              <Check className={classes.checkedIcon} />
-                            }
-                            icon={<Check className={classes.uncheckedIcon} />}
-                            classes={{
-                              checked: classes.checked,
-                              root: classes.checkRoot
-                            }}
-                          />
-                        }
-                        classes={{
-                          label: classes.label,
-                          root: classes.labelRoot
-                        }}
-                        label="c"
-                      />
-                    </div>
-                  </GridItem>
-                </GridContainer>
+              <ReactTable
+                data={this.state.applications}
+                filterable
+                columns={[
+                  
+                  {
+                    Header: "Application ID",
+                    accessor: "applicationID",
+                    //sortable: false,
+                    //filterable: false
+                  },
+                  {
+                    Header: "Animal Name",
+                    accessor: "name"
+                  },
+                  {
+                    Header: "Status",
+                    accessor: "status"
+                  },
+                  {
+                    Header: "Applicant",
+                    accessor: "applicant_email"
+                  },
+                  
+                  {
+                    Header: "Actions",
+                    accessor: "actions",
+                    sortable: false,
+                    filterable: false
+                  }
+                ]}
+                defaultPageSize={10}
+                showPaginationTop
+                showPaginationBottom={false}
+                className="-striped -highlight"
+              />
             </CardBody>
           </Card>
         </GridItem>
-        
       </GridContainer>
-      
-      
-      </>
     );
   }
 }
-AppliationView.propTypes = {
-  classes: PropTypes.object
-};
+
 const mapStateToProps = (state) => {
   return {
     userID : state.userReducer.userID,
     shelterID : state.shelterReducer.shelterID,
     shelterWorkerID : state.userReducer.shelterWorkerID,
-    roleID : state.userReducer.roleID,
-    shelter : state.shelterReducer.shelter
+    roleID : state.userReducer.roleID
   }
+  
 }
+
+ApplicationTable.propTypes = {
+  classes: PropTypes.object
+};
+
+
+
+
 export default connect(
   mapStateToProps,
   {}
-)(withStyles(regularFormsStyle)(AppliationView))
+)(withStyles(styles)(ApplicationTable))
+
+
+//export default withStyles(styles)(ReactTables);
+
+/*
+export default connect(
+  mapStateToProps,
+  {}
+)(ReactTables)
+*/

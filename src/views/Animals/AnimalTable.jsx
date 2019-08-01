@@ -1,18 +1,12 @@
 /*!
-
 =========================================================
 * Material Dashboard PRO React - v1.7.0
 =========================================================
-
 * Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
 * Copyright 2019 Creative Tim (https://www.creative-tim.com)
-
 * Coded by Creative Tim
-
 =========================================================
-
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
 */
 import React from "react";
 import PropTypes from "prop-types";
@@ -78,10 +72,9 @@ class ReactTables extends React.Component {
 
   componentDidMount() {
     axios
- 
-    
-    .get(`https://staging1-pawsnfind.herokuapp.com/api/animals/shelter/${localStorage.getItem("shelter_id")}`)
- 
+    .get(`http://localhost:8000/api/animals/shelter/${this.props.shelterID}`)
+    // .get(`http://localhost:8000/api/animals/shelter/${localStorage.getItem("shelter_id")}`)
+    // .get(`https://staging1-pawsnfind.herokuapp.com/api/animals/shelter/${this.props.shelterID}`)
     .then(animals => {
       const picStyle = { width: '100%' }
       console.log(animals)
@@ -109,7 +102,7 @@ class ReactTables extends React.Component {
                   <Search />
                 </Button>
               </NavLink>{" "}
-              {/*  
+              {/* edit animal */}
               <NavLink to={`/admin/editAnimal/${animal.id}`}>
                 <Button
                   justIcon
@@ -120,7 +113,7 @@ class ReactTables extends React.Component {
                 >
                   <Dvr />
                 </Button>
-              </NavLink>{" "}*/}
+              </NavLink>{" "}
            
             </div>
           )
@@ -257,3 +250,13 @@ export default connect(
   mapStateToProps,
   {}
 )(withStyles(styles)(ReactTables))
+
+
+//export default withStyles(styles)(ReactTables);
+
+/*
+export default connect(
+  mapStateToProps,
+  {}
+)(ReactTables)
+*/

@@ -167,9 +167,7 @@ class AnimalNotes extends React.Component {
                         {this.props.animalNotes.map(note => {
                             console.log('note info ', note)
                             return < NotesComponent key={note.id} note={note} />
-
                         })}
-
                     </List>
                 </Card>
             </GridItem>
