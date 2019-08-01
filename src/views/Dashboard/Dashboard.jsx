@@ -100,7 +100,7 @@ class Dashboard extends React.Component {
 
   async componentDidMount() {
     await axios
-    .get(`http://localhost:8000/api/dashboard/${localStorage.getItem('shelter_id')}`)
+    .get(`https://staging1-pawsnfind.herokuapp.com/api/dashboard/${localStorage.getItem('shelter_id')}`)
     .then(results => {
       if (results){
       this.setState({
