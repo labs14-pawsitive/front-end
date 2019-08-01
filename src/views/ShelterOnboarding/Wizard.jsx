@@ -17,41 +17,38 @@
 import React from "react";
 
 // core components
-import Wizard from "components/Wizard/ApplicationWizard.jsx";
+import ShelterOBWizard from "components/Wizard/ShelterOnboardingWizard.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 
 import Step1 from "./WizardSteps/Step1.jsx";
 import Step2 from "./WizardSteps/Step2.jsx";
 import Step3 from "./WizardSteps/Step3.jsx";
-import Step4 from "./WizardSteps/Step4.jsx";
 
-class ApplicationWizard extends React.Component {
+class ShelterOnboardinWizard extends React.Component {
 
- 
+  componentDidMount() {
+    
+  }
 
   render() {
-    const regFormStyle={
+    const onboardingStyle={
       zIndex: "5",
       margin: "0"
     }
     return (
-      <GridContainer justify="center" style={regFormStyle}>
+      <GridContainer justify="center" style={onboardingStyle}>
         <GridItem xs={12} sm={8}>
-          <Wizard
+          <ShelterOBWizard
             validate
             steps={[
-              { stepName: "About You", stepComponent: Step1, stepId: "about" },
-              { stepName: "About Your Home", stepComponent: Step2, stepId: "home" },
-              { stepName: "References", stepComponent: Step3, stepId: "references" },
-              { stepName: "Notes and Declarations", stepComponent: Step4, stepId: "declaration" }
-
+              { stepName: "LEGAL INFO", stepComponent: Step1, stepId: "legal_info" },
+              { stepName: "CONTACT", stepComponent: Step2, stepId: "contact" },
+              { stepName: "LOCATION", stepComponent: Step3, stepId: "location" }
             ]}
-            title="Adoption Application"
-            subtitle="Please fill out this application to adopt that special animal today"
+            title="Register Your Shelter"
+            subtitle="This information will let us know more about your shelter."
             finishButtonClick={e => alert(e)}
-            animalId={this.props.animalId}
-            shelterId={this.props.shelterId}
           />
         </GridItem>
       </GridContainer>
@@ -59,4 +56,4 @@ class ApplicationWizard extends React.Component {
   }
 }
 
-export default ApplicationWizard;
+export default ShelterOnboardinWizard;

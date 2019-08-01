@@ -17,18 +17,22 @@
 import React from "react";
 import cx from "classnames";
 import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
-import axios from "axios";
+import { NavLink, withRouter } from "react-router-dom"
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
+import GridContainer from "components/Grid/GridContainer.jsx";
+import GridItem from "components/Grid/GridItem.jsx";
 // core components
 import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
 
 import wizardStyle from "assets/jss/material-dashboard-pro-react/components/wizardStyle.jsx";
 
-class ApplicationWizard extends React.Component {
+import axios from 'axios';
+import customTabsStyle from "assets/jss/material-dashboard-pro-react/components/customTabsStyle";
+
+class ShelterOnboardingWizard extends React.Component {
   constructor(props) {
     super(props);
     var width;
@@ -55,15 +59,29 @@ class ApplicationWizard extends React.Component {
       nextButton: this.props.steps.length > 1 ? true : false,
       previousButton: false,
       finishButton: this.props.steps.length === 1 ? true : false,
+     
       width: width,
       movingTabStyle: {
         transition: "transform 0s"
       },
       allStates: {},
-      isSuccess: ""
+      ein: "",
+      shelterName: "", 
+      user_id: "",
+      shelter_id: "",
+      stepOne:false,
+      name: "",
+      email: "",
+      phone: "",
+      stepTwo: false,
+      state: "",
+      city: "",
+      zip: "",
+      street: "",
+      nickname: "",
+      stepThree: false,
+      error: ""
     };
-
-
     this.navigationStepChange = this.navigationStepChange.bind(this);
     this.refreshAnimation = this.refreshAnimation.bind(this);
     this.previousButtonClick = this.previousButtonClick.bind(this);
@@ -72,13 +90,16 @@ class ApplicationWizard extends React.Component {
     this.updateWidth = this.updateWidth.bind(this);
   }
   wizard = React.createRef();
-
+  
   componentDidMount() {
     this.refreshAnimation(0);
     window.addEventListener("resize", this.updateWidth);
-    
+    const shelter_id = localStorage.getItem('shelter_id')
+    if(shelter_id != "null" && typeof(shelter_id) !== 'undefined') {
+      const {history} = this.props;
+        history.push('/')
+      } 
   }
-
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateWidth);
   }
@@ -120,7 +141,9 @@ class ApplicationWizard extends React.Component {
       }
     }
   }
-  nextButtonClick() {
+
+
+  async nextButtonClick() {
     if (
       (this.props.validate &&
         ((this[this.props.steps[this.state.currentStep].stepId].isValidated !==
@@ -136,25 +159,135 @@ class ApplicationWizard extends React.Component {
         this[this.props.steps[this.state.currentStep].stepId].sendState !==
         undefined
       ) {
-        this.setState({
+       
+        await this.setState({
           allStates: {
             ...this.state.allStates,
             [this.props.steps[this.state.currentStep].stepId]: this[
               this.props.steps[this.state.currentStep].stepId
             ].sendState()
-          }
+          },
+          error: ""
+          
         });
-      }
-      var key = this.state.currentStep + 1;
-      this.setState({
+
+        // ***** onboarding process begins after field validation  ******//
+        // step one of shelter onboarding : verifying EIN (valid EIN and no record in database), add shelter, add shelter user, and update user with shelter_user_id
+        if(this.state.currentStep === 0 && this.state.stepOne === false) {
+          await this.setState({
+            error : "",
+            ein: this.state.allStates.legal_info.ein, 
+            shelterName : this.state.allStates.legal_info.shelterName,
+          })
+          await this.verifyShelter(this.state.ein, this.state.currentStep);
+        } 
+        // step two of shelter onboarding : add main contact information for shelter
+        else if(this.state.currentStep === 1 && this.state.stepTwo === false) 
+        {
+          await this.setState({
+            error: "",
+            name: this.state.allStates.contact.name,
+            email: this.state.allStates.contact.email,
+            phone: this.state.allStates.contact.phone
+          })
+          const newContact = {shelter_id: this.state.shelter_id, name: this.state.name, email: this.state.email, phone: this.state.phone}
+          await this.addContact(newContact)
+        }
+        // step three of shelter onboarding : add main location information for shelter using modified finishing button click
+        //step three now use finishing button instead of current function
+
+        
+      }        
+      console.log(this.state.allStates.legal_info.ein)
+    }
+  }
+
+  settingStates = async() => {
+      let key = this.state.currentStep + 1;
+      await this.setState({
         currentStep: key,
         nextButton: this.props.steps.length > key + 1 ? true : false,
         previousButton: key > 0 ? true : false,
         finishButton: this.props.steps.length === key + 1 ? true : false
       });
-      this.refreshAnimation(key);
-    }
+      await this.refreshAnimation(key);
   }
+
+  addLocation = async (newLocation) => {
+    await axios
+    .post(`http://localhost:8000/api/shelters/${localStorage.getItem('shelter_id')}/mainLocation`, newLocation)
+    .then( result => {
+      console.log('result', result)
+      localStorage.setItem("location_id", result.data.id)
+      localStorage.setItem("new_user", false)
+      //this.settingStates();
+      this.setState({
+        stepThree : true
+      })
+    })
+    .catch (error => {
+      this.setState({
+        error: "We were unable to save your location information, please try again."
+      })
+    })
+  }
+
+  addContact = async (newContact) => {
+    await axios
+    .post(`http://localhost:8000/api/shelters/${localStorage.getItem('shelter_id')}/mainContact`, newContact )
+    .then( result => {
+        console.log('result' , result)
+        localStorage.setItem("contact_id", result.data.id)
+        this.settingStates();
+        this.setState({
+          stepTwo : true,
+        })
+    })
+    .catch( error => {
+      this.setState({
+        error: "We were unable to save your contact information, please try again."
+      })
+    })
+  }
+
+  verifyShelter = async (ein, currentStep) => {
+          console.log("Step one authentication begins" )
+          const newShelter = {shelter : this.state.shelterName}
+          
+          await axios
+          .get(`http://localhost:8000/api/ein/validate/${this.state.ein}`)
+          .then(result => {
+              const shelterInfo = { shelter : this.state.shelterName, EIN: this.state.ein}
+              this.addShelter(shelterInfo) 
+          })
+          .catch(err => {
+            console.log(err.toString())
+            this.setState({
+              error: "The EIN you've entered is either invalid or already exist in our database"
+            })
+          })
+  }
+
+  addShelter = async (shelter) => {
+    await axios
+    .put(`http://localhost:8000/api/shelters/users/${localStorage.getItem('user_id')}`, shelter)
+    .then( result => {
+      console.log('result' , result)
+      localStorage.setItem("shelter_id", result.data.shelterInfo.id)
+      this.settingStates();
+      this.setState({
+        stepOne : true,
+        shelter_id : result.data.shelterInfo.id
+      })
+    })
+    .catch( error => {
+      console.log(error)
+      this.setState({
+              error: "Having trouble adding your shelter to our database"
+        })
+    })
+  }
+
   previousButtonClick() {
     if (
       this[this.props.steps[this.state.currentStep].stepId].sendState !==
@@ -180,7 +313,6 @@ class ApplicationWizard extends React.Component {
       this.refreshAnimation(key);
     }
   }
-
   async finishButtonClick() {
     if (
       (this.props.validate === false &&
@@ -204,56 +336,20 @@ class ApplicationWizard extends React.Component {
             ].sendState()
           }
         },
-
-      )
-      this.submitApplication(this.state.allStates)
-    }
-  }
-
-  submitApplication = applicationData => {
-    //post application process begins
-    const application = {
-      animal_id: this.props.animalId,
-      shelter_id: this.props.shelterId,
-      application_status_id: 1, 
-      user_id: localStorage.getItem("user_id"),
-      name: applicationData.about.name,
-      street_address: applicationData.about.street,
-      city: applicationData.about.city,
-      state_id: applicationData.about.state,
-      zip: applicationData.about.zip,
-      home_phone: applicationData.about.phone,
-      email: applicationData.about.email,
-      cell_phone: applicationData.about.cell,
-      is_over_18: applicationData.about.over18,
-      is_homeowner: applicationData.home.is_homeowner,
-      is_in_agreement: applicationData.home.is_agreement,
-      is_homevisit_allowed: applicationData.home.is_homevisit,
-      is_fenced: applicationData.home.is_fenced,
-      ref_name_1: applicationData.references.name1,
-      ref_phone_1: applicationData.references.phone1,
-      ref_relationship_1: applicationData.references.relationship1,
-      ref_name_2: applicationData.references.name2,
-      ref_phone_2: applicationData.references.phone2,
-      ref_relationship_2: applicationData.references.relationship2,
-      is_declaration: applicationData.declaration.declaration
-    }
-    console.log(application)
-    
-    axios.post('http://localhost:8000/api/applications/', application)
-    .then(app => {
-      this.setState({
-        isSuccess : true
-      })
-      localStorage.removeItem('animalId');
-      localStorage.removeItem('shelterId');
-    })
-    .catch(error => {
-      this.setState({
-        isSuccess : false
-      })
-      console.log(error)
-    })
+      );
+        if(this.state.stepThree === false) {
+            this.setState({
+            error: "",
+            street: this.state.allStates.location.street,
+            city: this.state.allStates.location.city,
+            state: this.state.allStates.location.state,
+            zip: this.state.allStates.location.zip,
+            nickname: this.state.allStates.location.nickname
+          })
+          const newLocation = {shelter_id: this.state.shelter_id, street_address: this.state.street, city: this.state.city, zipcode: this.state.zip, state_id: this.state.state, nickname: this.state.nickname, shelter_contact_id: localStorage.getItem("contact_id")}
+          this.addLocation(newLocation)
+          }
+    } 
   }
 
   refreshAnimation(index) {
@@ -303,7 +399,6 @@ class ApplicationWizard extends React.Component {
   }
   render() {
     const { classes, title, subtitle, color, steps } = this.props;
-    
     const customStyle={
       warning : {
         width: "70%",
@@ -322,7 +417,6 @@ class ApplicationWizard extends React.Component {
         fontWeight:"700"
       }
     }
-
     return (
       <div className={classes.wizardContainer} ref={this.wizard}>
         <Card className={classes.card}>
@@ -360,15 +454,16 @@ class ApplicationWizard extends React.Component {
               {steps[this.state.currentStep].stepName}
             </div>
           </div>
-          {this.state.isSuccess? 
-          <div style={customStyle.success}>
-            <h4>Your application has been successfully submitted</h4>
-          </div>
-          
-          : 
-          
-           <div className={classes.content}>
-            {steps.map((prop, key) => {
+          <div style={customStyle.warning}>
+            <h4>{this.state.error}</h4>
+            </div>
+              
+     
+
+
+          <div className={classes.content}>
+            {this.state.stepThree === false? 
+            steps.map((prop, key) => {
               const stepContentClasses = cx({
                 [classes.stepContentActive]: this.state.currentStep === key,
                 [classes.stepContent]: this.state.currentStep !== key
@@ -381,25 +476,18 @@ class ApplicationWizard extends React.Component {
                   />
                 </div>
               );
-            })}
-          </div>
-          
-          
-          }
-         
-          <div className={classes.footer}>
-            <div className={classes.left}>
-              {this.state.previousButton && !this.state.isSuccess ? (
-                <Button
-                  className={this.props.previousButtonClasses}
-                  onClick={() => this.previousButtonClick()}
-                >
-                  {this.props.previousButtonText}
-                </Button>
-              ) : null}
+            }) 
+            : 
+            <div style={customStyle.success}>
+            <h4>You've successfully registered your shelter</h4>
             </div>
+            }
+            
+          </div>
+          <div className={classes.footer}>
+           
             <div className={classes.right}>
-              {this.state.nextButton && !this.state.isSuccess ? (
+              {this.state.nextButton ? (
                 <Button
                   color="rose"
                   className={this.props.nextButtonClasses}
@@ -408,7 +496,7 @@ class ApplicationWizard extends React.Component {
                   {this.props.nextButtonText}
                 </Button>
               ) : null}
-              {this.state.finishButton && !this.state.isSuccess ? (
+              {this.state.finishButton && this.state.stepThree === false ? (
                 <Button
                   color="rose"
                   className={this.finishButtonClasses}
@@ -417,6 +505,15 @@ class ApplicationWizard extends React.Component {
                   {this.props.finishButtonText}
                 </Button>
               ) : null}
+              {this.state.stepThree === true? (
+                <NavLink to="/admin/dashboard">
+                <Button
+                  color="rose"
+                  className={this.finishButtonClasses}
+                >
+                  Go to your shelter dashboard
+                </Button></NavLink>
+              ) : null }
             </div>
             <div className={classes.clearfix} />
           </div>
@@ -426,7 +523,7 @@ class ApplicationWizard extends React.Component {
   }
 }
 
-ApplicationWizard.defaultProps = {
+ShelterOnboardingWizard.defaultProps = {
   color: "rose",
   title: "Here should go your title",
   subtitle: "And this would be your subtitle",
@@ -438,7 +535,7 @@ ApplicationWizard.defaultProps = {
   finishButtonText: "Finish"
 };
 
-ApplicationWizard.propTypes = {
+ShelterOnboardingWizard.propTypes = {
   classes: PropTypes.object.isRequired,
   steps: PropTypes.arrayOf(
     PropTypes.shape({
@@ -467,4 +564,4 @@ ApplicationWizard.propTypes = {
   validate: PropTypes.bool
 };
 
-export default withRouter(withStyles(wizardStyle)(ApplicationWizard));
+export default withRouter(withStyles(wizardStyle)(ShelterOnboardingWizard));

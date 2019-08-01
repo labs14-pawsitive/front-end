@@ -31,11 +31,7 @@ import mainPageStyle from "assets/jss/material-dashboard-pro-react/views/mainPag
 class Main extends React.Component {
   render() {
     const { classes } = this.props;
-    const customStyle = {
-      raise : {
-
-      }
-    }
+    
     return (
       <div className={classes.contentCenter}>
         <GridContainer>

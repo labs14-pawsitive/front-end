@@ -25,8 +25,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
+
 
 import MaskedInput from 'react-text-mask';
 
@@ -36,11 +35,7 @@ import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 
 import Face from "@material-ui/icons/Face";
-import RecordVoiceOver from "@material-ui/icons/RecordVoiceOver";
-import Email from "@material-ui/icons/Email";
-import Check from "@material-ui/icons/Check";
 
-import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
 
 
 import customSelectStyle from "assets/jss/material-dashboard-pro-react/customSelectStyle.jsx";
@@ -60,10 +55,10 @@ function moveCursor(event) {
   event.target.setSelectionRange(digits.length,digits.length);
 }
 
-//text mask for zip 5 digit 
+//text mask for 5 digit 
 function TextMaskCustom(props) {
   const { inputRef, ...other } = props;
-  
+
   return (
     <MaskedInput
       {...other}
@@ -82,37 +77,10 @@ TextMaskCustom.propTypes = {
 };
 
 
-//text mask for zip 5 digit 
-function PhoneMask(props) {
-  const { inputRef, ...other } = props;
-  
-  return (
-    <MaskedInput
-      {...other}
-      ref={ref => {
-        inputRef(ref ? ref.inputElement : null);
-      }}
-      mask={['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
-      placeholderChar={'\u2000'}
-      //showMask
-    />
-  );
-}
-
-PhoneMask.propTypes = {
-  inputRef: PropTypes.func.isRequired,
-};
-
-class Step1 extends React.Component {
+class Step3 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "",
-      nameState: "",
-      email: "",
-      emailState:"",
-      over18: false,
-     // over18State:"",
       street: "",
       streetState: "",
       city: "",  
@@ -121,10 +89,8 @@ class Step1 extends React.Component {
       stateState: "",
       zip: "",
       zipState: "",
-      phone: "",
-      phoneState: "",
-      cell: "",
-      cellState: "",
+      nickname: "",
+      nicknameState: "",
       options: []
     };
   }
@@ -156,14 +122,7 @@ class Step1 extends React.Component {
     }
     
 
-  // function that returns true if value is email, false otherwise
-  verifyEmail(value) {
-    var emailRex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (emailRex.test(value)) {
-      return true;
-    }
-    return false;
-  }
+
 
   // function that verifies if a string has a given length or not
   verifyLength(value, length) {
@@ -220,25 +179,19 @@ class Step1 extends React.Component {
       default:
         break;
     }
-    
     this.setState({ [stateName]: event.target.value });
   }
 
   isValidated() {
     if (
-      this.state.nameState === "success" &&
       this.state.streetState === "success" &&
       this.state.cityState === "success" &&
       this.state.stateState === "success" && 
       this.state.zipState === "success" && 
-      this.state.phoneState === "success" && 
-      this.state.emailState === "success" 
+      this.state.nicknameState === "success"
     ) {
       return true;
     } else {
-      if (this.state.nameState !== "success") {
-        this.setState({ nameState: "error" });
-      }
       if (this.state.streetState !== "success") {
         this.setState({ streetState: "error" });
       }
@@ -251,90 +204,21 @@ class Step1 extends React.Component {
       if (this.state.zipState !== "success") {
         this.setState({ zipState: "error" });
       }
-      if (this.state.phoneState !== "success") {
-        this.setState({ phoneState: "error" });
+      if (this.state.nicknameState !== "success") {
+        this.setState({ nicknameState: "error" });
       }
-      if (this.state.emailState !== "success") {
-        this.setState({ emailState: "error" });
-      }
-    
     }
     return false;
   }
 
-  handleToggle() {
-    this.setState({
-      over18: !this.state.over18
-    })
-   
-  }
-
   render() {
     const { classes } = this.props;
-    const customStyle = {
-      centerAlign: {
-        textAlign:"center"
-      },
-      checkBoxAlign : {
-        marginTop: "25px"
-      }
-     
-    }
     return (
       <GridContainer justify="center">
         <GridItem xs={12} sm={12}>
-          <h4 className={classes.infoText} style={customStyle.centerAlign}>Please tell us a little bit about yourself</h4>
+          <h4 className={classes.infoText}>Please enter your main location information</h4>
         </GridItem>
-        <GridItem xs={12} sm={12} md={5}>
-          <CustomInput
-            success={this.state.nameState === "success"}
-            error={this.state.nameState === "error"}
-            labelText={
-              <span>
-                Name <small>(required)</small>
-              </span>
-            }
-            id="name"
-            formControlProps={{
-              fullWidth: true
-            }}
-
-            inputProps={{
-              onChange: event => this.change(event, "name", "length", 5),
-            }}
-
-          />
-        </GridItem>
-        <GridItem xs={12} sm={12} md={5}>
-          <CustomInput
-            success={this.state.emailState === "success"}
-            error={this.state.emailState === "error"}
-            labelText={
-              <span>
-                Email <small>(required)</small>
-              </span>
-            }
-            id="email"
-            formControlProps={{
-              fullWidth: true
-            }}
-            inputProps={{
-              onChange: event => this.change(event, "email", "email"),
-              endAdornment: (
-                <InputAdornment
-                  position="end"
-                  className={classes.inputAdornment}
-                >
-                  <Email className={classes.inputAdornmentIcon} />
-                </InputAdornment>
-              )
-            }}
-          />
-
-        </GridItem>
-       
-
-        <GridItem xs={12} sm={12} md={4}>
+        <GridItem xs={12} sm={6}>
           <CustomInput
             success={this.state.streetState === "success"}
             error={this.state.streetState === "error"}
@@ -355,7 +239,7 @@ class Step1 extends React.Component {
 
           />
         </GridItem>
-        <GridItem xs={12} sm={12} md={3}>
+        <GridItem xs={12} sm={4}>
           <CustomInput
             success={this.state.cityState === "success"}
             error={this.state.cityState === "error"}
@@ -376,9 +260,9 @@ class Step1 extends React.Component {
           />
         </GridItem>
        
-        <GridItem xs={12} sm={12} md={3}>
+        <GridItem xs={12} sm={3}>
           <FormControl fullWidth className={classes.selectFormControl}>
-            <InputLabel htmlFor="state" className={this.state.stateState !== "error" ? classes.selectLabel : classes.selectLabelError}  >
+            <InputLabel htmlFor="state" className={classes.selectLabel}>
               Choose State
             </InputLabel>
             <Select
@@ -418,7 +302,7 @@ class Step1 extends React.Component {
             </Select>
           </FormControl>
         </GridItem>
-         <GridItem xs={12} sm={12} md={5}>
+         <GridItem xs={12} sm={3}>
           
           <CustomInput
             success={this.state.zipState === "success"}
@@ -442,105 +326,32 @@ class Step1 extends React.Component {
           />
           
         </GridItem>
-        <GridItem xs={12} sm={12} md={5} >
-        
-              <div className={classes.checkboxAndRadio} style={customStyle.checkBoxAlign}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        tabIndex={-1}
-                        onClick={() => this.handleToggle()}
-                        value={this.state.over18}
-                        checkedIcon={<Check className={classes.checkedIcon} />}
-                        //icon={<Check className={classes.uncheckedIcon} />}
-                        classes={{
-                          checked: classes.checked,
-                          root: classes.checkRoot
-                        }}
-                      />
-                    }
-                    classes={{
-                      label: classes.label,
-                      root: classes.labelRoot
-                    }}
-                    label="Are you over 18 years old?"
-                  />
-                </div>
-        </GridItem>
-
-
-
-
-         <GridItem xs={12} sm={12} md={5}>
-          <CustomInput 
-          success={this.state.phoneState === "success"}
-            error={this.state.phoneState === "error"}
+         <GridItem xs={12} sm={4}>
+          <CustomInput
+            success={this.state.nicknameState === "success"}
+            error={this.state.nicknameState === "error"}
             labelText={
               <span>
-                Phone Number <small>(required)</small>
+                Nickname <small>(required)</small>
               </span>
             }
-            id="phone"
+            id="nickname"
             formControlProps={{
               fullWidth: true
             }}
             inputProps={{
-              onChange : event => this.change(event, 'phone', 'digit-only', 10) ,
-              onClick: event => moveCursor(event),
-              onFocus: event => moveCursor(event),
-              inputComponent : PhoneMask,
-              endAdornment: (
-                <InputAdornment
-                  position="end"
-                  className={classes.inputAdornment}
-                >
-                  <RecordVoiceOver className={classes.inputAdornmentIcon} />
-                </InputAdornment>
-
-              )
+              onChange: event => this.change(event, "nickname", "length", 3),
+              
             }}
           />
-
-        </GridItem>
-        <GridItem xs={12} sm={12} md={5}>
-          <CustomInput 
-          //success={this.state.phoneState === "success"}
-          //  error={this.state.phoneState === "error"}
-            labelText={
-              <span>
-                Cell Number <small>(required)</small>
-              </span>
-            }
-            id="cell"
-            formControlProps={{
-              fullWidth: true
-            }}
-            inputProps={{
-              onChange : event => this.change(event, 'cell', 'digit-only', 10) ,
-              onClick: event => moveCursor(event),
-              onFocus: event => moveCursor(event),
-              inputComponent : PhoneMask,
-              endAdornment: (
-                <InputAdornment
-                  position="end"
-                  className={classes.inputAdornment}
-                >
-                  <RecordVoiceOver className={classes.inputAdornmentIcon} />
-                </InputAdornment>
-
-              )
-            }}
-          />
-
         </GridItem>
       </GridContainer>
     );
   }
 }
 
-
-Step1.propTypes = {
+Step3.propTypes = {
   classes: PropTypes.object
 };
 
-export default withStyles(style)(Step1);
+export default withStyles(style)(Step3);

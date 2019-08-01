@@ -17,6 +17,7 @@
 import React from "react";
 import classNames from "classnames";
 import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom"
 // import { Manager, Target, Popper } from "react-popper";
 
 // @material-ui/core components
@@ -59,6 +60,11 @@ class HeaderLinks extends React.Component {
   handleCloseProfile = () => {
     this.setState({ openProfile: false });
   };
+  handleLogout = ()=> {
+
+    localStorage.clear();
+    this.props.history.push('/')
+  }
   render() {
     const { classes, rtlActive } = this.props;
     const { openNotification, openProfile } = this.state;
@@ -83,6 +89,7 @@ class HeaderLinks extends React.Component {
     });
     return (
       <div className={wrapper}>
+        {/* 
         <CustomInput
           rtlActive={rtlActive}
           formControlProps={{
@@ -231,7 +238,7 @@ class HeaderLinks extends React.Component {
             )}
           </Popper>
         </div>
-
+*/}
         <div className={managerClasses}>
           <Button
             color="transparent"
@@ -287,7 +294,7 @@ class HeaderLinks extends React.Component {
                 <Paper className={classes.dropdown}>
                   <ClickAwayListener onClickAway={this.handleCloseProfile}>
                     <MenuList role="menu">
-                      <MenuItem
+                  {/*   <MenuItem
                         onClick={this.handleCloseProfile}
                         className={dropdownItem}
                       >
@@ -300,8 +307,9 @@ class HeaderLinks extends React.Component {
                         {rtlActive ? "الإعدادات" : "Settings"}
                       </MenuItem>
                       <Divider light />
+                      */}  
                       <MenuItem
-                        onClick={this.handleCloseProfile}
+                        onClick={this.handleLogout}
                         className={dropdownItem}
                       >
                         {rtlActive ? "الخروج" : "Log out"}
@@ -323,4 +331,4 @@ HeaderLinks.propTypes = {
   rtlActive: PropTypes.bool
 };
 
-export default withStyles(adminNavbarLinksStyle)(HeaderLinks);
+export default withRouter(withStyles(adminNavbarLinksStyle)(HeaderLinks));
