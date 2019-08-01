@@ -206,11 +206,7 @@ handleChange = name => event => {
             Let{"'"}s start with some legal information
           </h4>
         </GridItem>
-        {/* 
-        <GridItem xs={12} sm={4}>
-          <PictureUpload />
-        </GridItem>
-        */}
+        
         <GridItem xs={12} sm={6}>
           <CustomInput
             success={this.state.shelterNameState === "success"}
@@ -263,82 +259,9 @@ handleChange = name => event => {
               )
             }}
           />
- {/*
-<CustomInput 
-          success={this.state.textmaskState === "success"}
-            error={this.state.textmaskState === "error"}
-            labelText={
-              <span>
-                Phone Number <small>(required)</small>
-              </span>
-            }
-            id="textmask"
-            formControlProps={{
-              fullWidth: true
-            }}
-            inputProps={{
-              onChange : event => this.change(event, "textmask", 'digit-only', 10) ,
-              //value : textmask,
-              inputComponent : TextMaskCustom,
-              endAdornment: (
-                <InputAdornment
-                  position="end"
-                  className={classes.inputAdornment}
-                >
-                  <RecordVoiceOver className={classes.inputAdornmentIcon} />
-                </InputAdornment>
 
-              )
-            }}
-/>
-*/}
-
-
-{/*
-<div className={classes.container}>
-        <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="textmask">Phone Number</InputLabel>
-          <Input
-            value={textmask}
-            //onChange={this.handleChange('textmask')}
-            onChange = {event => this.change(event, "textmask", 'digit-only', 10)} 
-            id="textmask"
-            inputComponent={TextMaskCustom}
-          />
-        </FormControl>
+        </GridItem>
        
-      </div>
-*/}
-
-        </GridItem>
-        {/* 
-        <GridItem xs={12} sm={12} md={12} lg={10}>
-          <CustomInput
-            success={this.state.emailState === "success"}
-            error={this.state.emailState === "error"}
-            labelText={
-              <span>
-                Email <small>(required)</small>
-              </span>
-            }
-            id="email"
-            formControlProps={{
-              fullWidth: true
-            }}
-            inputProps={{
-              onChange: event => this.change(event, "email", "email"),
-              endAdornment: (
-                <InputAdornment
-                  position="end"
-                  className={classes.inputAdornment}
-                >
-                  <Email className={classes.inputAdornmentIcon} />
-                </InputAdornment>
-              )
-            }}
-          />
-        </GridItem>
-        */}
       </GridContainer>
     );
   }

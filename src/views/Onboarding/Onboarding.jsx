@@ -57,20 +57,15 @@ class Onboarding extends React.Component {
             <Card pricing raised>
               <CardBody pricing>
                 <h3 className={`${classes.cardTitle} ${classes.marginTop30}`}>
-                I would like to browse and eventually find my perfect pet
+                I would like to fill out an application form
                 </h3>
-               {/* <h6 className={classes.cardCategory}>I would like to browse and eventually find my perfect pet</h6> */}
                 <div className={classes.icon}>
                   <Pets className={classes.iconRose} />
                 </div>
-                {/*
-                <p className={classes.cardDescription}>
-                  This is good if your company size is between 2 and 10 Persons.
-                </p> 
-                */}
-                <NavLink to="/">
+        
+                <NavLink to="/application">
                 <Button round color="rose">
-                  Browse Animals
+                  Fill out an Application
                 </Button>
                 </NavLink>
               </CardBody>
@@ -86,11 +81,7 @@ class Onboarding extends React.Component {
                 <div className={classes.icon}>
                   <Store className={classes.iconRose} />
                 </div>
-                {/* 
-                <p className={classes.cardDescription}>
-                  This is good if your company size is between 2 and 10 Persons.
-                </p>
-                */}
+       
               <NavLink to="/shelter-signup">
                 <Button round color="rose">
                   Register Shelter

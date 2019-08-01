@@ -204,9 +204,7 @@ class ApplicationWizard extends React.Component {
             ].sendState()
           }
         },
-        //() => {
-         // this.submitApplication(this.state.allStates);
-        //}
+
       )
       this.submitApplication(this.state.allStates)
     }
@@ -305,6 +303,26 @@ class ApplicationWizard extends React.Component {
   }
   render() {
     const { classes, title, subtitle, color, steps } = this.props;
+    
+    const customStyle={
+      warning : {
+        width: "70%",
+        margin: "50px auto 30px",
+        textAlign: "center",
+        borderRadius: "5px",
+        color:"red",
+        fontWeight:"700"
+      },
+      success : {
+        width: "70%",
+        margin: "50px auto 30px",
+        textAlign: "center",
+        borderRadius: "5px",
+        color:"green",
+        fontWeight:"700"
+      }
+    }
+
     return (
       <div className={classes.wizardContainer} ref={this.wizard}>
         <Card className={classes.card}>
@@ -343,7 +361,10 @@ class ApplicationWizard extends React.Component {
             </div>
           </div>
           {this.state.isSuccess? 
-          <div><h1>Your application has been successfully submitted</h1></div> 
+          <div style={customStyle.success}>
+            <h4>Your application has been successfully submitted</h4>
+          </div>
+          
           : 
           
            <div className={classes.content}>

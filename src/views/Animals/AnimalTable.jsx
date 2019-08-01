@@ -78,7 +78,7 @@ class ReactTables extends React.Component {
 
   componentDidMount() {
     axios
-    //.get(`http://localhost:8000/api/animals/shelter/${localStorage.getItem("shelter_id")}`)
+    
     .get(`http://localhost:8000/api/animals/shelter/${this.props.shelterID}`)
     .then(animals => {
       const picStyle = { width: '100%' }
@@ -255,13 +255,3 @@ export default connect(
   mapStateToProps,
   {}
 )(withStyles(styles)(ReactTables))
-
-
-//export default withStyles(styles)(ReactTables);
-
-/*
-export default connect(
-  mapStateToProps,
-  {}
-)(ReactTables)
-*/

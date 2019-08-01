@@ -21,6 +21,8 @@ import { NavLink, withRouter } from "react-router-dom"
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
+import GridContainer from "components/Grid/GridContainer.jsx";
+import GridItem from "components/Grid/GridItem.jsx";
 // core components
 import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
@@ -28,6 +30,7 @@ import Card from "components/Card/Card.jsx";
 import wizardStyle from "assets/jss/material-dashboard-pro-react/components/wizardStyle.jsx";
 
 import axios from 'axios';
+import customTabsStyle from "assets/jss/material-dashboard-pro-react/components/customTabsStyle";
 
 class ShelterOnboardingWizard extends React.Component {
   constructor(props) {
@@ -191,22 +194,9 @@ class ShelterOnboardingWizard extends React.Component {
           await this.addContact(newContact)
         }
         // step three of shelter onboarding : add main location information for shelter using modified finishing button click
-        //step three now use finishing button
+        //step three now use finishing button instead of current function
 
-        /*
-        else if(this.state.currentStep === 2 && this.state.stepThree === false) {
-          await this.setState({
-            error: "",
-            street: this.state.allStates.location.street,
-            city: this.state.allStates.location.city,
-            state: this.state.allStates.location.state,
-            zip: this.state.allStates.location.zip,
-            nickname: this.state.allStates.location.nickname
-          })
-          const newLocation = {shelter_id: this.state.shelter_id, street_address: this.state.street, city: this.state.city, zipcode: this.state.zip, state_id: this.state.state, nickname: this.state.nickname, shelter_contact_id: localStorage.getItem("contact_id")}
-          await this.addLocation(newLocation)
-        }
-        */
+        
       }        
       console.log(this.state.allStates.legal_info.ein)
     }
@@ -409,6 +399,24 @@ class ShelterOnboardingWizard extends React.Component {
   }
   render() {
     const { classes, title, subtitle, color, steps } = this.props;
+    const customStyle={
+      warning : {
+        width: "70%",
+        margin: "50px auto 30px",
+        textAlign: "center",
+        borderRadius: "5px",
+        color:"red",
+        fontWeight:"700"
+      },
+      success : {
+        width: "70%",
+        margin: "50px auto 30px",
+        textAlign: "center",
+        borderRadius: "5px",
+        color:"green",
+        fontWeight:"700"
+      }
+    }
     return (
       <div className={classes.wizardContainer} ref={this.wizard}>
         <Card className={classes.card}>
@@ -446,8 +454,12 @@ class ShelterOnboardingWizard extends React.Component {
               {steps[this.state.currentStep].stepName}
             </div>
           </div>
+          <div style={customStyle.warning}>
+            <h4>{this.state.error}</h4>
+            </div>
+              
+     
 
-          <div><h1>{this.state.error}</h1></div>
 
           <div className={classes.content}>
             {this.state.stepThree === false? 
@@ -466,7 +478,9 @@ class ShelterOnboardingWizard extends React.Component {
               );
             }) 
             : 
-            <h2>You've successfully registered your shelter</h2>
+            <div style={customStyle.success}>
+            <h4>You've successfully registered your shelter</h4>
+            </div>
             }
             
           </div>

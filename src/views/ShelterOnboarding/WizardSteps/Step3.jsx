@@ -55,7 +55,7 @@ function moveCursor(event) {
   event.target.setSelectionRange(digits.length,digits.length);
 }
 
-//text mask for ein 9 digit 
+//text mask for 5 digit 
 function TextMaskCustom(props) {
   const { inputRef, ...other } = props;
 
@@ -213,7 +213,6 @@ class Step3 extends React.Component {
 
   render() {
     const { classes } = this.props;
-    //let hideDropdown = editMode? disabled : null;
     return (
       <GridContainer justify="center">
         <GridItem xs={12} sm={12}>
@@ -299,26 +298,7 @@ class Step3 extends React.Component {
                 {state.state}
               </MenuItem>
               ))}
-              {/* 
-              <MenuItem
-                classes={{
-                  root: classes.selectMenuItem,
-                  selected: classes.selectMenuItemSelected
-                }}
-                value="2"
-              >
-                France
-              </MenuItem>
-              <MenuItem
-                classes={{
-                  root: classes.selectMenuItem,
-                  selected: classes.selectMenuItemSelected
-                }}
-                value="3"
-              >
-                Romania
-              </MenuItem>
-              */}
+              
             </Select>
           </FormControl>
         </GridItem>
@@ -344,22 +324,7 @@ class Step3 extends React.Component {
             
             }}
           />
-          {/* 
-          <CustomInput
-            success={this.state.zipState === "success"}
-            error={this.state.zipState === "error"}
-            labelText="ZipCode"
-            id="zip"
-            formControlProps={{
-              fullWidth: true
-            }}
-            inputProps={{
-              onChange: event => this.change(event, "zip", "digit-only", 5),
-              
-            }}
-          />
-          */}
-
+          
         </GridItem>
          <GridItem xs={12} sm={4}>
           <CustomInput

@@ -25,6 +25,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Radio from "@material-ui/core/Radio";
 import Checkbox from "@material-ui/core/Checkbox";
+import TextField from "@material-ui/core/TextField";
 
 // @material-ui/icons
 import MailOutline from "@material-ui/icons/MailOutline";
@@ -122,6 +123,9 @@ class AppliationView extends React.Component {
       },
       checkBoxStyle : {
         float: "right"
+      },
+      solidLine: {
+        borderBottom: "1px solid black"
       }
     }
 
@@ -137,8 +141,9 @@ class AppliationView extends React.Component {
               <h4 className={classes.cardIconTitle}>Application Information</h4>
             </CardHeader>
             <CardBody>
-              <form>
+              <form >
                 <CustomInput
+                style={customStyle.solidLine}
                   labelText="Application ID"
                   id="application_id"
                   formControlProps={{
@@ -146,7 +151,7 @@ class AppliationView extends React.Component {
                   }}
                   inputProps={{
                     type: "text" ,
-                    disabled: true, 
+                    disabled: false, 
                     value : this.state.application.application_id,
                   }}
 
@@ -170,10 +175,32 @@ class AppliationView extends React.Component {
                   formControlProps={{
                     fullWidth: true
                   }}
+                  
                   inputProps={{
                     type: "text" ,
                     disabled: true, 
                     value : this.state.application.application_status,
+                    disableUnderline: true,
+                    style: {
+                      borderBottom: "1px solid black"
+                    }
+                  }}
+                />
+                <TextField
+                  labelText="Application Status"
+                  id="application_status"
+                  formControlProps={{
+                    fullWidth: true
+                  }}
+                  
+                  inputProps={{
+                    type: "text" ,
+                    disabled: true, 
+                    value : this.state.application.application_status,
+                    disableUnderline: true,
+                    style: {
+                      borderBottom: "1px solid black"
+                    }
                   }}
                 />
 
@@ -259,6 +286,8 @@ class AppliationView extends React.Component {
                   </GridItem>
                   <GridItem xs={12} sm={9}>
                     <CustomInput
+                      style={customStyle.solidLine}
+
                       id="application_status"
                       formControlProps={{
                         fullWidth: true
@@ -266,7 +295,8 @@ class AppliationView extends React.Component {
                       inputProps={{
                         type: "text" ,
                         disabled: true, 
-                        value : this.state.application.application_status
+                        value : this.state.application.application_status,
+                        
                       }} 
                     />
                   </GridItem>

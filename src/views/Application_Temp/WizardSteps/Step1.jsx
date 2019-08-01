@@ -274,6 +274,9 @@ class Step1 extends React.Component {
     const customStyle = {
       centerAlign: {
         textAlign:"center"
+      },
+      checkBoxAlign : {
+        marginTop: "25px"
       }
      
     }
@@ -282,7 +285,7 @@ class Step1 extends React.Component {
         <GridItem xs={12} sm={12}>
           <h4 className={classes.infoText} style={customStyle.centerAlign}>Please tell us a little bit about yourself</h4>
         </GridItem>
-        <GridItem xs={12} sm={5}>
+        <GridItem xs={12} sm={12} md={5}>
           <CustomInput
             success={this.state.nameState === "success"}
             error={this.state.nameState === "error"}
@@ -302,7 +305,7 @@ class Step1 extends React.Component {
 
           />
         </GridItem>
-        <GridItem xs={12} sm={5}>
+        <GridItem xs={12} sm={12} md={5}>
           <CustomInput
             success={this.state.emailState === "success"}
             error={this.state.emailState === "error"}
@@ -331,7 +334,7 @@ class Step1 extends React.Component {
         </GridItem>
        
 
-        <GridItem xs={12} sm={4}>
+        <GridItem xs={12} sm={12} md={4}>
           <CustomInput
             success={this.state.streetState === "success"}
             error={this.state.streetState === "error"}
@@ -352,7 +355,7 @@ class Step1 extends React.Component {
 
           />
         </GridItem>
-        <GridItem xs={12} sm={3}>
+        <GridItem xs={12} sm={12} md={3}>
           <CustomInput
             success={this.state.cityState === "success"}
             error={this.state.cityState === "error"}
@@ -373,7 +376,7 @@ class Step1 extends React.Component {
           />
         </GridItem>
        
-        <GridItem xs={12} sm={3}>
+        <GridItem xs={12} sm={12} md={3}>
           <FormControl fullWidth className={classes.selectFormControl}>
             <InputLabel htmlFor="state" className={this.state.stateState !== "error" ? classes.selectLabel : classes.selectLabelError}  >
               Choose State
@@ -415,7 +418,7 @@ class Step1 extends React.Component {
             </Select>
           </FormControl>
         </GridItem>
-         <GridItem xs={12} sm={5}>
+         <GridItem xs={12} sm={12} md={5}>
           
           <CustomInput
             success={this.state.zipState === "success"}
@@ -439,9 +442,9 @@ class Step1 extends React.Component {
           />
           
         </GridItem>
-        <GridItem xs={12} sm={5}>
+        <GridItem xs={12} sm={12} md={5} >
         
-              <div className={classes.checkboxAndRadio}>
+              <div className={classes.checkboxAndRadio} style={customStyle.checkBoxAlign}>
                   <FormControlLabel
                     control={
                       <Checkbox
@@ -468,7 +471,7 @@ class Step1 extends React.Component {
 
 
 
-         <GridItem xs={12} sm={5}>
+         <GridItem xs={12} sm={12} md={5}>
           <CustomInput 
           success={this.state.phoneState === "success"}
             error={this.state.phoneState === "error"}
@@ -499,7 +502,7 @@ class Step1 extends React.Component {
           />
 
         </GridItem>
-        <GridItem xs={12} sm={5}>
+        <GridItem xs={12} sm={12} md={5}>
           <CustomInput 
           //success={this.state.phoneState === "success"}
           //  error={this.state.phoneState === "error"}
