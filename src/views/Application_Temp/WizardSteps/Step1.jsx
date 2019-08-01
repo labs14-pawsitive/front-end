@@ -508,7 +508,7 @@ class Step1 extends React.Component {
           //  error={this.state.phoneState === "error"}
             labelText={
               <span>
-                Cell Number <small>(required)</small>
+                Cell Number 
               </span>
             }
             id="cell"

@@ -6,9 +6,9 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) => {
-        if (localStorage.getItem("id_token") && localStorage.getItem("shelter_id") !== "null") {
+        if (localStorage.getItem("id_token") && localStorage.getItem("shelter_id") && localStorage.getItem("shelter_id") !== "null") {
           return <Component {...props}/>;
-        } else if (localStorage.getItem("id_token" && localStorage.getItem("shelter_id") === "null")){
+        } else if (localStorage.getItem("id_token") && localStorage.getItem("shelter_id") === "null"){
           return <Redirect to="/shelter-signup" />
         }
           else

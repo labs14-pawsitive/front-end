@@ -45,6 +45,10 @@ class Pages extends React.Component {
   authLogin = () => {
     auth.login();
   }
+  
+  componentWillMount() {
+    this.authLogin();
+  }
 
   componentDidMount() {
     document.body.style.overflow = "unset";
@@ -102,8 +106,14 @@ class Pages extends React.Component {
   };
   render() {
     const { classes, ...rest } = this.props;
+    const customStyle = {
+      bg : {
+        background : "radial-gradient(#40404b, #111118) rgba(34,34,40,0.94)"
+      }
+    }
     return (
-      <div>
+      <div customStyle={customStyle.bg}> 
+      {/* 
         <TempNavBar brandText={this.getActiveRoute(routes)} {...rest} />
         <div className={classes.wrapper} ref={this.wrapper}>
           <div
@@ -117,6 +127,7 @@ class Pages extends React.Component {
             <Footer white />
           </div>
         </div>
+        */}
       </div>
     );
   }

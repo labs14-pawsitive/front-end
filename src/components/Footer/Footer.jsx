@@ -18,6 +18,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
+import { withRouter } from 'react-router-dom'
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -45,9 +46,18 @@ function Footer({ ...props }) {
   return (
     <footer className={classes.footer}>
       <div className={container}>
-       {/*  
+        
        <div className={classes.left}>
-          <List className={classes.list}>
+
+       <List className={classes.list}>
+       <ListItem className={classes.inlineBlock}>
+              <a href="/shelter-signup" className={block}>
+               Register Your Shelter
+              </a>
+            </ListItem>
+      
+       {/* 
+          
             <ListItem className={classes.inlineBlock}>
               <a href="/" className={block}>
                Home
@@ -64,9 +74,11 @@ function Footer({ ...props }) {
                Blog
               </a>
             </ListItem>
-          </List>
+          
+          */}
+          </List> 
         </div>
-        */}
+       
         <p className={classes.right}>
           &copy; {1900 + new Date().getYear()}{" "}
           <a
@@ -89,4 +101,4 @@ Footer.propTypes = {
   rtlActive: PropTypes.bool
 };
 
-export default withStyles(footerStyle)(Footer);
+export default withRouter(withStyles(footerStyle)(Footer));

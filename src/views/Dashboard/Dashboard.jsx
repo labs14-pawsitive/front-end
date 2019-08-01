@@ -178,13 +178,16 @@ class Dashboard extends React.Component {
         overflow: "hidden"
       },
       cardHeight : {
-        minHeight: "150px"
+        minHeight: "180px"
       }, 
      bottomFooter : {
         position: "absolute",
         bottom: '0',
-        
+      },
+      tightLineHeight : {
+        lineHeight : "1.2em"
       }
+
     }
     
     if(!this.state.shelter_info[0]) return <div>Still loading data</div>
@@ -203,7 +206,7 @@ class Dashboard extends React.Component {
                   {this.state.animal_count.length > 0 
                   ? 
                   this.state.animal_count.map((count, key) => (
-                    <h3 className={classes.cardTitle}>{count.count}{' '}{count.species}{count.count > 1 ? "s" : ""}</h3>
+                    <h3 className={classes.cardTitle} style={customStyle.tightLineHeight}>{count.count}{' '}{count.species}{count.count > 1 ? "s" : ""}</h3>
                   ))
                   :
                     <h3 className={classes.cardTitle}>0 Animals</h3>}
@@ -213,7 +216,7 @@ class Dashboard extends React.Component {
                 <div className={classes.stats}>
                  <Pets />
                   
-                    Current animals available for adoptions
+                    Animals available for adoptions
                  
                 </div>
               </CardFooter>
