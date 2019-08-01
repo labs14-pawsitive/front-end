@@ -100,7 +100,7 @@ class Dashboard extends React.Component {
 
   async componentDidMount() {
     await axios
-    .get(`http://localhost:8000/api/dashboard/3`)
+    .get(`http://localhost:8000/api/dashboard/${localStorage.getItem('shelter_id')}`)
     .then(results => {
       if (results){
       this.setState({
@@ -200,11 +200,13 @@ class Dashboard extends React.Component {
                   <Pets />
                 </CardIcon>
                 <p className={classes.cardCategory}>Current Animals</p>
-                
-                  {this.state.animal_count.map((count, key) => (
+                  {this.state.animal_count.length > 0 
+                  ? 
+                  this.state.animal_count.map((count, key) => (
                     <h3 className={classes.cardTitle}>{count.count}{' '}{count.species}{count.count > 1 ? "s" : ""}</h3>
-                  ))}
-                
+                  ))
+                  :
+                    <h3 className={classes.cardTitle}>0 Animals</h3>}
                 
               </CardHeader>
               <CardFooter stats style={customStyle.bottomFooter}>
@@ -224,7 +226,8 @@ class Dashboard extends React.Component {
                  <Money />
                 </CardIcon>
                 <p className={classes.cardCategory}>Recent Donations</p>
-                <h3 className={classes.cardTitle}>${this.state.donation_30[0].total}</h3>
+                {this.state.donation_30.length > 0 ? <h3 className={classes.cardTitle}>${this.state.donation_30[0].total}</h3> :<h3 className={classes.cardTitle}>$0</h3>  }
+                
               </CardHeader>
               <CardFooter stats style={customStyle.bottomFooter}>
                 <div className={classes.stats}>
@@ -242,7 +245,8 @@ class Dashboard extends React.Component {
                   <LibraryBooks />
                 </CardIcon>
                 <p className={classes.cardCategory}>Recent Applications</p>
-                <h3 className={classes.cardTitle}>{this.state.application_30[0].count}</h3>
+                {this.state.application_30.length > 0 ? <h3 className={classes.cardTitle}>{this.state.application_30[0].count}</h3> : <h3 className={classes.cardTitle}>0</h3> }
+                
               </CardHeader>
               <CardFooter stats style={customStyle.bottomFooter}>
                 <div className={classes.stats}>
@@ -372,6 +376,50 @@ class Dashboard extends React.Component {
         </GridContainer>
 
 
+
+        <GridContainer>
+          <GridItem xs={12}>
+          <Card>
+            <CardHeader color="rose" icon>
+              <CardIcon color="rose">
+                <LibraryBooks />
+              </CardIcon>
+              <h4 className={classes.cardIconTitle}>Recent Applications</h4>
+            </CardHeader>
+            <CardBody>
+              <Table
+                tableHead={[
+                  "Application ID",
+                  "Animal Name",
+                  "Application Status",
+                  "Applicant",
+                  "Submission Date",
+                  "View Application"
+                ]}
+                tableData={applicationRows}
+                customCellClasses={[
+                  classes.center,
+                  classes.right,
+                  classes.right
+                ]}
+                customClassesForCells={[0, 4, 5]}
+                customHeadCellClasses={[
+                  classes.center,
+                  classes.right,
+                  classes.right
+                ]}
+                customHeadClassesForCells={[0, 4, 5]}
+              />
+            </CardBody>
+          </Card>
+        </GridItem>
+        </GridContainer>
+
+
+
+
+
+{/*
         <GridContainer>
           <GridItem xs={12}>
           <Card>
@@ -415,7 +463,7 @@ class Dashboard extends React.Component {
           </Card>
         </GridItem>
         </GridContainer>
-
+ */}
 
 
         <h3>Animal Spotlights</h3>

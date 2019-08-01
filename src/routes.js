@@ -127,12 +127,12 @@ var dashRoutes = [
             component: ApplicationTable,
             layout: "/admin"
         },
-        {
+       /* {
             path:"/allApplications",
             name: "All Applications",
             component: ExtendedForms,
             layout: "/admin"
-        },
+        }, */
         {
             path:"/application/:id",
             name: "Application",
@@ -142,6 +142,7 @@ var dashRoutes = [
         }
     ]
 },
+/*
 {
     path: "/donations",
     name: "Donations",
@@ -155,6 +156,6 @@ var dashRoutes = [
     icon: "face",
     component: ReactTables,
     layout: "/admin"
-  },  
+  },  */
 ];
 export default dashRoutes;

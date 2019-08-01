@@ -157,7 +157,7 @@ const applicationChart = {
       tension: 0
     }),
     low: 0,
-    high: 10,
+    high: 12,
     chartPadding: {
       top: 0,
       right: 0,
