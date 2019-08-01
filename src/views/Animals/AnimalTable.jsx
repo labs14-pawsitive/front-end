@@ -109,7 +109,7 @@ class ReactTables extends React.Component {
                   <Search />
                 </Button>
               </NavLink>{" "}
-              {/* edit animal */}
+              {/*  
               <NavLink to={`/admin/editAnimal/${animal.id}`}>
                 <Button
                   justIcon
@@ -120,7 +120,7 @@ class ReactTables extends React.Component {
                 >
                   <Dvr />
                 </Button>
-              </NavLink>{" "}
+              </NavLink>{" "}*/}
            
             </div>
           )
