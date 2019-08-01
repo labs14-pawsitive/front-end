@@ -39,7 +39,10 @@ const shelterProfileStyles = {
     color: grayColor[0]
   },
   updateProfileButton: {
-    float: "right"
+    float: "right",
+  },
+  addButton: {
+    float: "right",
   }
 };
 export default shelterProfileStyles;
