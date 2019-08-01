@@ -17,7 +17,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { fetchShelter , deleteShelterLoc, deleteShelterCon, updateShelterCon } from '../../actions/shelterAction';
+import { fetchShelter , fetchOptions, deleteShelterLoc, deleteShelterCon, updateShelterCon, updateShelterLoc } from '../../actions/shelterAction';
 import Locations from './Locations';
 
 import LocationForm from './LocationForm';
@@ -76,12 +76,14 @@ updateShelter = () => {
       contacts: this.props.contacts,
     })
   })
+  .then(() => {
+    this.props.fetchOptions(this.props.shelterID)})
   .catch( err => {
     console.log('setting state error', err)
    })
 }
 
- 
+
 
 handleFormButtonToggle = e => {
   e.preventDefault();
@@ -103,17 +105,19 @@ deleteShelterLoc = locationId => {
   this.props.deleteShelterLoc(locationId)
 }
 
-updateShelterCon = (contactId, change) => {
-  this.props.updateShelterCon(contactId, change)
-  
+updateShelterLoc = (locationId, updatedChange) => {
+  this.props.updateShelterLoc(locationId, updatedChange)
+
 } 
 
 deleteShelterCon = contactId => {
   this.props.deleteShelterCon(contactId)
 }
 
-
-
+updateShelterCon = (contactId, change) => {
+  this.props.updateShelterCon(contactId, change)
+  
+} 
 
 render() {
       const { classes } = this.props;
@@ -127,8 +131,8 @@ return (
     <div>
       <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
-              <LocationForm contacts={this.state.contacts} />
-              <ContactForm />
+              <LocationForm contacts={this.state.contacts} updateShelter={this.updateShelter} />
+              <ContactForm updateShelter={this.updateShelter} />
       </GridItem>
       </GridContainer>
       <GridContainer>
@@ -246,10 +250,13 @@ return (
             <CardBody>
                     {this.state.locations && this.state.locations.map(location => (
                     <Locations
+                        updateShelter={this.updateShelter}
                         location ={location}
                         key = {location.id}
                         classes = {this.props.classes}
                         deleteShelterLoc = {this.deleteShelterLoc}
+                        updateShelterLoc = {this.updateShelterLoc}
+                        contacts={this.state.contacts}
                     />
                     ))}
             
@@ -289,6 +296,6 @@ ShelterProfile.propTypes = {
 
 export default connect(
   mapStateToProps,
-  { fetchShelter, deleteShelterLoc, deleteShelterCon, updateShelterCon }
+  { fetchShelter, fetchOptions, deleteShelterLoc, deleteShelterCon, updateShelterCon, updateShelterLoc }
 )(withStyles(shelterProfileStyles)(ShelterProfile))
 

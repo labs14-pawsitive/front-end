@@ -79,7 +79,7 @@ class ContactForm extends React.Component {
         this.props.addShelterCon(this.props.shelterID, newContact)
 
         .then( () => {
-            this.props.fetchShelter(this.props.shelterID)
+            this.props.updateShelter()
         });
 
         this.handleClose()

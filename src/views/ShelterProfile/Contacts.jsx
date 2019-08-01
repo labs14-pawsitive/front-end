@@ -8,6 +8,7 @@ import { fetchShelter ,updateShelterCon, deleteShelterCon } from '../../actions/
 import withStyles from "@material-ui/core/styles/withStyles";
 import InputLabel from "@material-ui/core/InputLabel";
 
+
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import Button from "components/CustomButtons/Button.jsx";
@@ -47,7 +48,7 @@ deleteContact = e => {
     e.preventDefault()
     this.props.deleteShelterCon(this.props.contact.id)
     .then( () => {
-        this.props.fetchShelter(this.props.shelterID)
+      this.props.updateShelter();
     })
 }
 

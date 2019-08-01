@@ -54,13 +54,12 @@ class LocationForm extends React.Component {
             shelter_contact_id: '',
             open: false,
             fullWidth: true,
-
         };
     }
 
-    componentDidMount(){
-        this.props.fetchOptions(this.props.shelterID);
-    }
+    // componentDidMount(){
+    //     this.props.fetchOptions(this.props.shelterID);
+    // }
 
 
 // Dialog functions 
@@ -96,7 +95,7 @@ class LocationForm extends React.Component {
         this.props.addShelterLoc(this.props.shelterID, newLocation)
 
         .then( () => {
-            this.props.fetchShelter(this.props.shelterID)
+            this.props.updateShelter();
         });
 
         this.handleClose()
@@ -190,7 +189,7 @@ class LocationForm extends React.Component {
                         />
                         </GridItem>
                         
-                        <GridItem xs={12} sm={12} md={2}>
+                        <GridItem xs={12} sm={12} md={3}>
                         <FormControl
                         fullWidth
                         className={classes.selectFormControl}>
@@ -208,7 +207,6 @@ class LocationForm extends React.Component {
                         }}
                         value={this.state.state_id}
                         onChange={this.changeHandler}
-                        //callback to pass up the parents
                         inputProps={{
                             name: "state_id",
                             id: "state-select"
@@ -228,7 +226,7 @@ class LocationForm extends React.Component {
                         </FormControl>
                         </GridItem>
 
-                        <GridItem xs={12} sm={12} md={4}>
+                        <GridItem xs={12} sm={12} md={3}>
 
                         <CustomInput 
                         id = "zipcode"
