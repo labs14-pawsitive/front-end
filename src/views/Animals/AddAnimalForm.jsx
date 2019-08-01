@@ -1,12 +1,18 @@
 /*!
+
 =========================================================
 * Material Dashboard PRO React - v1.7.0
 =========================================================
+
 * Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
 * Copyright 2019 Creative Tim (https://www.creative-tim.com)
+
 * Coded by Creative Tim
+
 =========================================================
+
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
 */
 import React from "react";
 import PropTypes from "prop-types";
@@ -63,7 +69,6 @@ class AddAnimalForm extends React.Component {
         coat_length_id: null,
         age_id: null,
         shelter_location_id: null,
-        states_id: null,
         is_male: false,
         is_house_trained: false,
         is_neutered_spayed: false,
@@ -109,59 +114,6 @@ class AddAnimalForm extends React.Component {
       }
     })
     this.props.fetchOptions(shelterId)
-
-    // this.setState({
-    //   animal: {
-    //     name: "snowflake",
-    //     color: "white",
-    //     health: "healthy",
-    //     description: "happy dog",
-    //     species_id: 1,
-    //     breed_id: 4,
-    //     animal_status_id: 2,
-    //     size_id: 3,
-    //     coat_length_id: 3,
-    //     age_id: 3,
-    //     shelter_location_id: 1,
-    //     states_id: 5,
-    //     shelter_id: 1,
-    //     is_male: false,
-    //     is_house_trained: false,
-    //     is_neutered_spayed: true,
-    //     is_good_with_kids: true,
-    //     is_good_with_dogs: true,
-    //     is_good_with_cats: false,
-    //     is_vaccinated: false,
-    //     profile_img_id: null,
-    //     is_mixed: 1
-    //   },
-    //   validation: {
-    //     name: true,
-    //     color: true,
-    //     health: true,
-    //     description: true,
-    //     species_id: true,
-    //     breed_id: true,
-    //     animal_status_id: true,
-    //     size_id: true,
-    //     coat_length_id: true,
-    //     age_id: true,
-    //     shelter_location_id: true,
-    //     states_id: true,
-    //     is_male: true,
-    //     is_house_trained: true,
-    //     is_neutered_spayed: true,
-    //     is_good_with_kids: true,
-    //     is_good_with_dogs: true,
-    //     is_good_with_cats: true,
-    //     is_vaccinated: true,
-    //     is_mixed: true,
-    //     shelter_id: true,
-    //     profile_img_id: true,
-
-    //   },
-    //   checked: [],
-    // });
   }
 
   handleImgUploadResponse = response => {
@@ -266,7 +218,6 @@ class AddAnimalForm extends React.Component {
       this.state.validation.shelter_location_id &&
       this.state.validation.size_id &&
       this.state.validation.species_id &&
-      this.state.validation.states_id  &&
       this.state.validation.shelter_id
     ) {
       return true
@@ -363,9 +314,7 @@ class AddAnimalForm extends React.Component {
       dropdownOptions: {
         minWidth: "100%"
       },
-      menuItemProps: {
-        width: "100%"
-      }
+
       
     }
 
@@ -398,9 +347,6 @@ class AddAnimalForm extends React.Component {
     const locationsDropdownOptions = this.props.locationsOptions.map(option => {
       return <span onChange={this.handleChange} value={option.id}>{option.nickname}</span>
     })
-    const statesDropdownOptions = this.props.statesOptions.map(option => {
-      return <span onChange={this.handleChange} value={option.id}>{option.state}</span>
-    })
 
     const buttonDisplay = (animalAttribute, optionType, nameAttribute, defaultText) => {
       const attributeId = this.state.animal[animalAttribute]
@@ -419,7 +365,6 @@ class AddAnimalForm extends React.Component {
     const speciesButtonDisplay = buttonDisplay('species_id', 'speciesOptions', 'species', 'Species')
     const agesButtonDisplay = buttonDisplay('age_id', 'agesOptions', 'age', 'Age')
     const locationsButtonDisplay = buttonDisplay('shelter_location_id', 'locationsOptions', 'nickname', 'Shelter location')
-    const statesButtonDisplay = buttonDisplay('states_id', 'statesOptions', 'state', 'States')
 
     return (
       
@@ -436,9 +381,8 @@ class AddAnimalForm extends React.Component {
             imageLimit={1} 
             editable={true} 
             callback={this.handleImgUploadResponse} 
-            url="https://staging1-pawsnfind.herokuapp.com/api/pictures/animal/1"
+            url="https://staging1-pawsnfind.herokuapp.com/api/pictures"
           />
-          
         </GridItem>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
@@ -531,7 +475,7 @@ class AddAnimalForm extends React.Component {
                           speciesDropdownOptions
                         }
                         dropdownHeader={
-                          speciesButtonDisplay
+                          "SPECIES"
                         }
                       />
                     </FormControl>
@@ -541,7 +485,6 @@ class AddAnimalForm extends React.Component {
                     <FormControl style={styles.formControl}>
                       <CustomDropdown
                         buttonText= {breedButtonDisplay}
-                        style={styles.menuItemProps}
                         buttonProps={{
                           style:styles.dropdown
                         }}
@@ -552,7 +495,7 @@ class AddAnimalForm extends React.Component {
                           breedsDropdownOptions
                         }
                         dropdownHeader={
-                          breedButtonDisplay
+                          "BREED"
                         }
                       /> 
                     </FormControl>
@@ -572,7 +515,7 @@ class AddAnimalForm extends React.Component {
                           locationsDropdownOptions
                         }
                         dropdownHeader={
-                          locationsButtonDisplay
+                          "SHELTER LOCATION"
                         }
                       />
                     </FormControl>
@@ -592,7 +535,7 @@ class AddAnimalForm extends React.Component {
                           animalStatusDropdownOptions
                         }
                         dropdownHeader={
-                          animalStatusButtonDisplay
+                          "ANIMAL STATUS"
                         }
                       /> 
                     </FormControl>
@@ -612,7 +555,7 @@ class AddAnimalForm extends React.Component {
                           sizeDropdownOptions
                         }
                         dropdownHeader={
-                          sizeButtonDisplay
+                          "SIZE"
                         }
                       /> 
                     </FormControl>
@@ -634,7 +577,7 @@ class AddAnimalForm extends React.Component {
                           agesDropdownOptions
                         }
                         dropdownHeader={
-                          agesButtonDisplay
+                          "AGE"
                         }
                       /> 
                     </FormControl>
@@ -654,7 +597,7 @@ class AddAnimalForm extends React.Component {
                           coatLengthDropdownOptions
                         }
                         dropdownHeader={
-                          coatLengthButtonDisplay
+                          "COAT LENGTH"
                         }
                       /> 
                     </FormControl>
