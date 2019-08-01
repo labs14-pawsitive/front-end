@@ -231,6 +231,8 @@ class ApplicationView extends React.Component {
               <Card>
                 <CardBody>
                   <form>
+
+                    <GridItem xs={12} sm={12} md={12}>
                     <TextField
                       label="Application ID"
                       id="application_id"
@@ -239,47 +241,56 @@ class ApplicationView extends React.Component {
                       style={customStyle.textFieldStyle}
                       inputProps={{
                         disabled: true,
-                        disableUnderline: true,
+                        // disableUnderline: true,
                       }}
                       InputProps={{
                         style: {
-                          paddingLeft: "2%",
-                          paddingTop: "2%",
-                          disableUnderline: true,
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                          // disableUnderline: true,
                         }
                       }}
                       InputLabelProps={{
                         style: {
-                          padding: "18px 12px",
-
+                          // padding: "18px 12px",
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
                         }
                       }}
                     />
+                    </GridItem>
 
+                    <GridItem xs={12} sm={12} md={12}>
                     <TextField
                       label="Animal Name"
                       id="animal_name"
                       fullWidth="true"
                       value={this.state.application.animal_name}
                       style={customStyle.textFieldStyle2}
+
                       inputProps={{
                         disabled: true,
                         disableUnderline: true,
                       }}
+
                       InputProps={{
                         style: {
-                          paddingLeft: "2%",
-                          paddingTop: "2%",
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
                           disableUnderline: true,
                         }
                       }}
                       InputLabelProps={{
                         style: {
-                          padding: "18px 12px",
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
                         }
                       }}
                     />
+                    </GridItem>
 
+
+                    <GridItem xs={12} sm={12} md={12}>
                     <FormControl fullWidth className={classes.selectFormControl}>
 
                       <div style={customStyle.selectStyle}>
@@ -334,7 +345,9 @@ class ApplicationView extends React.Component {
                       </div>
 
                     </FormControl>
+                     </GridItem>
 
+                     <GridItem xs={12} sm={12} md={12}>
                     <TextField
                       label="Applicant Name"
                       id="name"
@@ -347,18 +360,21 @@ class ApplicationView extends React.Component {
                       }}
                       InputProps={{
                         style: {
-                          paddingLeft: "2%",
-                          paddingTop: "2%",
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
                           disableUnderline: true,
                         }
                       }}
                       InputLabelProps={{
                         style: {
-                          padding: "18px 12px",
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
                         }
                       }}
                     />
+                       </GridItem>
 
+                       <GridItem xs={12} sm={12} md={12}>
                     <TextField
                       label="Submission Date"
                       id="application_status"
@@ -371,17 +387,19 @@ class ApplicationView extends React.Component {
                       }}
                       InputProps={{
                         style: {
-                          paddingLeft: "2%",
-                          paddingTop: "2%",
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
                           disableUnderline: true,
                         }
                       }}
                       InputLabelProps={{
                         style: {
-                          padding: "18px 12px",
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
                         }
                       }}
                     />
+                       </GridItem>
                   </form>
                 </CardBody>
               </Card>
@@ -393,6 +411,8 @@ class ApplicationView extends React.Component {
               </Typography>
               <Card>
                 <CardBody>
+
+                    
                   <TextField
                     label="Street Address"
                     id="street_address"
@@ -405,14 +425,15 @@ class ApplicationView extends React.Component {
                     }}
                     InputProps={{
                       style: {
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
+                        paddingLeft: "1%",
+                        paddingTop: "1%",
                         disableUnderline: true,
                       }
                     }}
                     InputLabelProps={{
                       style: {
-                        padding: "18px 12px",
+                        paddingLeft: "1%",
+                          paddingTop: "1%",
                       }
                     }}
                   />
@@ -428,14 +449,15 @@ class ApplicationView extends React.Component {
                     }}
                     InputProps={{
                       style: {
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
+                        paddingLeft: "1%",
+                          paddingTop: "1%",
                         disableUnderline: true,
                       }
                     }}
                     InputLabelProps={{
                       style: {
-                        padding: "18px 12px",
+                        paddingLeft: "1%",
+                          paddingTop: "1%",
                       }
                     }}
                   />
@@ -451,14 +473,15 @@ class ApplicationView extends React.Component {
                     }}
                     InputProps={{
                       style: {
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
+                        paddingLeft: "1%",
+                          paddingTop: "1%",
                         disableUnderline: true,
                       }
                     }}
                     InputLabelProps={{
                       style: {
-                        padding: "18px 12px",
+                        paddingLeft: "1%",
+                          paddingTop: "1%",
                       }
                     }}
                   />
@@ -474,14 +497,15 @@ class ApplicationView extends React.Component {
                     }}
                     InputProps={{
                       style: {
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
+                        paddingLeft: "1%",
+                        paddingTop: "1%",
                         disableUnderline: true,
                       }
                     }}
                     InputLabelProps={{
                       style: {
-                        padding: "18px 12px",
+                        paddingLeft: "1%",
+                          paddingTop: "1%",
                       }
                     }}
                   />
@@ -497,14 +521,15 @@ class ApplicationView extends React.Component {
                     }}
                     InputProps={{
                       style: {
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
+                        paddingLeft: "1%",
+                          paddingTop: "1%",
                         disableUnderline: true,
                       }
                     }}
                     InputLabelProps={{
                       style: {
-                        padding: "18px 12px",
+                        paddingLeft: "1%",
+                        paddingTop: "1%",
                       }
                     }}
                   />
@@ -531,14 +556,15 @@ class ApplicationView extends React.Component {
                     }}
                     InputProps={{
                       style: {
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
+                        paddingLeft: "1%",
+                        paddingTop: "1%",
                         disableUnderline: true,
                       }
                     }}
                     InputLabelProps={{
                       style: {
-                        padding: "18px 12px",
+                        paddingLeft: "1%",
+                          paddingTop: "1%",
                       }
                     }}
                   />
@@ -555,14 +581,15 @@ class ApplicationView extends React.Component {
                     }}
                     InputProps={{
                       style: {
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
+                        paddingLeft: "1%",
+                        paddingTop: "1%",
                         disableUnderline: true,
                       }
                     }}
                     InputLabelProps={{
                       style: {
-                        padding: "18px 12px",
+                        paddingLeft: "1%",
+                          paddingTop: "1%",
                       }
                     }}
                   />
@@ -579,14 +606,15 @@ class ApplicationView extends React.Component {
                     }}
                     InputProps={{
                       style: {
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
+                        paddingLeft: "1%",
+                        paddingTop: "1%",
                         disableUnderline: true,
                       }
                     }}
                     InputLabelProps={{
                       style: {
-                        padding: "18px 12px",
+                        paddingLeft: "1%",
+                        paddingTop: "1%",
                       }
                     }}
                   />
@@ -603,14 +631,15 @@ class ApplicationView extends React.Component {
                     }}
                     InputProps={{
                       style: {
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
+                        paddingLeft: "1%",
+                        paddingTop: "1%",
                         disableUnderline: true,
                       }
                     }}
                     InputLabelProps={{
                       style: {
-                        padding: "18px 12px",
+                        paddingLeft: "1%",
+                          paddingTop: "1%",
                       }
                     }}
                   />
@@ -627,14 +656,15 @@ class ApplicationView extends React.Component {
                     }}
                     InputProps={{
                       style: {
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
+                        paddingLeft: "1%",
+                        paddingTop: "1%",
                         disableUnderline: true,
                       }
                     }}
                     InputLabelProps={{
                       style: {
-                        padding: "18px 12px",
+                        paddingLeft: "1%",
+                          paddingTop: "1%",
                       }
                     }}
                   />
@@ -651,14 +681,15 @@ class ApplicationView extends React.Component {
                     }}
                     InputProps={{
                       style: {
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
+                        paddingLeft: "1%",
+                          paddingTop: "1%",
                         disableUnderline: true,
                       }
                     }}
                     InputLabelProps={{
                       style: {
-                        padding: "18px 12px",
+                        paddingLeft: "1%",
+                          paddingTop: "1%",
                       }
                     }}
                   />
@@ -686,14 +717,15 @@ class ApplicationView extends React.Component {
                     }}
                     InputProps={{
                       style: {
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
+                        paddingLeft: "1%",
+                        paddingTop: "1%",
                         disableUnderline: true,
                       }
                     }}
                     InputLabelProps={{
                       style: {
-                        padding: "18px 12px",
+                        paddingLeft: "1%",
+                          paddingTop: "1%",
                       }
                     }}
                   />
@@ -710,14 +742,15 @@ class ApplicationView extends React.Component {
                     }}
                     InputProps={{
                       style: {
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
+                        paddingLeft: "1%",
+                          paddingTop: "1%",
                         disableUnderline: true,
                       }
                     }}
                     InputLabelProps={{
                       style: {
-                        padding: "18px 12px",
+                        paddingLeft: "1%",
+                        paddingTop: "1%",
                       }
                     }}
                   />
@@ -734,14 +767,15 @@ class ApplicationView extends React.Component {
                     }}
                     InputProps={{
                       style: {
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
+                        paddingLeft: "1%",
+                        paddingTop: "1%",
                         disableUnderline: true,
                       }
                     }}
                     InputLabelProps={{
                       style: {
-                        padding: "18px 12px",
+                        paddingLeft: "1%",
+                          paddingTop: "1%",
                       }
                     }}
                   />
@@ -758,14 +792,15 @@ class ApplicationView extends React.Component {
                     }}
                     InputProps={{
                       style: {
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
+                        paddingLeft: "1%",
+                        paddingTop: "1%",
                         disableUnderline: true,
                       }
                     }}
                     InputLabelProps={{
                       style: {
-                        padding: "18px 12px",
+                        paddingLeft: "1%",
+                        paddingTop: "1%",
                       }
                     }}
                   />
@@ -782,14 +817,15 @@ class ApplicationView extends React.Component {
                     }}
                     InputProps={{
                       style: {
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
+                        paddingLeft: "1%",
+                        paddingTop: "1%",
                         disableUnderline: true,
                       }
                     }}
                     InputLabelProps={{
                       style: {
-                        padding: "18px 12px",
+                        paddingLeft: "1%",
+                          paddingTop: "1%",
                       }
                     }}
                   />
