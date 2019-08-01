@@ -60,6 +60,12 @@ const customSelectStyle = {
     color: grayColor[2] + " !important",
     top: "8px"
   },
+  selectLabelError: {
+    fontSize: "12px",
+    textTransform: "uppercase",
+    color: "red" + " !important",
+    top: "8px"
+  },
   selectMenu: {
     "& > div > ul": {
       border: "0",

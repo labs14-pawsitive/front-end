@@ -720,7 +720,7 @@ class ValidationForms extends React.Component {
                       }}
                       inputProps={{
                         onChange: event =>
-                          this.change(event, "maxLength", "max-length", 5),
+                          this.change(event, "maxLength", "max-length", 9),
                         type: "text",
                         endAdornment:
                           this.state.maxLengthState === "error" ? (

@@ -24,64 +24,62 @@ import withStyles from "@material-ui/core/styles/withStyles";
 // core components
 import TempNavBar from "components/Navbars/TempNavBar.jsx";
 import Footer from "components/Footer/Footer.jsx";
+import Onboarding from "views/Onboarding/Onboarding.jsx"
 
-import routes from "routes.js";
+// import routes from "routes.js";
 
 import pagesStyle from "assets/jss/material-dashboard-pro-react/layouts/authStyle.jsx";
 
-import register from "assets/img/register.jpeg";
-import login from "assets/img/login.jpeg";
-import lock from "assets/img/lock.jpeg";
-import error from "assets/img/clint-mckoy.jpg";
-import pricing from "assets/img/bg-pricing.jpeg";
+// import register from "assets/img/register.jpeg";
+// import login from "assets/img/login.jpeg";
+// import lock from "assets/img/lock.jpeg";
+// import error from "assets/img/clint-mckoy.jpg";
+// import pricing from "assets/img/bg-pricing.jpeg";
 import mainBG from "assets/img/bg-application.jpg"
 
 
-
 class Callback extends React.Component {
-  wrapper = React.createRef();
-  componentDidMount() {
-    document.body.style.overflow = "unset";
+  constructor(props) {
+    super(props)
+    this.interval = setInterval(this.timeoutFunction, 1000);
   }
-  getRoutes = routes => {
-    return routes.map((prop, key) => {
-      if (prop.collapse) {
-        return this.getRoutes(prop.views);
+  wrapper = React.createRef();
+
+  timeoutFunction = () => {
+    if (localStorage.getItem('new_user') === null) return;
+    
+    const newUser = localStorage.getItem('new_user');
+    const shelter_id = localStorage.getItem('shelter_id');
+      if(newUser == "true") {
+        this.props.history.push('/callback/onboarding')
+      } 
+      else 
+      if (shelter_id != "null" && typeof(shelter_id) !== 'undefined') {
+        this.props.history.push('/admin/dashboard')
+      } 
+      else 
+      if (localStorage.getItem('animalId') && localStorage.getItem('shelterId')) { 
+        this.props.history.push(`/application/${localStorage.getItem('shelterId')}/${localStorage.getItem('animalId')}`)
       }
-      if (prop.layout === "/auth") {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
-      } else {
-        return null;
+      else {
+        this.props.history.push('/')
       }
-    });
-  };
+      clearInterval(this.interval);
+  }
+
+  componentDidMount() {
+    
+    document.body.style.overflow = "unset";
+    
+  }
+
+
   getBgImage = () => {
     return mainBG;
   };
-  getActiveRoute = routes => {
-    let activeRoute = "Pawsnfind";
-    for (let i = 0; i < routes.length; i++) {
-      if (routes[i].collapse) {
-        let collapseActiveRoute = this.getActiveRoute(routes[i].views);
-        if (collapseActiveRoute !== activeRoute) {
-          return collapseActiveRoute;
-        }
-      } else {
-        if (
-          window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
-        ) {
-          return routes[i].name;
-        }
-      }
-    }
-    return activeRoute;
-  };
+
+
+
   render() {
     const { classes, ...rest } = this.props;
     return (
@@ -92,9 +90,7 @@ class Callback extends React.Component {
             className={classes.fullPage}
             style={{ backgroundImage: "url(" + this.getBgImage() + ")" }}
           >
-            <div>
-              <h2> Loading ... </h2>
-            </div>
+           <Route path='/callback/onboarding' component={Onboarding}/>
             <Footer white />
           </div>
         </div>

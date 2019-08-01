@@ -1,18 +1,12 @@
 /*!
-
 =========================================================
 * Material Dashboard PRO React - v1.7.0
 =========================================================
-
 * Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
 * Copyright 2019 Creative Tim (https://www.creative-tim.com)
-
 * Coded by Creative Tim
-
 =========================================================
-
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
 */
 import React from "react";
 // nodejs library that concatenates classes
@@ -45,7 +39,9 @@ class CustomDropdown extends React.Component {
     this.handleCloseMenu = this.handleCloseMenu.bind(this);
   }
 
-  handleClick = () => {
+  handleClick = (e) => {
+   //this.props.externalHandleClick(e)
+    //console.log(e.target)
     this.setState(state => ({ open: !state.open }));
   };
   handleClose = event => {
@@ -56,6 +52,15 @@ class CustomDropdown extends React.Component {
     this.setState({ open: false });
   };
   handleCloseMenu(param) {
+    if (param.props && param.props.onChange !== undefined) {
+      // align with handleChange in form component
+      let payload = {target: { id: null, value: null }}
+      payload.target.id = this.props.id
+      payload.target.value = param.props.value
+      
+      // this is defined on the option in the Form component
+      param.props.onChange(payload, this.props.id, "notNull")
+    }
     this.setState({ open: false });
     if (this.props && this.props.onClick) {
       this.props.onClick(param);
@@ -119,6 +124,7 @@ class CustomDropdown extends React.Component {
                 key={key}
                 className={dropdownItem}
                 style={{ overflow: "visible", padding: 0 }}
+                value={prop.id}
               >
                 {prop}
               </MenuItem>
@@ -129,6 +135,7 @@ class CustomDropdown extends React.Component {
               key={key}
               onClick={() => this.handleCloseMenu(prop)}
               className={dropdownItem}
+              value={prop.id}
             >
               {prop}
             </MenuItem>
@@ -198,7 +205,7 @@ class CustomDropdown extends React.Component {
 CustomDropdown.defaultProps = {
   caret: true,
   dropup: false,
-  hoverColor: "primary"
+  hoverColor: "info"
 };
 
 CustomDropdown.propTypes = {

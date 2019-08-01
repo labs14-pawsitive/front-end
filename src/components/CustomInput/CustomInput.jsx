@@ -27,6 +27,7 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import Input from "@material-ui/core/Input";
 
 import customInputStyle from "assets/jss/material-dashboard-pro-react/components/customInputStyle.jsx";
+import InputMask from 'react-input-mask'
 
 function CustomInput({ ...props }) {
   const {

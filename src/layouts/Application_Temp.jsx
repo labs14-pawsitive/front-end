@@ -16,9 +16,9 @@
 */
 import React from "react";
 import PropTypes from "prop-types";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Route, } from "react-router-dom";
 import Auth from "components/Auth/Auth.js"
-
+import SweetAlert from "react-bootstrap-sweetalert";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -31,87 +31,117 @@ import ApplicationWizard from "views/Application_Temp/Wizard.jsx";
 
 import routes from "routes.js";
 
-import pagesStyle from "assets/jss/material-dashboard-pro-react/layouts/authStyle.jsx";
+import applicationTempStyle from "assets/jss/material-dashboard-pro-react/layouts/applicationTempStyle.jsx";
 
-import register from "assets/img/register.jpeg";
-import login from "assets/img/login.jpeg";
-import lock from "assets/img/lock.jpeg";
-import error from "assets/img/clint-mckoy.jpg";
-import pricing from "assets/img/bg-pricing.jpeg";
+// import register from "assets/img/register.jpeg";
+// import login from "assets/img/login.jpeg";
+// import lock from "assets/img/lock.jpeg";
+// import error from "assets/img/clint-mckoy.jpg";
+// import pricing from "assets/img/bg-pricing.jpeg";
 import application from "assets/img/bg-application3.jpg";
 
 const auth = new Auth();
 
-
 class Application extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state={
+      alert: null,
+      show: false
+    }
+  }
+
   wrapper = React.createRef();
 
-  authLogin = () => {
-    auth.login();
+  componentWillMount() {
+    if(this.props.match.params.animalId && this.props.match.params.shelterId) {
+      localStorage.setItem('animalId', this.props.match.params.animalId )
+      localStorage.setItem('shelterId', this.props.match.params.shelterId) 
+    } 
   }
 
-  componentDidMount() {
+ componentDidMount() {
     document.body.style.overflow = "unset";
-    /*console.log("shelter", this.props.match.params.shelterId, "animal", this.props.match.params.animalId)
-    localStorage.setItem("shelter id", this.props.match.params.shelterId)
-    localStorage.setItem("animal id", this.props.match.params.animalId)
-    if(!localStorage.getItem("id_token")) this.authLogin();*/
+    this.setAlert();
   }
-  getRoutes = routes => {
-    return routes.map((prop, key) => {
-      if (prop.collapse) {
-        return this.getRoutes(prop.views);
-      }
-      if (prop.layout === "/auth") {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
-      } else {
-        return null;
-      }
+
+  setAlert = () => {
+    if (!localStorage.getItem('animalId') && !localStorage.getItem('shelterId')) {
+      this.dangerAlert();
+    } else if(!localStorage.getItem('id_token') && !localStorage.getItem('user_id')) {
+      this.warningAlert();
+    } else {
+      this.hideAlert();
+    }
+  }
+
+  dangerAlert() {
+    this.setState({
+      alert: (
+       <SweetAlert
+          danger
+          style={{ display: "block", marginTop: "-100px", color: "#777" }}
+          title="You've entered an invalid link"
+          onConfirm={() => this.hideAlert()}
+          confirmBtnCssClass={
+            this.props.classes.button + " " + this.props.classes.success
+          }
+          confirmBtnText="OK"
+        >
+          Please try again or request a valid link from your shelter.
+          </SweetAlert>
+      )
     });
-  };
+  }
+
+  warningAlert() {
+    this.setState({
+      alert: (
+       <SweetAlert
+          warning
+          style={{ display: "block", marginTop: "-100px", color: "#777" }}
+          title="You need to login / signup in order to continue with application process"
+          onConfirm={() => auth.login()}
+          confirmBtnCssClass={
+            this.props.classes.button + " " + this.props.classes.success
+          }
+          confirmBtnText="Signup / Login"
+        >
+          </SweetAlert>
+      )
+    });
+  }
+
+  hideAlert() {
+    this.setState({
+      alert: null
+    });
+  }
+
   getBgImage = () => {
     return application;
   };
-  getActiveRoute = routes => {
-    let activeRoute = "Pawsnfind";
-    for (let i = 0; i < routes.length; i++) {
-      if (routes[i].collapse) {
-        let collapseActiveRoute = this.getActiveRoute(routes[i].views);
-        if (collapseActiveRoute !== activeRoute) {
-          return collapseActiveRoute;
-        }
-      } else {
-        if (
-          window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
-        ) {
-          return routes[i].name;
-        }
-      }
-    }
-    return activeRoute;
-  };
-
- 
-
+  
   render() {
     const { classes, ...rest } = this.props;
+    
     return (
       <div>
-        <TempNavBar brandText={this.getActiveRoute(routes)} {...rest} />
+        <TempNavBar brandText="Pawsnfind" {...rest} />
+
         <div className={classes.wrapper} ref={this.wrapper}>
           
           <div
             className={classes.fullPage}
             style={{ backgroundImage: "url(" + this.getBgImage() + ")" }}
           >
-            <ApplicationWizard />
-            
+            {this.state.alert}
+            {localStorage.getItem('animalId') && localStorage.getItem('shelterId') && localStorage.getItem('id_token') && localStorage.getItem('user_id')
+            ? 
+            <ApplicationWizard animalId={localStorage.getItem('animalId')} shelterId={localStorage.getItem('shelterId')}/>
+            : 
+            null
+            } 
             <Footer white />
           </div>
         </div>
@@ -124,4 +154,4 @@ Application.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(pagesStyle)(Application);
+export default withStyles(applicationTempStyle)(Application);

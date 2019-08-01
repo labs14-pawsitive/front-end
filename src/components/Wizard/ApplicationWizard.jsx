@@ -17,6 +17,8 @@
 import React from "react";
 import cx from "classnames";
 import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
+import axios from "axios";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -57,8 +59,11 @@ class ApplicationWizard extends React.Component {
       movingTabStyle: {
         transition: "transform 0s"
       },
-      allStates: {}
+      allStates: {},
+      isSuccess: ""
     };
+
+
     this.navigationStepChange = this.navigationStepChange.bind(this);
     this.refreshAnimation = this.refreshAnimation.bind(this);
     this.previousButtonClick = this.previousButtonClick.bind(this);
@@ -67,10 +72,13 @@ class ApplicationWizard extends React.Component {
     this.updateWidth = this.updateWidth.bind(this);
   }
   wizard = React.createRef();
+
   componentDidMount() {
     this.refreshAnimation(0);
     window.addEventListener("resize", this.updateWidth);
+    
   }
+
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateWidth);
   }
@@ -172,7 +180,8 @@ class ApplicationWizard extends React.Component {
       this.refreshAnimation(key);
     }
   }
-  finishButtonClick() {
+
+  async finishButtonClick() {
     if (
       (this.props.validate === false &&
         this.props.finishButtonClick !== undefined) ||
@@ -186,7 +195,7 @@ class ApplicationWizard extends React.Component {
             undefined) &&
         this.props.finishButtonClick !== undefined)
     ) {
-      this.setState(
+      await this.setState(
         {
           allStates: {
             ...this.state.allStates,
@@ -195,17 +204,57 @@ class ApplicationWizard extends React.Component {
             ].sendState()
           }
         },
-        () => {
-          this.submitApplication(this.state.allStates);
-        }
-      );
+
+      )
+      this.submitApplication(this.state.allStates)
     }
   }
 
-  submitApplication = application => {
+  submitApplication = applicationData => {
+    //post application process begins
+    const application = {
+      animal_id: this.props.animalId,
+      shelter_id: this.props.shelterId,
+      application_status_id: 1, 
+      user_id: localStorage.getItem("user_id"),
+      name: applicationData.about.name,
+      street_address: applicationData.about.street,
+      city: applicationData.about.city,
+      state_id: applicationData.about.state,
+      zip: applicationData.about.zip,
+      home_phone: applicationData.about.phone,
+      email: applicationData.about.email,
+      cell_phone: applicationData.about.cell,
+      is_over_18: applicationData.about.over18,
+      is_homeowner: applicationData.home.is_homeowner,
+      is_in_agreement: applicationData.home.is_agreement,
+      is_homevisit_allowed: applicationData.home.is_homevisit,
+      is_fenced: applicationData.home.is_fenced,
+      ref_name_1: applicationData.references.name1,
+      ref_phone_1: applicationData.references.phone1,
+      ref_relationship_1: applicationData.references.relationship1,
+      ref_name_2: applicationData.references.name2,
+      ref_phone_2: applicationData.references.phone2,
+      ref_relationship_2: applicationData.references.relationship2,
+      is_declaration: applicationData.declaration.declaration
+    }
     console.log(application)
+    
+    axios.post('https://staging1-pawsnfind.herokuapp.com//api/applications/', application)
+    .then(app => {
+      this.setState({
+        isSuccess : true
+      })
+      localStorage.removeItem('animalId');
+      localStorage.removeItem('shelterId');
+    })
+    .catch(error => {
+      this.setState({
+        isSuccess : false
+      })
+      console.log(error)
+    })
   }
-
 
   refreshAnimation(index) {
     var total = this.props.steps.length;
@@ -254,6 +303,26 @@ class ApplicationWizard extends React.Component {
   }
   render() {
     const { classes, title, subtitle, color, steps } = this.props;
+    
+    const customStyle={
+      warning : {
+        width: "70%",
+        margin: "50px auto 30px",
+        textAlign: "center",
+        borderRadius: "5px",
+        color:"red",
+        fontWeight:"700"
+      },
+      success : {
+        width: "70%",
+        margin: "50px auto 30px",
+        textAlign: "center",
+        borderRadius: "5px",
+        color:"green",
+        fontWeight:"700"
+      }
+    }
+
     return (
       <div className={classes.wizardContainer} ref={this.wizard}>
         <Card className={classes.card}>
@@ -291,7 +360,14 @@ class ApplicationWizard extends React.Component {
               {steps[this.state.currentStep].stepName}
             </div>
           </div>
-          <div className={classes.content}>
+          {this.state.isSuccess? 
+          <div style={customStyle.success}>
+            <h4>Your application has been successfully submitted</h4>
+          </div>
+          
+          : 
+          
+           <div className={classes.content}>
             {steps.map((prop, key) => {
               const stepContentClasses = cx({
                 [classes.stepContentActive]: this.state.currentStep === key,
@@ -307,9 +383,13 @@ class ApplicationWizard extends React.Component {
               );
             })}
           </div>
+          
+          
+          }
+         
           <div className={classes.footer}>
             <div className={classes.left}>
-              {this.state.previousButton ? (
+              {this.state.previousButton && !this.state.isSuccess ? (
                 <Button
                   className={this.props.previousButtonClasses}
                   onClick={() => this.previousButtonClick()}
@@ -319,7 +399,7 @@ class ApplicationWizard extends React.Component {
               ) : null}
             </div>
             <div className={classes.right}>
-              {this.state.nextButton ? (
+              {this.state.nextButton && !this.state.isSuccess ? (
                 <Button
                   color="rose"
                   className={this.props.nextButtonClasses}
@@ -328,7 +408,7 @@ class ApplicationWizard extends React.Component {
                   {this.props.nextButtonText}
                 </Button>
               ) : null}
-              {this.state.finishButton ? (
+              {this.state.finishButton && !this.state.isSuccess ? (
                 <Button
                   color="rose"
                   className={this.finishButtonClasses}
@@ -387,4 +467,4 @@ ApplicationWizard.propTypes = {
   validate: PropTypes.bool
 };
 
-export default withStyles(wizardStyle)(ApplicationWizard);
+export default withRouter(withStyles(wizardStyle)(ApplicationWizard));
