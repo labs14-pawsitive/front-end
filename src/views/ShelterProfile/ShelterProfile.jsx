@@ -81,7 +81,7 @@ TextMaskCustom.propTypes = {
   }
 
 updateShelter = () => {
-  this.props.fetchShelter(this.props.shelterID)
+  this.props.fetchShelter(localStorage.getItem('shelter_id'))
   .then( () => {
     this.setState({
       shelter: this.props.shelter,
@@ -90,7 +90,7 @@ updateShelter = () => {
     })
   })
   .then(() => {
-    this.props.fetchOptions(this.props.shelterID)})
+    this.props.fetchOptions(localStorage.getItem('shelter_id'))})
   .catch( err => {
     console.log('setting state error', err)
    })

@@ -102,7 +102,7 @@ class AnimalView extends React.Component {
   componentDidMount() {
 
     Promise.all([this.props.getInfoByAnimalID(this.props.match.params.id),
-    this.props.getAllOptions(this.props.shelterID)])
+    this.props.getAllOptions(localStorage.getItem('shelter_id'))])
       .then(([animalInfo, animalOptions]) => {
         // call setState here
 

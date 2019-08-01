@@ -58,13 +58,13 @@ class Dashboard extends React.Component {
     e.preventDefault();
 
   }
-
+  
   componentDidMount() {
     
     //window.onpopstate = this.onBackButtonEvent;
 
     axios
-    .get(`https://staging1-pawsnfind.herokuapp.com/api/shelters/${this.props.shelterID}`)
+    .get(`https://staging1-pawsnfind.herokuapp.com/api/shelters/${localStorage.getItem('shelter_id')}`)
       .then( shelter => {
       console.log(shelter.data)
       this.setState({

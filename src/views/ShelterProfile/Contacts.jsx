@@ -97,7 +97,7 @@ updateSubmit = e => {
         name: this.state.contact.name,
         email: this.state.contact.email,
         phone: this.state.contact.phone,
-        shelter_id: this.props.shelterID
+        shelter_id: localStorage.getItem('shelter_id')
     }
 
     console.log('UPDATECHANGE', updatedContact)
@@ -106,7 +106,7 @@ updateSubmit = e => {
     this.props.updateShelterCon(this.props.contact.id, updatedContact)
     .then( (res) => {
         this.props.updateShelter();
-        console.log('UPDATESHELTERLOCATION:',this.props.shelterID)
+        console.log('UPDATESHELTERLOCATION:',localStorage.getItem('shelter_id'))
     })
     .then( (res) => {
       console.log('update shelter location shelter:', res)

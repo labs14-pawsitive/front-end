@@ -214,7 +214,7 @@ class ApplicationWizard extends React.Component {
     //post application process begins
     const application = {
       animal_id: this.props.animalId,
-      shelter_id: this.props.shelterId,
+      shelter_id: localStorage.getItem('shelter_id'),
       application_status_id: 1, 
       user_id: localStorage.getItem("user_id"),
       name: applicationData.about.name,

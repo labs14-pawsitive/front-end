@@ -62,7 +62,7 @@ class LocationForm extends React.Component {
     }
 
     // componentDidMount(){
-    //     this.props.fetchOptions(this.props.shelterID);
+    //     this.props.fetchOptions(localStorage.getItem('shelter_id'));
     // }
 
 
@@ -96,7 +96,7 @@ class LocationForm extends React.Component {
         e.preventDefault()
 
         const newLocation = {
-            shelter_id: this.props.shelterID,
+            shelter_id: localStorage.getItem('shelter_id'),
             street_address: this.state.street_address,
             city: this.state.city,
             zipcode: this.state.zipcode,
@@ -108,7 +108,7 @@ class LocationForm extends React.Component {
 
         console.log(newLocation)
 
-        this.props.addShelterLoc(this.props.shelterID, newLocation)
+        this.props.addShelterLoc(localStorage.getItem('shelter_id'), newLocation)
 
         .then( () => {
             this.props.updateShelter();

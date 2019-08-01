@@ -77,7 +77,7 @@ updateSubmit = e => {
   e.preventDefault()
 
   const updatedLocation = {
-      shelter_id: this.props.shelterID,
+      shelter_id: localStorage.getItem('shelter_id'),
       street_address: this.state.location.street_address,
       city: this.state.location.city,
       zipcode: this.state.location.zipcode,
@@ -93,7 +93,7 @@ updateSubmit = e => {
   this.props.updateShelterLoc(this.props.location.id, updatedLocation)
   .then( (res) => {
       this.props.updateShelter();
-      console.log('UPDATESHELTERLOCATION:',this.props.shelterID)
+      console.log('UPDATESHELTERLOCATION:',localStorage.getItem('shelter_id'))
   })
   .catch(err => {
     console.log('UpdateShelterLoc Error: ',err)

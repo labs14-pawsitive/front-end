@@ -70,8 +70,8 @@ class ApplicationTable extends React.Component {
   componentDidMount() {
     axios
     //.get(`https://staging1-pawsnfind.herokuapp.com/api/animals/shelter/${localStorage.getItem("shelter_id")}`)
-    // .get(`https://staging1-pawsnfind.herokuapp.com/api/applications/shelter/${this.props.shelterID}`)
-    .get(`https://staging1-pawsnfind.herokuapp.com/api/applications/shelter/${this.props.shelterID}`)
+    // .get(`https://staging1-pawsnfind.herokuapp.com/api/applications/shelter/${localStorage.getItem('shelter_id')}`)
+    .get(`https://staging1-pawsnfind.herokuapp.com/api/applications/shelter/${localStorage.getItem('shelter_id')}`)
     .then(applications => {
       console.log(applications)
       
