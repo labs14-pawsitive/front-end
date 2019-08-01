@@ -1,18 +1,12 @@
 /*!
-
 =========================================================
 * Material Dashboard PRO React - v1.7.0
 =========================================================
-
 * Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
 * Copyright 2019 Creative Tim (https://www.creative-tim.com)
-
 * Coded by Creative Tim
-
 =========================================================
-
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
 */
 import React from "react";
 import PropTypes from "prop-types";
@@ -52,8 +46,6 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
-import Checkbox from "@material-ui/core/Checkbox";
-import Check from "@material-ui/icons/Check";
 
 import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
 
@@ -127,9 +119,6 @@ class AnimalView extends React.Component {
       },
       imgStyle: {
         borderRadius: "4px"
-      },
-      checkboxStyle: {
-        color: "#000"
       }
     }
 
@@ -145,6 +134,7 @@ class AnimalView extends React.Component {
                <h1>{this.state.animal.name}</h1>             
                    <legend>{this.state.animal_meta.sex}{" "}{this.state.animal_meta.breed}{" "}{this.state.animal_meta.mixed? "mix" : ""}</legend>
              </div>
+                   
 
           </GridItem>
           <GridItem xs={12} sm={12} md={5}>
@@ -159,20 +149,6 @@ class AnimalView extends React.Component {
                   image={this.state.animal.img_url}
                   title={`${this.state.animal.name} the ${this.state.animal_meta.breed} for adoption`}
                 />
-                        <Checkbox
-                           
-                           style={customStyle.checkboxStyle}
-                           name = "checkedLabelTest"
-                           icon={this.state.animal_meta.is_vaccinated? <Check className={classes.checkedIcon} /> : <Check className={classes.uncheckedIcon} />}
-                           disabled ={true}
-                           
-                           /*classes={{
-                             checked: classes.checked,
-                             root: classes.checkRoot
-                           }} */
-                           
-                           
-                         />
                 </CardBody>
               </Card>
           </GridItem>
@@ -187,7 +163,6 @@ class AnimalView extends React.Component {
             </CardHeader>
           </Card>
         </GridItem>
-      
       </GridContainer>
       </div>
     );

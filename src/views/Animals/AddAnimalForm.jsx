@@ -1,18 +1,12 @@
 /*!
-
 =========================================================
 * Material Dashboard PRO React - v1.7.0
 =========================================================
-
 * Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
 * Copyright 2019 Creative Tim (https://www.creative-tim.com)
-
 * Coded by Creative Tim
-
 =========================================================
-
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
 */
 import React from "react";
 import PropTypes from "prop-types";
@@ -56,8 +50,7 @@ class AddAnimalForm extends React.Component {
       email: "",
       checked: [24, 22],
       selectedValue: null,
-      selectedEnabled: "b",
-      checkedLabelTest: true
+      selectedEnabled: "b"
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeEnabled = this.handleChangeEnabled.bind(this);
@@ -83,13 +76,6 @@ class AddAnimalForm extends React.Component {
       checked: newChecked
     });
   }
-
-  handleCheckboxToggle = e => {
-    this.setState({
-      [e.target.name]: !this.state.checkedLabelTest
-    })
-  }
-
   render() {
     const { classes } = this.props;
     return (
@@ -615,30 +601,24 @@ class AddAnimalForm extends React.Component {
                       <FormControlLabel
                         control={
                           <Checkbox
-                           
+                            tabIndex={-1}
+                            onClick={() => this.handleToggle(21)}
                             checkedIcon={
                               <Check className={classes.checkedIcon} />
                             }
-                            name = "checkedLabelTest"
-                            checked = {this.state.checkedLabelTest}
                             icon={<Check className={classes.uncheckedIcon} />}
-                            
-                            
-                            /*classes={{
+                            classes={{
                               checked: classes.checked,
                               root: classes.checkRoot
-                            }} */
-                            
-                            
+                            }}
                           />
                         }
-                        
-                        
+                        classes={{
+                          label: classes.label,
+                          root: classes.labelRoot
+                        }}
+                        label="Unchecked"
                       />
-
-                        }
-                      />
-
                     </div>
                     <div
                       className={

@@ -28,16 +28,16 @@ import Footer from "components/Footer/Footer.jsx";
 
 import Main from "views/Main_Temp/Main.jsx";
 
-import routes from "mainRoutes.js";
+// import routes from "mainRoutes.js";
 
 import pageStyle from "assets/jss/material-dashboard-pro-react/layouts/authStyle.jsx";
 
-import register from "assets/img/register.jpeg";
-import login from "assets/img/login.jpeg";
-import lock from "assets/img/lock.jpeg";
-import error from "assets/img/clint-mckoy.jpg";
-import pricing from "assets/img/bg-pricing.jpeg";
-import application from "assets/img/bg-application3.jpg";
+// import register from "assets/img/register.jpeg";
+// import login from "assets/img/login.jpeg";
+// import lock from "assets/img/lock.jpeg";
+// import error from "assets/img/clint-mckoy.jpg";
+// import pricing from "assets/img/bg-pricing.jpeg";
+// import application from "assets/img/bg-application3.jpg";
 import mainBG from "assets/img/bg-application.jpg"
 
 class MainTemp extends React.Component {

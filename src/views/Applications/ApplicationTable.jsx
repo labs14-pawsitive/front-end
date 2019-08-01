@@ -1,18 +1,12 @@
 /*!
-
 =========================================================
 * Material Dashboard PRO React - v1.7.0
 =========================================================
-
 * Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
 * Copyright 2019 Creative Tim (https://www.creative-tim.com)
-
 * Coded by Creative Tim
-
 =========================================================
-
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
 */
 import React from "react";
 import PropTypes from "prop-types";
@@ -79,7 +73,7 @@ class ApplicationTable extends React.Component {
   componentDidMount() {
     axios
     //.get(`http://localhost:8000/api/animals/shelter/${localStorage.getItem("shelter_id")}`)
-    .get(`http://localhost:8000/api/applications/shelter/${localStorage.getItem("shelter_id")}`)
+    .get(`http://localhost:8000/api/applications/shelter/${this.props.shelterID}`)
     .then(applications => {
       console.log(applications)
       

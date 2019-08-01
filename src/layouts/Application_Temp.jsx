@@ -16,7 +16,7 @@
 */
 import React from "react";
 import PropTypes from "prop-types";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Route, } from "react-router-dom";
 import Auth from "components/Auth/Auth.js"
 import SweetAlert from "react-bootstrap-sweetalert";
 
@@ -33,11 +33,11 @@ import routes from "routes.js";
 
 import applicationTempStyle from "assets/jss/material-dashboard-pro-react/layouts/applicationTempStyle.jsx";
 
-import register from "assets/img/register.jpeg";
-import login from "assets/img/login.jpeg";
-import lock from "assets/img/lock.jpeg";
-import error from "assets/img/clint-mckoy.jpg";
-import pricing from "assets/img/bg-pricing.jpeg";
+// import register from "assets/img/register.jpeg";
+// import login from "assets/img/login.jpeg";
+// import lock from "assets/img/lock.jpeg";
+// import error from "assets/img/clint-mckoy.jpg";
+// import pricing from "assets/img/bg-pricing.jpeg";
 import application from "assets/img/bg-application3.jpg";
 
 const auth = new Auth();
