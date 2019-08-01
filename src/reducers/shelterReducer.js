@@ -45,7 +45,7 @@ const initialState = {
     updatingContact: false,
     deletingLocation: false,
     deletingContact: false,
-    error: '',
+    error: null,
 }
 
 export const shelterReducer = (state = initialState, action) => {
@@ -175,7 +175,7 @@ export const shelterReducer = (state = initialState, action) => {
             return {
                 ...state,
                 updatingContact: false,
-                error: action.payload
+                error: action.payload.status
             }
         //----Deleting Contact:
         case DELETE_CONTACT_START:
