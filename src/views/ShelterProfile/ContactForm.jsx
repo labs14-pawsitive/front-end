@@ -117,7 +117,7 @@ class ContactForm extends React.Component {
 //
 
     handleSubmit = e => {
-        if (this.isValidated) 
+        if (this.isValidated()) 
         {e.preventDefault()
         const newContact = {
             name: this.state.name,
