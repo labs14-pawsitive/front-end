@@ -99,10 +99,9 @@ class AddAnimalForm extends React.Component {
   }
 
   componentDidMount () {
-    // const shelterId = localStorage.getItem('shelter_id')
+    const shelterId = localStorage.getItem('shelter_id')
     // TODO (SL): Use fake value until auth complete
 
-    const shelterId = 1
     this.setState({
       animal: {
         ...this.state.animal,
@@ -117,12 +116,14 @@ class AddAnimalForm extends React.Component {
   }
 
   handleImgUploadResponse = response => {
+   
     if (!response.error) {
-      const { image_id } = response[0].image
+      const { image_id, image_url } = response[0].image
       this.setState({
         animal: {
           ...this.state.animal,
-          profile_img_id: image_id
+          profile_img_id: image_id,
+          image_url: image_url
         }
       })
     }
@@ -271,7 +272,7 @@ class AddAnimalForm extends React.Component {
               subscriptions_id: "",
               age_id: "",
               shelter_location_id: "",
-              states_id: "",
+              shelter_id: "",
               is_male: false,
               is_house_trained: false,
               is_neutered_spayed: false,
