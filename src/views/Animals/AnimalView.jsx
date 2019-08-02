@@ -507,7 +507,7 @@ class AnimalView extends React.Component {
     return (
       <div>
         <GridContainer>
-          <GridItem xs={12} sm={12} md={8}>
+          <GridItem xs={12} sm={12} md={10} lg={8}>
             <Card>
               <GridContainer style={customStyle.containerStyle}>
                 <AnimalViewTop
@@ -610,4 +610,3 @@ export default connect(
   }
 )(withStyles(regularFormsStyle)(AnimalView))
 
-        //export default withStyles(extendedFormsStyle)(AnimalView);

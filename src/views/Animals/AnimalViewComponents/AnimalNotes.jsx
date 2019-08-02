@@ -26,7 +26,7 @@ class AnimalNotes extends React.Component {
         this.state = {
             // note: this.props.animalNotes,
             note: '',
-            addNoteState: "error",
+            addNoteState: "",
         }
     }
 
@@ -124,7 +124,7 @@ class AnimalNotes extends React.Component {
             },
         }
         return (
-            <GridItem xs={12} sm={12} md={4}>
+            <GridItem xs={12} sm={12} md={2} lg={4}>
                 <Card style={customStyle.textFieldNote}>
 
                     <CardHeader>
@@ -139,7 +139,7 @@ class AnimalNotes extends React.Component {
                         value={this.state.note}
                         multiline
                         className={classes.textField}
-                        onChange={this.handleAddNoteChange(10)}
+                        onChange={this.handleAddNoteChange(3)}
                         margin="normal"
                     />
 

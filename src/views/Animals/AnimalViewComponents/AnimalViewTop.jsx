@@ -42,19 +42,27 @@ class AnimalViewTop extends React.Component {
                 padding: "10% 0px 0px 0px"
             },
             form1ControlStyle: {
-                width: "50%",
+                width: "100%",
                 marginRight: "1%",
+                // color: 'rgba(0, 0, 0, 0.87)'
             },
             gridItemStyle: {
                 display: 'flex',
                 flexWrap: 'wrap',
               },
+              formGridStyle:{
+                  display:"flex",
+                  flexDirection:"column"
+              },
+              pstyle:{
+                color: "black"
+              }
 
         }
         return (
            
                 <GridItem xs={12} sm={12} md={12} style={customStyle.gridItemStyle}>
-                <GridItem xs={12} sm={12} md={5}>
+                <GridItem xs={12} sm={12} md={4}>
                     <GridList className={classes.gridList} >
                         <GridListTile key={this.props.animal.img_url} style={customStyle.imgCardStyle} >
 
@@ -63,7 +71,6 @@ class AnimalViewTop extends React.Component {
                                 borderRadius="5px" imageLimit={1}
                                 editable={this.props.isEditing} callback={this.props.callback}
                                 url={`https://staging1-pawsnfind.herokuapp.com/api/pictures/animal/${this.props.paramsId}`} />
-
 
                             <GridListTileBar style={customStyle.imgTitle}
                                 subtitle={<span>#{this.props.animal.id}</span>}
@@ -76,10 +83,10 @@ class AnimalViewTop extends React.Component {
                     </GridList>
                 </GridItem>
 
-                <GridItem xs={12} sm={12} md={7}>
+                <GridItem xs={12} sm={12} md={8} >
                     <div style={customStyle.titleStyle}>
                         {this.props.isEditing ?
-                            <form>
+                            <form style={customStyle.formGridStyle}>
                                 <TextField
                                     success={this.props.textState.nameState === "success"}
                                     error={this.props.textState.nameState === "error"}
@@ -128,7 +135,7 @@ class AnimalViewTop extends React.Component {
                             <div>
                                 <h1>{this.props.animal.name}</h1>
                                 <legend>{this.props.animal_meta.description}</legend>
-                                <p>Located at : {this.props.animal.nickname}</p>
+                                <p style={customStyle.pstyle}>Located at : {this.props.animal.nickname}</p>
                             </div>
                         }
 
