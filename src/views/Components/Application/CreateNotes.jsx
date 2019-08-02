@@ -153,6 +153,7 @@ class CreateNotes extends React.Component {
 
         return (
             <>
+       
                 <Typography style={customStyle.headerStyle} >
                     <p> Notes </p>
                 </Typography>
@@ -179,7 +180,7 @@ class CreateNotes extends React.Component {
                                 justify="flex-end"
                                 className="addNoteStyle"
                             >
-                                <GridItem xs={3}>
+                                <GridItem xs={3} sm={3} md={3}>
                                     <Button
                                         variant="contained"
                                         color="transparent"
@@ -216,6 +217,8 @@ class CreateNotes extends React.Component {
                         </div>
                     </CardBody>
                 </Card>
+
+        
             </>
         )
     }
