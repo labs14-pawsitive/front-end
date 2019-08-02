@@ -94,7 +94,7 @@ class LocationForm extends React.Component {
 
     handleSubmit = e => {
         e.preventDefault()
-
+        if (this.isValidated()) {
         const newLocation = {
             shelter_id: localStorage.getItem('shelter_id'),
             street_address: this.state.street_address,
@@ -126,7 +126,7 @@ class LocationForm extends React.Component {
             nicknameState: '',
             shelter_contact_id: '',
         })
-        
+      } else {console.log(' Locations Fields not validated')}
     }
 
     changeHandler = e => {
@@ -194,20 +194,24 @@ class LocationForm extends React.Component {
     
       isValidated() {
         if (
-          this.state.nameState === "success" &&
-          this.state.phoneState === "success" &&
-          this.state.emailState === "success"
+          this.state.nicknameState === "success" &&
+          this.state.street_addressState === "success" &&
+          this.state.cityState === "success" &&
+          this.state.zipcodeState === "success"
         ) {
           return true;
         } else {
-          if (this.state.nameState !== "success") {
-            this.setState({ nameState: "error" });
+          if (this.state.nicknameState !== "success") {
+            this.setState({ nicknameState: "error" });
           }
-          if (this.state.phoneState !== "success") {
-            this.setState({ phoneState: "error" });
+          if (this.state.street_addressState !== "success") {
+            this.setState({ street_addressState: "error" });
           }
-          if (this.state.emailState !== "success") {
-            this.setState({ emailState: "error" });
+          if (this.state.cityState !== "success") {
+            this.setState({ cityState: "error" });
+          }
+          if (this.state.zipcodeState !== "success") {
+            this.setState({ zipcodeState: "error" });
           }
         }
         return false;
