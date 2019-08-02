@@ -231,157 +231,176 @@ class ApplicationView extends React.Component {
               <Card>
                 <CardBody>
                   <form>
-                    <TextField
-                      label="Application ID"
-                      id="application_id"
-                      fullWidth="true"
-                      value={this.state.application.application_id}
-                      style={customStyle.textFieldStyle}
-                      inputProps={{
-                        disabled: true,
-                        disableUnderline: true,
-                      }}
-                      InputProps={{
-                        style: {
-                          paddingLeft: "2%",
-                          paddingTop: "2%",
+
+                    <GridItem xs={12} sm={12} md={12}>
+                      <TextField
+                        label="Application ID"
+                        id="application_id"
+                        fullWidth="true"
+                        value={this.state.application.application_id}
+                        style={customStyle.textFieldStyle}
+                        inputProps={{
+                          disabled: true,
+                          // disableUnderline: true,
+                        }}
+                        InputProps={{
+                          style: {
+                            paddingLeft: "1%",
+                            paddingTop: "1%",
+                            // disableUnderline: true,
+                          }
+                        }}
+                        InputLabelProps={{
+                          style: {
+                            // padding: "18px 12px",
+                            paddingLeft: "1%",
+                            paddingTop: "1%",
+                          }
+                        }}
+                      />
+                    </GridItem>
+
+                    <GridItem xs={12} sm={12} md={12}>
+                      <TextField
+                        label="Animal Name"
+                        id="animal_name"
+                        fullWidth="true"
+                        value={this.state.application.animal_name}
+                        style={customStyle.textFieldStyle2}
+
+                        inputProps={{
+                          disabled: true,
                           disableUnderline: true,
-                        }
-                      }}
-                      InputLabelProps={{
-                        style: {
-                          padding: "18px 12px",
+                        }}
 
-                        }
-                      }}
-                    />
+                        InputProps={{
+                          style: {
+                            paddingLeft: "1%",
+                            paddingTop: "1%",
+                            disableUnderline: true,
+                          }
+                        }}
+                        InputLabelProps={{
+                          style: {
+                            paddingLeft: "1%",
+                            paddingTop: "1%",
+                          }
+                        }}
+                      />
+                    </GridItem>
 
-                    <TextField
-                      label="Animal Name"
-                      id="animal_name"
-                      fullWidth="true"
-                      value={this.state.application.animal_name}
-                      style={customStyle.textFieldStyle2}
-                      inputProps={{
-                        disabled: true,
-                        disableUnderline: true,
-                      }}
-                      InputProps={{
-                        style: {
-                          paddingLeft: "2%",
-                          paddingTop: "2%",
-                          disableUnderline: true,
-                        }
-                      }}
-                      InputLabelProps={{
-                        style: {
-                          padding: "18px 12px",
-                        }
-                      }}
-                    />
 
-                    <FormControl fullWidth className={classes.selectFormControl}>
+                    <GridItem xs={12} sm={12} md={12}>
+                      <FormControl fullWidth className={classes.selectFormControl}>
 
-                      <div style={customStyle.selectStyle}>
-                        <InputLabel
-                          htmlFor="application_status"
-                          style={customStyle.selectLabel}
-                        >
-                          Application Status
+                        <div style={customStyle.selectStyle}>
+                          <InputLabel
+                            htmlFor="application_status"
+                            style={customStyle.selectLabel}
+                          >
+                            Application Status
                       </InputLabel>
 
 
-                        <Select
-                          SelectDisplayProps={{
-                            style: {
-                              padding: "12px 6px",
-                            }
-                          }}
-                          MenuProps={{
-                            className: classes.menuOptionStyle
-                          }}
-                          renderValue={value => `${value}`}
-                          value={this.state.application.application_status}
-                          onChange={this.handleChange}
-                          name="application_status"
-                          id="application_status"
-                          fullWidth="true"
-                        >
-
-
-                          <MenuItem
-                            disabled
-                            classes={{
-                              root: classes.selectMenuItem
+                          <Select
+                            SelectDisplayProps={{
+                              style: {
+                                paddingLeft: "1%",
+                                paddingTop: "2%",
+                              }
                             }}
+                            MenuProps={{
+                              className: classes.menuOptionStyle
+                            }}
+                            renderValue={value => `${value}`}
+                            value={this.state.application.application_status}
+                            onChange={this.handleChange}
+                            name="application_status"
+                            id="application_status"
+                            fullWidth="true"
                           >
-                            Application Status
+
+
+                            <MenuItem
+                              disabled
+                              classes={{
+                                root: classes.selectMenuItem
+                              }}
+                            >
+                              Application Status
                         </MenuItem>
 
-                          {this.props.options.map((option, key) => (
-                            <MenuItem
-                              classes={{
-                                root: classes.selectMenuItem,
-                                selected: classes.selectMenuItemSelected
-                              }}
-                              value={option.id}
-                            >
-                              {option.application_status}
-                            </MenuItem>
-                          ))}
-                        </Select>
+                            {this.props.options.map((option, key) => (
+                              <MenuItem
+                                classes={{
+                                  root: classes.selectMenuItem,
+                                  selected: classes.selectMenuItemSelected
+                                }}
+                                value={option.id}
+                              >
+                                {option.application_status}
+                              </MenuItem>
+                            ))}
+                          </Select>
 
-                      </div>
+                        </div>
 
-                    </FormControl>
+                      </FormControl>
+                    </GridItem>
 
-                    <TextField
-                      label="Applicant Name"
-                      id="name"
-                      fullWidth="true"
-                      value={this.state.application.name}
-                      style={customStyle.textFieldStyle3}
-                      inputProps={{
-                        disabled: true,
-                        disableUnderline: true,
-                      }}
-                      InputProps={{
-                        style: {
-                          paddingLeft: "2%",
-                          paddingTop: "2%",
+                    <GridItem xs={12} sm={12} md={12}>
+                      <TextField
+                        label="Applicant Name"
+                        id="name"
+                        fullWidth="true"
+                        value={this.state.application.name}
+                        style={customStyle.textFieldStyle3}
+                        inputProps={{
+                          disabled: true,
                           disableUnderline: true,
-                        }
-                      }}
-                      InputLabelProps={{
-                        style: {
-                          padding: "18px 12px",
-                        }
-                      }}
-                    />
+                        }}
+                        InputProps={{
+                          style: {
+                            paddingLeft: "1%",
+                            paddingTop: "1%",
+                            disableUnderline: true,
+                          }
+                        }}
+                        InputLabelProps={{
+                          style: {
+                            paddingLeft: "1%",
+                            paddingTop: "1%",
+                          }
+                        }}
+                      />
+                    </GridItem>
 
-                    <TextField
-                      label="Submission Date"
-                      id="application_status"
-                      fullWidth="true"
-                      value={moment(this.props.application.created_at).format("MMMM Do YYYY").toString()}
-                      style={customStyle.textFieldStyle}
-                      inputProps={{
-                        disabled: true,
-                        disableUnderline: true,
-                      }}
-                      InputProps={{
-                        style: {
-                          paddingLeft: "2%",
-                          paddingTop: "2%",
+                    <GridItem xs={12} sm={12} md={12}>
+                      <TextField
+                        label="Submission Date"
+                        id="application_status"
+                        fullWidth="true"
+                        value={moment(this.props.application.created_at).format("MMMM Do YYYY").toString()}
+                        style={customStyle.textFieldStyle}
+                        inputProps={{
+                          disabled: true,
                           disableUnderline: true,
-                        }
-                      }}
-                      InputLabelProps={{
-                        style: {
-                          padding: "18px 12px",
-                        }
-                      }}
-                    />
+                        }}
+                        InputProps={{
+                          style: {
+                            paddingLeft: "1%",
+                            paddingTop: "1%",
+                            disableUnderline: true,
+                          }
+                        }}
+                        InputLabelProps={{
+                          style: {
+                            paddingLeft: "1%",
+                            paddingTop: "1%",
+                          }
+                        }}
+                      />
+                    </GridItem>
                   </form>
                 </CardBody>
               </Card>
@@ -393,121 +412,143 @@ class ApplicationView extends React.Component {
               </Typography>
               <Card>
                 <CardBody>
-                  <TextField
-                    label="Street Address"
-                    id="street_address"
-                    fullWidth="true"
-                    value={this.state.application.street_address}
-                    style={customStyle.textFieldStyle}
-                    inputProps={{
-                      disabled: true,
-                      disableUnderline: true,
-                    }}
-                    InputProps={{
-                      style: {
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
+
+                  <GridItem xs={12} sm={12} md={12}>
+                    <TextField
+                      label="Street Address"
+                      id="street_address"
+                      fullWidth="true"
+                      value={this.state.application.street_address}
+                      style={customStyle.textFieldStyle}
+                      inputProps={{
+                        disabled: true,
                         disableUnderline: true,
-                      }
-                    }}
-                    InputLabelProps={{
-                      style: {
-                        padding: "18px 12px",
-                      }
-                    }}
-                  />
-                  <TextField
-                    label="City / State / Zip"
-                    id="city"
-                    fullWidth="true"
-                    value={this.state.application.city}
-                    style={customStyle.textFieldStyle}
-                    inputProps={{
-                      disabled: true,
-                      disableUnderline: true,
-                    }}
-                    InputProps={{
-                      style: {
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
+                      }}
+                      InputProps={{
+                        style: {
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                          disableUnderline: true,
+                        }
+                      }}
+                      InputLabelProps={{
+                        style: {
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                        }
+                      }}
+                    />
+                  </GridItem>
+
+
+                  <GridItem xs={12} sm={12} md={12}>
+                    <TextField
+                      label="City / State / Zip"
+                      id="city"
+                      fullWidth="true"
+                      value={this.state.application.city}
+                      style={customStyle.textFieldStyle}
+                      inputProps={{
+                        disabled: true,
                         disableUnderline: true,
-                      }
-                    }}
-                    InputLabelProps={{
-                      style: {
-                        padding: "18px 12px",
-                      }
-                    }}
-                  />
-                  <TextField
-                    label="Home Phone Number"
-                    id="home_number"
-                    fullWidth="true"
-                    value={this.state.application.home_phone}
-                    style={customStyle.textFieldStyle}
-                    inputProps={{
-                      disabled: true,
-                      disableUnderline: true,
-                    }}
-                    InputProps={{
-                      style: {
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
+                      }}
+                      InputProps={{
+                        style: {
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                          disableUnderline: true,
+                        }
+                      }}
+                      InputLabelProps={{
+                        style: {
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                        }
+                      }}
+                    />
+                  </GridItem>
+
+                  <GridItem xs={12} sm={12} md={12}>
+                    <TextField
+                      label="Home Phone Number"
+                      id="home_number"
+                      fullWidth="true"
+                      value={this.state.application.home_phone}
+                      style={customStyle.textFieldStyle}
+                      inputProps={{
+                        disabled: true,
                         disableUnderline: true,
-                      }
-                    }}
-                    InputLabelProps={{
-                      style: {
-                        padding: "18px 12px",
-                      }
-                    }}
-                  />
-                  <TextField
-                    label="Cell Phone Number"
-                    id="cell_number"
-                    fullWidth="true"
-                    value={this.state.application.cell_phone}
-                    style={customStyle.textFieldStyle}
-                    inputProps={{
-                      disabled: true,
-                      disableUnderline: true,
-                    }}
-                    InputProps={{
-                      style: {
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
+                      }}
+                      InputProps={{
+                        style: {
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                          disableUnderline: true,
+                        }
+                      }}
+                      InputLabelProps={{
+                        style: {
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                        }
+                      }}
+                    />
+                  </GridItem>
+
+                  <GridItem xs={12} sm={12} md={12}>
+                    <TextField
+                      label="Cell Phone Number"
+                      id="cell_number"
+                      fullWidth="true"
+                      value={this.state.application.cell_phone}
+                      style={customStyle.textFieldStyle}
+                      inputProps={{
+                        disabled: true,
                         disableUnderline: true,
-                      }
-                    }}
-                    InputLabelProps={{
-                      style: {
-                        padding: "18px 12px",
-                      }
-                    }}
-                  />
-                  <TextField
-                    label="Email"
-                    id="name"
-                    fullWidth="true"
-                    value={this.state.application.email}
-                    style={customStyle.textFieldStyle}
-                    inputProps={{
-                      disabled: true,
-                      disableUnderline: true,
-                    }}
-                    InputProps={{
-                      style: {
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
+                      }}
+                      InputProps={{
+                        style: {
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                          disableUnderline: true,
+                        }
+                      }}
+                      InputLabelProps={{
+                        style: {
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                        }
+                      }}
+                    />
+                  </GridItem>
+
+                  <GridItem xs={12} sm={12} md={12}>
+                    <TextField
+                      label="Email"
+                      id="name"
+                      fullWidth="true"
+                      value={this.state.application.email}
+                      style={customStyle.textFieldStyle}
+                      inputProps={{
+                        disabled: true,
                         disableUnderline: true,
-                      }
-                    }}
-                    InputLabelProps={{
-                      style: {
-                        padding: "18px 12px",
-                      }
-                    }}
-                  />
+                      }}
+                      InputProps={{
+                        style: {
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                          disableUnderline: true,
+                        }
+                      }}
+                      InputLabelProps={{
+                        style: {
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                        }
+                      }}
+                    />
+                  </GridItem>
+
                 </CardBody>
               </Card>
             </GridItem>
@@ -519,149 +560,170 @@ class ApplicationView extends React.Component {
 
               <Card>
                 <CardBody>
-                  <TextField
-                    label="Reference 1"
-                    id="ref_name_1"
-                    fullWidth="true"
-                    value={this.state.application.ref_name_1}
-                    style={customStyle.textFieldStyle}
-                    inputProps={{
-                      disabled: true,
-                      disableUnderline: true,
-                    }}
-                    InputProps={{
-                      style: {
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
-                        disableUnderline: true,
-                      }
-                    }}
-                    InputLabelProps={{
-                      style: {
-                        padding: "18px 12px",
-                      }
-                    }}
-                  />
 
-                  <TextField
-                    label="Reference 1 Phone Number"
-                    id="ref_phone_1"
-                    fullWidth="true"
-                    value={this.state.application.ref_phone_1}
-                    style={customStyle.textFieldStyle}
-                    inputProps={{
-                      disabled: true,
-                      disableUnderline: true,
-                    }}
-                    InputProps={{
-                      style: {
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
+                  <GridItem xs={12} sm={12} md={12}>
+                    <TextField
+                      label="Reference 1"
+                      id="ref_name_1"
+                      fullWidth="true"
+                      value={this.state.application.ref_name_1}
+                      style={customStyle.textFieldStyle}
+                      inputProps={{
+                        disabled: true,
                         disableUnderline: true,
-                      }
-                    }}
-                    InputLabelProps={{
-                      style: {
-                        padding: "18px 12px",
-                      }
-                    }}
-                  />
+                      }}
+                      InputProps={{
+                        style: {
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                          disableUnderline: true,
+                        }
+                      }}
+                      InputLabelProps={{
+                        style: {
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                        }
+                      }}
+                    />
+                  </GridItem>
 
-                  <TextField
-                    label="Reference 1 Relationship"
-                    id="ref_relationship_1"
-                    fullWidth="true"
-                    value={this.state.application.ref_relationship_1}
-                    style={customStyle.textFieldStyle}
-                    inputProps={{
-                      disabled: true,
-                      disableUnderline: true,
-                    }}
-                    InputProps={{
-                      style: {
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
-                        disableUnderline: true,
-                      }
-                    }}
-                    InputLabelProps={{
-                      style: {
-                        padding: "18px 12px",
-                      }
-                    }}
-                  />
 
-                  <TextField
-                    label="Reference 2"
-                    id="ref_name_2"
-                    fullWidth="true"
-                    value={this.state.application.ref_name_2}
-                    style={customStyle.textFieldStyle}
-                    inputProps={{
-                      disabled: true,
-                      disableUnderline: true,
-                    }}
-                    InputProps={{
-                      style: {
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
+                  <GridItem xs={12} sm={12} md={12}>
+                    <TextField
+                      label="Reference 1 Phone Number"
+                      id="ref_phone_1"
+                      fullWidth="true"
+                      value={this.state.application.ref_phone_1}
+                      style={customStyle.textFieldStyle}
+                      inputProps={{
+                        disabled: true,
                         disableUnderline: true,
-                      }
-                    }}
-                    InputLabelProps={{
-                      style: {
-                        padding: "18px 12px",
-                      }
-                    }}
-                  />
+                      }}
+                      InputProps={{
+                        style: {
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                          disableUnderline: true,
+                        }
+                      }}
+                      InputLabelProps={{
+                        style: {
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                        }
+                      }}
+                    />
+                  </GridItem>
 
-                  <TextField
-                    label="Reference 2 Phone Number"
-                    id="ref_phone_2"
-                    fullWidth="true"
-                    value={this.state.application.ref_phone_2}
-                    style={customStyle.textFieldStyle}
-                    inputProps={{
-                      disabled: true,
-                      disableUnderline: true,
-                    }}
-                    InputProps={{
-                      style: {
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
+                  <GridItem xs={12} sm={12} md={12}>
+                    <TextField
+                      label="Reference 1 Relationship"
+                      id="ref_relationship_1"
+                      fullWidth="true"
+                      value={this.state.application.ref_relationship_1}
+                      style={customStyle.textFieldStyle}
+                      inputProps={{
+                        disabled: true,
                         disableUnderline: true,
-                      }
-                    }}
-                    InputLabelProps={{
-                      style: {
-                        padding: "18px 12px",
-                      }
-                    }}
-                  />
+                      }}
+                      InputProps={{
+                        style: {
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                          disableUnderline: true,
+                        }
+                      }}
+                      InputLabelProps={{
+                        style: {
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                        }
+                      }}
+                    />
+                  </GridItem>
 
-                  <TextField
-                    label="Reference 2 Relationship"
-                    id="ref_relationship_2"
-                    fullWidth="true"
-                    value={this.state.application.ref_relationship_2}
-                    style={customStyle.textFieldStyle}
-                    inputProps={{
-                      disabled: true,
-                      disableUnderline: true,
-                    }}
-                    InputProps={{
-                      style: {
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
+
+                  <GridItem xs={12} sm={12} md={12}>
+                    <TextField
+                      label="Reference 2"
+                      id="ref_name_2"
+                      fullWidth="true"
+                      value={this.state.application.ref_name_2}
+                      style={customStyle.textFieldStyle}
+                      inputProps={{
+                        disabled: true,
                         disableUnderline: true,
-                      }
-                    }}
-                    InputLabelProps={{
-                      style: {
-                        padding: "18px 12px",
-                      }
-                    }}
-                  />
+                      }}
+                      InputProps={{
+                        style: {
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                          disableUnderline: true,
+                        }
+                      }}
+                      InputLabelProps={{
+                        style: {
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                        }
+                      }}
+                    />
+                  </GridItem>
+
+                  <GridItem xs={12} sm={12} md={12}>
+                    <TextField
+                      label="Reference 2 Phone Number"
+                      id="ref_phone_2"
+                      fullWidth="true"
+                      value={this.state.application.ref_phone_2}
+                      style={customStyle.textFieldStyle}
+                      inputProps={{
+                        disabled: true,
+                        disableUnderline: true,
+                      }}
+                      InputProps={{
+                        style: {
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                          disableUnderline: true,
+                        }
+                      }}
+                      InputLabelProps={{
+                        style: {
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                        }
+                      }}
+                    />
+                  </GridItem>
+
+                  <GridItem xs={12} sm={12} md={12}>
+                    <TextField
+                      label="Reference 2 Relationship"
+                      id="ref_relationship_2"
+                      fullWidth="true"
+                      value={this.state.application.ref_relationship_2}
+                      style={customStyle.textFieldStyle}
+                      inputProps={{
+                        disabled: true,
+                        disableUnderline: true,
+                      }}
+                      InputProps={{
+                        style: {
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                          disableUnderline: true,
+                        }
+                      }}
+                      InputLabelProps={{
+                        style: {
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                        }
+                      }}
+                    />
+                  </GridItem>
 
                 </CardBody>
               </Card>
@@ -674,125 +736,140 @@ class ApplicationView extends React.Component {
 
               <Card>
                 <CardBody>
-                  <TextField
-                    label="Applicant is 18 Years Old or Older"
-                    id="is_over_18"
-                    fullWidth="true"
-                    value={this.state.application.is_over_18 ? "Yes" : "No"}
-                    style={customStyle.textFieldStyle}
-                    inputProps={{
-                      disabled: true,
-                      disableUnderline: true,
-                    }}
-                    InputProps={{
-                      style: {
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
+                  <GridItem xs={12} sm={12} md={12}>
+                    <TextField
+                      label="Applicant is 18 Years Old or Older"
+                      id="is_over_18"
+                      fullWidth="true"
+                      value={this.state.application.is_over_18 ? "Yes" : "No"}
+                      style={customStyle.textFieldStyle}
+                      inputProps={{
+                        disabled: true,
                         disableUnderline: true,
-                      }
-                    }}
-                    InputLabelProps={{
-                      style: {
-                        padding: "18px 12px",
-                      }
-                    }}
-                  />
+                      }}
+                      InputProps={{
+                        style: {
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                          disableUnderline: true,
+                        }
+                      }}
+                      InputLabelProps={{
+                        style: {
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                        }
+                      }}
+                    />
+                  </GridItem>
 
-                  <TextField
-                    label="Applicant Owns Current Residence"
-                    id="is_homeowner"
-                    fullWidth="true"
-                    value={this.state.application.is_homeowner ? "Yes" : "No"}
-                    style={customStyle.textFieldStyle}
-                    inputProps={{
-                      disabled: true,
-                      disableUnderline: true,
-                    }}
-                    InputProps={{
-                      style: {
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
+                  <GridItem xs={12} sm={12} md={12}>
+                    <TextField
+                      label="Applicant Owns Current Residence"
+                      id="is_homeowner"
+                      fullWidth="true"
+                      value={this.state.application.is_homeowner ? "Yes" : "No"}
+                      style={customStyle.textFieldStyle}
+                      inputProps={{
+                        disabled: true,
                         disableUnderline: true,
-                      }
-                    }}
-                    InputLabelProps={{
-                      style: {
-                        padding: "18px 12px",
-                      }
-                    }}
-                  />
+                      }}
+                      InputProps={{
+                        style: {
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                          disableUnderline: true,
+                        }
+                      }}
+                      InputLabelProps={{
+                        style: {
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                        }
+                      }}
+                    />
+                  </GridItem>
 
-                  <TextField
-                    label="All Residents Agree to Adopt a New Animal"
-                    id="is_in_agreement"
-                    fullWidth="true"
-                    value={this.state.application.is_in_agreement ? "Yes" : "No"}
-                    style={customStyle.textFieldStyle}
-                    inputProps={{
-                      disabled: true,
-                      disableUnderline: true,
-                    }}
-                    InputProps={{
-                      style: {
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
+                  <GridItem xs={12} sm={12} md={12}>
+                    <TextField
+                      label="All Residents Agree to Adopt a New Animal"
+                      id="is_in_agreement"
+                      fullWidth="true"
+                      value={this.state.application.is_in_agreement ? "Yes" : "No"}
+                      style={customStyle.textFieldStyle}
+                      inputProps={{
+                        disabled: true,
                         disableUnderline: true,
-                      }
-                    }}
-                    InputLabelProps={{
-                      style: {
-                        padding: "18px 12px",
-                      }
-                    }}
-                  />
+                      }}
+                      InputProps={{
+                        style: {
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                          disableUnderline: true,
+                        }
+                      }}
+                      InputLabelProps={{
+                        style: {
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                        }
+                      }}
+                    />
+                  </GridItem>
 
-                  <TextField
-                    label="Residency Inspection Allowed"
-                    id="is_homevisit_allowed"
-                    fullWidth="true"
-                    value={this.state.application.is_homevisit_allowed ? "Yes" : "No"}
-                    style={customStyle.textFieldStyle}
-                    inputProps={{
-                      disabled: true,
-                      disableUnderline: true,
-                    }}
-                    InputProps={{
-                      style: {
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
+                  <GridItem xs={12} sm={12} md={12}>
+                    <TextField
+                      label="Residency Inspection Allowed"
+                      id="is_homevisit_allowed"
+                      fullWidth="true"
+                      value={this.state.application.is_homevisit_allowed ? "Yes" : "No"}
+                      style={customStyle.textFieldStyle}
+                      inputProps={{
+                        disabled: true,
                         disableUnderline: true,
-                      }
-                    }}
-                    InputLabelProps={{
-                      style: {
-                        padding: "18px 12px",
-                      }
-                    }}
-                  />
+                      }}
+                      InputProps={{
+                        style: {
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                          disableUnderline: true,
+                        }
+                      }}
+                      InputLabelProps={{
+                        style: {
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                        }
+                      }}
+                    />
+                  </GridItem>
 
-                  <TextField
-                    label="Has a Fenced in Yard"
-                    id="is_fenced"
-                    fullWidth="true"
-                    value={this.state.application.is_fenced ? "Yes" : "No"}
-                    style={customStyle.textFieldStyle}
-                    inputProps={{
-                      disabled: true,
-                      disableUnderline: true,
-                    }}
-                    InputProps={{
-                      style: {
-                        paddingLeft: "2%",
-                        paddingTop: "2%",
+                  <GridItem xs={12} sm={12} md={12}>
+                    <TextField
+                      label="Has a Fenced in Yard"
+                      id="is_fenced"
+                      fullWidth="true"
+                      value={this.state.application.is_fenced ? "Yes" : "No"}
+                      style={customStyle.textFieldStyle}
+                      inputProps={{
+                        disabled: true,
                         disableUnderline: true,
-                      }
-                    }}
-                    InputLabelProps={{
-                      style: {
-                        padding: "18px 12px",
-                      }
-                    }}
-                  />
+                      }}
+                      InputProps={{
+                        style: {
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                          disableUnderline: true,
+                        }
+                      }}
+                      InputLabelProps={{
+                        style: {
+                          paddingLeft: "1%",
+                          paddingTop: "1%",
+                        }
+                      }}
+                    />
+                  </GridItem>
 
                 </CardBody>
               </Card>
