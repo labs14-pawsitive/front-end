@@ -124,7 +124,7 @@ class AnimalNotes extends React.Component {
             },
         }
         return (
-            <GridItem xs={12} sm={12} md={2} lg={4}>
+            <GridItem xs={12} sm={12} md={4} lg={4}>
                 <Card style={customStyle.textFieldNote}>
 
                     <CardHeader>
