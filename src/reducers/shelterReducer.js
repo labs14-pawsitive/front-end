@@ -45,7 +45,7 @@ const initialState = {
     updatingContact: false,
     deletingLocation: false,
     deletingContact: false,
-    error: null,
+    error: '',
 }
 
 export const shelterReducer = (state = initialState, action) => {
@@ -111,7 +111,7 @@ export const shelterReducer = (state = initialState, action) => {
         case UPDATE_SHELTERLOC_START:
             return {
                 ...state,
-                updatingLocation:true
+                updatingLocation:true,
             }
         case UPDATE_SHELTERLOC_SUCCESS:
             return {
@@ -164,7 +164,8 @@ export const shelterReducer = (state = initialState, action) => {
         case UPDATE_CONTACT_START:
             return {
                 ...state,
-                updatingContact:true
+                updatingContact:true,
+                error: '',
             }
         case UPDATE_CONTACT_SUCCESS:
             return {

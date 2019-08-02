@@ -87,7 +87,7 @@ deleteContact = e => {
     this.props.deleteShelterCon(this.props.contact.id)
     .then( () => {
       this.props.updateShelter();
-    })
+    }) 
 }
 
 updateSubmit = e => {
@@ -119,7 +119,6 @@ updateSubmit = e => {
       nameState: '',
       emailState: '',
       phoneState: '',
-      error: false,
     })
  
 }
@@ -296,7 +295,8 @@ isValidated() {
                   />
                 </GridItem>
             <GridItem xs={12} sm={12} md={12}>
-            {this.state.editMode && this.props.error && <span style={customStyle.errorColor}><small>Error: This contact is associated with an existing location.</small></span>}
+            {this.state.editMode && this.props.error && <span style={customStyle.errorColor}>
+                <small>Error: Contact is associated with an existing location.</small> </span>}
             <GridItem xs={12} sm={12} md={12}>
             <Button 
                 size= "sm" 
@@ -307,13 +307,12 @@ isValidated() {
                 {this.state.editMode? "Save" : "Edit"}
               </Button>
 
-
               {this.state.editMode && <Button size= "sm" 
               color="rose" 
               className={classes.updateProfileButton}
                onClick={this.deleteContact}>
                 Delete
-                  </Button> }
+              </Button> }
                   </GridItem>
             </GridItem>
               </GridContainer>
@@ -332,7 +331,8 @@ const mapStateToProps = (state) => {
       roleID : state.userReducer.roleID,
       shelter: state.shelterReducer.shelter,
       fetchingShelter: state.shelterReducer.fetchingShelter,
-      error: state.shelterReducer.error, 
+      error: state.shelterReducer.error,
+      location: state.shelterReducer.location
     }
   }
  

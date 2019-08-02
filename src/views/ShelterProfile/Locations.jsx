@@ -82,7 +82,6 @@ updateSubmit = e => {
       city: this.state.location.city,
       zipcode: this.state.location.zipcode,
       state_id: this.state.location.state_id,
-      phone_number: '222-222-2222',
       nickname: this.state.location.nickname,
       shelter_contact_id: this.state.location.shelter_contact_id
   }
