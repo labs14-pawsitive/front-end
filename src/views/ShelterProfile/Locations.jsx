@@ -82,7 +82,6 @@ updateSubmit = e => {
       city: this.state.location.city,
       zipcode: this.state.location.zipcode,
       state_id: this.state.location.state_id,
-      phone_number: '222-222-2222',
       nickname: this.state.location.nickname,
       shelter_contact_id: this.state.location.shelter_contact_id
   }
@@ -293,7 +292,7 @@ isValidated() {
 
                   />
               </GridItem>
-               <GridItem xs={12} sm={12} md={6}>
+               <GridItem xs={12} sm={12} md={5}>
                <CustomInput
                     labelText="City"
                     id="city"
@@ -310,7 +309,7 @@ isValidated() {
                     style={this.state.editMode? "" : customStyle.shelterDisplayView}
                   />  
               </GridItem>
-              <GridItem xs={12} sm={12} md={2}>
+              <GridItem xs={12} sm={12} md={3}>
             <FormControl
             fullWidth
             className={classes.selectFormControl}
@@ -395,7 +394,8 @@ isValidated() {
                   onChange={this.selectChangeHandler}
                   inputProps={{
                       name: "shelter_contact_id",
-                      id: "shelter_contact_id"
+                      id: "shelter_contact_id",
+                      style: selectStyle.underline,
                   }}>
                       {this.props.contacts && this.props.contacts.map(contact => (
                           <MenuItem
@@ -411,23 +411,23 @@ isValidated() {
                             </Select>
                         </FormControl>
                         </GridItem>
-            <GridItem xs={12} sm={12} md={7}></GridItem>
-            <GridItem xs={12} sm={12} md={5}>
+            
+            <GridItem xs={12} sm={12} md={12}>
             <Button size= "sm" 
               color="rose" 
               className={classes.updateProfileButton}
               onClick={this.handleFormButtonToggle}
               onClick={this.state.editMode? this.updateSubmit : this.handleFormButtonToggle}
             >
-                {this.state.editMode? "Save" : "Update"}
+                {this.state.editMode? "Save" : "Edit"}
               </Button>
               
-            <Button size= "sm" 
+            {this.state.editMode && <Button size= "sm" 
                 color="rose" 
                 onClick={this.deleteLocation}
                 className={classes.updateProfileButton} >
                 Delete
-              </Button>
+                </Button> }
 
               
             </GridItem>
