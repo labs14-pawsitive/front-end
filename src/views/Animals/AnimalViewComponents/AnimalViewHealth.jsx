@@ -59,7 +59,8 @@ class AnimalViewHealth extends React.Component {
             },
             healthTextStyle:{
                 width:"100%",
-                marginBottom:"30px"
+                marginBottom:"30px",
+                borderBottom:"1px solid rgba(0, 0, 0, 0.54)"
             },
             colorStyle:{
               color:"rgba(0, 0, 0, 0.87)",
@@ -97,6 +98,7 @@ class AnimalViewHealth extends React.Component {
                     margin="normal"
                     InputProps={{
                       readOnly: this.props.isEditing ? false : true,
+                      disableUnderline:true
                     }}
                     InputLabelProps={{
                       style: { color: 'rgba(0, 0, 0, 0.87)' },
