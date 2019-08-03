@@ -147,6 +147,8 @@ class CreateNotes extends React.Component {
             },
             notesMarginStyle: {
                 marginTop: "7%",
+                paddingLeft: "4%",
+                paddingRight: "4%",
             },
 
         };
@@ -205,7 +207,7 @@ class CreateNotes extends React.Component {
                             </GridContainer>
                         </div>
 
-                        <div style={customStyle.notesMarginStyle}>
+                        <GridContainer style={customStyle.notesMarginStyle}>
                             {this.props.notes && this.props.notes.map(note => (
                                 <MapNotes
                                     note={note}
@@ -214,7 +216,7 @@ class CreateNotes extends React.Component {
                                     updateNotes={this.updateNotes}
                                 />
                             ))}
-                        </div>
+                        </GridContainer>
                     </CardBody>
                 </Card>
 

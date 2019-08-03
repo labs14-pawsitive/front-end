@@ -150,7 +150,6 @@ class ApplicationView extends React.Component {
         paddingTop: "33px",
       },
       checkBoxStyle: {
-        float: "right",
         color: "#228B22",
       },
       inputStyle: {
@@ -166,7 +165,6 @@ class ApplicationView extends React.Component {
         marginBottom: "2%",
         fontStyle: "Sans-serif",
         fontColor: "black",
-
       },
       textFieldStyle2: {
         background: "#edeae8",
@@ -195,10 +193,8 @@ class ApplicationView extends React.Component {
       },
       selectStyle: {
         background: "#edeae8",
-        // padding: "1%",
       },
       selectLabel: {
-        // padding: "12px 10px",
         padding: '1%',
       },
       signatureSectionStyle: {
@@ -206,17 +202,20 @@ class ApplicationView extends React.Component {
         paddingTop: "1%",
         paddingBottom: "1%",
         borderBottom: "1px solid black",
-        paddingRight: '5%',
-        // margin: '1%',
       },
       signatureTextStyle: {
         background: "#edeae8",
         padding: "1%",
-
       },
       dropDownValueStyle: {
         // paddingLeft: '2%',
         paddingTop: "4%",
+      },
+      cardStyle: {
+        paddingTop: "2%",
+        paddingBottom: "2%",
+        paddingLeft: "4%",
+        paddingRight: "4%",
       },
 
     };
@@ -302,14 +301,14 @@ class ApplicationView extends React.Component {
                             style={customStyle.selectLabel}
                           >
                             Application Status
-                      </InputLabel>
+                          </InputLabel>
 
 
                           <Select
                             SelectDisplayProps={{
                               style: {
                                 paddingLeft: "1%",
-                                paddingTop: "2%",
+                                paddingTop: "1.5%",
                               }
                             }}
                             MenuProps={{
@@ -331,7 +330,7 @@ class ApplicationView extends React.Component {
                               }}
                             >
                               Application Status
-                        </MenuItem>
+                            </MenuItem>
 
                             {this.props.options.map((option, key) => (
                               <MenuItem
@@ -883,23 +882,24 @@ class ApplicationView extends React.Component {
                 <p>Applicant Signature</p>
               </Typography>
 
-              <Card>
-                <CardBody>
-
+              <Card style={customStyle.cardStyle} >
+                <CardBody > 
                   <GridContainer style={customStyle.signatureSectionStyle} direction="row" justify="center" alignItems="center" >
 
                     <FormControlLabel
                       label="I hereby certify that the information provided above is true and correct. "
                       labelPlacement="start"
-                      control={<Checkbox
+                      inputProps={{
+                          marginLeft: "5px",
+                      }}
+                      control={ <Checkbox
                         style={customStyle.checkboxStyle}
                         name="is_declaration"
                         icon={this.state.application.is_declaration ? <Check className={classes.checkedIcon} /> : <Check className={classes.uncheckedIcon} />}
-                        disabled={true} />}
+                        disabled={true} /> }
                     />
 
                   </GridContainer>
-
                 </CardBody>
               </Card>
 
@@ -907,7 +907,7 @@ class ApplicationView extends React.Component {
 
           </GridItem>
 
-          <GridItem xs={12} sm={10} md={4} lg={4}className={classes.notesSectionStyle}>
+          <GridItem xs={12} sm={12} md={6} lg={4} className={classes.notesSectionStyle}>
 
             <CreateNotes application={this.state.application} application_id={this.props.match.params.id} />
 
