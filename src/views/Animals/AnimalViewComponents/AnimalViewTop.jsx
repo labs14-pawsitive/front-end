@@ -62,7 +62,7 @@ class AnimalViewTop extends React.Component {
         return (
            
                 <GridItem xs={12} sm={12} md={12} style={customStyle.gridItemStyle}>
-                <GridItem xs={12} sm={12} md={4}>
+                <GridItem xs={12} sm={12} md={8} lg={5}>
                     <GridList className={classes.gridList} >
                         <GridListTile key={this.props.animal.img_url} style={customStyle.imgCardStyle} >
 
@@ -83,7 +83,7 @@ class AnimalViewTop extends React.Component {
                     </GridList>
                 </GridItem>
 
-                <GridItem xs={12} sm={12} md={8} >
+                <GridItem xs={12} sm={12} md={4} lg={7}>
                     <div style={customStyle.titleStyle}>
                         {this.props.isEditing ?
                             <form style={customStyle.formGridStyle}>
