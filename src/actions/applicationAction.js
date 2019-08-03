@@ -8,7 +8,8 @@ export const FETCH_APP_FAILURE = 'FETCH_APP_FAILURE';
 export const fetchApplication = id => dispatch => {
     dispatch({ type: FETCH_APP_START });
     return axios
-    .get(`https://staging1-pawsnfind.herokuapp.com/api/applications/${id}`)
+    //.get(`https://staging1-pawsnfind.herokuapp.com/api/applications/${id}`)
+    .get(`http://localhost:8000/api/applications/${id}`)
     .then(res => {
         console.log('fetched application', res.data)
         dispatch({ type: FETCH_APP_SUCCESS, payload: res.data })

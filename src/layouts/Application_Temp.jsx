@@ -64,7 +64,8 @@ async componentWillMount() {
      // localStorage.setItem('shelterId', this.props.match.params.shelterId) 
           //checking for valid link => animal and shelter id match
         await axios
-        .get(`https://staging1-pawsnfind.herokuapp.com/api/animals/${this.props.match.params.animalId}/match/shelter/${this.props.match.params.shelterId}`)
+        //.get(`https://staging1-pawsnfind.herokuapp.com/api/animals/${this.props.match.params.animalId}/match/shelter/${this.props.match.params.shelterId}`)
+        .get(`http://localhost:8000/api/animals/${this.props.match.params.animalId}/match/shelter/${this.props.match.params.shelterId}`)
         .then(result => {
           console.log(result)
           this.setState({
@@ -96,7 +97,7 @@ async componentWillMount() {
     //if (!localStorage.getItem('animalId') && !localStorage.getItem('shelterId')) {
     if(this.state.match == false) {
       this.dangerAlert();
-    } else if(!localStorage.getItem('id_token') && !localStorage.getItem('user_id')) {
+    } else if(!localStorage.getItem('token') && !localStorage.getItem('user_id')) {
       this.warningAlert();
     } else {
       this.hideAlert();
@@ -168,7 +169,7 @@ async componentWillMount() {
             style={{ backgroundImage: "url(" + this.getBgImage() + ")" }}
           >
             {this.state.alert}
-            {this.state.match === true && localStorage.getItem('id_token') && localStorage.getItem('user_id')
+            {this.state.match === true && localStorage.getItem('token') && localStorage.getItem('user_id')
             ? 
             <ApplicationWizard animalId={this.state.animalId} shelterId={this.state.shelterId}/>
             : 

@@ -53,7 +53,7 @@ class AuthView extends React.Component {
         } 
       }
         return(
-          localStorage.getItem("id_token") 
+          localStorage.getItem("token") 
           ? 
         <ListItem className={classes.listItem} onClick={this.logout} style={customStyle.buttonWrapper}>
             <NavLink to="/">

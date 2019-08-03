@@ -93,6 +93,8 @@ class AddAnimalForm extends React.Component {
     this.handleChangeEnabled = this.handleChangeEnabled.bind(this);
   }
 
+  
+
   componentDidMount () {
     // const shelterId = localStorage.getItem('shelter_id')
     // TODO (SL): Use fake value until auth complete

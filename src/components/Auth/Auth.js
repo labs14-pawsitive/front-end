@@ -38,30 +38,32 @@ export default class Auth {
         let expiresAt = authResult.expiresIn * 1000 + new Date().getTime();
 
         // why do we have to set item in localstorage???
-        localStorage.setItem('access_token', authResult.accessToken)
-        localStorage.setItem('id_token', authResult.idToken)
-        localStorage.setItem('expires_at', expiresAt)
+        //localStorage.setItem('access_token', authResult.accessToken)
+        //localStorage.setItem('id_token', authResult.idToken)
+        //localStorage.setItem('expires_at', expiresAt)
 
         const decoded = jwtDecode(authResult.idToken)
         const user = {
-            email : decoded.email
+            email : decoded.email,
         }
 
         const config = {
             headers : {
-                Authorization: `Bearer ${localStorage.getItem('id_token')}`,
+                //Authorization: `Bearer ${localStorage.getItem('id_token')}`,
+                Authorization: `Bearer ${authResult.idToken}`,
                 withCredentials: true 
             }
         }
-
         const addUser = await axios.post(
-            'https://staging1-pawsnfind.herokuapp.com/api/auth',
+            //'https://staging1-pawsnfind.herokuapp.com/api/auth',
+            'http://localhost:8000/api/auth',
             user,
             config
         ).then( user => {
             localStorage.setItem('user_id', user.data.user_id)
             localStorage.setItem('shelter_id', user.data.shelter_id)
             localStorage.setItem('new_user', user.data.newUser)
+            localStorage.setItem('token', user.data.token)
         });
  
         console.log(addUser)

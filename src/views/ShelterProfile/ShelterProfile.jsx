@@ -13,6 +13,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { fetchShelter , fetchOptions, deleteShelterLoc, deleteShelterCon, updateShelterCon, updateShelterLoc } from '../../actions/shelterAction';
 import Locations from './Locations';
+import {axiosWithAuth} from 'axiosWithAuth';
 
 import LocationForm from './LocationForm';
 import ContactForm from './ContactForm';
@@ -74,6 +75,20 @@ TextMaskCustom.propTypes = {
       locations: [],
       contacts: []
     };
+  }
+
+
+  componentWillMount() {
+    //verifying shelter before proceeding
+    axiosWithAuth()
+      .get(`http://localhost:8000/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
+      .then( result => {
+        console.log(result)
+      })
+      .catch( error => {
+        console.log(error)
+        this.props.history.push('/')
+      })
   }
 
   componentDidMount() {

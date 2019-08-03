@@ -23,6 +23,8 @@ import { VectorMap } from "react-jvectormap";
 import axios from 'axios';
 import { NavLink } from 'react-router-dom'
 
+import {axiosWithAuth} from 'axiosWithAuth';
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Tooltip from "@material-ui/core/Tooltip";
@@ -97,10 +99,25 @@ class Dashboard extends React.Component {
   };
 
   
+  componentWillMount() {
+    //verifying shelter before proceeding
+    axiosWithAuth()
+      .get(`http://localhost:8000/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
+      .then( result => {
+        console.log(result)
+      })
+      .catch( error => {
+        console.log(error)
+        this.props.history.push('/')
+      })
+  }
+
 
   async componentDidMount() {
     await axios
-    .get(`https://staging1-pawsnfind.herokuapp.com/api/dashboard/${localStorage.getItem('shelter_id')}`)
+    //await axiosWithAuth()
+    //.get(`https://staging1-pawsnfind.herokuapp.com/api/dashboard/${localStorage.getItem('shelter_id')}`)
+    .get(`http://localhost:8000/api/dashboard/${localStorage.getItem('shelter_id')}`)
     .then(results => {
       if (results){
       this.setState({

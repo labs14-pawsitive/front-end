@@ -113,7 +113,8 @@ export const getAllOptions = (shelterID) => dispatch => {
       
       dispatch({ type: GET_ANIMAL_START })
       return axios
-        .get(`https://staging1-pawsnfind.herokuapp.com/api/animals/${animalID}`)
+        .get(`http://localhost:8000/api/animals/${animalID}`)
+        //.get(`https://staging1-pawsnfind.herokuapp.com/api/animals/${animalID}`)
         .then(res => {
           dispatch({ type: GET_ANIMAL_SUCCESS, payload: res.data })
           console.log('action: get all animal info', res.data)

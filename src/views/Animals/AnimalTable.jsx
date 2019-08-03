@@ -15,6 +15,9 @@ import { connect } from "react-redux";
 import ReactTable from "react-table";
 import { NavLink, Link } from "react-router-dom";
 import axios from 'axios';
+import {axiosWithAuth} from 'axiosWithAuth';
+
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Icon from "@material-ui/core/Icon";
@@ -70,11 +73,25 @@ class ReactTables extends React.Component {
     };
   }
 
+  componentWillMount() {
+    //verifying shelter before proceeding
+    axiosWithAuth()
+      .get(`http://localhost:8000/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
+      .then( result => {
+        console.log(result)
+      })
+      .catch( error => {
+        console.log(error)
+        this.props.history.push('/')
+      })
+  }
+
+
   componentDidMount() {
     axios
-    .get(`https://staging1-pawsnfind.herokuapp.com/api/animals/shelter/${localStorage.getItem('shelter_id')}`)
-    // .get(`https://staging1-pawsnfind.herokuapp.com/api/animals/shelter/${localStorage.getItem("shelter_id")}`)
-    // .get(`https://staging1-pawsnfind.herokuapp.com/api/animals/shelter/${localStorage.getItem('shelter_id')}`)
+    //.get(`https://staging1-pawsnfind.herokuapp.com/api/animals/shelter/${localStorage.getItem('shelter_id')}`)
+    .get(`http://localhost:8000/api/animals/shelter/${localStorage.getItem('shelter_id')}`)
+
     .then(animals => {
       const picStyle = { width: '100%' }
       console.log(animals)
@@ -92,6 +109,7 @@ class ReactTables extends React.Component {
             <div className="actions-right">
               {/* view animal */}
               <NavLink to={`/admin/animal/${animal.id}`}>
+             
                 <Button
                   justIcon
                   round
