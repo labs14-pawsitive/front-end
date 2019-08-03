@@ -26,6 +26,20 @@ class AnimalViewDetails extends React.Component {
     render() {
         const { classes } = this.props;
 
+        const theme = createMuiTheme({
+            overrides: {
+              MuiInput: {
+                underline: {
+                    
+                  "&&&&:hover:before": {
+                    borderBottom: "1px solid rgba(0, 0, 0, 0.54)"
+                  },
+                
+                }
+              }
+            }
+          });
+
         const customStyle = {
             titleStyle: {
                 padding: "10% 0px 0px 0px"
@@ -72,6 +86,7 @@ class AnimalViewDetails extends React.Component {
                 margin:"0px",
                 width:"100%",
                 color:"rgba(0, 0, 0, 0.87)",
+                borderBottom:"1px solid rgba(0, 0, 0, 0.54)"
             },
             colorStyle:{
                 color:"rgba(0, 0, 0, 0.87)",
@@ -267,6 +282,7 @@ class AnimalViewDetails extends React.Component {
 
                             <GridItem xs={12} sm={12} md={6} >
                                 <FormControl style={customStyle.form2ControlStyle} className={classes.formControl} >
+                                    <MuiThemeProvider theme={theme}>
                             <TextField style={customStyle.textStyle} 
                                 success={this.props.textState.colorState === "success"}
                                 error={this.props.textState.colorState === "error"}
@@ -279,11 +295,14 @@ class AnimalViewDetails extends React.Component {
                                 margin="normal"
                                 InputProps={{
                                     readOnly: this.props.isEditing ? false : true,
+                                    // disabled: this.props.isEditing ? false : true,
+                                    disableUnderline:true
                                 }}
                                 InputLabelProps={{
                                     style: { color: 'rgba(0, 0, 0, 0.87)' },
                                   }}
                             />
+                            </MuiThemeProvider>
                             </FormControl>
                             </GridItem>
 
