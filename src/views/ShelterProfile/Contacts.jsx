@@ -85,7 +85,11 @@ cancelClick = e => {
   e.preventDefault()
   this.setState({
     editMode : !this.state.editMode,
-    contact: this.props.contact})
+    contact: this.props.contact,
+    nameState: 'success',
+    emailState: 'success',
+    phoneState: 'success',
+  })
 }
 
 deleteContact = e => {

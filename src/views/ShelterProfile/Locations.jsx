@@ -65,7 +65,12 @@ cancelClick = e => {
   e.preventDefault()
   this.setState({
     editMode : !this.state.editMode, 
-    location: this.props.location})
+    location: this.props.location,
+    street_addressState: 'success',
+    cityState: 'success',
+    zipcodeState: 'success',
+    nicknameState: 'success',
+  })
 }
 
 updateLocation = e => {
