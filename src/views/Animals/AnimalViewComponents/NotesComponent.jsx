@@ -168,7 +168,7 @@ class NotesComponent extends React.Component {
                             multiline
                             className={classes.textField}
                             value={this.state.editNoteInfo.notes}
-                            onChange={this.handleUpdateNoteChange(3)}
+                            onChange={this.handleUpdateNoteChange(10)}
                             margin="normal"
 
                         /> :
