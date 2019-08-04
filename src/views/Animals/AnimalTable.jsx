@@ -70,14 +70,20 @@ class ReactTables extends React.Component {
     super(props);
     this.state = {
       animals: [],
+      shelterVerified: ""
+
     };
   }
 
+  
   componentWillMount() {
     //verifying shelter before proceeding
     axiosWithAuth()
-      .get(`http://localhost:8000/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
+      .get(`https://staging2-pawsnfind.herokuapp.com/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
       .then( result => {
+        this.setState({
+          shelterVerified : true
+        })
         console.log(result)
       })
       .catch( error => {
@@ -89,8 +95,8 @@ class ReactTables extends React.Component {
 
   componentDidMount() {
     axios
-    //.get(`https://staging1-pawsnfind.herokuapp.com/api/animals/shelter/${localStorage.getItem('shelter_id')}`)
-    .get(`http://localhost:8000/api/animals/shelter/${localStorage.getItem('shelter_id')}`)
+    //.get(`https://staging2-pawsnfind.herokuapp.com/api/animals/shelter/${localStorage.getItem('shelter_id')}`)
+    .get(`https://staging2-pawsnfind.herokuapp.com/api/animals/shelter/${localStorage.getItem('shelter_id')}`)
 
     .then(animals => {
       const picStyle = { width: '100%' }
@@ -164,6 +170,8 @@ class ReactTables extends React.Component {
       textDecoration: "none",
       textAlign: "right"
     }
+
+    if(this.state.shelterVerified !== true) return <div>Verifying animals</div>
 
     return (
       <GridContainer>

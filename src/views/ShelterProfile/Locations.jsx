@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { fetchShelter ,updateShelterLoc, deleteShelterLoc } from '../../actions/shelterAction';
+import {axiosWithAuth} from 'axiosWithAuth';
 
 
 // @material-ui/core components
@@ -30,8 +31,28 @@ class Locations extends Component {
             cityState: '',
             zipcodeState: '',
             nicknameState: '',
+            shelterVerified: ''
         }
 
+    }
+
+    verifyShelter = async(shelter_id) => {
+      //verifying shelter before proceeding
+      axiosWithAuth()
+        .get(`https://staging2-pawsnfind.herokuapp.com/api/auth/shelter/${shelter_id}`)
+        .then( result => { 
+          this.setState({
+            shelterVerified : true
+          })
+          console.log(result)
+        })
+        .catch( error => {
+          console.log(error)
+          this.setState({
+            shelterVerified : false
+          })
+          //this.props.history.push('/')
+        })
     }
 
 
@@ -65,18 +86,27 @@ updateLocation = e => {
   e.preventDefault()
 }
 
-deleteLocation = e => {
+deleteLocation = async(e) => {
     e.preventDefault()
-    this.props.deleteShelterLoc(this.props.location.id)
-    .then( () => {
-      this.props.updateShelter();
-    })
+    await this.verifyShelter(localStorage.getItem('shelter_id'))
+    if(this.state.shelterVerified) {
+      this.props.deleteShelterLoc(this.props.location.id)
+      .then( () => {
+        
+        this.props.updateShelter();
+        this.setState({
+          shelterVerified : ''
+        })
+      })
+    }
+    
 }
 
-updateSubmit = e => {
+updateSubmit = async(e) => {
   e.preventDefault()
-
-  const updatedLocation = {
+  await this.verifyShelter(localStorage.getItem('shelter_id'))
+  if(this.state.shelterVerified) {
+    const updatedLocation = {
       shelter_id: localStorage.getItem('shelter_id'),
       street_address: this.state.location.street_address,
       city: this.state.location.city,
@@ -93,6 +123,9 @@ updateSubmit = e => {
   this.props.updateShelterLoc(this.props.location.id, updatedLocation)
   .then( (res) => {
       this.props.updateShelter();
+      this.setState({
+        shelterVerified: ''
+      })
       console.log('UPDATESHELTERLOCATION:',localStorage.getItem('shelter_id'))
   })
   .catch(err => {
@@ -103,8 +136,10 @@ updateSubmit = e => {
     cityState: '',
     zipcodeState: '',
     nicknameState: '',
-    editMode : !this.state.editMode
+    editMode : !this.state.editMode,
   })  
+  }
+  
 }
 
 verifyLength(value, lengthNumber) {

@@ -66,14 +66,19 @@ class ApplicationTable extends React.Component {
     super(props);
     this.state = {
       applications: [],
+      shelterVerified: ""
+
     };
   }
 
   componentWillMount() {
     //verifying shelter before proceeding
     axiosWithAuth()
-      .get(`http://localhost:8000/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
+      .get(`https://staging2-pawsnfind.herokuapp.com/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
       .then( result => {
+        this.setState({
+          shelterVerified : true
+        })
         console.log(result)
       })
       .catch( error => {
@@ -81,13 +86,14 @@ class ApplicationTable extends React.Component {
         this.props.history.push('/')
       })
   }
+  
 
   componentDidMount() {
     axios
-    .get(`http://localhost:8000/api/applications/shelter/${localStorage.getItem('shelter_id')}`)
-    //.get(`https://staging1-pawsnfind.herokuapp.com/api/animals/shelter/${localStorage.getItem("shelter_id")}`)
-    // .get(`https://staging1-pawsnfind.herokuapp.com/api/applications/shelter/${localStorage.getItem('shelter_id')}`)
-    //.get(`https://staging1-pawsnfind.herokuapp.com/api/applications/shelter/${localStorage.getItem('shelter_id')}`)
+    .get(`https://staging2-pawsnfind.herokuapp.com/api/applications/shelter/${localStorage.getItem('shelter_id')}`)
+    //.get(`https://staging2-pawsnfind.herokuapp.com/api/animals/shelter/${localStorage.getItem("shelter_id")}`)
+    // .get(`https://staging2-pawsnfind.herokuapp.com/api/applications/shelter/${localStorage.getItem('shelter_id')}`)
+    //.get(`https://staging2-pawsnfind.herokuapp.com/api/applications/shelter/${localStorage.getItem('shelter_id')}`)
     .then(applications => {
       console.log(applications)
       
@@ -158,6 +164,8 @@ class ApplicationTable extends React.Component {
       textDecoration: "none",
       textAlign: "right"
     }
+
+    if(this.state.shelterVerified !== true) return <div>Verifying applications</div>
 
     return (
 

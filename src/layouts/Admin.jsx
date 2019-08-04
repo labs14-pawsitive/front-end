@@ -20,6 +20,8 @@ import PropTypes from "prop-types";
 import { Switch, Route, Redirect } from "react-router-dom";
 import axios from "axios"
 import { connect } from "react-redux";
+import { axiosWithAuth } from 'axiosWithAuth';
+
 
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
@@ -59,13 +61,26 @@ class Dashboard extends React.Component {
 
   }
   
+    componentWillMount() {
+      //verifying shelter before proceeding
+      axiosWithAuth()
+        .get(`https://staging2-pawsnfind.herokuapp.com/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
+        .then( result => {
+          console.log(result)
+        })
+        .catch( error => {
+          console.log(error)
+          this.props.history.push('/')
+        })
+    }
+
   componentDidMount() {
     
     //window.onpopstate = this.onBackButtonEvent;
 
     axios
-    //.get(`https://staging1-pawsnfind.herokuapp.com/api/shelters/${localStorage.getItem('shelter_id')}`)
-      .get(`http://localhost:8000/api/shelters/${localStorage.getItem('shelter_id')}`)
+    //.get(`https://staging2-pawsnfind.herokuapp.com/api/shelters/${localStorage.getItem('shelter_id')}`)
+      .get(`https://staging2-pawsnfind.herokuapp.com/api/shelters/${localStorage.getItem('shelter_id')}`)
       .then( shelter => {
       console.log(shelter.data)
       this.setState({

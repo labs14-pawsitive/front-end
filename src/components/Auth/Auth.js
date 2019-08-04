@@ -55,8 +55,8 @@ export default class Auth {
             }
         }
         const addUser = await axios.post(
-            //'https://staging1-pawsnfind.herokuapp.com/api/auth',
-            'http://localhost:8000/api/auth',
+            //'https://staging2-pawsnfind.herokuapp.com/api/auth',
+            'https://staging2-pawsnfind.herokuapp.com/api/auth',
             user,
             config
         ).then( user => {

@@ -10,7 +10,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   
   //verifying user before proceeding
   axiosWithAuth()
-  .get(`http://localhost:8000/api/auth/user/${localStorage.getItem('user_id')}`)
+  .get(`https://staging2-pawsnfind.herokuapp.com/api/auth/user/${localStorage.getItem('user_id')}`)
   .then( result => {
     console.log(result)
     verified = true;  

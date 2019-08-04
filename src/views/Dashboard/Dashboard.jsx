@@ -94,19 +94,23 @@ class Dashboard extends React.Component {
     recent_application : [],
     shelter_info : [],
     donationRawSeries : [],
-    applicationRawSeries : []
-
+    applicationRawSeries : [],
+    shelterVerified : ""
   };
 
   
   componentWillMount() {
     //verifying shelter before proceeding
     axiosWithAuth()
-      .get(`http://localhost:8000/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
+      .get(`https://staging2-pawsnfind.herokuapp.com/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
       .then( result => {
+        this.setState({
+          shelterVerified: true
+        })
         console.log(result)
       })
       .catch( error => {
+
         console.log(error)
         this.props.history.push('/')
       })
@@ -116,8 +120,8 @@ class Dashboard extends React.Component {
   async componentDidMount() {
     await axios
     //await axiosWithAuth()
-    //.get(`https://staging1-pawsnfind.herokuapp.com/api/dashboard/${localStorage.getItem('shelter_id')}`)
-    .get(`http://localhost:8000/api/dashboard/${localStorage.getItem('shelter_id')}`)
+    //.get(`https://staging2-pawsnfind.herokuapp.com/api/dashboard/${localStorage.getItem('shelter_id')}`)
+    .get(`https://staging2-pawsnfind.herokuapp.com/api/dashboard/${localStorage.getItem('shelter_id')}`)
     .then(results => {
       if (results){
       this.setState({
@@ -207,7 +211,8 @@ class Dashboard extends React.Component {
 
     }
     
-    if(!this.state.shelter_info[0]) return <div>Still loading data</div>
+    if(this.state.shelterVerified !== true) return <div>Verifying Shelter</div>
+    else if(!this.state.shelter_info[0]) return <div>Still loading data</div>
 
     return (
       

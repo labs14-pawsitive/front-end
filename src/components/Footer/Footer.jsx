@@ -48,21 +48,28 @@ function Footer({ ...props }) {
       <div className={container}>
         
        <div className={classes.left}>
-
-       <List className={classes.list}>
-       <ListItem className={classes.inlineBlock}>
-              <a href="/shelter-signup" className={block}>
-               Register Your Shelter
-              </a>
-            </ListItem>
-      
-       {/* 
-          
-            <ListItem className={classes.inlineBlock}>
-              <a href="/" className={block}>
+         <List className={classes.list}>
+           <ListItem className={classes.inlineBlock}>
+              <a href="/" 
+              className={block}
+              target={window.location.pathname.indexOf("/admin/") !== -1 ? "_blank" : ""}
+              >
                Home
               </a>
             </ListItem>
+
+          {window.location.pathname.indexOf("/admin/") !== -1 
+          ? 
+          null
+          : 
+          <ListItem className={classes.inlineBlock}>
+              <a href="/shelter-signup" className={block}>
+              Register Your Shelter
+            </a>
+          </ListItem>
+         }
+
+            {/* 
             <ListItem className={classes.inlineBlock}>
               <a href="#team" className={block}>
                 Team

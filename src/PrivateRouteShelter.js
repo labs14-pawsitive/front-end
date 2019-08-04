@@ -9,7 +9,7 @@ const  PrivateRoute = ({ component: Component, ...rest }) => {
   
     //verifying shelter before proceeding
   axiosWithAuth()
-  .get(`http://localhost:8000/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
+  .get(`https://staging2-pawsnfind.herokuapp.com/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
   .then( result => {
     console.log(result)
     verified = true;

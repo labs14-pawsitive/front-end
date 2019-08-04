@@ -69,7 +69,7 @@ class ApplicationView extends React.Component {
   verifyShelter = async (shelter_id) => {
     //verifying shelter before proceeding
     await axiosWithAuth()
-      .get(`http://localhost:8000/api/auth/shelter/${shelter_id}`)
+      .get(`https://staging2-pawsnfind.herokuapp.com/api/auth/shelter/${shelter_id}`)
       .then( result => {
         this.setState({
           shelterVerified : true

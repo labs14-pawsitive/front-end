@@ -73,23 +73,36 @@ TextMaskCustom.propTypes = {
       editMode : false,
       shelter : {},
       locations: [],
-      contacts: []
+      contacts: [],
+      shelterVerified: ""
     };
   }
 
 
   componentWillMount() {
     //verifying shelter before proceeding
+    this.verifyShelter(localStorage.getItem('shelter_id'))
+  }
+
+  verifyShelter = async(shelter_id) => {
+    //verifying shelter before proceeding
     axiosWithAuth()
-      .get(`http://localhost:8000/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
-      .then( result => {
+      .get(`https://staging2-pawsnfind.herokuapp.com/api/auth/shelter/${shelter_id}`)
+      .then( result => { 
+        this.setState({
+          shelterVerified : true
+        })
         console.log(result)
       })
       .catch( error => {
         console.log(error)
+        this.setState({
+          shelterVerified : false
+        })
         this.props.history.push('/')
       })
   }
+
 
   componentDidMount() {
     this.updateShelter();
@@ -154,7 +167,10 @@ render() {
           color:"#333333 !important",
         }
       }
-  
+
+if(this.state.shelterVerified !== true) return <div>Verifying shelter</div>
+
+      
 return (
     <div>
       <GridContainer>
