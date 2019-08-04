@@ -66,6 +66,7 @@ const mapNotesStyle = {
   editButtonStyle: {
     fontSize: '15px',
     color: 'grey',
+
  },
  deleteButtonStyle: {
   fontSize: '15px',
@@ -74,6 +75,9 @@ const mapNotesStyle = {
  headerStyle: {
   fontWeight: "bold",
 },
+buttonStyling: {
+  marginRight: '20px',
+}
 
 };
 
