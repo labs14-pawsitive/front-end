@@ -166,7 +166,7 @@ updateSubmit = async(e) => {
 
   } else {console.log(' Locations Fields not validated')}
 
-    }
+
 
 }
 
