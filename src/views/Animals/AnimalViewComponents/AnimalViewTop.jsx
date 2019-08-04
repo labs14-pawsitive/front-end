@@ -42,7 +42,7 @@ class AnimalViewTop extends React.Component {
                 padding: "10% 0px 0px 0px"
             },
             form1ControlStyle: {
-                width: "50%",
+                width: "100%",
                 marginRight: "1%",
             },
             gridItemStyle: {
@@ -80,7 +80,7 @@ class AnimalViewTop extends React.Component {
                     <div style={customStyle.titleStyle}>
                         {this.props.isEditing ?
                             <form>
-                                <TextField
+                                <TextField  style={customStyle.form1ControlStyle}
                                     success={this.props.textState.nameState === "success"}
                                     error={this.props.textState.nameState === "error"}
 
@@ -92,7 +92,7 @@ class AnimalViewTop extends React.Component {
                                     margin="normal"
                                 />
 
-                                <TextField
+                                <TextField  style={customStyle.form1ControlStyle}
                                     success={this.props.textState.descriptionState === "success"}
                                     error={this.props.textState.descriptionState === "error"}
 
