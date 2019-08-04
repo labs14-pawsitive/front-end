@@ -343,4 +343,3 @@ export default connect(
   mapStateToProps,
   { fetchShelter, fetchOptions, deleteShelterLoc, deleteShelterCon, updateShelterCon, updateShelterLoc }
 )(withStyles(shelterProfileStyles)(ShelterProfile))
-
