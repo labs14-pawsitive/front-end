@@ -152,7 +152,7 @@ updateSubmit = async(e) => {
     editMode : !this.state.editMode
   })
 } else {console.log(' Locations Fields not validated')}
-  }
+
 }
 
 verifyLength(value, lengthNumber) {
