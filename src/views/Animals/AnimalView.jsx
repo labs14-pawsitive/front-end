@@ -97,8 +97,13 @@ class AnimalView extends React.Component {
         nameState: 'success'
       },
       breedState: 'success',
-      shelterVerified: "",
+      shelterVerified: ""
     }
+  }
+
+
+  componentWillMount() {
+    this.verifyShelter(localStorage.getItem('shelter_id'))
   }
 
   componentDidMount() {
@@ -524,14 +529,14 @@ class AnimalView extends React.Component {
         paddingRight: '12%'
       },
     }
+
+
     if(this.state.shelterVerified !== true) return <div>Verifying animal</div>
     
     return (
       <div>
         <GridContainer>
-
-          <GridItem xs={12} sm={12} md={8} lg={8}>
-
+          <GridItem xs={12} sm={12} md={12} lg={8}>
             <Card>
               <GridContainer style={customStyle.containerStyle}>
                 <AnimalViewTop
@@ -634,3 +639,4 @@ export default connect(
   }
 )(withStyles(regularFormsStyle)(AnimalView))
 
+        //export default withStyles(extendedFormsStyle)(AnimalView);

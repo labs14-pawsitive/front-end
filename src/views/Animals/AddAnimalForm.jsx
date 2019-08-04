@@ -466,9 +466,7 @@ class AddAnimalForm extends React.Component {
             imageLimit={1} 
             editable={true} 
             callback={this.handleImgUploadResponse} 
- 
             url="https://staging2-pawsnfind.herokuapp.com/api/pictures"
- 
           />
         </GridItem>
         <GridItem xs={12} sm={12} md={12}>

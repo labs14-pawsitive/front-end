@@ -110,18 +110,10 @@ class ApplicationTable extends React.Component {
           actions: (
             <div className="actions-right">
               <NavLink to={`/admin/application/${application.id}`}>
-                {/* <Button
-                  justIcon
-                  round
-                  simple
-                  color="info"
-                  className="view"
-                >
+                <Button color="success">
                   <Search />
-                </Button> */}
-                 <Button color="success">
-          <Search />
-        </Button>
+                  </Button>
+                
               </NavLink>{" "}
             </div>
           )
@@ -181,7 +173,7 @@ class ApplicationTable extends React.Component {
                 </CardIcon>
                 <p className={classes.cardCategory} style={card_category}>Total Applications</p>
                 <h3 className={classes.cardTitle} style={card_title}>
-                  {this.state.applications.length} <small>Applications</small>
+                  {this.state.applications.length} <small>Application{this.state.applications.length > 1 ? "s" : "" }</small>
                 </h3>
               </CardHeader>
               <CardFooter stats>
@@ -270,12 +262,3 @@ export default connect(
   {}
 )(withStyles(styles)(ApplicationTable))
 
-
-//export default withStyles(styles)(ReactTables);
-
-/*
-export default connect(
-  mapStateToProps,
-  {}
-)(ReactTables)
-*/

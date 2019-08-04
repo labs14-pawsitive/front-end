@@ -282,12 +282,3 @@ export default connect(
   {}
 )(withStyles(styles)(ReactTables))
 
-
-//export default withStyles(styles)(ReactTables);
-
-/*
-export default connect(
-  mapStateToProps,
-  {}
-)(ReactTables)
-*/
