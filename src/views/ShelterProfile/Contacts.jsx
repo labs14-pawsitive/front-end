@@ -57,9 +57,9 @@ class Contacts extends Component {
         this.state = {
             editMode: false,
             contact : this.props.contact,
-            nameState: '',
-            emailState: '',
-            phoneState: '',
+            nameState: 'success',
+            emailState: 'success',
+            phoneState: 'success',
         }
 
     }
@@ -81,6 +81,10 @@ changeHandler = e => {
     })
   }
       
+cancelClick = e => {
+  e.preventDefault()
+  this.setState({editMode : !this.state.editMode})
+}
 
 deleteContact = e => {
     e.preventDefault()
@@ -92,7 +96,7 @@ deleteContact = e => {
 
 updateSubmit = e => {
     e.preventDefault()
-
+    if (this.isValidated()){
     const updatedContact = {
         name: this.state.contact.name,
         email: this.state.contact.email,
@@ -116,11 +120,11 @@ updateSubmit = e => {
     });
     this.setState({
       editMode : !this.state.editMode,
-      nameState: '',
-      emailState: '',
-      phoneState: '',
+      nameState: 'success',
+      emailState: 'success',
+      phoneState: 'success',
     })
- 
+  } else {console.log(' Locations Fields not validated')}
 }
 
 //---------Verification for fields:
@@ -235,7 +239,7 @@ isValidated() {
                   <CustomInput
                     labelText="Name"
                     id="name"
-                    success={this.state.nameState === "success"}
+                    success={this.state.editMode? this.state.nameState === "success" : null}
                     error={this.state.nameState === "error"}
 
                     formControlProps={{
@@ -256,7 +260,7 @@ isValidated() {
                   <CustomInput
                     labelText="Email address"
                     id="email"
-                    success={this.state.emailState === "success"}
+                    success={this.state.editMode? this.state.emailState === "success" : null }
                     error={this.state.emailState === "error"}
                     formControlProps={{
                       fullWidth: true,
@@ -275,7 +279,7 @@ isValidated() {
                   <CustomInput
                     labelText="Phone Number"
                     id="phone"
-                    success={this.state.phoneState === "success"}
+                    success={this.state.editMode? this.state.phoneState === "success": null}
                     error={this.state.phoneState === "error"}
                 
                     formControlProps={{
@@ -298,6 +302,12 @@ isValidated() {
             {this.state.editMode && this.props.error && <span style={customStyle.errorColor}>
                 <small>Error: Contact is associated with an existing location.</small> </span>}
             <GridItem xs={12} sm={12} md={12}>
+            {this.state.editMode && <Button size= "sm" 
+              color="rose" 
+              className={classes.updateProfileButton}
+               onClick={this.cancelClick}>
+                Cancel
+              </Button> }
             <Button 
                 size= "sm" 
                 color="rose" 
@@ -312,7 +322,7 @@ isValidated() {
               className={classes.updateProfileButton}
                onClick={this.deleteContact}>
                 Delete
-              </Button> }
+                  </Button>}
                   </GridItem>
             </GridItem>
               </GridContainer>

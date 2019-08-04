@@ -66,7 +66,6 @@ class LocationForm extends React.Component {
     // }
 
 
-// Dialog functions 
 
     handleClickOpen = () => {
         this.setState({
