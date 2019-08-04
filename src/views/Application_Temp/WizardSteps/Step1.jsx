@@ -133,7 +133,7 @@ class Step1 extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('https://staging1-pawsnfind.herokuapp.com/api/internal/paws/options/3')
+    axios.get('https://staging2-pawsnfind.herokuapp.com/api/internal/paws/options/3')
     .then(options => {
       this.setState({
         options: options.data.states
@@ -508,7 +508,7 @@ class Step1 extends React.Component {
           //  error={this.state.phoneState === "error"}
             labelText={
               <span>
-                Cell Number <small>(required)</small>
+                Cell Number 
               </span>
             }
             id="cell"

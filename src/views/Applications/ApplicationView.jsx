@@ -14,6 +14,7 @@ import { connect } from "react-redux";
 import moment from 'moment';
 import CreateNotes from "../Components/Application/CreateNotes";
 import { fetchOptions, fetchApplication, updateApplication } from "../../actions/applicationAction";
+import {axiosWithAuth} from 'axiosWithAuth';
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -36,6 +37,7 @@ import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 
 import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
+import { async } from "q";
 
 
 class ApplicationView extends React.Component {
@@ -48,6 +50,8 @@ class ApplicationView extends React.Component {
       options: [],
 
       statusChanged: false,
+
+      shelterVerified : ""
     };
     this.handleChange = this.handleChange.bind(this);
 
@@ -58,7 +62,26 @@ class ApplicationView extends React.Component {
 
     await this.props.fetchApplication(this.props.match.params.id)
 
+    this.verifyShelter(this.props.application.shelter_id)
+
   };
+
+  verifyShelter = async (shelter_id) => {
+    //verifying shelter before proceeding
+    await axiosWithAuth()
+      .get(`https://staging2-pawsnfind.herokuapp.com/api/auth/shelter/${shelter_id}`)
+      .then( result => {
+        this.setState({
+          shelterVerified : true
+        })
+      })
+      .catch( error => {
+        this.setState({
+          shelterVerified : false
+        })
+        this.props.history.push('/admin/currentApplications')
+      })
+  }
 
 
   loadOptions = async () => {
@@ -218,6 +241,9 @@ class ApplicationView extends React.Component {
       },
 
     };
+
+
+    if(this.state.shelterVerified !== true) return <div>Verifying application</div>
 
     return (
       <>

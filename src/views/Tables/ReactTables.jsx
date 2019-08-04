@@ -171,8 +171,8 @@ class ReactTables extends React.Component {
 
   componentDidMount() {
     axios
-    //.get(`https://staging1-pawsnfind.herokuapp.com/api/animals/shelter/${localStorage.getItem("shelter_id")}`)
-    .get(`https://staging1-pawsnfind.herokuapp.com/api/animals/shelter/${localStorage.getItem('shelter_id')}`)
+    //.get(`https://staging2-pawsnfind.herokuapp.com/api/animals/shelter/${localStorage.getItem("shelter_id")}`)
+    .get(`https://staging2-pawsnfind.herokuapp.com/api/animals/shelter/${localStorage.getItem('shelter_id')}`)
     .then(animals => {
       const picStyle = { width: '100%' }
       console.log(animals)

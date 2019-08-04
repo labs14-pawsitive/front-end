@@ -18,6 +18,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addShelterLoc , fetchOptions, fetchShelter  } from "../../actions/shelterAction";
+import {axiosWithAuth} from 'axiosWithAuth';
+
 
 import shelterProfileStyles from "assets/jss/material-dashboard-pro-react/views/shelterProfileStyles.jsx";
 
@@ -58,6 +60,7 @@ class LocationForm extends React.Component {
             shelter_contact_id: '',
             open: false,
             fullWidth: true,
+            shelterVerified : ''
         };
     }
 
@@ -66,6 +69,27 @@ class LocationForm extends React.Component {
     // }
 
 
+    verifyShelter = async(shelter_id) => {
+      //verifying shelter before proceeding
+      axiosWithAuth()
+        .get(`https://staging2-pawsnfind.herokuapp.com/api/auth/shelter/${shelter_id}`)
+        .then( result => { 
+          this.setState({
+            shelterVerified : true
+          })
+          console.log(result)
+        })
+        .catch( error => {
+          console.log(error)
+          this.setState({
+            shelterVerified : false
+          })
+          //this.props.history.push('/')
+        })
+    }
+
+
+// Dialog functions 
 
     handleClickOpen = () => {
         this.setState({
@@ -91,41 +115,49 @@ class LocationForm extends React.Component {
 
 //
 
-    handleSubmit = e => {
+    handleSubmit = async(e) => {
         e.preventDefault()
-        if (this.isValidated()) {
-        const newLocation = {
+        await this.verifyShelter(localStorage.getItem('shelter_id'))
+        if(this.state.shelterVerified) {
+          const newLocation = {
             shelter_id: localStorage.getItem('shelter_id'),
             street_address: this.state.street_address,
             city: this.state.city,
             zipcode: this.state.zipcode,
             state_id: this.state.state_id,
             nickname: this.state.nickname,
+            phone_number: '7012258948',
             shelter_contact_id: this.state.shelter_contact_id
             }
 
-        console.log(newLocation)
+          console.log(newLocation)
 
-        this.props.addShelterLoc(localStorage.getItem('shelter_id'), newLocation)
+          this.props.addShelterLoc(localStorage.getItem('shelter_id'), newLocation)
 
-        .then( () => {
-            this.props.updateShelter();
-        });
+          .then( () => {
+              this.props.updateShelter();
+              this.setState({
+                shelterVerified : ''
+              })
+          });
 
-        this.handleClose()
-        this.setState({
-            street_address: '',
-            street_addressState: '',
-            city: '',
-            cityState: '',
-            zipcode: '',
-            zipcodeState: '',
-            state_id: '',
-            nickname: '',
-            nicknameState: '',
-            shelter_contact_id: '',
-        })
-      } else {console.log(' Locations Fields not validated')}
+          this.handleClose()
+          this.setState({
+              street_address: '',
+              street_addressState: '',
+              city: '',
+              cityState: '',
+              zipcode: '',
+              zipcodeState: '',
+              state_id: '',
+              nickname: '',
+              nicknameState: '',
+              shelter_contact_id: '',
+          })
+          }
+
+        
+        
     }
 
     changeHandler = e => {
@@ -193,24 +225,20 @@ class LocationForm extends React.Component {
     
       isValidated() {
         if (
-          this.state.nicknameState === "success" &&
-          this.state.street_addressState === "success" &&
-          this.state.cityState === "success" &&
-          this.state.zipcodeState === "success"
+          this.state.nameState === "success" &&
+          this.state.phoneState === "success" &&
+          this.state.emailState === "success"
         ) {
           return true;
         } else {
-          if (this.state.nicknameState !== "success") {
-            this.setState({ nicknameState: "error" });
+          if (this.state.nameState !== "success") {
+            this.setState({ nameState: "error" });
           }
-          if (this.state.street_addressState !== "success") {
-            this.setState({ street_addressState: "error" });
+          if (this.state.phoneState !== "success") {
+            this.setState({ phoneState: "error" });
           }
-          if (this.state.cityState !== "success") {
-            this.setState({ cityState: "error" });
-          }
-          if (this.state.zipcodeState !== "success") {
-            this.setState({ zipcodeState: "error" });
+          if (this.state.emailState !== "success") {
+            this.setState({ emailState: "error" });
           }
         }
         return false;

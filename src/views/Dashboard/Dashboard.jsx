@@ -23,6 +23,8 @@ import { VectorMap } from "react-jvectormap";
 import axios from 'axios';
 import { NavLink } from 'react-router-dom'
 
+import {axiosWithAuth} from 'axiosWithAuth';
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Tooltip from "@material-ui/core/Tooltip";
@@ -92,15 +94,34 @@ class Dashboard extends React.Component {
     recent_application : [],
     shelter_info : [],
     donationRawSeries : [],
-    applicationRawSeries : []
-
+    applicationRawSeries : [],
+    shelterVerified : ""
   };
 
   
+  componentWillMount() {
+    //verifying shelter before proceeding
+    axiosWithAuth()
+      .get(`https://staging2-pawsnfind.herokuapp.com/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
+      .then( result => {
+        this.setState({
+          shelterVerified: true
+        })
+        console.log(result)
+      })
+      .catch( error => {
+
+        console.log(error)
+        this.props.history.push('/')
+      })
+  }
+
 
   async componentDidMount() {
     await axios
-    .get(`https://staging1-pawsnfind.herokuapp.com/api/dashboard/${localStorage.getItem('shelter_id')}`)
+    //await axiosWithAuth()
+    //.get(`https://staging2-pawsnfind.herokuapp.com/api/dashboard/${localStorage.getItem('shelter_id')}`)
+    .get(`https://staging2-pawsnfind.herokuapp.com/api/dashboard/${localStorage.getItem('shelter_id')}`)
     .then(results => {
       if (results){
       this.setState({
@@ -178,16 +199,20 @@ class Dashboard extends React.Component {
         overflow: "hidden"
       },
       cardHeight : {
-        minHeight: "150px"
+        minHeight: "180px"
       }, 
      bottomFooter : {
         position: "absolute",
         bottom: '0',
-        
+      },
+      tightLineHeight : {
+        lineHeight : "1.2em"
       }
+
     }
     
-    if(!this.state.shelter_info[0]) return <div>Still loading data</div>
+    if(this.state.shelterVerified !== true) return <div>Verifying Shelter</div>
+    else if(!this.state.shelter_info[0]) return <div>Still loading data</div>
 
     return (
       
@@ -203,7 +228,7 @@ class Dashboard extends React.Component {
                   {this.state.animal_count.length > 0 
                   ? 
                   this.state.animal_count.map((count, key) => (
-                    <h3 className={classes.cardTitle}>{count.count}{' '}{count.species}{count.count > 1 ? "s" : ""}</h3>
+                    <h3 className={classes.cardTitle} style={customStyle.tightLineHeight}>{count.count}{' '}{count.species}{count.count > 1 ? "s" : ""}</h3>
                   ))
                   :
                     <h3 className={classes.cardTitle}>0 Animals</h3>}
@@ -213,7 +238,7 @@ class Dashboard extends React.Component {
                 <div className={classes.stats}>
                  <Pets />
                   
-                    Current animals available for adoptions
+                    Animals available for adoptions
                  
                 </div>
               </CardFooter>

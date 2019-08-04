@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { fetchShelter ,updateShelterLoc, deleteShelterLoc } from '../../actions/shelterAction';
+import {axiosWithAuth} from 'axiosWithAuth';
 
 
 // @material-ui/core components
@@ -26,12 +27,35 @@ class Locations extends Component {
         this.state = {
             editMode: false,
             location: this.props.location,
+
             street_addressState: 'success',
             cityState: 'success',
             zipcodeState: 'success',
             nicknameState: 'success',
+
+            shelterVerified: ''
+
         }
 
+    }
+
+    verifyShelter = async(shelter_id) => {
+      //verifying shelter before proceeding
+      axiosWithAuth()
+        .get(`https://staging2-pawsnfind.herokuapp.com/api/auth/shelter/${shelter_id}`)
+        .then( result => { 
+          this.setState({
+            shelterVerified : true
+          })
+          console.log(result)
+        })
+        .catch( error => {
+          console.log(error)
+          this.setState({
+            shelterVerified : false
+          })
+          //this.props.history.push('/')
+        })
     }
 
 
@@ -70,23 +94,37 @@ updateLocation = e => {
   e.preventDefault()
 }
 
-deleteLocation = e => {
+deleteLocation = async(e) => {
     e.preventDefault()
-    this.props.deleteShelterLoc(this.props.location.id)
-    .then( () => {
-      this.props.updateShelter();
-    })
+    await this.verifyShelter(localStorage.getItem('shelter_id'))
+    if(this.state.shelterVerified) {
+      this.props.deleteShelterLoc(this.props.location.id)
+      .then( () => {
+        
+        this.props.updateShelter();
+        this.setState({
+          shelterVerified : ''
+        })
+      })
+    }
+    
 }
 
-updateSubmit = e => {
+updateSubmit = async(e) => {
   e.preventDefault()
+
   if (this.isValidated()) {
-  const updatedLocation = {
+
+  await this.verifyShelter(localStorage.getItem('shelter_id'))
+  if(this.state.shelterVerified) {
+    const updatedLocation = {
+
       shelter_id: localStorage.getItem('shelter_id'),
       street_address: this.state.location.street_address,
       city: this.state.location.city,
       zipcode: this.state.location.zipcode,
       state_id: this.state.location.state_id,
+      phone_number: '222-222-2222',
       nickname: this.state.location.nickname,
       shelter_contact_id: this.state.location.shelter_contact_id
   }
@@ -97,12 +135,16 @@ updateSubmit = e => {
   this.props.updateShelterLoc(this.props.location.id, updatedLocation)
   .then( (res) => {
       this.props.updateShelter();
+      this.setState({
+        shelterVerified: ''
+      })
       console.log('UPDATESHELTERLOCATION:',localStorage.getItem('shelter_id'))
   })
   .catch(err => {
     console.log('UpdateShelterLoc Error: ',err)
   });
   this.setState({
+
     street_addressState: 'success',
     cityState: 'success',
     zipcodeState: 'success',
@@ -110,6 +152,7 @@ updateSubmit = e => {
     editMode : !this.state.editMode
   })
 } else {console.log(' Locations Fields not validated')}
+
 }
 
 verifyLength(value, lengthNumber) {
@@ -302,7 +345,7 @@ isValidated() {
 
                   />
               </GridItem>
-               <GridItem xs={12} sm={12} md={5}>
+               <GridItem xs={12} sm={12} md={6}>
                <CustomInput
                     labelText="City"
                     id="city"
@@ -319,7 +362,7 @@ isValidated() {
                     style={this.state.editMode? "" : customStyle.shelterDisplayView}
                   />  
               </GridItem>
-              <GridItem xs={12} sm={12} md={3}>
+              <GridItem xs={12} sm={12} md={2}>
             <FormControl
             fullWidth
             className={classes.selectFormControl}
@@ -404,8 +447,7 @@ isValidated() {
                   onChange={this.selectChangeHandler}
                   inputProps={{
                       name: "shelter_contact_id",
-                      id: "shelter_contact_id",
-                      style: selectStyle.underline,
+                      id: "shelter_contact_id"
                   }}>
                       {this.props.contacts && this.props.contacts.map(contact => (
                           <MenuItem
@@ -421,7 +463,7 @@ isValidated() {
                             </Select>
                         </FormControl>
                         </GridItem>
-            
+    
             <GridItem xs={12} sm={12} md={12}>
             {this.state.editMode && <Button size= "sm" 
               color="rose" 
@@ -436,15 +478,15 @@ isValidated() {
               onClick={this.handleFormButtonToggle}
               onClick={this.state.editMode? this.updateSubmit : this.handleFormButtonToggle}
             >
-                {this.state.editMode? "Save" : "Edit"}
+                {this.state.editMode? "Save" : "Update"}
               </Button>
               
-            {this.state.editMode && <Button size= "sm" 
+            <Button size= "sm" 
                 color="rose" 
                 onClick={this.deleteLocation}
                 className={classes.updateProfileButton} >
                 Delete
-                </Button> }
+              </Button>
 
               
             </GridItem>

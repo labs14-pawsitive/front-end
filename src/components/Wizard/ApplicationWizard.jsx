@@ -31,6 +31,7 @@ import wizardStyle from "assets/jss/material-dashboard-pro-react/components/wiza
 class ApplicationWizard extends React.Component {
   constructor(props) {
     super(props);
+    
     var width;
     if (this.props.steps.length === 1) {
       width = "100%";
@@ -214,7 +215,7 @@ class ApplicationWizard extends React.Component {
     //post application process begins
     const application = {
       animal_id: this.props.animalId,
-      shelter_id: localStorage.getItem('shelter_id'),
+      shelter_id: this.props.shelterId,
       application_status_id: 1, 
       user_id: localStorage.getItem("user_id"),
       name: applicationData.about.name,
@@ -240,13 +241,12 @@ class ApplicationWizard extends React.Component {
     }
     console.log(application)
     
-    axios.post('https://staging1-pawsnfind.herokuapp.com//api/applications/', application)
+    //axios.post('https://staging2-pawsnfind.herokuapp.com/api/applications/', application)
+    axios.post('https://staging2-pawsnfind.herokuapp.com/api/applications/', application)
     .then(app => {
       this.setState({
         isSuccess : true
       })
-      localStorage.removeItem('animalId');
-      localStorage.removeItem('shelterId');
     })
     .catch(error => {
       this.setState({
