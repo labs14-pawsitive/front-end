@@ -138,7 +138,7 @@ class AnimalNotes extends React.Component {
             },
             urlClicked: {
                 padding:"10px",
-                border: "3px dashed green",
+                border: "3px dashed rgba(0, 0, 0, 0.42)",
                 textAlign: "center",
                 fontWeight:"700"
             }
