@@ -63,7 +63,9 @@ selectChangeHandler = e => {
 
 cancelClick = e => {
   e.preventDefault()
-  this.setState({editMode : !this.state.editMode})
+  this.setState({
+    editMode : !this.state.editMode, 
+    location: this.props.location})
 }
 
 updateLocation = e => {

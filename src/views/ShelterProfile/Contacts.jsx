@@ -83,7 +83,9 @@ changeHandler = e => {
       
 cancelClick = e => {
   e.preventDefault()
-  this.setState({editMode : !this.state.editMode})
+  this.setState({
+    editMode : !this.state.editMode,
+    contact: this.props.contact})
 }
 
 deleteContact = e => {
