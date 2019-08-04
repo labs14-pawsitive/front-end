@@ -38,12 +38,11 @@ class AnimalViewHealth extends React.Component {
             },
             adoptionStyle: {
                 paddingTop: "3%",
-
                 display: "flex",
                 flexWrap: 'wrap',
             },
             formControlStyle: {
-                width: "43%",
+                width: "100%",
                 paddingTop: "3%",
                 paddingBottom:"10%"
             },
@@ -52,7 +51,7 @@ class AnimalViewHealth extends React.Component {
                 color:"rgba(0, 0, 0, 0.87)"
             },
             healthTextStyle:{
-                width:"72%"
+                width:"100%"
             },
             colorStyle:{
                 color:"rgba(0, 0, 0, 0.87)"

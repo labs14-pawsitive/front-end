@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { fetchShelter ,updateShelterCon, deleteShelterCon } from '../../actions/shelterAction';
+import {axiosWithAuth} from 'axiosWithAuth';
 
 
 // @material-ui/core components
@@ -60,10 +61,30 @@ class Contacts extends Component {
             nameState: '',
             emailState: '',
             phoneState: '',
+            shelterVerified: ''
+
         }
 
     }
 
+    verifyShelter = async(shelter_id) => {
+      //verifying shelter before proceeding
+      axiosWithAuth()
+        .get(`https://staging2-pawsnfind.herokuapp.com/api/auth/shelter/${shelter_id}`)
+        .then( result => { 
+          this.setState({
+            shelterVerified : true
+          })
+          console.log(result)
+        })
+        .catch( error => {
+          console.log(error)
+          this.setState({
+            shelterVerified : false
+          })
+          //this.props.history.push('/')
+        })
+    }
  
 handleFormButtonToggle = e => {
         e.preventDefault();
@@ -82,31 +103,43 @@ changeHandler = e => {
   }
       
 
-deleteContact = e => {
+deleteContact = async(e) => {
     e.preventDefault()
-    this.props.deleteShelterCon(this.props.contact.id)
-    .then( () => {
-      this.props.updateShelter();
-    })
+    await this.verifyShelter(localStorage.getItem('shelter_id'))
+    if(this.state.shelterVerified) {
+      this.props.deleteShelterCon(this.props.contact.id)
+        .then( () => {
+          
+          this.props.updateShelter();
+        })
+        this.setState({
+            shelterVerified : ''
+          })
+    }
+    
 }
 
-updateSubmit = e => {
+updateSubmit = async(e) => {
     e.preventDefault()
-
-    const updatedContact = {
+    await this.verifyShelter(localStorage.getItem('shelter_id'))
+    if(this.state.shelterVerified) {
+      const updatedContact = {
         name: this.state.contact.name,
         email: this.state.contact.email,
         phone: this.state.contact.phone,
-        shelter_id: this.props.shelterID
+        shelter_id: localStorage.getItem('shelter_id')
     }
 
     console.log('UPDATECHANGE', updatedContact)
 
-
     this.props.updateShelterCon(this.props.contact.id, updatedContact)
     .then( (res) => {
+        
         this.props.updateShelter();
-        console.log('UPDATESHELTERLOCATION:',this.props.shelterID)
+        this.setState({
+          shelterVerified : ''
+        })
+        console.log('UPDATESHELTERLOCATION:',localStorage.getItem('shelter_id'))
     })
     .then( (res) => {
       console.log('update shelter location shelter:', res)
@@ -120,6 +153,9 @@ updateSubmit = e => {
       emailState: '',
       phoneState: '',
     })
+    }
+
+    
  
 }
 

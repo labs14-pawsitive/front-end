@@ -147,15 +147,12 @@ class CreateNotes extends React.Component {
             },
             notesMarginStyle: {
                 marginTop: "7%",
-                paddingLeft: "4%",
-                paddingRight: "4%",
             },
 
         };
 
         return (
             <>
-       
                 <Typography style={customStyle.headerStyle} >
                     <p> Notes </p>
                 </Typography>
@@ -182,7 +179,7 @@ class CreateNotes extends React.Component {
                                 justify="flex-end"
                                 className="addNoteStyle"
                             >
-                                <GridItem xs={3} sm={3} md={3}>
+                                <GridItem xs={3}>
                                     <Button
                                         variant="contained"
                                         color="transparent"
@@ -207,7 +204,7 @@ class CreateNotes extends React.Component {
                             </GridContainer>
                         </div>
 
-                        <GridContainer style={customStyle.notesMarginStyle}>
+                        <div style={customStyle.notesMarginStyle}>
                             {this.props.notes && this.props.notes.map(note => (
                                 <MapNotes
                                     note={note}
@@ -216,11 +213,9 @@ class CreateNotes extends React.Component {
                                     updateNotes={this.updateNotes}
                                 />
                             ))}
-                        </GridContainer>
+                        </div>
                     </CardBody>
                 </Card>
-
-        
             </>
         )
     }

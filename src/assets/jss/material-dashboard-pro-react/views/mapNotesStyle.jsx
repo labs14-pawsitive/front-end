@@ -71,7 +71,6 @@ const mapNotesStyle = {
  deleteButtonStyle: {
   fontSize: '15px',
   color: 'grey',
-
  },
  headerStyle: {
   fontWeight: "bold",

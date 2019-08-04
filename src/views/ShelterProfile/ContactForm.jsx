@@ -18,6 +18,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addShelterCon, fetchShelter } from "../../actions/shelterAction";
+import {axiosWithAuth} from 'axiosWithAuth';
+
 
 import shelterProfileStyles from "assets/jss/material-dashboard-pro-react/views/shelterProfileStyles.jsx";
 
@@ -90,8 +92,30 @@ class ContactForm extends React.Component {
             open: false,
             fullWidth: true,
             isValidatedState: false,
+            shelterVerified : ''
         };
     }
+
+
+    verifyShelter = async(shelter_id) => {
+      //verifying shelter before proceeding
+      axiosWithAuth()
+        .get(`https://staging2-pawsnfind.herokuapp.com/api/auth/shelter/${shelter_id}`)
+        .then( result => { 
+          this.setState({
+            shelterVerified : true
+          })
+          console.log(result)
+        })
+        .catch( error => {
+          console.log(error)
+          this.setState({
+            shelterVerified : false
+          })
+          //this.props.history.push('/')
+        })
+    }
+
 
 // Dialog functions 
 
@@ -116,21 +140,26 @@ class ContactForm extends React.Component {
 
 //
 
-    handleSubmit = e => {
-        if (this.isValidated) 
-        {e.preventDefault()
-        const newContact = {
+    handleSubmit = async(e) => { 
+      e.preventDefault()
+      await this.verifyShelter(localStorage.getItem('shelter_id'))
+       
+        if (this.isValidated && this.state.shelterVerified) {
+          const newContact = {
             name: this.state.name,
             email: this.state.email,
             phone: this.state.phone,
-            shelter_id: this.props.shelterID
+            shelter_id: localStorage.getItem('shelter_id')
             }
 
         console.log(newContact)
-        this.props.addShelterCon(this.props.shelterID, newContact)
+        this.props.addShelterCon(localStorage.getItem('shelter_id'), newContact)
 
         .then( () => {
             this.props.updateShelter()
+            this.setState({
+              shelterVerified : ''
+            })
         });
 
         this.handleClose()

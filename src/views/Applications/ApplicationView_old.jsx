@@ -55,8 +55,8 @@ class AppliationView extends React.Component {
   componentDidMount() {
 
     axios
-    // get(`https://staging1-pawsnfind.herokuapp.com/api/applications/${this.props.match.params.id}`)
-    .get(`https://staging1-pawsnfind.herokuapp.com/api/applications/${this.props.match.params.id}`)
+    // get(`https://staging2-pawsnfind.herokuapp.com/api/applications/${this.props.match.params.id}`)
+    .get(`https://staging2-pawsnfind.herokuapp.com/api/applications/${this.props.match.params.id}`)
     .then( application => {
      
       console.log('application', application.data)

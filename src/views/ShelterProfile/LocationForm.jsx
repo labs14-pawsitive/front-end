@@ -18,6 +18,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addShelterLoc , fetchOptions, fetchShelter  } from "../../actions/shelterAction";
+import {axiosWithAuth} from 'axiosWithAuth';
+
 
 import shelterProfileStyles from "assets/jss/material-dashboard-pro-react/views/shelterProfileStyles.jsx";
 
@@ -58,12 +60,34 @@ class LocationForm extends React.Component {
             shelter_contact_id: '',
             open: false,
             fullWidth: true,
+            shelterVerified : ''
         };
     }
 
     // componentDidMount(){
-    //     this.props.fetchOptions(this.props.shelterID);
+    //     this.props.fetchOptions(localStorage.getItem('shelter_id'));
     // }
+
+
+    verifyShelter = async(shelter_id) => {
+      //verifying shelter before proceeding
+      axiosWithAuth()
+        .get(`https://staging2-pawsnfind.herokuapp.com/api/auth/shelter/${shelter_id}`)
+        .then( result => { 
+          this.setState({
+            shelterVerified : true
+          })
+          console.log(result)
+        })
+        .catch( error => {
+          console.log(error)
+          this.setState({
+            shelterVerified : false
+          })
+          //this.props.history.push('/')
+        })
+    }
+
 
 
 // Dialog functions 
@@ -92,11 +116,12 @@ class LocationForm extends React.Component {
 
 //
 
-    handleSubmit = e => {
+    handleSubmit = async(e) => {
         e.preventDefault()
-
-        const newLocation = {
-            shelter_id: this.props.shelterID,
+        await this.verifyShelter(localStorage.getItem('shelter_id'))
+        if(this.state.shelterVerified) {
+          const newLocation = {
+            shelter_id: localStorage.getItem('shelter_id'),
             street_address: this.state.street_address,
             city: this.state.city,
             zipcode: this.state.zipcode,
@@ -106,27 +131,33 @@ class LocationForm extends React.Component {
             shelter_contact_id: this.state.shelter_contact_id
             }
 
-        console.log(newLocation)
+          console.log(newLocation)
 
-        this.props.addShelterLoc(this.props.shelterID, newLocation)
+          this.props.addShelterLoc(localStorage.getItem('shelter_id'), newLocation)
 
-        .then( () => {
-            this.props.updateShelter();
-        });
+          .then( () => {
+              this.props.updateShelter();
+              this.setState({
+                shelterVerified : ''
+              })
+          });
 
-        this.handleClose()
-        this.setState({
-            street_address: '',
-            street_addressState: '',
-            city: '',
-            cityState: '',
-            zipcode: '',
-            zipcodeState: '',
-            state_id: '',
-            nickname: '',
-            nicknameState: '',
-            shelter_contact_id: '',
-        })
+          this.handleClose()
+          this.setState({
+              street_address: '',
+              street_addressState: '',
+              city: '',
+              cityState: '',
+              zipcode: '',
+              zipcodeState: '',
+              state_id: '',
+              nickname: '',
+              nicknameState: '',
+              shelter_contact_id: '',
+          })
+          }
+
+        
         
     }
 

@@ -21,7 +21,8 @@ class NotesComponent extends React.Component {
         super(props)
         this.state = {
             isNoteEditing: false,
-            editNoteInfo: this.props.note,           
+            editNoteInfo: this.props.note,
+            restoreNote:this.props.note,           
             updateNoteState:"success"
             
         }
@@ -78,6 +79,7 @@ class NotesComponent extends React.Component {
                     (res) => {
                         this.setState({
                             isNoteEditing: false,
+                            restoreNote:this.state.editNoteInfo
                         });
                     }
                 )
@@ -102,7 +104,7 @@ class NotesComponent extends React.Component {
 
     submitDelete = (event, noteID) => {
         event.preventDefault()
-       
+        if (!this.state.isNoteEditing) {
         this.props.deleteNotes(this.state.editNoteInfo.animal_id, noteID)
             .then((res) =>
                 {
@@ -110,12 +112,19 @@ class NotesComponent extends React.Component {
                 this.setState({
                     isNoteEditing: false,
                 })
-            }
-            )
+            })
             .catch(error => {
                 console.log('delete: notes component: error ', error)
-            }
-            )
+            })
+        }
+        else {
+
+            this.setState({
+                editNoteInfo: this.state.restoreNote
+            })
+            console.log('restore note ',this.state.restoreNote.notes)
+            this.handleNoteToggle(event)
+        }
     }
 
     handleButton = (event) => {
@@ -179,12 +188,11 @@ class NotesComponent extends React.Component {
 
                 </CardContent>
                 <CardActions>
-                    <span style={customStyle.runningNoteButtonStyle}>
-                        <Button size="small" className={classes.button} 
-                        onClick={(event) => this.submitDelete(event, this.state.editNoteInfo.id)}
-                            style={{ display: this.state.isNoteEditing ? "block" : "none" }}>
-                            DELETE
-                            </Button>
+                    <span style={customStyle.runningNoteButtonStyle}>                        
+                            <Button size="small" className={classes.button}
+                            onClick={(event) => this.submitDelete(event, this.state.editNoteInfo.id)}>
+                            {this.state.isNoteEditing ? "CANCEL" : "DELETE"}
+                        </Button>
                         <Button size="small" className={classes.button}
                             onClick={this.handleButton}>
                             {this.state.isNoteEditing ? "SAVE" : "EDIT"}

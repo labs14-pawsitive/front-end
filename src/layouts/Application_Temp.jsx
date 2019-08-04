@@ -14,11 +14,13 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+
 import React from "react";
 import PropTypes from "prop-types";
-import { Route, } from "react-router-dom";
+import { Route, withRouter } from "react-router-dom";
 import Auth from "components/Auth/Auth.js"
 import SweetAlert from "react-bootstrap-sweetalert";
+import axios from 'axios';
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -47,28 +49,55 @@ class Application extends React.Component {
     super(props);
     this.state={
       alert: null,
-      show: false
+      show: false,
+      match: "",
+      animalId: "",
+      shelterId: ""
     }
   }
 
   wrapper = React.createRef();
 
-  componentWillMount() {
+async componentWillMount() {
     if(this.props.match.params.animalId && this.props.match.params.shelterId) {
-      localStorage.setItem('animalId', this.props.match.params.animalId )
-      localStorage.setItem('shelterId', this.props.match.params.shelterId) 
+     // localStorage.setItem('animalId', this.props.match.params.animalId )
+     // localStorage.setItem('shelterId', this.props.match.params.shelterId) 
+          //checking for valid link => animal and shelter id match
+        await axios
+        //.get(`https://staging2-pawsnfind.herokuapp.com/api/animals/${this.props.match.params.animalId}/match/shelter/${this.props.match.params.shelterId}`)
+        .get(`https://staging2-pawsnfind.herokuapp.com/api/animals/${this.props.match.params.animalId}/match/shelter/${this.props.match.params.shelterId}`)
+        .then(result => {
+          console.log(result)
+          this.setState({
+            match : true,
+            animalId : this.props.match.params.animalId,
+            shelterId : this.props.match.params.shelterId
+          })
+        })
+        .catch(error => {
+          this.setState({
+            match : false
+          })
+          console.log(error)
+        })
+    } else {
+      this.setState({
+        match : false
+      })
     } 
+      this.setAlert();   
+
   }
 
  componentDidMount() {
     document.body.style.overflow = "unset";
-    this.setAlert();
   }
 
   setAlert = () => {
-    if (!localStorage.getItem('animalId') && !localStorage.getItem('shelterId')) {
+    //if (!localStorage.getItem('animalId') && !localStorage.getItem('shelterId')) {
+    if(this.state.match == false) {
       this.dangerAlert();
-    } else if(!localStorage.getItem('id_token') && !localStorage.getItem('user_id')) {
+    } else if(!localStorage.getItem('token') && !localStorage.getItem('user_id')) {
       this.warningAlert();
     } else {
       this.hideAlert();
@@ -82,7 +111,7 @@ class Application extends React.Component {
           danger
           style={{ display: "block", marginTop: "-100px", color: "#777" }}
           title="You've entered an invalid link"
-          onConfirm={() => this.hideAlert()}
+          onConfirm={() => this.backHome()}
           confirmBtnCssClass={
             this.props.classes.button + " " + this.props.classes.success
           }
@@ -112,6 +141,10 @@ class Application extends React.Component {
     });
   }
 
+  backHome() {
+    this.props.history.push('/')
+  }
+
   hideAlert() {
     this.setState({
       alert: null
@@ -124,7 +157,7 @@ class Application extends React.Component {
   
   render() {
     const { classes, ...rest } = this.props;
-    
+    if(this.state.match === "") return <div></div>
     return (
       <div>
         <TempNavBar brandText="Pawsnfind" {...rest} />
@@ -136,9 +169,9 @@ class Application extends React.Component {
             style={{ backgroundImage: "url(" + this.getBgImage() + ")" }}
           >
             {this.state.alert}
-            {localStorage.getItem('animalId') && localStorage.getItem('shelterId') && localStorage.getItem('id_token') && localStorage.getItem('user_id')
+            {this.state.match === true && localStorage.getItem('token') && localStorage.getItem('user_id')
             ? 
-            <ApplicationWizard animalId={localStorage.getItem('animalId')} shelterId={localStorage.getItem('shelterId')}/>
+            <ApplicationWizard animalId={this.state.animalId} shelterId={this.state.shelterId}/>
             : 
             null
             } 
@@ -154,4 +187,4 @@ Application.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(applicationTempStyle)(Application);
+export default withRouter(withStyles(applicationTempStyle)(Application));

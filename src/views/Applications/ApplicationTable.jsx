@@ -15,6 +15,8 @@ import { connect } from "react-redux";
 import ReactTable from "react-table";
 import { NavLink } from "react-router-dom";
 import axios from 'axios';
+import {axiosWithAuth} from 'axiosWithAuth';
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Icon from "@material-ui/core/Icon";
@@ -64,14 +66,34 @@ class ApplicationTable extends React.Component {
     super(props);
     this.state = {
       applications: [],
+      shelterVerified: ""
+
     };
   }
 
+  componentWillMount() {
+    //verifying shelter before proceeding
+    axiosWithAuth()
+      .get(`https://staging2-pawsnfind.herokuapp.com/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
+      .then( result => {
+        this.setState({
+          shelterVerified : true
+        })
+        console.log(result)
+      })
+      .catch( error => {
+        console.log(error)
+        this.props.history.push('/')
+      })
+  }
+  
+
   componentDidMount() {
     axios
-    //.get(`https://staging1-pawsnfind.herokuapp.com/api/animals/shelter/${localStorage.getItem("shelter_id")}`)
-    // .get(`https://staging1-pawsnfind.herokuapp.com/api/applications/shelter/${this.props.shelterID}`)
-    .get(`https://staging1-pawsnfind.herokuapp.com/api/applications/shelter/${this.props.shelterID}`)
+    .get(`https://staging2-pawsnfind.herokuapp.com/api/applications/shelter/${localStorage.getItem('shelter_id')}`)
+    //.get(`https://staging2-pawsnfind.herokuapp.com/api/animals/shelter/${localStorage.getItem("shelter_id")}`)
+    // .get(`https://staging2-pawsnfind.herokuapp.com/api/applications/shelter/${localStorage.getItem('shelter_id')}`)
+    //.get(`https://staging2-pawsnfind.herokuapp.com/api/applications/shelter/${localStorage.getItem('shelter_id')}`)
     .then(applications => {
       console.log(applications)
       
@@ -88,15 +110,10 @@ class ApplicationTable extends React.Component {
           actions: (
             <div className="actions-right">
               <NavLink to={`/admin/application/${application.id}`}>
-                <Button
-                  justIcon
-                  round
-                  simple
-                  color="info"
-                  className="view"
-                >
+                <Button color="success">
                   <Search />
-                </Button>
+                  </Button>
+                
               </NavLink>{" "}
             </div>
           )
@@ -143,6 +160,8 @@ class ApplicationTable extends React.Component {
       textAlign: "right"
     }
 
+    if(this.state.shelterVerified !== true) return <div>Verifying applications</div>
+
     return (
 
       <GridContainer>     
@@ -154,7 +173,7 @@ class ApplicationTable extends React.Component {
                 </CardIcon>
                 <p className={classes.cardCategory} style={card_category}>Total Applications</p>
                 <h3 className={classes.cardTitle} style={card_title}>
-                  {this.state.applications.length} <small>Applications</small>
+                  {this.state.applications.length} <small>Application{this.state.applications.length > 1 ? "s" : "" }</small>
                 </h3>
               </CardHeader>
               <CardFooter stats>
@@ -202,7 +221,7 @@ class ApplicationTable extends React.Component {
                   },
                   
                   {
-                    Header: "Actions",
+                    Header: "View Applications",
                     accessor: "actions",
                     sortable: false,
                     filterable: false
@@ -243,12 +262,3 @@ export default connect(
   {}
 )(withStyles(styles)(ApplicationTable))
 
-
-//export default withStyles(styles)(ReactTables);
-
-/*
-export default connect(
-  mapStateToProps,
-  {}
-)(ReactTables)
-*/
