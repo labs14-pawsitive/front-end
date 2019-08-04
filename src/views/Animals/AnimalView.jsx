@@ -536,7 +536,7 @@ class AnimalView extends React.Component {
     return (
       <div>
         <GridContainer>
-          <GridItem xs={12} sm={12} md={12} lg={8}>
+          <GridItem xs={12} sm={12} md={8} lg={8}>
             <Card>
               <GridContainer style={customStyle.containerStyle}>
                 <AnimalViewTop
