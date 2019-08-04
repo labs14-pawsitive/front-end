@@ -27,11 +27,14 @@ class Locations extends Component {
         this.state = {
             editMode: false,
             location: this.props.location,
-            street_addressState: '',
-            cityState: '',
-            zipcodeState: '',
-            nicknameState: '',
+
+            street_addressState: 'success',
+            cityState: 'success',
+            zipcodeState: 'success',
+            nicknameState: 'success',
+
             shelterVerified: ''
+
         }
 
     }
@@ -82,6 +85,11 @@ selectChangeHandler = e => {
   console.log('WHERES THE CHANGE', [e.target.name])
 }
 
+cancelClick = e => {
+  e.preventDefault()
+  this.setState({editMode : !this.state.editMode})
+}
+
 updateLocation = e => {
   e.preventDefault()
 }
@@ -104,9 +112,13 @@ deleteLocation = async(e) => {
 
 updateSubmit = async(e) => {
   e.preventDefault()
+
+  if (this.isValidated()) {
+
   await this.verifyShelter(localStorage.getItem('shelter_id'))
   if(this.state.shelterVerified) {
     const updatedLocation = {
+
       shelter_id: localStorage.getItem('shelter_id'),
       street_address: this.state.location.street_address,
       city: this.state.location.city,
@@ -132,14 +144,15 @@ updateSubmit = async(e) => {
     console.log('UpdateShelterLoc Error: ',err)
   });
   this.setState({
-    street_addressState: '',
-    cityState: '',
-    zipcodeState: '',
-    nicknameState: '',
-    editMode : !this.state.editMode,
-  })  
-  }
-  
+
+    street_addressState: 'success',
+    cityState: 'success',
+    zipcodeState: 'success',
+    nicknameState: 'success',
+    editMode : !this.state.editMode
+  })
+} else {console.log(' Locations Fields not validated')}
+
 }
 
 verifyLength(value, lengthNumber) {
@@ -199,20 +212,24 @@ change(event, stateName, type, stateNameEqualTo) {
 
 isValidated() {
   if (
-    this.state.nameState === "success" &&
-    this.state.phoneState === "success" &&
-    this.state.emailState === "success"
+    this.state.nicknameState === "success" &&
+    this.state.street_addressState === "success" &&
+    this.state.cityState === "success" &&
+    this.state.zipcodeState === "success"
   ) {
     return true;
   } else {
-    if (this.state.nameState !== "success") {
-      this.setState({ nameState: "error" });
+    if (this.state.nicknameState !== "success") {
+      this.setState({ nicknameState: "error" });
     }
-    if (this.state.phoneState !== "success") {
-      this.setState({ phoneState: "error" });
+    if (this.state.street_addressState !== "success") {
+      this.setState({ street_addressState: "error" });
     }
-    if (this.state.emailState !== "success") {
-      this.setState({ emailState: "error" });
+    if (this.state.cityState !== "success") {
+      this.setState({ cityState: "error" });
+    }
+    if (this.state.zipcodeState !== "success") {
+      this.setState({ zipcodeState: "error" });
     }
   }
   return false;
@@ -295,7 +312,7 @@ isValidated() {
                   <CustomInput
                     labelText="Nickname"
                     id="nickname"
-                    success={this.state.nicknameState === "success"}
+                    success={this.state.editMode? this.state.nicknameState === "success": null}
                     error={this.state.nicknameState === "error"}
                     formControlProps={{
                       fullWidth: true
@@ -314,7 +331,7 @@ isValidated() {
                 <CustomInput
                     labelText="Street Address"
                     id="street_address"
-                    success={this.state.street_addressState === "success"}
+                    success={this.state.editMode? this.state.street_addressState === "success": null}
                     error={this.state.street_addressState === "error"}
                     formControlProps={{
                       fullWidth: true
@@ -332,7 +349,7 @@ isValidated() {
                <CustomInput
                     labelText="City"
                     id="city"
-                    success={this.state.cityState === "success"}
+                    success={this.state.editMode? this.state.cityState === "success": null}
                     error={this.state.cityState === "error"}
                     formControlProps={{
                       fullWidth: true
@@ -390,7 +407,7 @@ isValidated() {
               <CustomInput
                     labelText="Zipcode"
                     id="zipcode"
-                    success={this.state.zipcodeState === "success"}
+                    success={this.state.editMode? this.state.zipcodeState === "success": null}
                     error={this.state.zipcodeState === "error"}
 
                     formControlProps={{
@@ -446,8 +463,15 @@ isValidated() {
                             </Select>
                         </FormControl>
                         </GridItem>
-            <GridItem xs={12} sm={12} md={7}></GridItem>
-            <GridItem xs={12} sm={12} md={5}>
+    
+            <GridItem xs={12} sm={12} md={12}>
+            {this.state.editMode && <Button size= "sm" 
+              color="rose" 
+              className={classes.updateProfileButton}
+               onClick={this.cancelClick}>
+                Cancel
+              </Button> }
+
             <Button size= "sm" 
               color="rose" 
               className={classes.updateProfileButton}
