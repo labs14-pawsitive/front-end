@@ -116,7 +116,7 @@ class ReactTables extends React.Component {
               {/* view animal */}
               <NavLink to={`/admin/animal/${animal.id}`}>
  
-             
+             {/* 
                 <Button
  
                   justIcon
@@ -126,7 +126,7 @@ class ReactTables extends React.Component {
                   className="like"
                 >
                   <Search />
-                </Button>  
+                </Button>  */}
                  <Button color="success">
           <Search />
         </Button>

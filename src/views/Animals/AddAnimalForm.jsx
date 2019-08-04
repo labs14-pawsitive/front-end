@@ -337,7 +337,7 @@ class AddAnimalForm extends React.Component {
   submitAnimal = e => {
     e.preventDefault();
     this.verifyShelter(this.state.animal.shelter_id)
-    if (this.isValidated()) {
+    if (this.isValidated() && this.state.shelterVerified) {
       const { checked } = this.state
       let animalAttributes = { ...this.state.animal }
       this.props.addAnimal(animalAttributes).then((animalId) => {
@@ -399,8 +399,6 @@ class AddAnimalForm extends React.Component {
       dropdownOptions: {
         minWidth: "100%"
       },
-
-      
     }
 
     const filterBreedOptions = this.props.breedsOptions.filter(breed => {
@@ -469,7 +467,7 @@ class AddAnimalForm extends React.Component {
             editable={true} 
             callback={this.handleImgUploadResponse} 
  
-            url="https://staging2-pawsnfind.herokuapp.com/api/pictures/animal/1"
+            url="https://staging2-pawsnfind.herokuapp.com/api/pictures"
  
           />
         </GridItem>
