@@ -144,7 +144,7 @@ class AnimalNotes extends React.Component {
             }
         }
         return (
-            <GridItem xs={12} sm={12} md={12} lg={4}>
+            <GridItem xs={12} sm={12} md={4} lg={4}>
                 <Card style={this.state.urlClicked? customStyle.urlClicked : customStyle.urlButton}>
                     <div onClick={this.handleUrlClick} >
                         {this.state.urlClicked ? `http${window.location.hostname.indexOf(".com") !== -1 ? "s" : ""}://${window.location.host}/application/${this.props.shelter_id}/${this.props.animal_id}`: "Generate Application Link"}  
