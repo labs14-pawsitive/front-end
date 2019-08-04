@@ -70,7 +70,7 @@ class AnimalViewTop extends React.Component {
                                 defaultImage={this.props.animal.img_url}
                                 borderRadius="5px" imageLimit={1}
                                 editable={this.props.isEditing} callback={this.props.callback}
-                                url={`https://staging1-pawsnfind.herokuapp.com/api/pictures/animal/${this.props.paramsId}`} />
+                                url={`https://staging2-pawsnfind.herokuapp.com/api/pictures/animal/${this.props.paramsId}`} />
 
                             <GridListTileBar style={customStyle.imgTitle}
                                 subtitle={<span>#{this.props.animal.id}</span>}

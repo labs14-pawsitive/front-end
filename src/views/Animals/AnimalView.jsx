@@ -13,6 +13,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import axios from 'axios';
 import moment from 'moment'
+import {axiosWithAuth} from 'axiosWithAuth';
 
 import { updateAnimal, getInfoByAnimalID, getAllOptions, addNotes, updateNotes, deleteNotes }
   from '../../actions/animalAction.js'
@@ -95,7 +96,8 @@ class AnimalView extends React.Component {
         healthState: 'success',
         nameState: 'success'
       },
-      breedState: 'success'
+      breedState: 'success',
+      shelterVerified: "",
     }
   }
 
@@ -104,6 +106,10 @@ class AnimalView extends React.Component {
     Promise.all([this.props.getInfoByAnimalID(this.props.match.params.id),
     this.props.getAllOptions(localStorage.getItem('shelter_id'))])
       .then(([animalInfo, animalOptions]) => {
+
+        //verifying shelter
+        this.verifyShelter(this.props.animal.shelter_id)
+        
         // call setState here
 
         this.setState({
@@ -118,13 +124,28 @@ class AnimalView extends React.Component {
           coat_length: this.props.coat_length,
           animal_status: this.props.animal_status,
           locations: this.props.locations,
-
         })
       })
       .catch(error => {
         console.log('animal info error', error)
       })
+  }
 
+  verifyShelter = async (shelter_id) => {
+    //verifying shelter before proceeding
+    await axiosWithAuth()
+      .get(`https://staging2-pawsnfind.herokuapp.com/api/auth/shelter/${shelter_id}`)
+      .then( result => {
+        this.setState({
+          shelterVerified : true
+        })
+      })
+      .catch( error => {
+        this.setState({
+          shelterVerified : false
+        })
+        this.props.history.push('/admin/allAnimals')
+      })
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -503,11 +524,14 @@ class AnimalView extends React.Component {
         paddingRight: '12%'
       },
     }
-
+    if(this.state.shelterVerified !== true) return <div>Verifying animal</div>
+    
     return (
       <div>
         <GridContainer>
+
           <GridItem xs={12} sm={12} md={8} lg={8}>
+
             <Card>
               <GridContainer style={customStyle.containerStyle}>
                 <AnimalViewTop

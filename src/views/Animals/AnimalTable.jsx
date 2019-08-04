@@ -15,6 +15,9 @@ import { connect } from "react-redux";
 import ReactTable from "react-table";
 import { NavLink, Link } from "react-router-dom";
 import axios from 'axios';
+import {axiosWithAuth} from 'axiosWithAuth';
+
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Icon from "@material-ui/core/Icon";
@@ -67,14 +70,34 @@ class ReactTables extends React.Component {
     super(props);
     this.state = {
       animals: [],
+      shelterVerified: ""
+
     };
   }
 
+  
+  componentWillMount() {
+    //verifying shelter before proceeding
+    axiosWithAuth()
+      .get(`https://staging2-pawsnfind.herokuapp.com/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
+      .then( result => {
+        this.setState({
+          shelterVerified : true
+        })
+        console.log(result)
+      })
+      .catch( error => {
+        console.log(error)
+        this.props.history.push('/')
+      })
+  }
+
+
   componentDidMount() {
     axios
-    .get(`https://staging1-pawsnfind.herokuapp.com/api/animals/shelter/${localStorage.getItem('shelter_id')}`)
-    // .get(`https://staging1-pawsnfind.herokuapp.com/api/animals/shelter/${localStorage.getItem("shelter_id")}`)
-    // .get(`https://staging1-pawsnfind.herokuapp.com/api/animals/shelter/${localStorage.getItem('shelter_id')}`)
+    //.get(`https://staging2-pawsnfind.herokuapp.com/api/animals/shelter/${localStorage.getItem('shelter_id')}`)
+    .get(`https://staging2-pawsnfind.herokuapp.com/api/animals/shelter/${localStorage.getItem('shelter_id')}`)
+
     .then(animals => {
       const picStyle = { width: '100%' }
       console.log(animals)
@@ -92,7 +115,10 @@ class ReactTables extends React.Component {
             <div className="actions-right">
               {/* view animal */}
               <NavLink to={`/admin/animal/${animal.id}`}>
-                {/* <Button
+ 
+             
+                <Button
+ 
                   justIcon
                   round
                   simple
@@ -100,7 +126,7 @@ class ReactTables extends React.Component {
                   className="like"
                 >
                   <Search />
-                </Button> */}
+                </Button>  
                  <Button color="success">
           <Search />
         </Button>
@@ -149,6 +175,8 @@ class ReactTables extends React.Component {
       textDecoration: "none",
       textAlign: "right"
     }
+
+    if(this.state.shelterVerified !== true) return <div>Verifying animals</div>
 
     return (
       <GridContainer>

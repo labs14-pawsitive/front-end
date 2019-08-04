@@ -19,6 +19,8 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {addAnimal, fetchOptions} from '../../actions/animalAction';
 import ImageUpload from '../../components/ImageUpload/ImageUpload'
+import { axiosWithAuth } from 'axiosWithAuth';
+
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -69,6 +71,7 @@ class AddAnimalForm extends React.Component {
         coat_length_id: null,
         age_id: null,
         shelter_location_id: null,
+ 
         is_male: false,
         is_house_trained: false,
         is_neutered_spayed: false,
@@ -92,27 +95,106 @@ class AddAnimalForm extends React.Component {
         
       },
       checked: [],
+      shelterVerified : ''
     };
     
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeEnabled = this.handleChangeEnabled.bind(this);
   }
 
-  componentDidMount () {
-    const shelterId = localStorage.getItem('shelter_id')
-    // TODO (SL): Use fake value until auth complete
-
+  componentWillMount() {
+    this.verifyShelter(localStorage.getItem('shelter_id'))
     this.setState({
-      animal: {
-        ...this.state.animal,
-        shelter_id: shelterId
-      },
-      validation: {
-        ...this.state.validation,
-        shelter_id: true
-      }
-    })
-    this.props.fetchOptions(shelterId)
+          animal: {
+            ...this.state.animal,
+            shelter_id : localStorage.getItem('shelter_id')
+          },
+          validation : {
+            ...this.state.validation,
+            shelter_id : true
+          }
+        })
+  }
+
+  verifyShelter = async(shelter_id) => {
+    //verifying shelter before proceeding
+    axiosWithAuth()
+      .get(`https://staging2-pawsnfind.herokuapp.com/api/auth/shelter/${shelter_id}`)
+      .then( result => { 
+        this.setState({
+          shelterVerified : true
+        })
+        console.log(result)
+      })
+      .catch( error => {
+        console.log(error)
+        this.setState({
+          shelterVerified : false
+        })
+        this.props.history.push('/')
+      })
+  }
+
+  componentDidMount () {
+ 
+    const shelterId = localStorage.getItem('shelter_id')
+  
+
+    this.props.fetchOptions(this.state.animal.shelter_id)
+
+    // this.setState({
+    //   animal: {
+    //     name: "snowflake",
+    //     color: "white",
+    //     health: "healthy",
+    //     description: "happy dog",
+    //     species_id: 1,
+    //     breed_id: 4,
+    //     animal_status_id: 2,
+    //     size_id: 3,
+    //     coat_length_id: 3,
+    //     age_id: 3,
+    //     shelter_location_id: 1,
+    //     states_id: 5,
+    //     shelter_id: 1,
+    //     is_male: false,
+    //     is_house_trained: false,
+    //     is_neutered_spayed: true,
+    //     is_good_with_kids: true,
+    //     is_good_with_dogs: true,
+    //     is_good_with_cats: false,
+    //     is_vaccinated: false,
+    //     profile_img_id: null,
+    //     is_mixed: 1
+    //   },
+    //   validation: {
+    //     name: true,
+    //     color: true,
+    //     health: true,
+    //     description: true,
+    //     species_id: true,
+    //     breed_id: true,
+    //     animal_status_id: true,
+    //     size_id: true,
+    //     coat_length_id: true,
+    //     age_id: true,
+    //     shelter_location_id: true,
+    //     states_id: true,
+    //     is_male: true,
+    //     is_house_trained: true,
+    //     is_neutered_spayed: true,
+    //     is_good_with_kids: true,
+    //     is_good_with_dogs: true,
+    //     is_good_with_cats: true,
+    //     is_vaccinated: true,
+    //     is_mixed: true,
+    //     shelter_id: true,
+    //     profile_img_id: true,
+
+    //   },
+    //   checked: [],
+    // });
+ 
   }
 
   handleImgUploadResponse = response => {
@@ -219,6 +301,7 @@ class AddAnimalForm extends React.Component {
       this.state.validation.shelter_location_id &&
       this.state.validation.size_id &&
       this.state.validation.species_id &&
+ 
       this.state.validation.shelter_id
     ) {
       return true
@@ -253,6 +336,7 @@ class AddAnimalForm extends React.Component {
 
   submitAnimal = e => {
     e.preventDefault();
+    this.verifyShelter(this.state.animal.shelter_id)
     if (this.isValidated()) {
       const { checked } = this.state
       let animalAttributes = { ...this.state.animal }
@@ -367,6 +451,8 @@ class AddAnimalForm extends React.Component {
     const agesButtonDisplay = buttonDisplay('age_id', 'agesOptions', 'age', 'Age')
     const locationsButtonDisplay = buttonDisplay('shelter_location_id', 'locationsOptions', 'nickname', 'Shelter location')
 
+    if(this.state.shelterVerified !== true) return <div>Verifying Shelter</div>
+
     return (
       
       <GridContainer>
@@ -382,7 +468,9 @@ class AddAnimalForm extends React.Component {
             imageLimit={1} 
             editable={true} 
             callback={this.handleImgUploadResponse} 
-            url="https://staging1-pawsnfind.herokuapp.com/api/pictures"
+ 
+            url="https://staging2-pawsnfind.herokuapp.com/api/pictures/animal/1"
+ 
           />
         </GridItem>
         <GridItem xs={12} sm={12} md={12}>

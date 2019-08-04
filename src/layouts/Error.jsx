@@ -23,6 +23,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 // core components
 import TempNavBar from "components/Navbars/TempNavBar.jsx";
+import ErrorPage from "views/Pages/ErrorPage.jsx";
 import Footer from "components/Footer/Footer.jsx";
 
 import routes from "routes.js";
@@ -32,24 +33,11 @@ import pagesStyle from "assets/jss/material-dashboard-pro-react/layouts/authStyl
 import register from "assets/img/register.jpeg";
 import login from "assets/img/login.jpeg";
 import lock from "assets/img/lock.jpeg";
-import error from "assets/img/clint-mckoy.jpg";
+import error from "assets/img/bg-404lostPuppy.jpg";
 import pricing from "assets/img/bg-pricing.jpeg";
-
-import Auth from "components/Auth/Auth.js"
-  
-const auth = new Auth();
 
 class Pages extends React.Component {
   wrapper = React.createRef();
-
-  authLogin = () => {
-    auth.login();
-  }
-  
-  componentWillMount() {
-    this.authLogin();
-  }
-
   componentDidMount() {
     document.body.style.overflow = "unset";
   }
@@ -71,63 +59,26 @@ class Pages extends React.Component {
       }
     });
   };
-  /*getBgImage = () => {
-    if (window.location.pathname.indexOf("/auth/register-page") !== -1) {
-      return register;
-    } else if (window.location.pathname.indexOf("/auth/login-page") !== -1) {
-      return login;
-    } else if (window.location.pathname.indexOf("/auth/pricing-page") !== -1) {
-      return pricing;
-    } else if (
-      window.location.pathname.indexOf("/auth/lock-screen-page") !== -1
-    ) {
-      return lock;
-    } else if (window.location.pathname.indexOf("/auth/error-page") !== -1) {
+  getBgImage = () => {
       return error;
-    }
-  };*/
-  getActiveRoute = routes => {
-    let activeRoute = "Default Brand Text";
-    for (let i = 0; i < routes.length; i++) {
-      if (routes[i].collapse) {
-        let collapseActiveRoute = this.getActiveRoute(routes[i].views);
-        if (collapseActiveRoute !== activeRoute) {
-          return collapseActiveRoute;
-        }
-      } else {
-        if (
-          window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
-        ) {
-          return routes[i].name;
-        }
-      }
-    }
-    return activeRoute;
+
   };
+
   render() {
     const { classes, ...rest } = this.props;
-    const customStyle = {
-      bg : {
-        background : "radial-gradient(#40404b, #111118) rgba(34,34,40,0.94)"
-      }
-    }
     return (
-      <div customStyle={customStyle.bg}> 
-      {/* 
-        <TempNavBar brandText={this.getActiveRoute(routes)} {...rest} />
+      <div>
+        <TempNavBar brandText="Pawsnfind" {...rest} />
         <div className={classes.wrapper} ref={this.wrapper}>
           <div
             className={classes.fullPage}
             style={{ backgroundImage: "url(" + this.getBgImage() + ")" }}
           >
-            <Switch>
-              {this.getRoutes(routes)}
-              <Redirect from="/auth" to="/auth/login-page" />
-            </Switch>
+            <ErrorPage />
+
             <Footer white />
           </div>
         </div>
-        */}
       </div>
     );
   }
