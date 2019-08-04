@@ -92,7 +92,7 @@ class ReactTables extends React.Component {
             <div className="actions-right">
               {/* view animal */}
               <NavLink to={`/admin/animal/${animal.id}`}>
-                <Button
+                {/* <Button
                   justIcon
                   round
                   simple
@@ -100,7 +100,10 @@ class ReactTables extends React.Component {
                   className="like"
                 >
                   <Search />
-                </Button>
+                </Button> */}
+                 <Button color="success">
+          <Search />
+        </Button>
               </NavLink>{" "}
               {/* edit animal 
               <NavLink to={`/admin/editAnimal/${animal.id}`}>
@@ -210,7 +213,7 @@ class ReactTables extends React.Component {
                     accessor: "location"
                   },
                   {
-                    Header: "Actions",
+                    Header: "View Animals",
                     accessor: "actions",
                     sortable: false,
                     filterable: false
