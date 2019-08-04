@@ -105,7 +105,6 @@ changeHandler = e => {
 
 deleteContact = async(e) => {
     e.preventDefault()
- 
     await this.verifyShelter(localStorage.getItem('shelter_id'))
     if(this.state.shelterVerified) {
       this.props.deleteShelterCon(this.props.contact.id)
@@ -117,7 +116,7 @@ deleteContact = async(e) => {
             shelterVerified : ''
           })
     }
- 
+    
 }
 
 updateSubmit = async(e) => {
@@ -259,9 +258,6 @@ isValidated() {
         const customStyle = {
             shelterDisplayView : {
               color:"#333333 !important",
-            },
-            errorColor: {
-              color: "#d81b60"
             }
           }
           const { classes } = this.props;
@@ -331,26 +327,26 @@ isValidated() {
 
                   />
                 </GridItem>
-            <GridItem xs={12} sm={12} md={12}>
-            {this.state.editMode && this.props.error && <span style={customStyle.errorColor}>
-                <small>Error: Contact is associated with an existing location.</small> </span>}
-            <GridItem xs={12} sm={12} md={12}>
+            <GridItem xs={12} sm={12} md={7}></GridItem>
+            <GridItem xs={12} sm={12} md={5}>
+            
             <Button 
                 size= "sm" 
                 color="rose" 
                 className={classes.updateProfileButton}
                 onClick={this.state.editMode? this.updateSubmit : this.handleFormButtonToggle}
               >
-                {this.state.editMode? "Save" : "Edit"}
+                {this.state.editMode? "Save" : "Update"}
               </Button>
 
-              {this.state.editMode && <Button size= "sm" 
+
+              <Button size= "sm" 
               color="rose" 
               className={classes.updateProfileButton}
                onClick={this.deleteContact}>
                 Delete
-              </Button> }
-                  </GridItem>
+              </Button>
+              
             </GridItem>
               </GridContainer>
             </>
@@ -367,9 +363,7 @@ const mapStateToProps = (state) => {
       shelterWorkerID : state.userReducer.shelterWorkerID,
       roleID : state.userReducer.roleID,
       shelter: state.shelterReducer.shelter,
-      fetchingShelter: state.shelterReducer.fetchingShelter,
-      error: state.shelterReducer.error,
-      location: state.shelterReducer.location
+      fetchingShelter: state.shelterReducer.fetchingShelter, 
     }
   }
  

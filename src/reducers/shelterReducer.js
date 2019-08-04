@@ -111,7 +111,7 @@ export const shelterReducer = (state = initialState, action) => {
         case UPDATE_SHELTERLOC_START:
             return {
                 ...state,
-                updatingLocation:true,
+                updatingLocation:true
             }
         case UPDATE_SHELTERLOC_SUCCESS:
             return {
@@ -164,8 +164,7 @@ export const shelterReducer = (state = initialState, action) => {
         case UPDATE_CONTACT_START:
             return {
                 ...state,
-                updatingContact:true,
-                error: '',
+                updatingContact:true
             }
         case UPDATE_CONTACT_SUCCESS:
             return {
@@ -176,7 +175,7 @@ export const shelterReducer = (state = initialState, action) => {
             return {
                 ...state,
                 updatingContact: false,
-                error: action.payload.status
+                error: action.payload
             }
         //----Deleting Contact:
         case DELETE_CONTACT_START:

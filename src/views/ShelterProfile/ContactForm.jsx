@@ -140,14 +140,12 @@ class ContactForm extends React.Component {
 
 //
 
- 
     handleSubmit = async(e) => { 
       e.preventDefault()
       await this.verifyShelter(localStorage.getItem('shelter_id'))
        
         if (this.isValidated && this.state.shelterVerified) {
           const newContact = {
-
             name: this.state.name,
             email: this.state.email,
             phone: this.state.phone,

@@ -110,7 +110,7 @@ class ApplicationTable extends React.Component {
           actions: (
             <div className="actions-right">
               <NavLink to={`/admin/application/${application.id}`}>
-                {/* <Button
+                <Button
                   justIcon
                   round
                   simple
@@ -118,10 +118,7 @@ class ApplicationTable extends React.Component {
                   className="view"
                 >
                   <Search />
-                </Button> */}
-                 <Button color="success">
-          <Search />
-        </Button>
+                </Button>
               </NavLink>{" "}
             </div>
           )
@@ -229,7 +226,7 @@ class ApplicationTable extends React.Component {
                   },
                   
                   {
-                    Header: "View Applications",
+                    Header: "Actions",
                     accessor: "actions",
                     sortable: false,
                     filterable: false
