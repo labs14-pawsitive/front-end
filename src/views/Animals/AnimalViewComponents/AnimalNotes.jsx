@@ -27,9 +27,17 @@ class AnimalNotes extends React.Component {
             // note: this.props.animalNotes,
             note: '',
             addNoteState: "",
+            urlClicked : false,
+            animal_id: this.props.animal.id,
+            shelter_id: this.props.animal.shelter_id
         }
     }
 
+    handleUrlClick = e => {
+        this.setState({
+            urlClicked : true
+        })
+    }
 
     cancelNote = (event) => {
         event.preventDefault()
@@ -122,9 +130,25 @@ class AnimalNotes extends React.Component {
                 margin: "0px 10px 10px 15px",
                 width: "40%"
             },
+            urlButton : {
+                padding: "10px" ,
+                textAlign: "center",
+                fontWeight:"700",
+            },
+            urlClicked: {
+                padding:"10px",
+                border: "3px dashed green",
+                textAlign: "center",
+                fontWeight:"700"
+            }
         }
         return (
             <GridItem xs={12} sm={12} md={12} lg={4}>
+                <Card style={this.state.urlClicked? customStyle.urlClicked : customStyle.urlButton}>
+                    <div onClick={this.handleUrlClick} >
+                        {this.state.urlClicked ? `http${window.location.hostname.indexOf(".com") !== -1 ? "s" : ""}://${window.location.hostname}/application/${this.props.shelter_id}/${this.props.animal_id}`: "Generate Application Link"}  
+                    </div>
+                </Card>
                 <Card style={customStyle.textFieldNote}>
 
                     <CardHeader>

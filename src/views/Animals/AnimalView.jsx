@@ -589,7 +589,8 @@ class AnimalView extends React.Component {
               </GridContainer>
             </Card>
           </GridItem>
-          <AnimalNotes />
+          
+          <AnimalNotes animal_id={this.state.animal.id} shelter_id={this.state.animal.shelter_id}/>
         </GridContainer>
       </div >
     );
