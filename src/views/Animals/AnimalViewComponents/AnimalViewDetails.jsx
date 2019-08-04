@@ -25,6 +25,19 @@ class AnimalViewDetails extends React.Component {
     render() {
         const { classes } = this.props;
 
+        const theme = createMuiTheme({
+            overrides: {
+              MuiInput: {
+                underline: {
+                    
+                  "&&&&:hover:before": {
+                    borderBottom: "1px solid rgba(0, 0, 0, 0.54)"
+                  },
+                
+                }
+              }
+            }
+          });
 
         const customStyle = {
             titleStyle: {
@@ -49,7 +62,8 @@ class AnimalViewDetails extends React.Component {
             formControlStyle: {
                 width: "100%",
                 marginRight: "7%",
-                paddingBottom:"10%",
+                marginBottom:"30px",
+                // paddingBottom:"10%",
                
             },
             form1ControlStyle: {
@@ -59,12 +73,14 @@ class AnimalViewDetails extends React.Component {
             form2ControlStyle: {
                 width: "100%",
                 marginRight: "7%",
-                paddingBottom:"10%"
+                marginBottom:"30px",
+                // paddingBottom:"10%"
             },
             textStyle:{
                  margin:"0px",
                  width:"100%",
                  color:"rgba(0, 0, 0, 0.87)",
+                 borderBottom:"1px solid rgba(0, 0, 0, 0.54)"
             },
             colorStyle:{
                 color:"rgba(0, 0, 0, 0.87)"
@@ -214,7 +230,7 @@ class AnimalViewDetails extends React.Component {
                             </GridItem>
 
                             <GridItem xs={12} sm={12} md={6} >
-                            <FormControl style={customStyle.form1ControlStyle} className={classes.formControl} >
+                            <FormControl style={customStyle.form2ControlStyle} className={classes.formControl} >
                                 <InputLabel style={customStyle.colorStyle} htmlFor='coat_length_id'>Coat Length</InputLabel>
                                 <Select style={customStyle.color1Style}
                                     disabled={this.props.isEditing ? false : true}
@@ -256,6 +272,7 @@ class AnimalViewDetails extends React.Component {
 
                             <GridItem xs={12} sm={12} md={6} >
                                 <FormControl style={customStyle.form2ControlStyle} className={classes.formControl} >
+                                <MuiThemeProvider theme={theme}>
                             <TextField style={customStyle.textStyle}
                                 success={this.props.textState.colorState === "success"}
                                 error={this.props.textState.colorState === "error"}
@@ -268,9 +285,13 @@ class AnimalViewDetails extends React.Component {
                                 margin="normal"
                                 InputProps={{
                                     readOnly: this.props.isEditing ? false : true,
-
+                                    disableUnderline:true
                                 }}
+                                InputLabelProps={{
+                                    style: { color: 'rgba(0, 0, 0, 0.87)' },
+                                  }}
                             />
+                            </MuiThemeProvider>
                                      </FormControl>
                             </GridItem>
 
