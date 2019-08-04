@@ -86,12 +86,8 @@ class MapNotes extends React.Component {
             },
             adjustFont: {
                 fontSize: "20px",
-            },
-            buttonPadding: {
-                paddingRight: "20px",
-                
-            },
- 
+            }
+
         };
 
         return (
@@ -115,12 +111,9 @@ class MapNotes extends React.Component {
                 <GridContainer
                     direction="row"
                     justify="flex-end"
-                    style={customStyle.buttonPadding}
                 >
 
-
-                    <GridItem className={classes.buttonStyling} xs={3} sm={3} md={3} lg={3} xl={3}>
-
+                    <GridItem xs={3} sm={3} md={3} lg={3} xl={3}>
                         <Button
                             color="transparent"
                             className={classes.deleteButtonStyle}
@@ -130,11 +123,8 @@ class MapNotes extends React.Component {
                         </Button>
                     </GridItem>
 
-
-                    <GridItem className={classes.buttonStyling} xs={3} sm={3} md={3} lg={3} xl={3}>
-
+                    <GridItem lg={3} xl={3}>
                         <Button
-
                             color="transparent"
                             className={classes.editButtonStyle}
                             onClick={this.state.isEditSelected ? this.updateNotes : this.editSelected}
