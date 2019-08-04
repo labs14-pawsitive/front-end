@@ -22,8 +22,7 @@ class AnimalViewHealth extends React.Component {
     render(){
         const { classes } = this.props;
 
-
-        const customStyle = {
+       const customStyle = {
             titleStyle: {
                 padding: "10% 0px 0px 0px"
             },
@@ -32,47 +31,61 @@ class AnimalViewHealth extends React.Component {
                 flexWrap: 'wrap',
             },
             gridStyle: {
-                // margin: "40px 40px",
                 borderTop: "1px solid lightgray",
-
-            },
+              },
             adoptionStyle: {
                 paddingTop: "3%",
-
                 display: "flex",
                 flexWrap: 'wrap',
             },
             formControlStyle: {
-                width: "43%",
-                paddingTop: "3%",
-                paddingBottom:"10%"
+                width: "100%",
             },
+            form1ControlStyle: {
+              width: "100%",
+              paddingBottom:"10%",
+          },
+          form2ControlStyle: {
+            width: "100%",
+            paddingBottom:"10%", 
+        },
             inputLabelStyle :{
                 width:"130%",
                 color:"rgba(0, 0, 0, 0.87)"
             },
+            healthGrid:{
+              maxWidth:"100%",
+              minWidth:"100%"
+            },
             healthTextStyle:{
-                width:"72%"
+                width:"100%",
+                marginBottom:"30px",
+                borderBottom:"1px solid rgba(0, 0, 0, 0.54)"
             },
             colorStyle:{
-                color:"rgba(0, 0, 0, 0.87)"
-            }
+              color:"rgba(0, 0, 0, 0.87)",
+              borderBottom:"1px solid rgba(0, 0, 0, 0.54)"
+          },
+          legendStyle:{
+            padding:"0 2%"
+        }
 
         }
 
+
+
         return (
-            <GridItem xs={12} sm={12} md={12} style={customStyle.gridStyle}>
+            <GridItem xs={12} sm={12} md={12}  style={customStyle.gridStyle}>
             <div style={customStyle.titleStyle}>
-              <legend>Health and Personality</legend>
+              <legend style={customStyle.legendStyle}>Health and Personality</legend>
             </div>
 
-            <GridContainer style={customStyle.detailsContainerStyle}>
-
-                <form
+            <form
                   className={classes.root}
                   autoComplete="off" style={customStyle.adoptionStyle}
                 >
                     <GridItem xs={12} sm={12} md={12}>
+                    <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
                   <TextField style={customStyle.healthTextStyle}
                     success={this.props.textState.healthState === "success"}
                     error={this.props.textState.healthState === "error"}
@@ -85,12 +98,17 @@ class AnimalViewHealth extends React.Component {
                     margin="normal"
                     InputProps={{
                       readOnly: this.props.isEditing ? false : true,
+                      disableUnderline:true
+                    }}
+                    InputLabelProps={{
+                      style: { color: 'rgba(0, 0, 0, 0.87)' },
                     }}
                   />
+                  </FormControl>
                   </GridItem>
 
                   <GridItem xs={12} sm={12} md={6}>
-                  <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
+                  <FormControl style={customStyle.form1ControlStyle} className={classes.formControl} >
                     <InputLabel style={customStyle.inputLabelStyle} htmlFor='is_vaccinated'>Vaccinated?</InputLabel>
                     <Select style={customStyle.colorStyle}
                       disabled={this.props.isEditing ? false : true}
@@ -99,6 +117,7 @@ class AnimalViewHealth extends React.Component {
                       onChange={this.props.handleAdoption}
                       renderValue={value => `${value}`}
                       input={<Input id="is_vaccinated" />}
+                      disableUnderline
                     >
 
                       <MenuItem value={true}>Yes</MenuItem>
@@ -109,7 +128,7 @@ class AnimalViewHealth extends React.Component {
                   </GridItem>
 
                   <GridItem xs={12} sm={12} md={6}>
-                  <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
+                  <FormControl style={customStyle.form2ControlStyle} className={classes.formControl} >
                     <InputLabel style={customStyle.inputLabelStyle} htmlFor='is_house_trained'>House trained?</InputLabel>
                     <Select style={customStyle.colorStyle}
                       disabled={this.props.isEditing ? false : true}
@@ -118,6 +137,7 @@ class AnimalViewHealth extends React.Component {
                       onChange={this.props.handleAdoption}
                       renderValue={value => `${value}`}
                       input={<Input id="is_house_trained" />}
+                      disableUnderline
                     >
 
                       <MenuItem value={true}>Yes</MenuItem>
@@ -128,7 +148,7 @@ class AnimalViewHealth extends React.Component {
                   </GridItem>
 
                   <GridItem xs={12} sm={12} md={6}>
-                  <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
+                  <FormControl style={customStyle.form2ControlStyle} className={classes.formControl} >
                     <InputLabel style={customStyle.inputLabelStyle} htmlFor='is_good_with_kids'>Good with Kids?</InputLabel>
                     <Select style={customStyle.colorStyle}
                       disabled={this.props.isEditing ? false : true}
@@ -137,6 +157,7 @@ class AnimalViewHealth extends React.Component {
                       onChange={this.props.handleAdoption}
                       renderValue={value => `${value}`}
                       input={<Input id="is_good_with_kids" />}
+                      disableUnderline
                     >
 
                       <MenuItem value={true}>Yes</MenuItem>
@@ -147,7 +168,7 @@ class AnimalViewHealth extends React.Component {
                   </GridItem>
 
                   <GridItem xs={12} sm={12} md={6}>
-                  <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
+                  <FormControl style={customStyle.form2ControlStyle} className={classes.formControl} >
                     <InputLabel style={customStyle.inputLabelStyle} htmlFor='is_good_with_cats'>Good with Cats?</InputLabel>
                     <Select style={customStyle.colorStyle}
                       disabled={this.props.isEditing ? false : true}
@@ -156,7 +177,8 @@ class AnimalViewHealth extends React.Component {
                       onChange={this.props.handleAdoption}
                       renderValue={value => `${value}`}
                       input={<Input id="is_good_with_cats" />}
-                    >
+                      disableUnderline
+                   >
 
                       <MenuItem value={true}>Yes</MenuItem>
                       <MenuItem value={false}>No</MenuItem>
@@ -166,7 +188,7 @@ class AnimalViewHealth extends React.Component {
                   </GridItem>
 
                   <GridItem xs={12} sm={12} md={6}>
-                  <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
+                  <FormControl style={customStyle.form2ControlStyle} className={classes.formControl} >
                     <InputLabel style={customStyle.inputLabelStyle} htmlFor='is_good_with_dogs'>Good with Dogs?</InputLabel>
                     <Select style={customStyle.colorStyle}
                       disabled={this.props.isEditing ? false : true}
@@ -175,6 +197,7 @@ class AnimalViewHealth extends React.Component {
                       onChange={this.props.handleAdoption}
                       renderValue={value => `${value}`}
                       input={<Input id="is_good_with_dogs" />}
+                      disableUnderline
                     >
 
                       <MenuItem value={true}>Yes</MenuItem>
@@ -185,7 +208,7 @@ class AnimalViewHealth extends React.Component {
                   </GridItem>
 
                   <GridItem xs={12} sm={12} md={6}>
-                  <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
+                  <FormControl style={customStyle.form2ControlStyle} className={classes.formControl} >
                     <InputLabel style={customStyle.inputLabelStyle} htmlFor='is_neutered_spayed'>Neutered/Spayed?</InputLabel>
                     <Select style={customStyle.colorStyle}
                       disabled={this.props.isEditing ? false : true}
@@ -194,6 +217,7 @@ class AnimalViewHealth extends React.Component {
                       onChange={this.props.handleAdoption}
                       renderValue={value => `${value}`}
                       input={<Input id="is_neutered_spayed" />}
+                      disableUnderline
                     >
 
                       <MenuItem value={true}>Yes</MenuItem>
@@ -205,7 +229,7 @@ class AnimalViewHealth extends React.Component {
 
 
                   <GridItem xs={12} sm={12} md={6}>
-                  <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
+                  <FormControl style={customStyle.form2ControlStyle} className={classes.formControl} >
                     <InputLabel style={customStyle.inputLabelStyle} htmlFor='is_mixed'>Is Mixed?</InputLabel>
                     <Select style={customStyle.colorStyle}
                       disabled={this.props.isEditing ? false : true}
@@ -214,6 +238,7 @@ class AnimalViewHealth extends React.Component {
                       onChange={this.props.handleAdoption}
                       renderValue={value => `${value}`}
                       input={<Input id="is_mixed" />}
+                      disableUnderline                   
                     >
 
                       <MenuItem value={true}>Yes</MenuItem>
@@ -224,7 +249,6 @@ class AnimalViewHealth extends React.Component {
                   </GridItem>
 
                 </form>
-            </GridContainer>
 
           </GridItem>
         )

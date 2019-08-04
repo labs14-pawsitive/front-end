@@ -17,6 +17,7 @@ import Select from "@material-ui/core/Select";
 import Input from '@material-ui/core/Input';
 import MenuItem from "@material-ui/core/MenuItem";
 import GridContainer from "components/Grid/GridContainer.jsx";
+import { MuiThemeProvider,createMuiTheme } from '@material-ui/core/styles';
 
 
 import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
@@ -25,6 +26,19 @@ class AnimalViewDetails extends React.Component {
     render() {
         const { classes } = this.props;
 
+        const theme = createMuiTheme({
+            overrides: {
+              MuiInput: {
+                underline: {
+                    
+                  "&&&&:hover:before": {
+                    borderBottom: "1px solid rgba(0, 0, 0, 0.54)"
+                  },
+                
+                }
+              }
+            }
+          });
 
         const customStyle = {
             titleStyle: {
@@ -47,25 +61,42 @@ class AnimalViewDetails extends React.Component {
                 flexWrap: 'wrap',
             },
             formControlStyle: {
-                width: "auto",
+                width: "100%",
                 marginRight: "7%",
                 paddingBottom:"10%",
                
             },
             form1ControlStyle: {
-                width: "64%",
+                width: "100%",
                 marginRight: "10%",
             },
             form2ControlStyle: {
-                width: "64%",
+                width: "100%",
                 marginRight: "7%",
                 paddingBottom:"10%"
             },
+            form3ControlStyle: {
+                width: "64%",
+                marginRight: "7%",
+                paddingBottom:"10%",
+                marginTop:"16px",
+                marginBottom:"8px",
+            },
             textStyle:{
-                margin:"0px"
+                margin:"0px",
+                width:"100%",
+                color:"rgba(0, 0, 0, 0.87)",
+                borderBottom:"1px solid rgba(0, 0, 0, 0.54)"
             },
             colorStyle:{
-                color:"rgba(0, 0, 0, 0.87)"
+                color:"rgba(0, 0, 0, 0.87)",
+            },
+            color1Style:{
+                color:"rgba(0, 0, 0, 0.87)",
+                borderBottom:"1px solid rgba(0, 0, 0, 0.54)"
+            },
+            legendStyle:{
+                padding:"0 2%"
             }
         }
 
@@ -73,7 +104,7 @@ class AnimalViewDetails extends React.Component {
             <GridItem xs={12} sm={12} md={12} style={customStyle.gridStyle}>
 
                 <div style={customStyle.titleStyle}>
-                    <legend>Details</legend>
+                    <legend style={customStyle.legendStyle}>Details</legend>
                 </div>
 
                 <GridContainer style={customStyle.detailsContainerStyle}>
@@ -85,12 +116,13 @@ class AnimalViewDetails extends React.Component {
                                 <GridItem xs={12} sm={12} md={6} >
                             <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
                                 <InputLabel style={customStyle.colorStyle} htmlFor="animal_status_id">Adoption Status</InputLabel>
-                                <Select style={customStyle.colorStyle}
+                                <Select style={customStyle.color1Style} 
                                     disabled={this.props.isEditing ? false : true}
                                     value={this.props.animal.animal_status}
                                     name='animal_status_id'
                                     onChange={this.props.handleAdoption}
                                     renderValue={value => `${value}`}
+                                    disableUnderline
                                     input={<Input id="animal_status_id" />}
                                 >
 
@@ -107,13 +139,14 @@ class AnimalViewDetails extends React.Component {
                             <GridItem xs={12} sm={12} md={6} >
                             <FormControl style={customStyle.form2ControlStyle} className={classes.formControl} >
                                 <InputLabel style={customStyle.colorStyle} htmlFor="species_id">Species</InputLabel>
-                                <Select style={customStyle.colorStyle}
+                                <Select style={customStyle.color1Style}
                                     disabled={this.props.isEditing ? false : true}
                                     value={this.props.animal.species}
                                     name='species_id'
                                     onChange={this.props.handleAdoption}
                                     renderValue={value => `${value}`}
                                     input={<Input id="species_id" />}
+                                    disableUnderline
                                 >
 
                                     {this.props.species.map(status => {
@@ -128,13 +161,14 @@ class AnimalViewDetails extends React.Component {
                             <GridItem xs={12} sm={12} md={6} >
                             <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
                                 <InputLabel style={customStyle.colorStyle} htmlFor="breed_id">Breed</InputLabel>
-                                <Select style={customStyle.colorStyle}
+                                <Select style={customStyle.color1Style}
                                     disabled={this.props.isEditing ? false : true}
                                     value={this.props.animal_meta.breed}
                                     name='breed_id'
                                     onChange={this.props.handleAdoption}
                                     renderValue={value => `${value}`}
                                     input={<Input id="breed_id" />}
+                                    disableUnderline
                                 >
 
                                     {this.props.dynamicBreedDropdown.length === 0 ?
@@ -161,13 +195,18 @@ class AnimalViewDetails extends React.Component {
                             <GridItem xs={12} sm={12} md={6} >
                             <FormControl style={customStyle.form2ControlStyle} className={classes.formControl} >
                                 <InputLabel style={customStyle.colorStyle} htmlFor="age_id">Age</InputLabel>
-                                <Select style={customStyle.colorStyle}
+                                <Select style={customStyle.color1Style}
                                     disabled={this.props.isEditing ? false : true}
                                     value={this.props.animal_meta.age}
                                     name='age_id'
                                     onChange={this.props.handleAdoption}
                                     renderValue={value => `${value}`}
                                     input={<Input id="age_id" />}
+                                    disableUnderline
+                                    InputProps={{
+                                        disabled:this.props.isEditing ? false : true,
+                                        disableUnderline:true
+                                    }} 
                                 >
                                     {this.props.ages.map(status => {
                                         return (
@@ -182,13 +221,14 @@ class AnimalViewDetails extends React.Component {
                             <GridItem xs={12} sm={12} md={6} >
                             <FormControl style={customStyle.form2ControlStyle} className={classes.formControl} >
                                 <InputLabel style={customStyle.colorStyle} htmlFor="size_id">Size</InputLabel>
-                                <Select style={customStyle.colorStyle}
+                                <Select style={customStyle.color1Style}
                                     disabled={this.props.isEditing ? false : true}
                                     value={this.props.animal_meta.size}
                                     name='size_id'
                                     onChange={this.props.handleAdoption}
                                     renderValue={value => `${value}`}
                                     input={<Input id="size_id" />}
+                                    disableUnderline
                                 >
                                     {this.props.size.map(status => {
                                         return (
@@ -200,16 +240,17 @@ class AnimalViewDetails extends React.Component {
                             </GridItem>
 
                             <GridItem xs={12} sm={12} md={6} >
-                            <FormControl style={customStyle.form1ControlStyle} className={classes.formControl} >
+                            <FormControl style={customStyle.form2ControlStyle} className={classes.formControl} >
                                 <InputLabel style={customStyle.colorStyle} htmlFor='coat_length_id'>Coat Length</InputLabel>
-                                <Select style={customStyle.colorStyle}
+                                <Select style={customStyle.color1Style}
                                     disabled={this.props.isEditing ? false : true}
                                     value={this.props.animal_meta.coat_length}
                                     name='coat_length_id'
                                     onChange={this.props.handleAdoption}
                                     renderValue={value => `${value}`}
                                     input={<Input id="coat_length_id" />}
-                                >
+                                    disableUnderline
+                                   >
                                     {this.props.coat_length.map(status => {
                                         return (
                                             <MenuItem key={status.id} value={status.id}>{status.coat_length}</MenuItem>
@@ -222,14 +263,15 @@ class AnimalViewDetails extends React.Component {
                             <GridItem xs={12} sm={12} md={6} >
                             <FormControl style={customStyle.form2ControlStyle} className={classes.formControl} >
                                 <InputLabel style={customStyle.colorStyle} htmlFor='is_male'>Gender</InputLabel>
-                                <Select style={customStyle.colorStyle}
+                                <Select style={customStyle.color1Style}
                                     disabled={this.props.isEditing ? false : true}
                                     value={this.props.animal_meta.is_male ? 'male' : 'female'}
                                     name='is_male'
                                     onChange={this.props.handleAdoption}
                                     renderValue={value => `${value}`}
                                     input={<Input id="is_male" />}
-                                >
+                                    disableUnderline
+                                   >
 
                                     <MenuItem value={true}>male</MenuItem>
                                     <MenuItem value={false}>female</MenuItem>
@@ -239,21 +281,29 @@ class AnimalViewDetails extends React.Component {
                             </GridItem>
 
                             <GridItem xs={12} sm={12} md={6} >
-                            <TextField style={customStyle.textStyle}
+                                <FormControl style={customStyle.form2ControlStyle} className={classes.formControl} >
+                                    <MuiThemeProvider theme={theme}>
+                            <TextField style={customStyle.textStyle} 
                                 success={this.props.textState.colorState === "success"}
                                 error={this.props.textState.colorState === "error"}
 
                                 name="color"
-                                label="Color"
+                                label="Color" 
                                 className={classes.textField}
                                 value={this.props.animal_meta.color}
                                 onChange={this.props.handleMetaTextField(3)}
                                 margin="normal"
                                 InputProps={{
                                     readOnly: this.props.isEditing ? false : true,
-
+                                    // disabled: this.props.isEditing ? false : true,
+                                    disableUnderline:true
                                 }}
+                                InputLabelProps={{
+                                    style: { color: 'rgba(0, 0, 0, 0.87)' },
+                                  }}
                             />
+                            </MuiThemeProvider>
+                            </FormControl>
                             </GridItem>
 
                         </form>
