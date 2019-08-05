@@ -54,7 +54,7 @@ export const shelterReducer = (state = initialState, action) => {
         case GET_SHELTER_START:
             return {
                 ...state,
-                fetchingShelter: true
+                fetchingShelter: true,
             }
         case GET_SHELTER_SUCCESS:
             return {

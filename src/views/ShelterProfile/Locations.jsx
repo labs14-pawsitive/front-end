@@ -38,7 +38,7 @@ class Locations extends Component {
 handleFormButtonToggle = e => {
       e.preventDefault();
       this.setState({
-        editMode : !this.state.editMode
+        editMode : !this.state.editMode,
       })
 }
 
