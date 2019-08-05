@@ -14,6 +14,8 @@ import { connect } from "react-redux";
 import moment from 'moment';
 import CreateNotes from "../Components/Application/CreateNotes";
 import { fetchOptions, fetchApplication, updateApplication } from "../../actions/applicationAction";
+import { fetchShelter } from "../../actions/shelterAction";
+import axios from 'axios';
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -34,7 +36,6 @@ import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
-
 import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
 
 
@@ -44,6 +45,8 @@ class ApplicationView extends React.Component {
     this.state = {
 
       application: {},
+
+      shelter: {},
 
       options: [],
 
@@ -57,13 +60,29 @@ class ApplicationView extends React.Component {
   loadApplication = async () => {
 
     await this.props.fetchApplication(this.props.match.params.id)
-
   };
 
 
   loadOptions = async () => {
 
     await this.props.fetchOptions(this.props.match.params.id)
+  };
+
+  loadShelterContact = async () => {
+
+    await this.props.fetchShelter(localStorage.getItem('shelter_id')) 
+
+    // await axios
+    // .get(`https://staging2-pawsnfind.herokuapp.com/api/shelters/${localStorage.getItem('shelter_id')}`)
+    // .then(shelter => {
+
+    //   this.setState({
+    //     shelter: shelter.data
+    //   })
+    // })
+    // .catch(error => {
+    //   console.log(error)
+    // })
 
   };
 
@@ -80,12 +99,13 @@ class ApplicationView extends React.Component {
     this.props.updateApplication(updatedStatus, this.props.application.application_id)
   };
 
-
   componentDidMount(prevProps, prevState) {
 
     this.loadApplication()
 
     this.loadOptions()
+
+    this.loadShelterContact()
   };
 
 
@@ -97,6 +117,7 @@ class ApplicationView extends React.Component {
         ...this.state,
         application: this.props.application,
         options: this.props.options,
+        shelter: this.props.shelter,
       })
     }
   };
@@ -909,7 +930,7 @@ class ApplicationView extends React.Component {
 
           <GridItem xs={12} sm={12} md={5} lg={5} xl={5} className={classes.notesSectionStyle}>
 
-            <CreateNotes application={this.state.application} application_id={this.props.match.params.id} />
+            <CreateNotes application={this.state.application} shelter={this.props.shelter} application_id={this.props.match.params.id} />
 
           </GridItem>
 
@@ -932,10 +953,11 @@ const mapStateToProps = (state) => {
     shelterWorkerID: state.userReducer.shelterWorkerID,
     roleID: state.userReducer.roleID,
     shelter: state.shelterReducer.shelter,
-    options: state.applicationReducer.options
+    options: state.applicationReducer.options,
+
   }
 };
 export default connect(
   mapStateToProps,
-  { fetchOptions, fetchApplication, updateApplication }
+  { fetchOptions, fetchApplication, updateApplication, fetchShelter }
 )(withStyles(regularFormsStyle)(ApplicationView));

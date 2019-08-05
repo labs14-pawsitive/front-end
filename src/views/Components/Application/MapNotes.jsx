@@ -105,7 +105,7 @@ class MapNotes extends React.Component {
                         }}
                     />
 
-                    <FormLabel> <p> {this.props.application.name} . {moment(this.props.note.created_at).format("MMMM Do YYYY").toString()} </p> </FormLabel>
+                    <FormLabel> <p> {this.props.shelter.name} . {moment(this.props.note.created_at).format("MMMM Do YYYY").toString()} </p> </FormLabel>
                 </div>
 
                 <GridContainer

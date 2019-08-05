@@ -106,9 +106,9 @@ export const updateNotes = ( updatedNote, id ) => dispatch => {
     })
 };
 
-export const FETCH_OPTIONS_START = 'GET_OPTIONS_START';
-export const FETCH_OPTIONS_SUCCESS = 'GET_OPTIONS_SUCCESS';
-export const FETCH_OPTIONS_FAILURE = 'GET_OPTIONS_FAILURE';
+export const FETCH_OPTIONS_START = 'FETCH_OPTIONS_START';
+export const FETCH_OPTIONS_SUCCESS = 'FETCH_OPTIONS_SUCCESS';
+export const FETCH_OPTIONS_FAILURE = 'FETCH_OPTIONS_FAILURE';
 
 export const fetchOptions = id => dispatch => {
     dispatch({ type: FETCH_OPTIONS_START })

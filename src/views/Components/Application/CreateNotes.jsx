@@ -127,9 +127,6 @@ class CreateNotes extends React.Component {
 
     render() {
 
-        console.log('PROPS APPLICATION', this.props.application)
-        console.log('SHELTER USER ID', this.props.application.shelter_user_id)
-
         const { classes } = this.props;
 
         const customStyle = {
@@ -212,6 +209,7 @@ class CreateNotes extends React.Component {
                                 <MapNotes
                                     note={note}
                                     application={this.props.application}
+                                    shelter={this.props.shelter}
                                     deleteNotes={this.deleteNotes}
                                     updateNotes={this.updateNotes}
                                 />

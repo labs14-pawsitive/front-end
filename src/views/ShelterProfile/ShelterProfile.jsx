@@ -161,6 +161,9 @@ updateShelterCon = (contactId, change) => {
 } 
 
 render() {
+
+  console.log(this.state.shelter)
+
       const { classes } = this.props;
       const customStyle = {
         shelterDisplayView : {
