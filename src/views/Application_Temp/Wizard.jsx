@@ -56,7 +56,7 @@ class ApplicationWizard extends React.Component {
             subtitle="Please fill out this application to adopt that special animal today"
             finishButtonClick={e => alert(e)}
             animalId={this.props.animalId}
-            shelterId={localStorage.getItem('shelter_id')}
+            shelterId={this.props.shelterId}
           />
         </GridItem>
       </GridContainer>

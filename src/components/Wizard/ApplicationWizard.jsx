@@ -385,8 +385,6 @@ class ApplicationWizard extends React.Component {
               );
             })}
           </div>
-          
-          
           }
          
           <div className={classes.footer}>
