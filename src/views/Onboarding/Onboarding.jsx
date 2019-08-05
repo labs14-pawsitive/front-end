@@ -63,7 +63,7 @@ class Onboarding extends React.Component {
                   <Pets className={classes.iconRose} />
                 </div>
         
-                <NavLink to="/application">
+                <NavLink to={`/application/${localStorage.getItem('shelterId')}/${localStorage.getItem('animalId')}`}>
                 <Button round color="rose">
                   Fill out an Application
                 </Button>
