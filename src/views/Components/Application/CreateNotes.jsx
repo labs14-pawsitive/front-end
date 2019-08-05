@@ -182,7 +182,7 @@ class CreateNotes extends React.Component {
                                 justify="flex-end"
                                 className="addNoteStyle"
                             >
-                                <GridItem xs={3} sm={3} md={3}>
+                                <GridItem xs={3} sm={3} md={3} lg={3} xl={3} >
                                     <Button
                                         variant="contained"
                                         color="transparent"
@@ -193,7 +193,7 @@ class CreateNotes extends React.Component {
                                 </Button>
                                 </GridItem>
 
-                                <GridItem>
+                                <GridItem xs={false} sm={false} md={false} lg={false} xl={false} >
                                     <Button
                                         variant="contained"
                                         color="transparent"

@@ -224,7 +224,7 @@ class ApplicationView extends React.Component {
       <>
         <GridContainer >
 
-          <GridItem xs={12} sm={12} md={8} >
+          <GridItem xs={12} sm={12} md={7} lg={7} xl={7} >
 
             <GridItem xs={12} sm={12} md={12} >
               <Typography style={customStyle.headerStyle} >
@@ -907,7 +907,7 @@ class ApplicationView extends React.Component {
 
           </GridItem>
 
-          <GridItem xs={12} sm={12} md={6} lg={4} className={classes.notesSectionStyle}>
+          <GridItem xs={12} sm={12} md={5} lg={5} xl={5} className={classes.notesSectionStyle}>
 
             <CreateNotes application={this.state.application} application_id={this.props.match.params.id} />
 

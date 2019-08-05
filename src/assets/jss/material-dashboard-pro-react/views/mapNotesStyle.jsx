@@ -58,26 +58,26 @@ const mapNotesStyle = {
   inputAdornmentIconError: {
     color: dangerColor[0] + "!important"
   },
-
   noteBackground: {
-    background: '#edeae8',
-    borderBottom: '1px solid lightgrey',
+    background: "#edeae8",
+    borderBottom: "1px solid lightgrey",
   },
   editButtonStyle: {
-    fontSize: '15px',
-    color: 'grey',
-
+    fontSize: "15px",
+    color: "grey",
  },
  deleteButtonStyle: {
-  fontSize: '15px',
-  color: 'grey',
-
+  fontSize: "15px",
+  color: "grey",
  },
  headerStyle: {
   fontWeight: "bold",
 },
-buttonStyling: {
-  marginRight: '20px',
+deleteButtonStyling: {
+  marginRight: "30px",
+},
+editButtonStyling: {
+  marginRight: "30px",
 }
 
 };
