@@ -17,6 +17,7 @@ import CustomInput from "components/CustomInput/ShelterCustomInput.jsx";
 import shelterProfileStyles from "assets/jss/material-dashboard-pro-react/views/shelterProfileStyles.jsx";
 import MaskedInput from 'react-text-mask';
 
+
 function moveCursor(event) {
   let digits = event.target.value.replace(/\D/g,'').length;
   if(digits <= 3){
@@ -60,6 +61,7 @@ class Contacts extends Component {
             nameState: 'success',
             emailState: 'success',
             phoneState: 'success',
+            delError: false,
         }
 
     }
@@ -89,15 +91,19 @@ cancelClick = e => {
     nameState: 'success',
     emailState: 'success',
     phoneState: 'success',
+    delError: false,
   })
-}
+ }
 
 deleteContact = e => {
     e.preventDefault()
     this.props.deleteShelterCon(this.props.contact.id)
     .then( () => {
       this.props.updateShelter();
-    }) 
+    })
+    this.setState({
+      delError: true
+    })
 }
 
 updateSubmit = e => {
@@ -305,8 +311,8 @@ isValidated() {
                   />
                 </GridItem>
             <GridItem xs={12} sm={12} md={12}>
-            {this.state.editMode && this.props.error && <span style={customStyle.errorColor}>
-                <small>Error: Contact is associated with an existing location.</small> </span>}
+            {this.state.editMode && this.props.error && this.state.delError && <span style={customStyle.errorColor}>
+                <small> Error: Contact is associated with an existing location </small> </span>}
             <GridItem xs={12} sm={12} md={12}>
             {this.state.editMode && <Button size= "sm" 
               color="rose" 
