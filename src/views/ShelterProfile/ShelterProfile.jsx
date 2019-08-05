@@ -13,7 +13,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { fetchShelter , fetchOptions, deleteShelterLoc, deleteShelterCon, updateShelterCon, updateShelterLoc } from '../../actions/shelterAction';
 import Locations from './Locations';
-import {axiosWithAuth} from 'axiosWithAuth';
+import { axiosWithAuth } from 'axiosWithAuth';
 
 import LocationForm from './LocationForm';
 import ContactForm from './ContactForm';
@@ -258,7 +258,6 @@ return (
                       inputComponent : TextMaskCustom,
                     }}
                     style={this.state.editMode? "" : customStyle.shelterDisplayView}
-
                   />
                 </GridItem>
               </GridContainer>
@@ -309,9 +308,6 @@ return (
           </Card>
         </GridItem>
       </GridContainer>
-
-
-     
     </div>
   );
   }

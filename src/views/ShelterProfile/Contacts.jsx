@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { fetchShelter ,updateShelterCon, deleteShelterCon } from '../../actions/shelterAction';
+import { axiosWithAuth } from 'axiosWithAuth';
 
 
 // @material-ui/core components
@@ -62,11 +63,30 @@ class Contacts extends Component {
             emailState: 'success',
             phoneState: 'success',
             delError: false,
+            shelterVerified : ''
+
         }
 
     }
 
- 
+  verifyShelter = async(shelter_id) => {
+      //verifying shelter before proceeding
+      axiosWithAuth()
+        .get(`https://staging2-pawsnfind.herokuapp.com/api/auth/shelter/${shelter_id}`)
+        .then( result => { 
+          this.setState({
+            shelterVerified : true
+          })
+          console.log(result)
+        })
+        .catch( error => {
+          console.log(error)
+          this.setState({
+            shelterVerified : false
+          })
+        })
+  } 
+
 handleFormButtonToggle = e => {
         e.preventDefault();
         this.setState({
@@ -95,19 +115,28 @@ cancelClick = e => {
   })
  }
 
-deleteContact = e => {
+deleteContact = async(e) => {
     e.preventDefault()
+    await this.verifyShelter(localStorage.getItem('shelter_id'))
+    //if(this.state.shelterVerified) {
     this.props.deleteShelterCon(this.props.contact.id)
     .then( () => {
       this.props.updateShelter();
+      this.setState({
+        shelterVerified : ''
+      })
     })
     this.setState({
       delError: true
     })
+  //}
 }
 
-updateSubmit = e => {
+updateSubmit = async(e) => {
     e.preventDefault()
+    await this.verifyShelter(localStorage.getItem('shelter_id'))
+
+    //if (this.isValidated() && this.state.shelterVerified) {
     if (this.isValidated()){
     const updatedContact = {
         name: this.state.contact.name,
@@ -122,6 +151,9 @@ updateSubmit = e => {
     this.props.updateShelterCon(this.props.contact.id, updatedContact)
     .then( (res) => {
         this.props.updateShelter();
+        this.setState({
+          shelterVerified : ''
+        })
         console.log('UPDATESHELTERLOCATION:',localStorage.getItem('shelter_id'))
     })
     .then( (res) => {

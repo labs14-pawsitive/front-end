@@ -247,6 +247,8 @@ class ApplicationWizard extends React.Component {
       this.setState({
         isSuccess : true
       })
+      localStorage.removeItem('animalId')
+      localStorage.removeItem('shelterId')
     })
     .catch(error => {
       this.setState({

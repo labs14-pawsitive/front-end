@@ -18,7 +18,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addShelterCon, fetchShelter } from "../../actions/shelterAction";
-import {axiosWithAuth} from 'axiosWithAuth';
+import { axiosWithAuth } from 'axiosWithAuth';
 
 
 import shelterProfileStyles from "assets/jss/material-dashboard-pro-react/views/shelterProfileStyles.jsx";
@@ -112,7 +112,6 @@ class ContactForm extends React.Component {
           this.setState({
             shelterVerified : false
           })
-          //this.props.history.push('/')
         })
     }
 
@@ -144,7 +143,8 @@ class ContactForm extends React.Component {
       e.preventDefault()
       await this.verifyShelter(localStorage.getItem('shelter_id'))
        
-        if (this.isValidated && this.state.shelterVerified) {
+       // if (this.isValidated() && this.state.shelterVerified) {
+        if (this.isValidated()) {
           const newContact = {
             name: this.state.name,
             email: this.state.email,

@@ -12,6 +12,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addShelterLoc , fetchOptions, fetchShelter  } from "../../actions/shelterAction";
+import { axiosWithAuth } from 'axiosWithAuth';
+
 
 import shelterProfileStyles from "assets/jss/material-dashboard-pro-react/views/shelterProfileStyles.jsx";
 
@@ -52,13 +54,27 @@ class LocationForm extends React.Component {
             shelter_contact_id: '',
             open: false,
             fullWidth: true,
+            shelterVerified : ''
         };
     }
 
-    // componentDidMount(){
-    //     this.props.fetchOptions(localStorage.getItem('shelter_id'));
-    // }
-
+    verifyShelter = async(shelter_id) => {
+      //verifying shelter before proceeding
+      axiosWithAuth()
+        .get(`https://staging2-pawsnfind.herokuapp.com/api/auth/shelter/${shelter_id}`)
+        .then( result => { 
+          this.setState({
+            shelterVerified : true
+          })
+          console.log(result)
+        })
+        .catch( error => {
+          console.log(error)
+          this.setState({
+            shelterVerified : false
+          })
+        })
+    }
 
 
     handleClickOpen = () => {
@@ -85,10 +101,13 @@ class LocationForm extends React.Component {
 
 //
 
-    handleSubmit = e => {
+    handleSubmit = async(e) => {
         e.preventDefault()
+        await this.verifyShelter(localStorage.getItem('shelter_id'))
+
+       // if (this.isValidated() && this.state.shelterVerified) {
         if (this.isValidated()) {
-        const newLocation = {
+            const newLocation = {
             shelter_id: localStorage.getItem('shelter_id'),
             street_address: this.state.street_address,
             city: this.state.city,

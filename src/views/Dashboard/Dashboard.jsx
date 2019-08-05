@@ -441,61 +441,11 @@ class Dashboard extends React.Component {
         </GridContainer>
 
 
-
-
-
-{/*
-        <GridContainer>
-          <GridItem xs={12}>
-          <Card>
-            <CardHeader color="rose" icon>
-              <CardIcon color="rose">
-                <LibraryBooks />
-              </CardIcon>
-              <h4 className={classes.cardIconTitle}>Recent Applications</h4>
-            </CardHeader>
-            <CardBody>
-              <Table
-                tableHead={[
-                  "Application ID",
-                  "Animal Name",
-                  "Application Status",
-                  "Applicant",
-                  "Submission Date",
-                  "View Application"
-                ]}
-                tableData={[
-                  applicationRows[0],
-                  applicationRows[1],
-                  applicationRows[2],
-                  applicationRows[3],
-                  applicationRows[4]
-                ]}
-                customCellClasses={[
-                  classes.center,
-                  classes.right,
-                  classes.right
-                ]}
-                customClassesForCells={[0, 4, 5]}
-                customHeadCellClasses={[
-                  classes.center,
-                  classes.right,
-                  classes.right
-                ]}
-                customHeadClassesForCells={[0, 4, 5]}
-              />
-            </CardBody>
-          </Card>
-        </GridItem>
-        </GridContainer>
- */}
-
-
         <h3>Animal Spotlights</h3>
         <br />
         <GridContainer>
           {this.state.animal_3.map((animal, key) => (
-            <GridItem xs={12} sm={12} md={4}>
+            <GridItem xs={12} sm={6} md={4}>
               <NavLink to={`/admin/animal/${animal.id}`}>
             <Card product>
               <CardHeader image className={classes.cardHeaderHover} style={customStyle.imgHover}>

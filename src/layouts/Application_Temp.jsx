@@ -70,9 +70,11 @@ async componentWillMount() {
           console.log(result)
           this.setState({
             match : true,
-            animalId : this.props.match.params.animalId,
-            shelterId : this.props.match.params.shelterId
+            /*animalId : this.props.match.params.animalId,
+            shelterId : this.props.match.params.shelterId*/
           })
+          localStorage.setItem("animalId", this.props.match.params.animalId)
+          localStorage.setItem('shelterId', this.props.match.params.shelterId)
         })
         .catch(error => {
           this.setState({
@@ -171,7 +173,7 @@ async componentWillMount() {
             {this.state.alert}
             {this.state.match === true && localStorage.getItem('token') && localStorage.getItem('user_id')
             ? 
-            <ApplicationWizard animalId={this.state.animalId} shelterId={this.state.shelterId}/>
+            <ApplicationWizard animalId={this.props.match.params.animalId} shelterId={this.props.match.params.shelterId}/>
             : 
             null
             } 
