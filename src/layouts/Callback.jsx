@@ -50,13 +50,15 @@ class Callback extends React.Component {
     
     const newUser = localStorage.getItem('new_user');
     const shelter_id = localStorage.getItem('shelter_id');
+    const shelterId = localStorage.getItem('shelterId');
+    const animalId = localStorage.getItem('animalId')
    
       if(newUser == "true") {
         this.props.history.push('/callback/onboarding')
       }  
       else 
       if (localStorage.getItem('animalId') && localStorage.getItem('shelterId')) { 
-        this.props.history.push(`/application/${localStorage.getItem('shelterId')}/${localStorage.getItem('animalId')}`)
+        this.props.history.push(`/application/${shelterId}/${animalId}`)
       }
       else 
       if (shelter_id != "null" && typeof(shelter_id) !== 'undefined') {
