@@ -218,7 +218,7 @@ class Dashboard extends React.Component {
       
       <div>
         <GridContainer>
-          <GridItem xs={12} sm={6} md={6} lg={3}>
+          <GridItem xs={12} sm={6} md={6} lg={6}>
             <Card style={customStyle.cardHeight}>
               <CardHeader color="warning" stats icon>
                 <CardIcon color="warning">
@@ -244,8 +244,8 @@ class Dashboard extends React.Component {
               </CardFooter>
             </Card>
           </GridItem>
-           
-          {/*<GridItem xs={12} sm={6} md={6} lg={3}>
+          
+          <GridItem xs={12} sm={6} md={6} lg={3}>
           <Card style={customStyle.cardHeight}>
               <CardHeader color="success" stats icon>
                 <CardIcon color="success">
@@ -263,8 +263,8 @@ class Dashboard extends React.Component {
               </CardFooter>
             </Card>
           </GridItem>
-          */}
-          <GridItem xs={12} sm={6} md={6} lg={3}>
+          
+          <GridItem xs={12} sm={6} md={6} lg={6}>
           <Card style={customStyle.cardHeight}>
               <CardHeader color="danger" stats icon>
                 <CardIcon color="danger">
@@ -282,7 +282,7 @@ class Dashboard extends React.Component {
               </CardFooter>
             </Card>
           </GridItem>
-           {/* 
+          
           <GridItem xs={12} sm={6} md={6} lg={3}>
           <Card style={customStyle.cardHeight}>
               <CardHeader color="info" stats icon>
@@ -300,59 +300,11 @@ class Dashboard extends React.Component {
               </CardFooter>
             </Card>
           </GridItem>
-          */}
-<GridItem xs={12} sm={12} md={6}>
-            <Card chart>
-              <CardHeader color="danger" className={classes.cardHeaderHover}>
-                <ChartistGraph
-                  className="ct-chart-white-colors"
-                  data={applicationChartData}
-                  type="Line"
-                  options={applicationChart.options}
-                  listener={applicationChart.animation}
-                />
-              </CardHeader>
-              <CardBody>
-                <div className={classes.cardHoverUnder}>
-                  <Tooltip
-                    id="tooltip-top"
-                    title="Refresh"
-                    placement="bottom"
-                    classes={{ tooltip: classes.tooltip }}
-                  >
-                    <Button simple color="info" justIcon>
-                      <Refresh className={classes.underChartIcons} />
-                    </Button>
-                  </Tooltip>
-                  <Tooltip
-                    id="tooltip-top"
-                    title="Change Date"
-                    placement="bottom"
-                    classes={{ tooltip: classes.tooltip }}
-                  >
-                    <Button color="transparent" simple justIcon>
-                      <Edit className={classes.underChartIcons} />
-                    </Button>
-                  </Tooltip>
-                </div>
-                <h4 className={classes.cardTitle}>Monthly Applications</h4>
-                <p className={classes.cardCategory}>
-                  A snapshot of your aggregated monthly application for the past 12 months
-                </p>
-              </CardBody>
-              <CardFooter chart>
-                <div className={classes.stats}>
-                  <AccessTime /> Updated within the last 24 hours
-                </div>
-              </CardFooter>
-            </Card>
-          </GridItem>
-
+          
         </GridContainer>
 
-{/* 
         <GridContainer>
-          
+           
           <GridItem xs={12} sm={12} md={6}>
             <Card chart>
               <CardHeader color="info" className={classes.cardHeaderHover}>
@@ -404,10 +356,55 @@ class Dashboard extends React.Component {
           </GridItem>
 
 
-          
+          <GridItem xs={12} sm={12} md={12}>
+            <Card chart>
+              <CardHeader color="danger" className={classes.cardHeaderHover}>
+                <ChartistGraph
+                  className="ct-chart-white-colors"
+                  data={applicationChartData}
+                  type="Line"
+                  options={applicationChart.options}
+                  listener={applicationChart.animation}
+                />
+              </CardHeader>
+              <CardBody>
+                <div className={classes.cardHoverUnder}>
+                  <Tooltip
+                    id="tooltip-top"
+                    title="Refresh"
+                    placement="bottom"
+                    classes={{ tooltip: classes.tooltip }}
+                  >
+                    <Button simple color="info" justIcon>
+                      <Refresh className={classes.underChartIcons} />
+                    </Button>
+                  </Tooltip>
+                  <Tooltip
+                    id="tooltip-top"
+                    title="Change Date"
+                    placement="bottom"
+                    classes={{ tooltip: classes.tooltip }}
+                  >
+                    <Button color="transparent" simple justIcon>
+                      <Edit className={classes.underChartIcons} />
+                    </Button>
+                  </Tooltip>
+                </div>
+                <h4 className={classes.cardTitle}>Monthly Applications</h4>
+                <p className={classes.cardCategory}>
+                  A snapshot of your aggregated monthly application for the past 12 months
+                </p>
+              </CardBody>
+              <CardFooter chart>
+                <div className={classes.stats}>
+                  <AccessTime /> Updated within the last 24 hours
+                </div>
+              </CardFooter>
+            </Card>
+          </GridItem>
         </GridContainer>
 
-*/}
+
 
         <GridContainer>
           <GridItem xs={12}>
@@ -498,6 +495,7 @@ class Dashboard extends React.Component {
                     {animal.name}
                   </NavLink>
                 </h4>
+              
               </CardBody>
              
             </Card>
