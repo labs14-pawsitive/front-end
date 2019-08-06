@@ -356,7 +356,7 @@ class Dashboard extends React.Component {
           </GridItem>
           */}
 
-          <GridItem xs={12} sm={12} md={6}>
+          <GridItem xs={12} sm={12} md={12}>
             <Card chart>
               <CardHeader color="danger" className={classes.cardHeaderHover}>
                 <ChartistGraph
