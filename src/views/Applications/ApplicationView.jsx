@@ -951,7 +951,7 @@ class ApplicationView extends React.Component {
 
           <GridItem xs={12} sm={12} md={6} lg={4} className={classes.notesSectionStyle}>
 
-            <CreateNotes application={this.state.application} application_id={this.props.match.params.id} />
+            <CreateNotes application={this.state.application} application_id={this.props.match.params.id} shelterUserId={this.state.user.shelter_user_id}/>
 
           </GridItem>
 

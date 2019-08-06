@@ -100,7 +100,7 @@ class CreateNotes extends React.Component {
 
         const newNote = {
             notes: this.state.inputField,
-            shelter_user_id: this.props.application.user_id,
+            shelter_user_id: this.props.shelterUserId,
             application_id: this.props.application_id,
         };
 
