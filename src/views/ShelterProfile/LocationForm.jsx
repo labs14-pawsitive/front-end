@@ -61,7 +61,7 @@ class LocationForm extends React.Component {
     verifyShelter = async(shelter_id) => {
       //verifying shelter before proceeding
       axiosWithAuth()
-        .get(`https://staging2-pawsnfind.herokuapp.com/api/auth/shelter/${shelter_id}`)
+        .get(`process.env.backendurl/api/auth/shelter/${shelter_id}`)
         .then( result => { 
           this.setState({
             shelterVerified : true

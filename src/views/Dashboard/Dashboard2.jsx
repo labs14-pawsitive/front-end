@@ -102,7 +102,7 @@ class Dashboard extends React.Component {
   componentWillMount() {
     //verifying shelter before proceeding
     axiosWithAuth()
-      .get(`https://staging2-pawsnfind.herokuapp.com/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
+      .get(`process.env.backendurl/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
       .then( result => {
         this.setState({
           shelterVerified: true
@@ -120,8 +120,8 @@ class Dashboard extends React.Component {
   async componentDidMount() {
     await axios
     //await axiosWithAuth()
-    //.get(`https://staging2-pawsnfind.herokuapp.com/api/dashboard/${localStorage.getItem('shelter_id')}`)
-    .get(`https://staging2-pawsnfind.herokuapp.com/api/dashboard/${localStorage.getItem('shelter_id')}`)
+    //.get(`process.env.backendurl/api/dashboard/${localStorage.getItem('shelter_id')}`)
+    .get(`process.env.backendurl/api/dashboard/${localStorage.getItem('shelter_id')}`)
     .then(results => {
       if (results){
       this.setState({

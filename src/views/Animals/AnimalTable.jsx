@@ -79,7 +79,7 @@ class ReactTables extends React.Component {
   componentWillMount() {
     //verifying shelter before proceeding
     axiosWithAuth()
-      .get(`https://staging2-pawsnfind.herokuapp.com/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
+      .get(`process.env.backendurl/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
       .then( result => {
         this.setState({
           shelterVerified : true
@@ -95,8 +95,8 @@ class ReactTables extends React.Component {
 
   componentDidMount() {
     axios
-    //.get(`https://staging2-pawsnfind.herokuapp.com/api/animals/shelter/${localStorage.getItem('shelter_id')}`)
-    .get(`https://staging2-pawsnfind.herokuapp.com/api/animals/shelter/${localStorage.getItem('shelter_id')}`)
+    //.get(`process.env.backendurl/api/animals/shelter/${localStorage.getItem('shelter_id')}`)
+    .get(`process.env.backendurl/api/animals/shelter/${localStorage.getItem('shelter_id')}`)
 
     .then(animals => {
       const picStyle = { width: '100%' }

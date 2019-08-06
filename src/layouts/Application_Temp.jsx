@@ -64,8 +64,8 @@ async componentWillMount() {
      // localStorage.setItem('shelterId', this.props.match.params.shelterId) 
           //checking for valid link => animal and shelter id match
         await axios
-        //.get(`https://staging2-pawsnfind.herokuapp.com/api/animals/${this.props.match.params.animalId}/match/shelter/${this.props.match.params.shelterId}`)
-        .get(`https://staging2-pawsnfind.herokuapp.com/api/animals/${this.props.match.params.animalId}/match/shelter/${this.props.match.params.shelterId}`)
+        //.get(`process.env.backendurl/api/animals/${this.props.match.params.animalId}/match/shelter/${this.props.match.params.shelterId}`)
+        .get(`process.env.backendurl/api/animals/${this.props.match.params.animalId}/match/shelter/${this.props.match.params.shelterId}`)
         .then(result => {
           console.log(result)
           this.setState({

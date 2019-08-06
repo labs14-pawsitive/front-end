@@ -133,7 +133,7 @@ class Step1 extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('https://staging2-pawsnfind.herokuapp.com/api/internal/paws/options/3')
+    axios.get('process.env.backendurl/api/internal/paws/options/3')
     .then(options => {
       this.setState({
         options: options.data.states

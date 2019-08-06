@@ -8,8 +8,8 @@ export const FETCH_APP_FAILURE = 'FETCH_APP_FAILURE';
 export const fetchApplication = id => dispatch => {
     dispatch({ type: FETCH_APP_START });
     return axios
-    //.get(`https://staging2-pawsnfind.herokuapp.com/api/applications/${id}`)
-    .get(`https://staging2-pawsnfind.herokuapp.com/api/applications/${id}`)
+    //.get(`process.env.backendurl/api/applications/${id}`)
+    .get(`process.env.backendurl/api/applications/${id}`)
     .then(res => {
         console.log('fetched application', res.data)
         dispatch({ type: FETCH_APP_SUCCESS, payload: res.data })
@@ -26,7 +26,7 @@ export const UPDATE_APP_STATUS_FAILURE = 'UPDATE_APP_STATUS_FAILURE';
 export const updateApplication = ( updatedStatus, id ) => dispatch => {
     dispatch({ type: UPDATE_APP_STATUS_START });
     return axios
-    .put(`https://staging2-pawsnfind.herokuapp.com/api/applications/${id}/status`, updatedStatus )
+    .put(`process.env.backendurl/api/applications/${id}/status`, updatedStatus )
     .then(res => {
         dispatch({ type: UPDATE_APP_STATUS_SUCCESS, payload: res.data })
         console.log('updated app status', res.data)
@@ -44,7 +44,7 @@ export const ADD_NOTES_FAILURE = 'ADD_NOTES_FAILURE';
 export const addNotes = ( newNote, id ) => dispatch => {
     dispatch({ type: ADD_NOTES_START });
     return axios
-        .post(`https://staging2-pawsnfind.herokuapp.com/api/applications/${id}/note`, newNote )
+        .post(`process.env.backendurl/api/applications/${id}/note`, newNote )
         .then(res => {
             console.log(res);
             dispatch({ type: ADD_NOTES_SUCCESS, payload: res.data })
@@ -62,7 +62,7 @@ export const GET_NOTES_FAILURE = 'GET_NOTES_FAILURE';
 export const getNotes = id => dispatch => {
     dispatch({ type: GET_NOTES_START })
     return axios
-        .get(`https://staging2-pawsnfind.herokuapp.com/api/applications/${id}/notes`)
+        .get(`process.env.backendurl/api/applications/${id}/notes`)
         .then(res => {
             console.log(res)
             dispatch({ type: GET_NOTES_SUCCESS, payload: res.data })
@@ -80,7 +80,7 @@ export const DELETE_NOTES_FAILURE = 'DELETE_NOTES_FAILURE';
 export const deleteNotes = id => dispatch => {
     dispatch({ type: DELETE_NOTES_START })
     return axios
-    .delete(`https://staging2-pawsnfind.herokuapp.com/api/applications/note/${id}`)
+    .delete(`process.env.backendurl/api/applications/note/${id}`)
     .then(res => {
         dispatch({ type: DELETE_NOTES_SUCCESS, payload: id })
     })
@@ -96,7 +96,7 @@ export const UPDATE_NOTES_FAILURE = 'UPDATE_NOTES_FAILURE';
 export const updateNotes = ( updatedNote, id ) => dispatch => {
     dispatch({ type: UPDATE_NOTES_START })
     return axios 
-    .put(`https://staging2-pawsnfind.herokuapp.com/api/applications/note/${id}`, updatedNote )
+    .put(`process.env.backendurl/api/applications/note/${id}`, updatedNote )
     .then(res => {
         console.log(res)
         dispatch({ type: UPDATE_NOTES_SUCCESS, payload: res.data })
@@ -113,7 +113,7 @@ export const FETCH_OPTIONS_FAILURE = 'GET_OPTIONS_FAILURE';
 export const fetchOptions = id => dispatch => {
     dispatch({ type: FETCH_OPTIONS_START })
     return axios
-    .get(`https://staging2-pawsnfind.herokuapp.com/api/internal/paws/options/${id}`)
+    .get(`process.env.backendurl/api/internal/paws/options/${id}`)
     .then(res => {
         console.log(res)
         dispatch({ type: FETCH_OPTIONS_SUCCESS, payload: res.data })

@@ -64,7 +64,7 @@ class Dashboard extends React.Component {
     componentWillMount() {
       //verifying shelter before proceeding
       axiosWithAuth()
-        .get(`https://staging2-pawsnfind.herokuapp.com/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
+        .get(`process.env.backendurl/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
         .then( result => {
           console.log(result)
         })
@@ -79,8 +79,8 @@ class Dashboard extends React.Component {
     //window.onpopstate = this.onBackButtonEvent;
 
     axios
-    //.get(`https://staging2-pawsnfind.herokuapp.com/api/shelters/${localStorage.getItem('shelter_id')}`)
-      .get(`https://staging2-pawsnfind.herokuapp.com/api/shelters/${localStorage.getItem('shelter_id')}`)
+    //.get(`process.env.backendurl/api/shelters/${localStorage.getItem('shelter_id')}`)
+      .get(`process.env.backendurl/api/shelters/${localStorage.getItem('shelter_id')}`)
       .then( shelter => {
       console.log(shelter.data)
       this.setState({
