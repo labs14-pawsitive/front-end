@@ -119,7 +119,7 @@ class AddAnimalForm extends React.Component {
   verifyShelter = async(shelter_id) => {
     //verifying shelter before proceeding
     axiosWithAuth()
-      .get(`process.env.backendurl/api/auth/shelter/${shelter_id}`)
+      .get(`${process.env.backendurl}/api/auth/shelter/${shelter_id}`)
       .then( result => { 
         this.setState({
           shelterVerified : true
@@ -466,7 +466,7 @@ class AddAnimalForm extends React.Component {
             imageLimit={1} 
             editable={true} 
             callback={this.handleImgUploadResponse} 
-            url="process.env.backendurl/api/pictures"
+            url={`${process.env.backendurl}/api/pictures`}
           />
         </GridItem>
         <GridItem xs={12} sm={12} md={12}>

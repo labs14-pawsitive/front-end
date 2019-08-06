@@ -74,7 +74,7 @@ class ApplicationTable extends React.Component {
   componentWillMount() {
     //verifying shelter before proceeding
     axiosWithAuth()
-      .get(`process.env.backendurl/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
+      .get(`${process.env.backendurl}/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
       .then( result => {
         this.setState({
           shelterVerified : true
@@ -90,10 +90,10 @@ class ApplicationTable extends React.Component {
 
   componentDidMount() {
     axios
-    .get(`process.env.backendurl/api/applications/shelter/${localStorage.getItem('shelter_id')}`)
-    //.get(`process.env.backendurl/api/animals/shelter/${localStorage.getItem("shelter_id")}`)
-    // .get(`process.env.backendurl/api/applications/shelter/${localStorage.getItem('shelter_id')}`)
-    //.get(`process.env.backendurl/api/applications/shelter/${localStorage.getItem('shelter_id')}`)
+    .get(`${process.env.backendurl}/api/applications/shelter/${localStorage.getItem('shelter_id')}`)
+    //.get(`${process.env.backendurl}/api/animals/shelter/${localStorage.getItem("shelter_id")}`)
+    // .get(`${process.env.backendurl}/api/applications/shelter/${localStorage.getItem('shelter_id')}`)
+    //.get(`${process.env.backendurl}/api/applications/shelter/${localStorage.getItem('shelter_id')}`)
     .then(applications => {
       console.log(applications)
       

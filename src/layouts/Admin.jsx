@@ -64,7 +64,7 @@ class Dashboard extends React.Component {
     componentWillMount() {
       //verifying shelter before proceeding
       axiosWithAuth()
-        .get(`process.env.backendurl/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
+        .get(`${process.env.backendurl}/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
         .then( result => {
           console.log(result)
         })
@@ -79,8 +79,7 @@ class Dashboard extends React.Component {
     //window.onpopstate = this.onBackButtonEvent;
 
     axios
-    //.get(`process.env.backendurl/api/shelters/${localStorage.getItem('shelter_id')}`)
-      .get(`process.env.backendurl/api/shelters/${localStorage.getItem('shelter_id')}`)
+      .get(`${process.env.backendurl}/api/shelters/${localStorage.getItem('shelter_id')}`)
       .then( shelter => {
       console.log(shelter.data)
       this.setState({

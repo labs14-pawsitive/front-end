@@ -55,8 +55,8 @@ export default class Auth {
             }
         }
         const addUser = await axios.post(
-            //'process.env.backendurl/api/auth',
-            'process.env.backendurl/api/auth',
+           
+            `${process.env.backendurl}.backendurl/api/auth`,
             user,
             config
         ).then( user => {

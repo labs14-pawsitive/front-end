@@ -10,7 +10,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   
   //verifying user before proceeding
   axiosWithAuth()
-  .get(`process.env.backendurl/api/auth/user/${localStorage.getItem('user_id')}`)
+  .get(`${${${${${process.env.backendurl}}}}}.backendurl/api/auth/user/${localStorage.getItem('user_id')}`)
   .then( result => {
     console.log(result)
     verified = true;  
