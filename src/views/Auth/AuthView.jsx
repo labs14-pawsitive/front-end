@@ -26,9 +26,9 @@ class AuthView extends React.Component {
 
 
     logout = () => {
-      
+
       auth.logout({
-        returnTo: '/',
+        returnTo: process.env.REACT_APP_AUTH0_LOGOUT_URL,
         client_id: process.env.REACT_APP_AUTH0_CLIENT_ID,
       });
       localStorage.clear()
