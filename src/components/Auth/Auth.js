@@ -17,6 +17,14 @@ export default class Auth {
         sso: false
     })
 
+    logout = () => {
+        this.auth0.logout({
+            returnTo: process.env.REACT_APP_AUTH0_LOGOUT_URL,
+            client_id: process.env.REACT_APP_AUTH0_CLIENT_ID,
+          });
+          localStorage.clear()
+    }
+
     login = () => {
         this.auth0.authorize();
     }

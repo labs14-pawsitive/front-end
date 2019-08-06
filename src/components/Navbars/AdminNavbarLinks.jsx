@@ -42,7 +42,7 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 
 import adminNavbarLinksStyle from "assets/jss/material-dashboard-pro-react/components/adminNavbarLinksStyle.jsx";
-import auth0 from 'auth0-js';
+ 
 
 const auth = new Auth();
 
@@ -65,12 +65,7 @@ class HeaderLinks extends React.Component {
   };
   handleLogout = ()=> {
 
-    localStorage.clear(); 
-
-    this.auth0.logout({
-      returnTo: process.env.REACT_APP_AUTH0_LOGOUT_URL,
-      client_id: process.env.REACT_APP_AUTH0_CLIENT_ID,
-    });
+    auth.logout();
 
   }
   render() {
