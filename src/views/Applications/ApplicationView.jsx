@@ -72,18 +72,6 @@ class ApplicationView extends React.Component {
 
     await this.props.fetchShelter(localStorage.getItem('shelter_id')) 
 
-    // await axios
-    // .get(`https://staging2-pawsnfind.herokuapp.com/api/shelters/${localStorage.getItem('shelter_id')}`)
-    // .then(shelter => {
-
-    //   this.setState({
-    //     shelter: shelter.data
-    //   })
-    // })
-    // .catch(error => {
-    //   console.log(error)
-    // })
-
   };
 
 
@@ -930,7 +918,7 @@ class ApplicationView extends React.Component {
 
           <GridItem xs={12} sm={12} md={5} lg={5} xl={5} className={classes.notesSectionStyle}>
 
-            <CreateNotes application={this.state.application} shelter={this.props.shelter} application_id={this.props.match.params.id} />
+            <CreateNotes application={this.props.application} shelter={this.props.shelter} application_id={this.props.match.params.id} />
 
           </GridItem>
 
