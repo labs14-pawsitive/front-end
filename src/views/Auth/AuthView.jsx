@@ -14,7 +14,7 @@ import authNavbarStyle from "assets/jss/material-dashboard-pro-react/components/
 
 
 const auth = new Auth();
-
+ 
 
 class AuthView extends React.Component {
   constructor(props){

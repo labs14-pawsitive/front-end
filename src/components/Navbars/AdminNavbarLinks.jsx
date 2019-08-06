@@ -64,7 +64,7 @@ class HeaderLinks extends React.Component {
     this.setState({ openProfile: false });
   };
   handleLogout = ()=> {
-
+ 
     auth.logout();
 
   }

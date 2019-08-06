@@ -24,7 +24,7 @@ export default class Auth {
           });
           localStorage.clear()
     }
-
+ 
     login = () => {
         this.auth0.authorize();
     }
