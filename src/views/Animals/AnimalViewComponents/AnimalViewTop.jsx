@@ -19,8 +19,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
 
-
-
 class AnimalViewTop extends React.Component {
     render() {
         const { classes } = this.props;
