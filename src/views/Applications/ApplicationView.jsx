@@ -91,7 +91,7 @@ class ApplicationView extends React.Component {
 
     await this.loadApplication()
     axios.
-    get(`${process.env.REACT_APP_BACKEND_URL}/api/users/${this.state.application.user_id}`)
+    get(`${process.env.REACT_APP_BACKEND_URL}/api/users/${localStorage.getItem('user_id')}`)
     .then( result => {
       console.log(result)
       this.setState({
