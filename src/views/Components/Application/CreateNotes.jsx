@@ -211,6 +211,7 @@ class CreateNotes extends React.Component {
                             {this.props.notes && this.props.notes.map(note => (
                                 <MapNotes
                                     note={note}
+                                    email={this.props.email}
                                     application={this.props.application}
                                     deleteNotes={this.deleteNotes}
                                     updateNotes={this.updateNotes}
