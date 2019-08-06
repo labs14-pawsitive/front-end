@@ -63,7 +63,11 @@ class HeaderLinks extends React.Component {
   handleLogout = ()=> {
 
     localStorage.clear();
-    this.props.history.push('/')
+    webAuth.logout({
+      returnTo: '/',
+      client_id: process.env.REACT_APP_AUTH0_CLIENT_ID,
+    });
+
   }
   render() {
     const { classes, rtlActive } = this.props;
