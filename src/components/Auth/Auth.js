@@ -19,6 +19,7 @@ export default class Auth {
 
     logout = () => {
         this.auth0.logout({
+            domain: process.env.REACT_APP_AUTH0_LOGOUT_DOMAIN,
             returnTo: process.env.REACT_APP_AUTH0_LOGOUT_URL,
             client_id: process.env.REACT_APP_AUTH0_CLIENT_ID,
           });
