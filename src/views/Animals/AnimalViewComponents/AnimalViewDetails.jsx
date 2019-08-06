@@ -271,28 +271,25 @@ class AnimalViewDetails extends React.Component {
                             </GridItem>
 
                             <GridItem xs={12} sm={12} md={6} >
-                                <FormControl style={customStyle.form2ControlStyle} className={classes.formControl} >
-                                <MuiThemeProvider theme={theme}>
+                              
                             <TextField style={customStyle.textStyle}
-                                success={this.props.textState.colorState === "success"}
-                                error={this.props.textState.colorState === "error"}
+                                success={this.props.animal_meta.color && this.props.animal_meta.color !== "" && this.props.animal_meta.color.length >= this.props.maxLength}
+                                error={this.props.animal_meta.color && (this.props.animal_meta.color.length < this.props.maxLength) ||  this.props.animal_meta.color === "" }
 
                                 name="color"
                                 label="Color"
                                 className={classes.textField}
                                 value={this.props.animal_meta.color}
-                                onChange={this.props.handleMetaTextField(3)}
+                                onChange={this.props.handleMetaTextField}
                                 margin="normal"
                                 InputProps={{
                                     readOnly: this.props.isEditing ? false : true,
-                                    disableUnderline:true
+                                    
                                 }}
-                                InputLabelProps={{
-                                    style: { color: 'rgba(0, 0, 0, 0.87)' },
-                                  }}
+                          
                             />
-                            </MuiThemeProvider>
-                                     </FormControl>
+                       
+                                  
                             </GridItem>
 
                         </form>

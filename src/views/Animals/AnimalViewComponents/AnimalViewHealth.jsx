@@ -88,26 +88,23 @@ class AnimalViewHealth extends React.Component {
                   autoComplete="off" style={customStyle.adoptionStyle}
                 >
                     <GridItem xs={12} sm={12} md={12}>
-                    <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
-                  <TextField style={customStyle.healthTextStyle}
-                    success={this.props.textState.healthState === "success"}
-                    error={this.props.textState.healthState === "error"}
+                   <TextField style={customStyle.healthTextStyle}
+                    success={this.props.animal_meta.health && this.props.animal_meta.health !== "" && this.props.animal_meta.health.length >= this.props.maxLength}
+                    error={this.props.animal_meta.health && (this.props.animal_meta.health.length < this.props.maxLength) || this.props.animal_meta.health === ""}
                     name="health"
                     label="Health"
                     multiline
                     className={classes.textField}
                     value={this.props.animal_meta.health}
-                    onChange={this.props.handleMetaTextField(10)}
+                    onChange={this.props.handleMetaTextField}
                     margin="normal"
                     InputProps={{
                       readOnly: this.props.isEditing ? false : true,
-                      disableUnderline:true
+                      
                     }}
-                    InputLabelProps={{
-                      style: { color: 'rgba(0, 0, 0, 0.87)' },
-                    }}
+                
                   />
-                  </FormControl>
+                  
                   </GridItem>
 
                   <GridItem xs={12} sm={12} md={6}>

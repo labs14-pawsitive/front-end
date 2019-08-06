@@ -167,8 +167,8 @@ class NotesComponent extends React.Component {
                 <CardContent>
                     {this.state.isNoteEditing ?
                         <TextField
-                        success={this.state.updateNoteState === "success" || this.state.editNoteInfo.notes.length === 0}
-                        error={this.state.updateNoteState === "error" && this.state.editNoteInfo.notes.length > 0}
+                        success={this.state.updateNoteState === "success" }
+                        error={this.state.updateNoteState === "error"}
                             name="notes"
                             multiline
                             className={classes.textField}

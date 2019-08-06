@@ -127,27 +127,27 @@ class AnimalViewTop extends React.Component {
                         {this.props.isEditing ?
                             <form>
                                 <TextField  style={customStyle.form1ControlStyle}
-                                    success={this.props.textState.nameState === "success"}
-                                    error={this.props.textState.nameState === "error"}
+                                    success={this.props.textState.nameState === "success" }
+                                    error={this.props.textState.nameState === "error" }
 
                                     name="name"
                                     label="Name"
                                     className={classes.textField}
                                     value={this.props.animal.name}
-                                    onChange={this.props.handleTextField(4)}
+                                    onChange={this.props.handleTextField}
                                     margin="normal"
                                 />
 
                                 <TextField  style={customStyle.form1ControlStyle}
                                     success={this.props.textState.descriptionState === "success"}
-                                    error={this.props.textState.descriptionState === "error"}
+                                    error={this.props.textState.descriptionState === "error"  }
 
                                     name="description"
                                     label="Description"
                                     multiline
                                     className={classes.textField}
                                     value={this.props.animal_meta.description}
-                                    onChange={this.props.handleMetaTextField(10)}
+                                    onChange={this.props.handleMetaTextField}
                                     margin="normal"
                                 />
 

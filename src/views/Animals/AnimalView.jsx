@@ -99,6 +99,8 @@ class AnimalView extends React.Component {
       breedState: 'success',
       shelterVerified: ""
     }
+
+    this.maxLength = 3;
   }
 
 
@@ -345,8 +347,8 @@ class AnimalView extends React.Component {
     console.log('handle cancel :', this.state.animal.name)
   }
 
-  verifyLength = (value, len) => {
-    if (value.length >= len) {
+  verifyLength = (value) => {
+    if (value.length >= this.maxLength) {
       // console.log(`verify length fn: ${value} is valid length`)
       return true
     }
@@ -411,10 +413,10 @@ class AnimalView extends React.Component {
   }
 
   //with validation
-  handleTextField = (len) => event => {
+  handleTextField = (event) => {
     let stateName = `${event.target.name}State`
 
-    if (event.target.value.length >= len) {
+    if (event.target.value.length >= this.maxLength) {
       this.setState({
         textState: {
           ...this.state.textState,
@@ -440,11 +442,11 @@ class AnimalView extends React.Component {
   }
 
   //with validation
-  handleMetaTextField = (len) => event => {
+  handleMetaTextField = event => {
     // console.log(`concatenate test : [${event.target.name}State] [${event.target.name}State]:success `)
     let stateName = `${event.target.name}State`
 
-    if (event.target.value.length >= len) {
+    if (event.target.value.length >= this.maxLength) {
       // console.log(`concatenate test : ${[stateInfo+"State"]} ${{[stateInfo+"State"]:"success"}}`)
       this.setState({
         textState: {
@@ -549,8 +551,8 @@ class AnimalView extends React.Component {
                   handleTextField={this.handleTextField}
                   handleAdoption={this.handleAdoption}
                   paramsId={this.props.match.params.id} 
-                  handleToggle={this.handleToggle}/>
-
+                  handleToggle={this.handleToggle}
+                  maxLength={this.maxLength}/>
                 <GridItem xs={12} sm={12} md={12}>
                   <div style={customStyle.animalButtonStyle}>
 
@@ -576,7 +578,9 @@ class AnimalView extends React.Component {
                   textState={this.state.textState}
                   breedState={this.state.breedState}
                   speciesProps={this.state.species}
-                  breedsProps={this.state.breeds} />
+                  breedsProps={this.state.breeds} 
+                  maxLength={this.maxLength}
+                  />
 
                 <AnimalViewHealth
                   textState={this.state.textState}
@@ -584,6 +588,7 @@ class AnimalView extends React.Component {
                   isEditing={this.state.isEditing}
                   handleAdoption={this.handleAdoption}
                   handleMetaTextField={this.handleMetaTextField}
+                  maxLength={this.maxLength}
                 />
 
               </GridContainer>
