@@ -9,7 +9,7 @@ const  PrivateRoute = ({ component: Component, ...rest }) => {
   
     //verifying shelter before proceeding
   axiosWithAuth()
-  .get(`${${${${${${process.env.backendurl}}}}}}.backendurl/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
+  .get(`${${${${${${process.env.REACT_APP_BACKEND_URL}}}}}}.REACT_APP_BACKEND_URL/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
   .then( result => {
     console.log(result)
     verified = true;

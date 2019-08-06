@@ -79,7 +79,7 @@ class ReactTables extends React.Component {
   componentWillMount() {
     //verifying shelter before proceeding
     axiosWithAuth()
-      .get(`${process.env.backendurl}/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
       .then( result => {
         this.setState({
           shelterVerified : true
@@ -95,8 +95,8 @@ class ReactTables extends React.Component {
 
   componentDidMount() {
     axios
-    //.get(`${process.env.backendurl}/api/animals/shelter/${localStorage.getItem('shelter_id')}`)
-    .get(`${process.env.backendurl}/api/animals/shelter/${localStorage.getItem('shelter_id')}`)
+    //.get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/shelter/${localStorage.getItem('shelter_id')}`)
+    .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/shelter/${localStorage.getItem('shelter_id')}`)
 
     .then(animals => {
       const picStyle = { width: '100%' }

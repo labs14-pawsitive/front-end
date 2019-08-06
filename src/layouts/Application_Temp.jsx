@@ -64,7 +64,7 @@ async componentWillMount() {
      // localStorage.setItem('shelterId', this.props.match.params.shelterId) 
           //checking for valid link => animal and shelter id match
         await axios
-        .get(`${process.env.backendurl}/api/animals/${this.props.match.params.animalId}/match/shelter/${this.props.match.params.shelterId}`)
+        .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${this.props.match.params.animalId}/match/shelter/${this.props.match.params.shelterId}`)
         .then(result => {
           console.log(result)
           this.setState({

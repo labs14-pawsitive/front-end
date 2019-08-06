@@ -62,7 +62,7 @@ class AnimalViewTop extends React.Component {
                                 defaultImage={this.props.animal.img_url}
                                 borderRadius="5px" imageLimit={1}
                                 editable={this.props.isEditing} callback={this.props.callback}
-                                url={`${process.env.backendurl}/api/pictures/animal/${this.props.paramsId}`} />
+                                url={`${process.env.REACT_APP_BACKEND_URL}/api/pictures/animal/${this.props.paramsId}`} />
 
 
                             <GridListTileBar style={customStyle.imgTitle}

@@ -241,7 +241,7 @@ class ApplicationWizard extends React.Component {
     }
     console.log(application)
      
-    axios.post(`${process.env.backendurl}/api/applications/`, application)
+    axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/applications/`, application)
     .then(app => {
       this.setState({
         isSuccess : true

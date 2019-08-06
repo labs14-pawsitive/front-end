@@ -72,7 +72,7 @@ class Contacts extends Component {
   verifyShelter = async(shelter_id) => {
       //verifying shelter before proceeding
       axiosWithAuth()
-        .get(`${process.env.backendurl}/api/auth/shelter/${shelter_id}`)
+        .get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/shelter/${shelter_id}`)
         .then( result => { 
           this.setState({
             shelterVerified : true

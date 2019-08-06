@@ -133,7 +133,7 @@ class Step1 extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`${process.env.backendurl}/api/internal/paws/options/3`)
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/internal/paws/options/3`)
     .then(options => {
       this.setState({
         options: options.data.states
