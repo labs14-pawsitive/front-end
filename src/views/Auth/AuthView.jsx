@@ -9,6 +9,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Fingerprint from "@material-ui/icons/Fingerprint";
 import withStyles from "@material-ui/core/styles/withStyles";
 import authNavbarStyle from "assets/jss/material-dashboard-pro-react/components/authNavbarStyle.jsx";
+import auth0 from 'auth0-js';
 
 
 
@@ -27,7 +28,7 @@ class AuthView extends React.Component {
 
     logout = () => {
 
-      auth.logout({
+      this.auth0.logout({
         returnTo: process.env.REACT_APP_AUTH0_LOGOUT_URL,
         client_id: process.env.REACT_APP_AUTH0_CLIENT_ID,
       });
