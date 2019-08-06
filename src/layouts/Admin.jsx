@@ -20,6 +20,8 @@ import PropTypes from "prop-types";
 import { Switch, Route, Redirect } from "react-router-dom";
 import axios from "axios"
 import { connect } from "react-redux";
+import { axiosWithAuth } from 'axiosWithAuth';
+
 
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
@@ -58,13 +60,26 @@ class Dashboard extends React.Component {
     e.preventDefault();
 
   }
+  
+    componentWillMount() {
+      //verifying shelter before proceeding
+      axiosWithAuth()
+        .get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
+        .then( result => {
+          console.log(result)
+        })
+        .catch( error => {
+          console.log(error)
+          this.props.history.push('/')
+        })
+    }
 
   componentDidMount() {
     
     //window.onpopstate = this.onBackButtonEvent;
 
     axios
-    .get(`https://staging1-pawsnfind.herokuapp.com/api/shelters/${this.props.shelterID}`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/shelters/${localStorage.getItem('shelter_id')}`)
       .then( shelter => {
       console.log(shelter.data)
       this.setState({
@@ -190,7 +205,7 @@ class Dashboard extends React.Component {
           routes={routes}
           logoText={this.state.shelter.shelter}
           //logo={this.state.logo}
-          image={this.state.image}
+          //image={this.state.image}
           handleDrawerToggle={this.handleDrawerToggle}
           open={this.state.mobileOpen}
           color={this.state.color}

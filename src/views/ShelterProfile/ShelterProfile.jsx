@@ -13,6 +13,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { fetchShelter , fetchOptions, deleteShelterLoc, deleteShelterCon, updateShelterCon, updateShelterLoc } from '../../actions/shelterAction';
 import Locations from './Locations';
+import { axiosWithAuth } from 'axiosWithAuth';
 
 import LocationForm from './LocationForm';
 import ContactForm from './ContactForm';
@@ -72,16 +73,43 @@ TextMaskCustom.propTypes = {
       editMode : false,
       shelter : {},
       locations: [],
-      contacts: []
+      contacts: [],
+      shelterVerified: ""
     };
   }
+
+
+  componentWillMount() {
+    //verifying shelter before proceeding
+    this.verifyShelter(localStorage.getItem('shelter_id'))
+  }
+
+  verifyShelter = async(shelter_id) => {
+    //verifying shelter before proceeding
+    axiosWithAuth()
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/shelter/${shelter_id}`)
+      .then( result => { 
+        this.setState({
+          shelterVerified : true
+        })
+        console.log(result)
+      })
+      .catch( error => {
+        console.log(error)
+        this.setState({
+          shelterVerified : false
+        })
+        this.props.history.push('/')
+      })
+  }
+
 
   componentDidMount() {
     this.updateShelter();
   }
 
 updateShelter = () => {
-  this.props.fetchShelter(this.props.shelterID)
+  this.props.fetchShelter(localStorage.getItem('shelter_id'))
   .then( () => {
     this.setState({
       shelter: this.props.shelter,
@@ -90,7 +118,7 @@ updateShelter = () => {
     })
   })
   .then(() => {
-    this.props.fetchOptions(this.props.shelterID)})
+    this.props.fetchOptions(localStorage.getItem('shelter_id'))})
   .catch( err => {
     console.log('setting state error', err)
    })
@@ -139,7 +167,10 @@ render() {
           color:"#333333 !important",
         }
       }
-  
+
+if(this.state.shelterVerified !== true) return <div>Verifying shelter</div>
+
+      
 return (
     <div>
       <GridContainer>
@@ -227,7 +258,6 @@ return (
                       inputComponent : TextMaskCustom,
                     }}
                     style={this.state.editMode? "" : customStyle.shelterDisplayView}
-
                   />
                 </GridItem>
               </GridContainer>
@@ -278,9 +308,6 @@ return (
           </Card>
         </GridItem>
       </GridContainer>
-
-
-     
     </div>
   );
   }
@@ -312,4 +339,3 @@ export default connect(
   mapStateToProps,
   { fetchShelter, fetchOptions, deleteShelterLoc, deleteShelterCon, updateShelterCon, updateShelterLoc }
 )(withStyles(shelterProfileStyles)(ShelterProfile))
-

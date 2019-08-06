@@ -28,7 +28,12 @@ import Step4 from "./WizardSteps/Step4.jsx";
 
 class ApplicationWizard extends React.Component {
 
- 
+  /*componentDidMount() {
+    if(this.props.animalId && this.props.shelterId)
+    localStorage.setItem("animalId", this.props.animalId)
+    localStorage.setItem('shelterId', this.props.shelterId)
+  }
+ */
 
   render() {
     const regFormStyle={

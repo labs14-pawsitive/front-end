@@ -99,7 +99,7 @@ class Step3 extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('https://staging1-pawsnfind.herokuapp.com/api/internal/paws/options/3')
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/internal/paws/options/3`)
     .then(options => {
       this.setState({
         options: options.data.states
@@ -332,7 +332,7 @@ class Step3 extends React.Component {
             error={this.state.nicknameState === "error"}
             labelText={
               <span>
-                Nickname <small>(required)</small>
+                Location Name <small>(required)</small>
               </span>
             }
             id="nickname"

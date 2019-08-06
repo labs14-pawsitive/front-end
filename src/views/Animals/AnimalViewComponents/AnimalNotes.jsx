@@ -26,10 +26,20 @@ class AnimalNotes extends React.Component {
         this.state = {
             // note: this.props.animalNotes,
             note: '',
-            addNoteState: "error",
+            addNoteState: "",
+            urlClicked : false,
+            animal_id: this.props.animal.id,
+            shelter_id: this.props.animal.shelter_id
         }
+
+        this.maxLength = 3;
     }
 
+    handleUrlClick = e => {
+        this.setState({
+            urlClicked : true
+        })
+    }
 
     cancelNote = (event) => {
         event.preventDefault()
@@ -38,9 +48,13 @@ class AnimalNotes extends React.Component {
         })
     }
 
-    handleAddNoteChange = (len) => (event) => {
+    handleAddNoteChange =  async (event) => {
 
-        if (this.state.note.length >= len) {
+        await this.setState({
+            note: event.target.value,
+        })
+        
+        if (this.state.note.length >= this.maxLength) {
             this.setState({
                 addNoteState: "success"
             })
@@ -50,9 +64,7 @@ class AnimalNotes extends React.Component {
                 addNoteState: "error"
             })
         }
-        this.setState({
-            note: event.target.value,
-        })
+
 
     }
 
@@ -77,6 +89,8 @@ class AnimalNotes extends React.Component {
         event.preventDefault()
         console.log(this.state.note)
 
+        if (this.state.note.length === 0)
+            return;
         let notes = {}
 
         notes = {
@@ -122,9 +136,26 @@ class AnimalNotes extends React.Component {
                 margin: "0px 10px 10px 15px",
                 width: "40%"
             },
+            urlButton : {
+                padding: "10px" ,
+                textAlign: "center",
+                fontWeight:"700",
+                cursor: "pointer"
+            },
+            urlClicked: {
+                padding:"10px",
+                border: "3px dashed rgba(0, 0, 0, 0.42)",
+                textAlign: "center",
+                fontWeight:"700"
+            }
         }
         return (
-            <GridItem xs={12} sm={12} md={4}>
+            <GridItem xs={12} sm={12} md={4} lg={4}>
+                <Card style={this.state.urlClicked? customStyle.urlClicked : customStyle.urlButton}>
+                    <div onClick={this.handleUrlClick} >
+                        {this.state.urlClicked ? `http${window.location.hostname.indexOf(".com") !== -1 ? "s" : ""}://${window.location.host}/application/${this.props.shelter_id}/${this.props.animal_id}`: "Generate Application Link"}  
+                    </div>
+                </Card>
                 <Card style={customStyle.textFieldNote}>
 
                     <CardHeader>
@@ -132,19 +163,24 @@ class AnimalNotes extends React.Component {
                     </CardHeader>
 
                     <TextField
-                        success={this.state.addNoteState === "success"}
-                        error={this.state.addNoteState === "error"}
+                        success={this.state.note.length === 0 || this.state.addNoteState === "success" }
+                        error={this.state.addNoteState === "error" && this.state.note.length > 0}
                         id="standard-textarea"
                         label="Add a note"
                         value={this.state.note}
                         multiline
                         className={classes.textField}
-                        onChange={this.handleAddNoteChange(10)}
+                        onChange={this.handleAddNoteChange}
                         margin="normal"
                     />
 
 
                     <div style={customStyle.detailsContainerStyle}>
+                    <Button style={customStyle.noteButtonStyle}
+                            variant="contained" className={classes.button} onClick={this.submitNote}>
+                            SUBMIT
+                    </Button>
+                    
                         {this.state.note.length > 0 &&
                             <Button style={customStyle.noteButtonStyle}
                                 variant="contained" color="secondary"
@@ -153,10 +189,7 @@ class AnimalNotes extends React.Component {
                             </Button>
                         }
 
-                        <Button style={customStyle.noteButtonStyle}
-                            variant="contained" className={classes.button} onClick={this.submitNote}>
-                            SUBMIT
-                    </Button>
+              
                     </div>
 
                     <List

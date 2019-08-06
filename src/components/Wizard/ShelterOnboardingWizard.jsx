@@ -95,9 +95,10 @@ class ShelterOnboardingWizard extends React.Component {
     this.refreshAnimation(0);
     window.addEventListener("resize", this.updateWidth);
     const shelter_id = localStorage.getItem('shelter_id')
+
     if(shelter_id != "null" && typeof(shelter_id) !== 'undefined') {
       const {history} = this.props;
-        history.push('/')
+        history.push('/admin/dashboard')
       } 
   }
   componentWillUnmount() {
@@ -215,7 +216,7 @@ class ShelterOnboardingWizard extends React.Component {
 
   addLocation = async (newLocation) => {
     await axios
-    .post(`https://staging1-pawsnfind.herokuapp.com/api/shelters/${localStorage.getItem('shelter_id')}/mainLocation`, newLocation)
+    .post(`${process.env.REACT_APP_BACKEND_URL}/api/shelters/${localStorage.getItem('shelter_id')}/mainLocation`, newLocation)
     .then( result => {
       console.log('result', result)
       localStorage.setItem("location_id", result.data.id)
@@ -234,7 +235,7 @@ class ShelterOnboardingWizard extends React.Component {
 
   addContact = async (newContact) => {
     await axios
-    .post(`https://staging1-pawsnfind.herokuapp.com/api/shelters/${localStorage.getItem('shelter_id')}/mainContact`, newContact )
+    .post(`${process.env.REACT_APP_BACKEND_URL}/api/shelters/${localStorage.getItem('shelter_id')}/mainContact`, newContact )
     .then( result => {
         console.log('result' , result)
         localStorage.setItem("contact_id", result.data.id)
@@ -255,7 +256,7 @@ class ShelterOnboardingWizard extends React.Component {
           const newShelter = {shelter : this.state.shelterName}
           
           await axios
-          .get(`https://staging1-pawsnfind.herokuapp.com/api/ein/validate/${this.state.ein}`)
+          .get(`${process.env.REACT_APP_BACKEND_URL}/api/ein/validate/${this.state.ein}`)
           .then(result => {
               const shelterInfo = { shelter : this.state.shelterName, EIN: this.state.ein}
               this.addShelter(shelterInfo) 
@@ -270,10 +271,11 @@ class ShelterOnboardingWizard extends React.Component {
 
   addShelter = async (shelter) => {
     await axios
-    .put(`https://staging1-pawsnfind.herokuapp.com/api/shelters/users/${localStorage.getItem('user_id')}`, shelter)
+    .put(`${process.env.REACT_APP_BACKEND_URL}/api/shelters/users/${localStorage.getItem('user_id')}`, shelter)
     .then( result => {
       console.log('result' , result)
       localStorage.setItem("shelter_id", result.data.shelterInfo.id)
+      localStorage.setItem("token", result.data.shelterInfo.token)
       this.settingStates();
       this.setState({
         stepOne : true,

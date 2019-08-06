@@ -17,6 +17,15 @@ export default class Auth {
         sso: false
     })
 
+    logout = () => {
+        this.auth0.logout({
+            domain: process.env.REACT_APP_AUTH0_LOGOUT_DOMAIN,
+            returnTo: process.env.REACT_APP_AUTH0_LOGOUT_URL,
+            client_id: process.env.REACT_APP_AUTH0_CLIENT_ID,
+          });
+          localStorage.clear()
+    }
+ 
     login = () => {
         this.auth0.authorize();
     }
@@ -38,30 +47,32 @@ export default class Auth {
         let expiresAt = authResult.expiresIn * 1000 + new Date().getTime();
 
         // why do we have to set item in localstorage???
-        localStorage.setItem('access_token', authResult.accessToken)
-        localStorage.setItem('id_token', authResult.idToken)
-        localStorage.setItem('expires_at', expiresAt)
+        //localStorage.setItem('access_token', authResult.accessToken)
+        //localStorage.setItem('id_token', authResult.idToken)
+        //localStorage.setItem('expires_at', expiresAt)
 
         const decoded = jwtDecode(authResult.idToken)
         const user = {
-            email : decoded.email
+            email : decoded.email,
         }
 
         const config = {
             headers : {
-                Authorization: `Bearer ${localStorage.getItem('id_token')}`,
+                //Authorization: `Bearer ${localStorage.getItem('id_token')}`,
+                Authorization: `Bearer ${authResult.idToken}`,
                 withCredentials: true 
             }
         }
-
         const addUser = await axios.post(
-            'https://staging1-pawsnfind.herokuapp.com/api/auth',
+           
+            `${process.env.REACT_APP_BACKEND_URL}/api/auth`,
             user,
             config
         ).then( user => {
             localStorage.setItem('user_id', user.data.user_id)
             localStorage.setItem('shelter_id', user.data.shelter_id)
             localStorage.setItem('new_user', user.data.newUser)
+            localStorage.setItem('token', user.data.token)
         });
  
         console.log(addUser)

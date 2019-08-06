@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { fetchShelter ,updateShelterLoc, deleteShelterLoc } from '../../actions/shelterAction';
+import { axiosWithAuth } from 'axiosWithAuth';
 
 
 // @material-ui/core components
@@ -26,19 +27,37 @@ class Locations extends Component {
         this.state = {
             editMode: false,
             location: this.props.location,
-            street_addressState: '',
-            cityState: '',
-            zipcodeState: '',
-            nicknameState: '',
+            street_addressState: 'success',
+            cityState: 'success',
+            zipcodeState: 'success',
+            nicknameState: 'success',
+            shelterVerified : ''
         }
-
     }
 
+
+  verifyShelter = async(shelter_id) => {
+      //verifying shelter before proceeding
+      axiosWithAuth()
+        .get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/shelter/${shelter_id}`)
+        .then( result => { 
+          this.setState({
+            shelterVerified : true
+          })
+          console.log(result)
+        })
+        .catch( error => {
+          console.log(error)
+          this.setState({
+            shelterVerified : false
+          })
+        })
+  }
 
 handleFormButtonToggle = e => {
       e.preventDefault();
       this.setState({
-        editMode : !this.state.editMode
+        editMode : !this.state.editMode,
       })
 }
 
@@ -61,50 +80,73 @@ selectChangeHandler = e => {
   console.log('WHERES THE CHANGE', [e.target.name])
 }
 
+cancelClick = e => {
+  e.preventDefault()
+  this.setState({
+    editMode : !this.state.editMode, 
+    location: this.props.location,
+    street_addressState: 'success',
+    cityState: 'success',
+    zipcodeState: 'success',
+    nicknameState: 'success',
+  })
+}
+
 updateLocation = e => {
   e.preventDefault()
 }
 
-deleteLocation = e => {
+deleteLocation = async(e) => {
     e.preventDefault()
-    this.props.deleteShelterLoc(this.props.location.id)
-    .then( () => {
-      this.props.updateShelter();
-    })
+    await this.verifyShelter(localStorage.getItem('shelter_id'))
+    //if(this.state.shelterVerified) {
+      this.props.deleteShelterLoc(this.props.location.id)
+        .then( () => {
+          this.props.updateShelter();
+          this.setState({
+            shelterVerified : ''
+          })
+        })
+    //} 
 }
 
-updateSubmit = e => {
+updateSubmit = async(e) => {
   e.preventDefault()
+  await this.verifyShelter(localStorage.getItem('shelter_id'))
 
-  const updatedLocation = {
-      shelter_id: this.props.shelterID,
+  //if (this.isValidated() && this.state.shelterVerified) {
+    if (this.isValidated()) {
+    const updatedLocation = {
+      shelter_id: localStorage.getItem('shelter_id'),
       street_address: this.state.location.street_address,
       city: this.state.location.city,
       zipcode: this.state.location.zipcode,
       state_id: this.state.location.state_id,
-      phone_number: '222-222-2222',
       nickname: this.state.location.nickname,
       shelter_contact_id: this.state.location.shelter_contact_id
   }
-
   console.log('UPDATECHANGE', updatedLocation)
 
 
   this.props.updateShelterLoc(this.props.location.id, updatedLocation)
   .then( (res) => {
       this.props.updateShelter();
-      console.log('UPDATESHELTERLOCATION:',this.props.shelterID)
+      this.setState({
+        shelterVerified : ''
+      })
+      console.log('UPDATESHELTERLOCATION:',localStorage.getItem('shelter_id'))
   })
   .catch(err => {
     console.log('UpdateShelterLoc Error: ',err)
   });
   this.setState({
-    street_addressState: '',
-    cityState: '',
-    zipcodeState: '',
-    nicknameState: '',
+    street_addressState: 'success',
+    cityState: 'success',
+    zipcodeState: 'success',
+    nicknameState: 'success',
     editMode : !this.state.editMode
-  })  
+  })
+} else {console.log(' Locations Fields not validated')}
 }
 
 verifyLength(value, lengthNumber) {
@@ -164,20 +206,24 @@ change(event, stateName, type, stateNameEqualTo) {
 
 isValidated() {
   if (
-    this.state.nameState === "success" &&
-    this.state.phoneState === "success" &&
-    this.state.emailState === "success"
+    this.state.nicknameState === "success" &&
+    this.state.street_addressState === "success" &&
+    this.state.cityState === "success" &&
+    this.state.zipcodeState === "success"
   ) {
     return true;
   } else {
-    if (this.state.nameState !== "success") {
-      this.setState({ nameState: "error" });
+    if (this.state.nicknameState !== "success") {
+      this.setState({ nicknameState: "error" });
     }
-    if (this.state.phoneState !== "success") {
-      this.setState({ phoneState: "error" });
+    if (this.state.street_addressState !== "success") {
+      this.setState({ street_addressState: "error" });
     }
-    if (this.state.emailState !== "success") {
-      this.setState({ emailState: "error" });
+    if (this.state.cityState !== "success") {
+      this.setState({ cityState: "error" });
+    }
+    if (this.state.zipcodeState !== "success") {
+      this.setState({ zipcodeState: "error" });
     }
   }
   return false;
@@ -258,9 +304,9 @@ isValidated() {
                 <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
                   <CustomInput
-                    labelText="Nickname"
+                    labelText="Location Name"
                     id="nickname"
-                    success={this.state.nicknameState === "success"}
+                    success={this.state.editMode? this.state.nicknameState === "success": null}
                     error={this.state.nicknameState === "error"}
                     formControlProps={{
                       fullWidth: true
@@ -279,7 +325,7 @@ isValidated() {
                 <CustomInput
                     labelText="Street Address"
                     id="street_address"
-                    success={this.state.street_addressState === "success"}
+                    success={this.state.editMode? this.state.street_addressState === "success": null}
                     error={this.state.street_addressState === "error"}
                     formControlProps={{
                       fullWidth: true
@@ -293,11 +339,11 @@ isValidated() {
 
                   />
               </GridItem>
-               <GridItem xs={12} sm={12} md={6}>
+               <GridItem xs={12} sm={12} md={5}>
                <CustomInput
                     labelText="City"
                     id="city"
-                    success={this.state.cityState === "success"}
+                    success={this.state.editMode? this.state.cityState === "success": null}
                     error={this.state.cityState === "error"}
                     formControlProps={{
                       fullWidth: true
@@ -310,7 +356,7 @@ isValidated() {
                     style={this.state.editMode? "" : customStyle.shelterDisplayView}
                   />  
               </GridItem>
-              <GridItem xs={12} sm={12} md={2}>
+              <GridItem xs={12} sm={12} md={3}>
             <FormControl
             fullWidth
             className={classes.selectFormControl}
@@ -355,7 +401,7 @@ isValidated() {
               <CustomInput
                     labelText="Zipcode"
                     id="zipcode"
-                    success={this.state.zipcodeState === "success"}
+                    success={this.state.editMode? this.state.zipcodeState === "success": null}
                     error={this.state.zipcodeState === "error"}
 
                     formControlProps={{
@@ -395,7 +441,8 @@ isValidated() {
                   onChange={this.selectChangeHandler}
                   inputProps={{
                       name: "shelter_contact_id",
-                      id: "shelter_contact_id"
+                      id: "shelter_contact_id",
+                      style: selectStyle.underline,
                   }}>
                       {this.props.contacts && this.props.contacts.map(contact => (
                           <MenuItem
@@ -411,23 +458,30 @@ isValidated() {
                             </Select>
                         </FormControl>
                         </GridItem>
-            <GridItem xs={12} sm={12} md={7}></GridItem>
-            <GridItem xs={12} sm={12} md={5}>
+            
+            <GridItem xs={12} sm={12} md={12}>
+            {this.state.editMode && <Button size= "sm" 
+              color="rose" 
+              className={classes.updateProfileButton}
+               onClick={this.cancelClick}>
+                Cancel
+              </Button> }
+
             <Button size= "sm" 
               color="rose" 
               className={classes.updateProfileButton}
               onClick={this.handleFormButtonToggle}
               onClick={this.state.editMode? this.updateSubmit : this.handleFormButtonToggle}
             >
-                {this.state.editMode? "Save" : "Update"}
+                {this.state.editMode? "Save" : "Edit"}
               </Button>
               
-            <Button size= "sm" 
+            {this.state.editMode && <Button size= "sm" 
                 color="rose" 
                 onClick={this.deleteLocation}
                 className={classes.updateProfileButton} >
                 Delete
-              </Button>
+                </Button> }
 
               
             </GridItem>
@@ -436,11 +490,8 @@ isValidated() {
         );
     }
 }
-
 Locations.propTypes = {
-
 };
-
 const mapStateToProps = (state) => {
     return {
       userID : state.userReducer.userID,
@@ -458,4 +509,3 @@ const mapStateToProps = (state) => {
     mapStateToProps,
     { updateShelterLoc, deleteShelterLoc, fetchShelter }
   )(withStyles(shelterProfileStyles)(Locations))
-  

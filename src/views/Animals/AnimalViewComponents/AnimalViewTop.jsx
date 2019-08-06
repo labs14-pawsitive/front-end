@@ -19,8 +19,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
 
-
-
 class AnimalViewTop extends React.Component {
     render() {
         const { classes } = this.props;
@@ -36,13 +34,18 @@ class AnimalViewTop extends React.Component {
                     'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
                 opacity: 0.8,
                 fontSize: "26px",
-                fontWeight: "bold"
+                fontWeight: "bold",
+    
+             
+            },
+            imageUpload:{
+                position:"absolute"
             },
             titleStyle: {
                 padding: "10% 0px 0px 0px"
             },
             form1ControlStyle: {
-                width: "50%",
+                width: "100%",
                 marginRight: "1%",
             },
             gridItemStyle: {
@@ -51,20 +54,59 @@ class AnimalViewTop extends React.Component {
               },
 
         }
+
+        const imageStyle = {
+
+            media: {
+              height: "100%",
+              width: "100%",
+              background: "lightgray",
+              borderRadius: "5px",
+              overflow: "hidden",
+              padding: 0,
+              position:"absolute"
+           
+            },
+      
+            image: {
+              padding: 0,
+              margin: 0,
+              top: 0,
+              height: "100%",
+              width: "100%",
+              objectFit: "cover",
+              overflow: "hidden",
+              position: "relative",
+              borderRadius: "5px"
+            },
+      
+            text: {
+              padding: 0,
+              margin: 0,
+              opacity: 0.9,
+              height: "25px",
+              width: "100%",
+              background: "lightgray",
+              objectFit: "cover",
+              overflow: "hidden",
+              position: "absolute"
+            }
+          }
         return (
            
                 <GridItem xs={12} sm={12} md={12} style={customStyle.gridItemStyle}>
                 <GridItem xs={12} sm={12} md={5}>
                     <GridList className={classes.gridList} >
                         <GridListTile key={this.props.animal.img_url} style={customStyle.imgCardStyle} >
-
+                        
                             <ImageUpload height="100%" width="100%"
                                 defaultImage={this.props.animal.img_url}
                                 borderRadius="5px" imageLimit={1}
+                                customStyle={imageStyle}
                                 editable={this.props.isEditing} callback={this.props.callback}
-                                url={`https://staging1-pawsnfind.herokuapp.com/api/pictures/animal/${this.props.paramsId}`} />
+                                url={`${process.env.REACT_APP_BACKEND_URL}/api/pictures/animal/${this.props.paramsId}`}/>
 
-
+                          
                             <GridListTileBar style={customStyle.imgTitle}
                                 subtitle={<span>#{this.props.animal.id}</span>}
                                 classes={{
@@ -72,6 +114,8 @@ class AnimalViewTop extends React.Component {
                                     title: classes.title,
                                 }}
                             />
+                            
+                            
                         </GridListTile>
                     </GridList>
                 </GridItem>
@@ -80,28 +124,28 @@ class AnimalViewTop extends React.Component {
                     <div style={customStyle.titleStyle}>
                         {this.props.isEditing ?
                             <form>
-                                <TextField
-                                    success={this.props.textState.nameState === "success"}
-                                    error={this.props.textState.nameState === "error"}
+                                <TextField  style={customStyle.form1ControlStyle}
+                                    success={this.props.textState.nameState === "success" }
+                                    error={this.props.textState.nameState === "error" }
 
                                     name="name"
                                     label="Name"
                                     className={classes.textField}
                                     value={this.props.animal.name}
-                                    onChange={this.props.handleTextField(4)}
+                                    onChange={this.props.handleTextField}
                                     margin="normal"
                                 />
 
-                                <TextField
+                                <TextField  style={customStyle.form1ControlStyle}
                                     success={this.props.textState.descriptionState === "success"}
-                                    error={this.props.textState.descriptionState === "error"}
+                                    error={this.props.textState.descriptionState === "error"  }
 
                                     name="description"
                                     label="Description"
                                     multiline
                                     className={classes.textField}
                                     value={this.props.animal_meta.description}
-                                    onChange={this.props.handleMetaTextField(10)}
+                                    onChange={this.props.handleMetaTextField}
                                     margin="normal"
                                 />
 

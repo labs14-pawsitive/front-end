@@ -14,6 +14,8 @@ import { connect } from "react-redux";
 import moment from 'moment';
 import CreateNotes from "../Components/Application/CreateNotes";
 import { fetchOptions, fetchApplication, updateApplication } from "../../actions/applicationAction";
+import {axiosWithAuth} from 'axiosWithAuth';
+import axios from 'axios';
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -48,6 +50,10 @@ class ApplicationView extends React.Component {
       options: [],
 
       statusChanged: false,
+
+      user : {},
+
+      shelterVerified: ''
     };
     this.handleChange = this.handleChange.bind(this);
 
@@ -81,12 +87,45 @@ class ApplicationView extends React.Component {
   };
 
 
-  componentDidMount(prevProps, prevState) {
+  async componentDidMount(prevProps, prevState) {
 
-    this.loadApplication()
-
+    await this.loadApplication()
+    axios.
+    get(`${process.env.REACT_APP_BACKEND_URL}/api/users/${localStorage.getItem('user_id')}`)
+    .then( result => {
+      console.log(result)
+      this.setState({
+        user : result.data
+      })
+    })
+    .catch(error => {
+      console.log(error)
+    })
+    
+    this.verifyShelter(this.props.application.shelter_id)
+    
     this.loadOptions()
+
+    
   };
+
+
+  verifyShelter = async (shelter_id) => {
+    //verifying shelter before proceeding
+    await axiosWithAuth()
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/shelter/${shelter_id}`)
+      .then( result => {
+        this.setState({
+          shelterVerified : true
+        })
+      })
+      .catch( error => {
+        this.setState({
+          shelterVerified : false
+        })
+        this.props.history.push('/admin/currentApplications')
+      })
+  }
 
 
   componentDidUpdate(prevProps, prevState) {
@@ -100,6 +139,8 @@ class ApplicationView extends React.Component {
       })
     }
   };
+
+
 
 
   handleChange = async (event) => {
@@ -219,6 +260,7 @@ class ApplicationView extends React.Component {
       },
 
     };
+    if(this.state.shelterVerified !== true) return <div>Verifying application</div>
 
     return (
       <>
@@ -909,7 +951,7 @@ class ApplicationView extends React.Component {
 
           <GridItem xs={12} sm={12} md={6} lg={4} className={classes.notesSectionStyle}>
 
-            <CreateNotes application={this.state.application} application_id={this.props.match.params.id} />
+            <CreateNotes application={this.state.application} application_id={this.props.match.params.id} userEmail={this.state.user.email} shelterUserId={this.state.user.shelter_user_id}/>
 
           </GridItem>
 
@@ -939,402 +981,3 @@ export default connect(
   mapStateToProps,
   { fetchOptions, fetchApplication, updateApplication }
 )(withStyles(regularFormsStyle)(ApplicationView));
-{/* <GridItem xs={12} sm={12} md={8}>
-            <Card>
-              <CardHeader color="rose" text>
-                <CardText color="rose">
-                  <h4>Application for {this.state.application.animal_name}</h4>
-                </CardText>
-              </CardHeader>
-              <CardBody>
-                <GridContainer>
-                  <GridItem xs={12} sm={3}>
-                    <FormLabel className={classes.labelHorizontal} style={customStyle.labelStyle}>
-                      Application ID
-                    </FormLabel>
-                  </GridItem>
-                  <GridItem xs={12} sm={9}>
-                    <CustomInput
-                      id="application_id"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        type: "text",
-                        disabled: true,
-                        value: this.state.application.application_id
-                      }}
-                    />
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={3}>
-                    <FormLabel className={classes.labelHorizontal} style={customStyle.labelStyle}>
-                      Application Status
-                    </FormLabel>
-                  </GridItem>
-                  <GridItem xs={12} sm={9}>
-                    <CustomInput
-                      id="application_status"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        type: "text",
-                        disabled: true,
-                        value: this.state.application.application_status
-                      }}
-                    />
-                  </GridItem>
-                </GridContainer>
-
-                <GridContainer>
-
-                  <GridItem xs={12} sm={3}>
-                    <div
-                      className={
-                        classes.checkboxAndRadio +
-                        " " +
-                        classes.checkboxAndRadioHorizontal
-                      }
-                    >
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            style={customStyle.checkBoxStyle}
-                            tabIndex={-1}
-                            value={this.state.application.is_over_18}
-                            checkedIcon={
-                              <Check className={classes.checkedIcon} />
-                            }
-                            icon={<Check className={classes.uncheckedIcon} />}
-                            classes={{
-                              checked: classes.checked,
-                              root: classes.checkRoot
-                            }}
-                          />
-                        }
-                        classes={{
-                          label: classes.label,
-                          root: classes.labelRoot
-                        }}
-
-                      />
-                    </div>
-
-
-                  </GridItem>
-                  <GridItem xs={12} sm={9}>
-                    <FormLabel
-                      className={
-                        classes.labelHorizontal +
-                        " " +
-                        classes.labelHorizontalRadioCheckbox
-                      }
-                    >
-                      Applicant is over 18 years of age
-                    </FormLabel>
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={3}>
-                    <FormLabel className={classes.labelHorizontal}>
-                      Password
-                    </FormLabel>
-                  </GridItem>
-                  <GridItem xs={12} sm={9}>
-                    <CustomInput
-                      id="pass"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        type: "password",
-                        autoComplete: "off"
-                      }}
-                    />
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={3}>
-                    <FormLabel className={classes.labelHorizontal}>
-                      Placeholder
-                    </FormLabel>
-                  </GridItem>
-                  <GridItem xs={12} sm={9}>
-                    <CustomInput
-                      id="placeholder"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        placeholder: "placeholder"
-                      }}
-                    />
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={3}>
-                    <FormLabel className={classes.labelHorizontal}>
-                      Disabled
-                    </FormLabel>
-                  </GridItem>
-                  <GridItem xs={12} sm={9}>
-                    <CustomInput
-                      id="disabled"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        placeholder: "Disabled",
-                        disabled: true
-                      }}
-                    />
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={3}>
-                    <FormLabel className={classes.labelHorizontal}>
-                      Static control
-                    </FormLabel>
-                  </GridItem>
-                  <GridItem xs={12} sm={9}>
-                    <div className={classes.staticFormGroup}>
-                      <p className={classes.staticFormControl}>
-                        hello@creative-tim.com
-                      </p>
-                    </div>
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={3}>
-                    <FormLabel
-                      className={
-                        classes.labelHorizontal +
-                        " " +
-                        classes.labelHorizontalRadioCheckbox
-                      }
-                    >
-                      Checkboxes and radios
-                    </FormLabel>
-                  </GridItem>
-                  <GridItem xs={12} sm={9}>
-                    <div
-                      className={
-                        classes.checkboxAndRadio +
-                        " " +
-                        classes.checkboxAndRadioHorizontal
-                      }
-                    >
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            tabIndex={-1}
-                            onClick={() => this.handleToggle(3)}
-                            checkedIcon={
-                              <Check className={classes.checkedIcon} />
-                            }
-                            icon={<Check className={classes.uncheckedIcon} />}
-                            classes={{
-                              checked: classes.checked,
-                              root: classes.checkRoot
-                            }}
-                          />
-                        }
-                        classes={{
-                          label: classes.label,
-                          root: classes.labelRoot
-                        }}
-                        label="First Checkbox"
-                      />
-                    </div>
-                    <div
-                      className={
-                        classes.checkboxAndRadio +
-                        " " +
-                        classes.checkboxAndRadioHorizontal
-                      }
-                    >
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            tabIndex={-1}
-                            onClick={() => this.handleToggle(4)}
-                            checkedIcon={
-                              <Check className={classes.checkedIcon} />
-                            }
-                            icon={<Check className={classes.uncheckedIcon} />}
-                            classes={{
-                              checked: classes.checked,
-                              root: classes.checkRoot
-                            }}
-                          />
-                        }
-                        classes={{
-                          label: classes.label,
-                          root: classes.labelRoot
-                        }}
-                        label="Second Checkbox"
-                      />
-                    </div>
-                    <div
-                      className={
-                        classes.checkboxAndRadio +
-                        " " +
-                        classes.checkboxAndRadioHorizontal
-                      }
-                    >
-                      <FormControlLabel
-                        control={
-                          <Radio
-                            checked={this.state.selectedValue === "a"}
-                            onChange={this.handleChange}
-                            value="a"
-                            name="radio button demo"
-                            aria-label="A"
-                            icon={
-                              <FiberManualRecord
-                                className={classes.radioUnchecked}
-                              />
-                            }
-                            checkedIcon={
-                              <FiberManualRecord
-                                className={classes.radioChecked}
-                              />
-                            }
-                            classes={{
-                              checked: classes.radio,
-                              root: classes.radioRoot
-                            }}
-                          />
-                        }
-                        classes={{
-                          label: classes.label,
-                          root: classes.labelRoot
-                        }}
-                        label="First Radio"
-                      />
-                    </div>
-                    <div
-                      className={
-                        classes.checkboxAndRadio +
-                        " " +
-                        classes.checkboxAndRadioHorizontal
-                      }
-                    >
-                      <FormControlLabel
-                        control={
-                          <Radio
-                            checked={this.state.selectedValue === "b"}
-                            onChange={this.handleChange}
-                            value="b"
-                            name="radio button demo"
-                            aria-label="B"
-                            icon={
-                              <FiberManualRecord
-                                className={classes.radioUnchecked}
-                              />
-                            }
-                            checkedIcon={
-                              <FiberManualRecord
-                                className={classes.radioChecked}
-                              />
-                            }
-                            classes={{
-                              checked: classes.radio,
-                              root: classes.radioRoot
-                            }}
-                          />
-                        }
-                        classes={{
-                          label: classes.label,
-                          root: classes.labelRoot
-                        }}
-                        label="Second Radio"
-                      />
-                    </div>
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
-                  <GridItem xs={12} sm={2}>
-                    <FormLabel
-                      className={
-                        classes.labelHorizontal +
-                        " " +
-                        classes.labelHorizontalRadioCheckbox
-                      }
-                    >
-                      Inline checkboxes
-                    </FormLabel>
-                  </GridItem>
-                  <GridItem xs={12} sm={10}>
-                    <div className={classes.inlineChecks}>
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            tabIndex={-1}
-                            onClick={() => this.handleToggle(10)}
-                            checkedIcon={
-                              <Check className={classes.checkedIcon} />
-                            }
-                            icon={<Check className={classes.uncheckedIcon} />}
-                            classes={{
-                              checked: classes.checked,
-                              root: classes.checkRoot
-                            }}
-                          />
-                        }
-                        classes={{
-                          label: classes.label,
-                          root: classes.labelRoot
-                        }}
-                        label="a"
-                      />
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            tabIndex={-1}
-                            onClick={() => this.handleToggle(11)}
-                            checkedIcon={
-                              <Check className={classes.checkedIcon} />
-                            }
-                            icon={<Check className={classes.uncheckedIcon} />}
-                            classes={{
-                              checked: classes.checked,
-                              root: classes.checkRoot
-                            }}
-                          />
-                        }
-                        classes={{
-                          label: classes.label,
-                          root: classes.labelRoot
-                        }}
-                        label="b"
-                      />
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            tabIndex={-1}
-                            onClick={() => this.handleToggle(12)}
-                            checkedIcon={
-                              <Check className={classes.checkedIcon} />
-                            }
-                            icon={<Check className={classes.uncheckedIcon} />}
-                            classes={{
-                              checked: classes.checked,
-                              root: classes.checkRoot
-                            }}
-                          />
-                        }
-                        classes={{
-                          label: classes.label,
-                          root: classes.labelRoot
-                        }}
-                        label="c"
-                      />
-                    </div>
-                  </GridItem>
-                </GridContainer>
-              </CardBody>
-            </Card>
-          </GridItem>  */}

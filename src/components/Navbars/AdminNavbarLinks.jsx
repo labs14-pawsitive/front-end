@@ -30,7 +30,7 @@ import Grow from "@material-ui/core/Grow";
 import Hidden from "@material-ui/core/Hidden";
 import Popper from "@material-ui/core/Popper";
 import Divider from "@material-ui/core/Divider";
-
+import Auth from "components/Auth/Auth.js"
 // @material-ui/icons
 import Person from "@material-ui/icons/Person";
 import Notifications from "@material-ui/icons/Notifications";
@@ -42,6 +42,9 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 
 import adminNavbarLinksStyle from "assets/jss/material-dashboard-pro-react/components/adminNavbarLinksStyle.jsx";
+ 
+
+const auth = new Auth();
 
 class HeaderLinks extends React.Component {
   state = {
@@ -61,9 +64,9 @@ class HeaderLinks extends React.Component {
     this.setState({ openProfile: false });
   };
   handleLogout = ()=> {
+ 
+    auth.logout();
 
-    localStorage.clear();
-    this.props.history.push('/')
   }
   render() {
     const { classes, rtlActive } = this.props;

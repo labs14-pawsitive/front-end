@@ -1,23 +1,19 @@
 /*!
-
 =========================================================
 * Material Dashboard PRO React - v1.7.0
 =========================================================
-
 * Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
 * Copyright 2019 Creative Tim (https://www.creative-tim.com)
-
 * Coded by Creative Tim
-
 =========================================================
-
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
 */
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addShelterLoc , fetchOptions, fetchShelter  } from "../../actions/shelterAction";
+import { axiosWithAuth } from 'axiosWithAuth';
+
 
 import shelterProfileStyles from "assets/jss/material-dashboard-pro-react/views/shelterProfileStyles.jsx";
 
@@ -58,15 +54,28 @@ class LocationForm extends React.Component {
             shelter_contact_id: '',
             open: false,
             fullWidth: true,
+            shelterVerified : ''
         };
     }
 
-    // componentDidMount(){
-    //     this.props.fetchOptions(this.props.shelterID);
-    // }
+    verifyShelter = async(shelter_id) => {
+      //verifying shelter before proceeding
+      axiosWithAuth()
+        .get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/shelter/${shelter_id}`)
+        .then( result => { 
+          this.setState({
+            shelterVerified : true
+          })
+          console.log(result)
+        })
+        .catch( error => {
+          console.log(error)
+          this.setState({
+            shelterVerified : false
+          })
+        })
+    }
 
-
-// Dialog functions 
 
     handleClickOpen = () => {
         this.setState({
@@ -92,23 +101,25 @@ class LocationForm extends React.Component {
 
 //
 
-    handleSubmit = e => {
+    handleSubmit = async(e) => {
         e.preventDefault()
+        await this.verifyShelter(localStorage.getItem('shelter_id'))
 
-        const newLocation = {
-            shelter_id: this.props.shelterID,
+       // if (this.isValidated() && this.state.shelterVerified) {
+        if (this.isValidated()) {
+            const newLocation = {
+            shelter_id: localStorage.getItem('shelter_id'),
             street_address: this.state.street_address,
             city: this.state.city,
             zipcode: this.state.zipcode,
             state_id: this.state.state_id,
             nickname: this.state.nickname,
-            phone_number: '7012258948',
             shelter_contact_id: this.state.shelter_contact_id
             }
 
         console.log(newLocation)
 
-        this.props.addShelterLoc(this.props.shelterID, newLocation)
+        this.props.addShelterLoc(localStorage.getItem('shelter_id'), newLocation)
 
         .then( () => {
             this.props.updateShelter();
@@ -127,7 +138,7 @@ class LocationForm extends React.Component {
             nicknameState: '',
             shelter_contact_id: '',
         })
-        
+      } else {console.log(' Locations Fields not validated')}
     }
 
     changeHandler = e => {
@@ -195,20 +206,24 @@ class LocationForm extends React.Component {
     
       isValidated() {
         if (
-          this.state.nameState === "success" &&
-          this.state.phoneState === "success" &&
-          this.state.emailState === "success"
+          this.state.nicknameState === "success" &&
+          this.state.street_addressState === "success" &&
+          this.state.cityState === "success" &&
+          this.state.zipcodeState === "success"
         ) {
           return true;
         } else {
-          if (this.state.nameState !== "success") {
-            this.setState({ nameState: "error" });
+          if (this.state.nicknameState !== "success") {
+            this.setState({ nicknameState: "error" });
           }
-          if (this.state.phoneState !== "success") {
-            this.setState({ phoneState: "error" });
+          if (this.state.street_addressState !== "success") {
+            this.setState({ street_addressState: "error" });
           }
-          if (this.state.emailState !== "success") {
-            this.setState({ emailState: "error" });
+          if (this.state.cityState !== "success") {
+            this.setState({ cityState: "error" });
+          }
+          if (this.state.zipcodeState !== "success") {
+            this.setState({ zipcodeState: "error" });
           }
         }
         return false;

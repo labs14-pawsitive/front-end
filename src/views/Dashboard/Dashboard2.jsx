@@ -237,13 +237,15 @@ class Dashboard extends React.Component {
               <CardFooter stats style={customStyle.bottomFooter}>
                 <div className={classes.stats}>
                  <Pets />
+                  
                     Animals available for adoptions
+                 
                 </div>
               </CardFooter>
             </Card>
           </GridItem>
-           
-          {/*<GridItem xs={12} sm={6} md={6} lg={3}>
+          
+          <GridItem xs={12} sm={6} md={6} lg={3}>
           <Card style={customStyle.cardHeight}>
               <CardHeader color="success" stats icon>
                 <CardIcon color="success">
@@ -261,8 +263,7 @@ class Dashboard extends React.Component {
               </CardFooter>
             </Card>
           </GridItem>
-          */}
-
+          
           <GridItem xs={12} sm={6} md={6} lg={6}>
           <Card style={customStyle.cardHeight}>
               <CardHeader color="danger" stats icon>
@@ -281,8 +282,7 @@ class Dashboard extends React.Component {
               </CardFooter>
             </Card>
           </GridItem>
-           
-           {/* 
+          
           <GridItem xs={12} sm={6} md={6} lg={3}>
           <Card style={customStyle.cardHeight}>
               <CardHeader color="info" stats icon>
@@ -300,12 +300,12 @@ class Dashboard extends React.Component {
               </CardFooter>
             </Card>
           </GridItem>
-        */}
+          
         </GridContainer>
 
         <GridContainer>
-          {/* 
-          <GridItem xs={12} sm={12} md={3}>
+           
+          <GridItem xs={12} sm={12} md={6}>
             <Card chart>
               <CardHeader color="info" className={classes.cardHeaderHover}>
                 <ChartistGraph
@@ -354,7 +354,7 @@ class Dashboard extends React.Component {
               </CardFooter>
             </Card>
           </GridItem>
-          */}
+
 
           <GridItem xs={12} sm={12} md={12}>
             <Card chart>

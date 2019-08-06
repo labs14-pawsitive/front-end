@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { fetchShelter ,updateShelterCon, deleteShelterCon } from '../../actions/shelterAction';
+import { axiosWithAuth } from 'axiosWithAuth';
 
 
 // @material-ui/core components
@@ -16,6 +17,7 @@ import CustomInput from "components/CustomInput/ShelterCustomInput.jsx";
 
 import shelterProfileStyles from "assets/jss/material-dashboard-pro-react/views/shelterProfileStyles.jsx";
 import MaskedInput from 'react-text-mask';
+
 
 function moveCursor(event) {
   let digits = event.target.value.replace(/\D/g,'').length;
@@ -57,14 +59,34 @@ class Contacts extends Component {
         this.state = {
             editMode: false,
             contact : this.props.contact,
-            nameState: '',
-            emailState: '',
-            phoneState: '',
+            nameState: 'success',
+            emailState: 'success',
+            phoneState: 'success',
+            delError: false,
+            shelterVerified : ''
+
         }
 
     }
 
- 
+  verifyShelter = async(shelter_id) => {
+      //verifying shelter before proceeding
+      axiosWithAuth()
+        .get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/shelter/${shelter_id}`)
+        .then( result => { 
+          this.setState({
+            shelterVerified : true
+          })
+          console.log(result)
+        })
+        .catch( error => {
+          console.log(error)
+          this.setState({
+            shelterVerified : false
+          })
+        })
+  } 
+
 handleFormButtonToggle = e => {
         e.preventDefault();
         this.setState({
@@ -81,23 +103,46 @@ changeHandler = e => {
     })
   }
       
+cancelClick = e => {
+  e.preventDefault()
+  this.setState({
+    editMode : !this.state.editMode,
+    contact: this.props.contact,
+    nameState: 'success',
+    emailState: 'success',
+    phoneState: 'success',
+    delError: false,
+  })
+ }
 
-deleteContact = e => {
+deleteContact = async(e) => {
     e.preventDefault()
+    await this.verifyShelter(localStorage.getItem('shelter_id'))
+    //if(this.state.shelterVerified) {
     this.props.deleteShelterCon(this.props.contact.id)
     .then( () => {
       this.props.updateShelter();
+      this.setState({
+        shelterVerified : ''
+      })
     })
+    this.setState({
+      delError: true
+    })
+  //}
 }
 
-updateSubmit = e => {
+updateSubmit = async(e) => {
     e.preventDefault()
+    await this.verifyShelter(localStorage.getItem('shelter_id'))
 
+    //if (this.isValidated() && this.state.shelterVerified) {
+    if (this.isValidated()){
     const updatedContact = {
         name: this.state.contact.name,
         email: this.state.contact.email,
         phone: this.state.contact.phone,
-        shelter_id: this.props.shelterID
+        shelter_id: localStorage.getItem('shelter_id')
     }
 
     console.log('UPDATECHANGE', updatedContact)
@@ -106,7 +151,10 @@ updateSubmit = e => {
     this.props.updateShelterCon(this.props.contact.id, updatedContact)
     .then( (res) => {
         this.props.updateShelter();
-        console.log('UPDATESHELTERLOCATION:',this.props.shelterID)
+        this.setState({
+          shelterVerified : ''
+        })
+        console.log('UPDATESHELTERLOCATION:',localStorage.getItem('shelter_id'))
     })
     .then( (res) => {
       console.log('update shelter location shelter:', res)
@@ -116,11 +164,11 @@ updateSubmit = e => {
     });
     this.setState({
       editMode : !this.state.editMode,
-      nameState: '',
-      emailState: '',
-      phoneState: '',
+      nameState: 'success',
+      emailState: 'success',
+      phoneState: 'success',
     })
- 
+  } else {console.log(' Locations Fields not validated')}
 }
 
 //---------Verification for fields:
@@ -222,6 +270,9 @@ isValidated() {
         const customStyle = {
             shelterDisplayView : {
               color:"#333333 !important",
+            },
+            errorColor: {
+              color: "#d81b60"
             }
           }
           const { classes } = this.props;
@@ -232,7 +283,7 @@ isValidated() {
                   <CustomInput
                     labelText="Name"
                     id="name"
-                    success={this.state.nameState === "success"}
+                    success={this.state.editMode? this.state.nameState === "success" : null}
                     error={this.state.nameState === "error"}
 
                     formControlProps={{
@@ -253,7 +304,7 @@ isValidated() {
                   <CustomInput
                     labelText="Email address"
                     id="email"
-                    success={this.state.emailState === "success"}
+                    success={this.state.editMode? this.state.emailState === "success" : null }
                     error={this.state.emailState === "error"}
                     formControlProps={{
                       fullWidth: true,
@@ -272,7 +323,7 @@ isValidated() {
                   <CustomInput
                     labelText="Phone Number"
                     id="phone"
-                    success={this.state.phoneState === "success"}
+                    success={this.state.editMode? this.state.phoneState === "success": null}
                     error={this.state.phoneState === "error"}
                 
                     formControlProps={{
@@ -291,35 +342,38 @@ isValidated() {
 
                   />
                 </GridItem>
-            <GridItem xs={12} sm={12} md={7}></GridItem>
-            <GridItem xs={12} sm={12} md={5}>
-            
+            <GridItem xs={12} sm={12} md={12}>
+            {this.state.editMode && this.props.error && this.state.delError && <span style={customStyle.errorColor}>
+                <small> Error: Contact is associated with an existing location </small> </span>}
+            <GridItem xs={12} sm={12} md={12}>
+            {this.state.editMode && <Button size= "sm" 
+              color="rose" 
+              className={classes.updateProfileButton}
+               onClick={this.cancelClick}>
+                Cancel
+              </Button> }
             <Button 
                 size= "sm" 
                 color="rose" 
                 className={classes.updateProfileButton}
                 onClick={this.state.editMode? this.updateSubmit : this.handleFormButtonToggle}
               >
-                {this.state.editMode? "Save" : "Update"}
+                {this.state.editMode? "Save" : "Edit"}
               </Button>
 
-
-              <Button size= "sm" 
+              {this.state.editMode && <Button size= "sm" 
               color="rose" 
               className={classes.updateProfileButton}
                onClick={this.deleteContact}>
                 Delete
-              </Button>
-              
+                  </Button>}
+                  </GridItem>
             </GridItem>
               </GridContainer>
             </>
         );
     }
 }
-
-
-
 const mapStateToProps = (state) => {
     return {
       userID : state.userReducer.userID,
@@ -327,7 +381,9 @@ const mapStateToProps = (state) => {
       shelterWorkerID : state.userReducer.shelterWorkerID,
       roleID : state.userReducer.roleID,
       shelter: state.shelterReducer.shelter,
-      fetchingShelter: state.shelterReducer.fetchingShelter, 
+      fetchingShelter: state.shelterReducer.fetchingShelter,
+      error: state.shelterReducer.error,
+      location: state.shelterReducer.location
     }
   }
  

@@ -45,7 +45,7 @@ class CreateNotes extends React.Component {
     verifyLength(value, len) {
         if (value.length >= len) {
 
-            return true;
+           return true;
         }
         return false;
     };
@@ -98,9 +98,12 @@ class CreateNotes extends React.Component {
 
     addNotes = e => {
 
+        if (this.state.inputField.length === 0)
+            return;
+        
         const newNote = {
             notes: this.state.inputField,
-            shelter_user_id: this.props.application.user_id,
+            shelter_user_id: this.props.shelterUserId,
             application_id: this.props.application_id,
         };
 
@@ -211,6 +214,7 @@ class CreateNotes extends React.Component {
                             {this.props.notes && this.props.notes.map(note => (
                                 <MapNotes
                                     note={note}
+                                    email={this.props.userEmail}
                                     application={this.props.application}
                                     deleteNotes={this.deleteNotes}
                                     updateNotes={this.updateNotes}

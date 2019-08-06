@@ -9,11 +9,12 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Fingerprint from "@material-ui/icons/Fingerprint";
 import withStyles from "@material-ui/core/styles/withStyles";
 import authNavbarStyle from "assets/jss/material-dashboard-pro-react/components/authNavbarStyle.jsx";
+ 
 
 
 
 const auth = new Auth();
-
+ 
 
 class AuthView extends React.Component {
   constructor(props){
@@ -26,7 +27,7 @@ class AuthView extends React.Component {
 
 
     logout = () => {
-      localStorage.clear()
+      auth.logout();
     }
 
     render()  {
@@ -53,7 +54,7 @@ class AuthView extends React.Component {
         } 
       }
         return(
-          localStorage.getItem("id_token") 
+          localStorage.getItem("token") 
           ? 
         <ListItem className={classes.listItem} onClick={this.logout} style={customStyle.buttonWrapper}>
             <NavLink to="/">

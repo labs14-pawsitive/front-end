@@ -36,7 +36,7 @@ class Main extends React.Component {
       <div className={classes.contentCenter}>
         <GridContainer>
           <GridItem md={12}>
-            <h1 className={classes.title}>8/15<sup>*</sup></h1>
+            <h1 className={classes.title}>8/20<sup>*</sup></h1>
             <h2 className={classes.subTitle}>Search, discover, adopt your pets!</h2>
             <h4 className={classes.description}>
               Busy pawing on our keyboards so you can have a seamless adoption experience, very soon!
