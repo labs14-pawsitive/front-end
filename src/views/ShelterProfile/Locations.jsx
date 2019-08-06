@@ -304,7 +304,7 @@ isValidated() {
                 <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
                   <CustomInput
-                    labelText="Nickname"
+                    labelText="Location Name"
                     id="nickname"
                     success={this.state.editMode? this.state.nicknameState === "success": null}
                     error={this.state.nicknameState === "error"}

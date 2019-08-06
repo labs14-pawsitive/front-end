@@ -332,7 +332,7 @@ class Step3 extends React.Component {
             error={this.state.nicknameState === "error"}
             labelText={
               <span>
-                Nickname <small>(required)</small>
+                Location Name <small>(required)</small>
               </span>
             }
             id="nickname"

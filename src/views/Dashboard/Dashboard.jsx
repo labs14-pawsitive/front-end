@@ -244,6 +244,7 @@ class Dashboard extends React.Component {
               </CardFooter>
             </Card>
           </GridItem>
+          {/* 
           <GridItem xs={12} sm={6} md={6} lg={3}>
           <Card style={customStyle.cardHeight}>
               <CardHeader color="success" stats icon>
@@ -262,7 +263,7 @@ class Dashboard extends React.Component {
               </CardFooter>
             </Card>
           </GridItem>
-          
+          */}
           <GridItem xs={12} sm={6} md={6} lg={3}>
           <Card style={customStyle.cardHeight}>
               <CardHeader color="danger" stats icon>
@@ -281,7 +282,7 @@ class Dashboard extends React.Component {
               </CardFooter>
             </Card>
           </GridItem>
-          
+          {/* 
           <GridItem xs={12} sm={6} md={6} lg={3}>
           <Card style={customStyle.cardHeight}>
               <CardHeader color="info" stats icon>
@@ -299,10 +300,11 @@ class Dashboard extends React.Component {
               </CardFooter>
             </Card>
           </GridItem>
+          */}
         </GridContainer>
-        
 
         <GridContainer>
+{/*           
           <GridItem xs={12} sm={12} md={6}>
             <Card chart>
               <CardHeader color="info" className={classes.cardHeaderHover}>
@@ -315,6 +317,7 @@ class Dashboard extends React.Component {
                   listener={donationChart.animation}
                 />
               </CardHeader>
+
               <CardBody>
                 <div className={classes.cardHoverUnder}>
                   <Tooltip
@@ -351,6 +354,7 @@ class Dashboard extends React.Component {
               </CardFooter>
             </Card>
           </GridItem>
+*/}
 
           <GridItem xs={12} sm={12} md={6}>
             <Card chart>
