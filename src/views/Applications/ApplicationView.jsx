@@ -51,6 +51,8 @@ class ApplicationView extends React.Component {
 
       statusChanged: false,
 
+      user : {},
+
       shelterVerified: ''
     };
     this.handleChange = this.handleChange.bind(this);
@@ -88,6 +90,17 @@ class ApplicationView extends React.Component {
   async componentDidMount(prevProps, prevState) {
 
     await this.loadApplication()
+    axios.
+    get(`${process.env.REACT_APP_BACKEND_URL}/api/users/${this.state.application.user_id}`)
+    .then( result => {
+      console.log(result)
+      this.setState({
+        user : result.data
+      })
+    })
+    .catch(error => {
+      console.log(error)
+    })
     
     this.verifyShelter(this.props.application.shelter_id)
     
