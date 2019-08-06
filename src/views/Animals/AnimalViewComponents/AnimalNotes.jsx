@@ -170,6 +170,11 @@ class AnimalNotes extends React.Component {
 
 
                     <div style={customStyle.detailsContainerStyle}>
+                    <Button style={customStyle.noteButtonStyle}
+                            variant="contained" className={classes.button} onClick={this.submitNote}>
+                            SUBMIT
+                    </Button>
+                    
                         {this.state.note.length > 0 &&
                             <Button style={customStyle.noteButtonStyle}
                                 variant="contained" color="secondary"
@@ -178,10 +183,7 @@ class AnimalNotes extends React.Component {
                             </Button>
                         }
 
-                        <Button style={customStyle.noteButtonStyle}
-                            variant="contained" className={classes.button} onClick={this.submitNote}>
-                            SUBMIT
-                    </Button>
+              
                     </div>
 
                     <List
