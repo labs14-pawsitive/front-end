@@ -273,7 +273,7 @@ class AnimalViewDetails extends React.Component {
                             <GridItem xs={12} sm={12} md={6} >
                               
                             <TextField style={customStyle.textStyle}
-                                success={this.props.animal_meta.color  && this.props.animal_meta.color.length >= this.props.maxLength}
+                                success={this.props.animal_meta.color  && this.props.animal_meta.color.length >= this.props.maxLength && this.props.animal_meta.color != ""}
                                 error={this.props.animal_meta.color && (this.props.animal_meta.color.length < this.props.maxLength || this.props.animal_meta.color === "")}
 
                                 name="color"
