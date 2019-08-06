@@ -26,7 +26,8 @@ class AuthView extends React.Component {
 
 
     logout = () => {
-      webAuth.logout({
+      
+      auth.logout({
         returnTo: '/',
         client_id: process.env.REACT_APP_AUTH0_CLIENT_ID,
       });

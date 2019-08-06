@@ -62,7 +62,8 @@ class HeaderLinks extends React.Component {
   };
   handleLogout = ()=> {
 
-    localStorage.clear();
+    localStorage.clear(); 
+    
     auth.logout({
       returnTo: '/',
       client_id: process.env.REACT_APP_AUTH0_CLIENT_ID,
