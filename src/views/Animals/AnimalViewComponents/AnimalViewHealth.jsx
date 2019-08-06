@@ -102,7 +102,7 @@ class AnimalViewHealth extends React.Component {
                       readOnly: this.props.isEditing ? false : true,
                       
                     }}
-                    InputLabelProps= {!this.props.isEditing || this.props.animal_meta.health.length >= this.props.maxLength ?{
+                    InputLabelProps= {this.props.animal_meta.health && (!this.props.isEditing || this.props.animal_meta.health.length >= this.props.maxLength) ?{
                                     style: { color: 'rgba(0, 0, 0, 0.87)' },
                                   } : {}}
                 

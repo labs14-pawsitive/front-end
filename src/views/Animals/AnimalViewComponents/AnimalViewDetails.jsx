@@ -273,8 +273,8 @@ class AnimalViewDetails extends React.Component {
                             <GridItem xs={12} sm={12} md={6} >
                               
                             <TextField style={customStyle.textStyle}
-                                success={this.props.animal_meta.color.length >= this.props.maxLength}
-                                error={this.props.animal_meta.color.length < this.props.maxLength || this.props.animal_meta.color === ""}
+                                success={this.props.animal_meta.color  && this.props.animal_meta.color.length >= this.props.maxLength}
+                                error={this.props.animal_meta.color && (this.props.animal_meta.color.length < this.props.maxLength || this.props.animal_meta.color === "")}
 
                                 name="color"
                                 label="Color"
@@ -286,7 +286,7 @@ class AnimalViewDetails extends React.Component {
                                     readOnly: this.props.isEditing ? false : true,
                              
                                 }}
-                                InputLabelProps= {!this.props.isEditing || this.props.animal_meta.color.length >= this.props.maxLength ?{
+                                InputLabelProps= {this.props.animal_meta.color && (!this.props.isEditing || this.props.animal_meta.color.length >= this.props.maxLength) ?{
                                     style: { color: 'rgba(0, 0, 0, 0.87)' },
                                   } : {}}
                            
