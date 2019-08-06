@@ -21,15 +21,16 @@ class ImageUpload extends Component {
     const borderRadius = this.props.borderRadius
       ? this.props.borderRadius
       : "5px";
-
-    this.styles = {
+    
+    this.styles = this.props.customStyle ? this.props.customStyle :{
       media: {
         height: height,
         width: width,
         background: "lightgray",
         borderRadius: "5px",
         overflow: "hidden",
-        padding: 0
+        padding: 0,
+     
       },
 
       image: {

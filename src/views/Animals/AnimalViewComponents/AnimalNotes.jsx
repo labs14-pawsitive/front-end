@@ -31,6 +31,8 @@ class AnimalNotes extends React.Component {
             animal_id: this.props.animal.id,
             shelter_id: this.props.animal.shelter_id
         }
+
+        this.maxLength = 3;
     }
 
     handleUrlClick = e => {
@@ -46,9 +48,13 @@ class AnimalNotes extends React.Component {
         })
     }
 
-    handleAddNoteChange = (len) => (event) => {
+    handleAddNoteChange =  async (event) => {
 
-        if (this.state.note.length >= len) {
+        await this.setState({
+            note: event.target.value,
+        })
+        
+        if (this.state.note.length >= this.maxLength) {
             this.setState({
                 addNoteState: "success"
             })
@@ -58,9 +64,7 @@ class AnimalNotes extends React.Component {
                 addNoteState: "error"
             })
         }
-        this.setState({
-            note: event.target.value,
-        })
+
 
     }
 
@@ -85,6 +89,8 @@ class AnimalNotes extends React.Component {
         event.preventDefault()
         console.log(this.state.note)
 
+        if (this.state.note.length === 0)
+            return;
         let notes = {}
 
         notes = {
@@ -157,14 +163,14 @@ class AnimalNotes extends React.Component {
                     </CardHeader>
 
                     <TextField
-                        success={this.state.addNoteState === "success"}
-                        error={this.state.addNoteState === "error"}
+                        success={this.state.note.length === 0 || this.state.addNoteState === "success" }
+                        error={this.state.addNoteState === "error" && this.state.note.length > 0}
                         id="standard-textarea"
                         label="Add a note"
                         value={this.state.note}
                         multiline
                         className={classes.textField}
-                        onChange={this.handleAddNoteChange(3)}
+                        onChange={this.handleAddNoteChange}
                         margin="normal"
                     />
 

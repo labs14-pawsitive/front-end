@@ -26,6 +26,8 @@ class NotesComponent extends React.Component {
             updateNoteState:"success"
             
         }
+
+        this.maxLength = 3;
     }
 
     handleNoteToggle = (event) => {
@@ -34,8 +36,16 @@ class NotesComponent extends React.Component {
         })
     }
 
-    handleUpdateNoteChange = (len) => (event) => {
-        if (this.state.editNoteInfo.notes.length >= len) {
+    handleUpdateNoteChange =  async (event) => {
+
+        await this.setState({
+            editNoteInfo: {
+                ...this.state.editNoteInfo,
+                [event.target.name]: event.target.value
+            }
+        })
+
+        if (this.state.editNoteInfo.notes.length >= this.maxLength) {
             this.setState({
                 updateNoteState: "success"
             })
@@ -45,12 +55,7 @@ class NotesComponent extends React.Component {
                 updateNoteState: "error"
             })
         }
-        this.setState({
-            editNoteInfo: {
-                ...this.state.editNoteInfo,
-                [event.target.name]: event.target.value
-            }
-        })
+  
     }
 
     isValidated() {
@@ -162,13 +167,13 @@ class NotesComponent extends React.Component {
                 <CardContent>
                     {this.state.isNoteEditing ?
                         <TextField
-                        success={this.state.updateNoteState === "success"}
-                        error={this.state.updateNoteState === "error"}
+                        success={this.state.updateNoteState === "success" || this.state.editNoteInfo.notes.length === 0}
+                        error={this.state.updateNoteState === "error" && this.state.editNoteInfo.notes.length > 0}
                             name="notes"
                             multiline
                             className={classes.textField}
                             value={this.state.editNoteInfo.notes}
-                            onChange={this.handleUpdateNoteChange(3)}
+                            onChange={this.handleUpdateNoteChange}
                             margin="normal"
 
                         /> :

@@ -28,7 +28,6 @@ class AuthView extends React.Component {
 
     logout = () => {
       auth.logout();
- 
     }
 
     render()  {

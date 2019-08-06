@@ -98,6 +98,9 @@ class CreateNotes extends React.Component {
 
     addNotes = e => {
 
+        if (this.state.inputField.length === 0)
+            return;
+        
         const newNote = {
             notes: this.state.inputField,
             shelter_user_id: this.props.shelterUserId,
