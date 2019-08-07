@@ -104,7 +104,9 @@ const customDropdownStyle = theme => ({
     textAlign: "left",
     listStyle: "none",
     backgroundColor: whiteColor,
-    backgroundClip: "padding-box"
+    backgroundClip: "padding-box",
+    maxHeight: "200px",
+    overflow: "scroll"
   },
   menuList: {
     padding: "0"
