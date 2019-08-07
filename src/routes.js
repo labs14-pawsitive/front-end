@@ -50,6 +50,8 @@ import EditAnimalForm from "views/Animals/EditAnimalForm";
 import ApplicationView from "views/Applications/ApplicationView.jsx"
 import ApplicationTable from "views/Applications/ApplicationTable";
 import ShelterProfile from "views/ShelterProfile/ShelterProfile";
+import StripeInfo from "views/ShelterProfile/StripeInfo";
+import SubscriptionPlan from "views/ShelterProfile/SubscriptionPlan";
 
 
 // @material-ui/icons
@@ -72,12 +74,32 @@ var dashRoutes = [
     component: Dashboard,
     layout: "/admin"
   }, 
+  
   {
-    path: "/shelterProfile",
-    name: "Shelter Profile",
+    collapse: true,
+    name: "Shelter Info",
     icon: "store_mall_directory",
-    component: ShelterProfile,
-    layout: "/admin"
+    state: "shelterCollapse",
+    views: [
+        {
+          path: "/shelterProfile",
+          name: "Shelter Profile",
+          component: ShelterProfile,
+          layout: "/admin"
+      },
+      {
+        path: "/stripeInfo",
+        name: "Stripe Info",
+        component: StripeInfo,
+        layout: "/admin"
+    },
+    {
+      path: "/subscriptionPlan",
+      name: "Subscription Plan",
+      component: SubscriptionPlan,
+      layout: "/admin"
+    }
+    ]
   },
   {
       collapse: true,
@@ -88,7 +110,6 @@ var dashRoutes = [
           {
               path:"/allAnimals",
               name: "All Animals",
-              
               component: AnimalTable,
               layout: "/admin"
           },
@@ -142,7 +163,7 @@ var dashRoutes = [
         }
     ]
 },
-/*
+
 {
     path: "/donations",
     name: "Donations",
@@ -156,6 +177,6 @@ var dashRoutes = [
     icon: "face",
     component: ReactTables,
     layout: "/admin"
-  },  */
+  },  
 ];
 export default dashRoutes;

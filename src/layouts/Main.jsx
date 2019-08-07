@@ -23,10 +23,11 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import withStyles from "@material-ui/core/styles/withStyles";
 
 // core components
-import TempNavBar from "components/Navbars/TempNavBar.jsx";
+import MainNavBar from "components/Navbars/MainNavBar.jsx";
 import Footer from "components/Footer/Footer.jsx";
 
-import Main from "views/Main_Temp/Main.jsx";
+import MainPage from "views/Main/Main.jsx";
+import AnimalPage from "views/Main/Animal.jsx";
 
 // import routes from "mainRoutes.js";
 
@@ -40,7 +41,7 @@ import pageStyle from "assets/jss/material-dashboard-pro-react/layouts/authStyle
 // import application from "assets/img/bg-application3.jpg";
 import mainBG from "assets/img/bg-application.jpg"
 
-class MainTemp extends React.Component {
+class MainLayout extends React.Component {
   wrapper = React.createRef();
 
  
@@ -48,6 +49,7 @@ class MainTemp extends React.Component {
     document.body.style.overflow = "unset"; 
     
   }
+  /*
   getRoutes = routes => {
     return routes.map((prop, key) => {
       if (prop.collapse) {
@@ -66,11 +68,12 @@ class MainTemp extends React.Component {
       }
     });
   };
+  */
   getBgImage = () => {
     return mainBG;
    
   };
-  
+  /*
   getActiveRoute = routes => {
     let activeRoute = "Pawsnfind";
     for (let i = 0; i < routes.length; i++) {
@@ -89,21 +92,20 @@ class MainTemp extends React.Component {
     }
     return activeRoute;
   };
-  
+  */ 
+
   render() {
     const { classes, ...rest } = this.props;
     return (
       <div>
-        <TempNavBar brandText="Pawsnfind" {...rest} />
+        <MainNavBar brandText="Pawsnfind" {...rest} />
         <div className={classes.wrapper} ref={this.wrapper}>
-          
           <div
             className={classes.fullPage}
             style={{ backgroundImage: "url(" + this.getBgImage() + ")" }}
           >
-            
-            <Main {...this.props}/>
-            
+            <Route exact path="/" component={MainPage} />
+            <Route path="/animal/:id" component={AnimalPage} />
             <Footer white />
           </div>
         </div>
@@ -112,8 +114,8 @@ class MainTemp extends React.Component {
   }
 }
 
-MainTemp.propTypes = {
+MainLayout.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(pageStyle)(MainTemp);
+export default withStyles(pageStyle)(MainLayout);
