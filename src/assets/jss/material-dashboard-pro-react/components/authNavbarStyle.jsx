@@ -196,13 +196,13 @@ const pagesHeaderStyle = theme => ({
       top: "0"
     },
     "&:after": {
-      background: blackColor,
+      background: whiteColor,
       opacity: ".8"
     }
   },
   sidebarButton: {
     "&,&:hover,&:focus": {
-      color: whiteColor
+      color: blackColor
     },
     top: "-2px"
   }

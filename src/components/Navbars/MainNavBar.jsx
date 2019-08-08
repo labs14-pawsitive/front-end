@@ -108,18 +108,14 @@ class MainNavBar extends React.Component {
           <Hidden smDown>
             <div className={classes.flex}>
               <NavLink to="/"><h3 style={logoStyle}>Pawsnfind</h3>
-              {/* <Button className={classes.title} color="transparent">
-                
-              </Button>*/}
+     
               </NavLink>
             </div>
           </Hidden>
           <Hidden mdUp>
             <div className={classes.flex}>
               <NavLink to="/"> <h4 style={logoStyle}>Pawsnfind</h4>
-              {/* <Button className={classes.title} color="transparent">
-               
-            </Button>*/}
+      
               </NavLink>
             </div>
           </Hidden>

@@ -81,10 +81,10 @@ class TempNavBar extends React.Component {
     var list = (
       <List className={classes.list}>
         <ListItem className={classes.listItem}>
-          <NavLink to={"/admin/dashboard"} className={classes.navLink}>
+          <NavLink to={"/shelterManagers"} className={classes.navLink}>
             <Dashboard className={classes.listItemIcon} />
             <ListItemText
-              primary={"Shelter Dashboard Beta"}
+              primary={"Shelter Managers"}
               disableTypography={true}
               className={classes.listItemText}
             />
