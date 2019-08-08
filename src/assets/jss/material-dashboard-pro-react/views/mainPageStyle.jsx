@@ -1,4 +1,4 @@
-import { title, whiteColor } from "assets/jss/material-dashboard-pro-react.jsx";
+import { title, whiteColor, blackColor } from "assets/jss/material-dashboard-pro-react.jsx";
 
 const mainPageStyle = () => ({
   contentCenter: {
@@ -16,7 +16,7 @@ const mainPageStyle = () => ({
   title: {
     ...title,
     fontSize: "13.7em",
-    color: whiteColor,
+    color: blackColor,
     letterSpacing: "14px",
     fontWeight: "700"
   },
@@ -35,7 +35,9 @@ const mainPageStyle = () => ({
     display:"flex",
     alignItems: "center",
     justifyContent: "center",
-    width:"100%"
+    width:"100%",
+    color: blackColor
+
   }
 });
 

@@ -74,7 +74,7 @@ class MainLayout extends React.Component {
               <Route path="/error" component={ErrorPage} />
               <Redirect from ="/" to="/error" />
             </Switch>
-            <Footer white/>
+            <Footer black/>
           </div>
         </div>
       </div>

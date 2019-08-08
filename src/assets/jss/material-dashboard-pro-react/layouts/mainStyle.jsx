@@ -25,7 +25,8 @@ const pagesStyle = theme => ({
     height: "auto",
     minHeight: "100vh",
     position: "relative",
-    top: "0"
+    top: "0",
+    
   },
   fullPage: {
     padding: "120px 0",
@@ -50,7 +51,8 @@ const pagesStyle = theme => ({
       border: "none !important"
     },
     "&:before": {
-      backgroundColor: "rgba(" + hexToRgb(blackColor) + ", 0.65)"
+      //backgroundColor: "rgba(" + hexToRgb(blackColor) + ", 0.65)"
+      //backgroundColor: 'white'
       
     },
     "&:before,&:after": {

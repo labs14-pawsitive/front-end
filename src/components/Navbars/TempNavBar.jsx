@@ -41,11 +41,11 @@ import LibraryBooks from "@material-ui/icons/LibraryBooks";
 
 
 import Auth from "components/Auth/Auth.js"
-import AuthView from "views/Auth/AuthView.jsx"
+import AuthView from "views/Auth/AuthViewTemp.jsx"
 // core components
 import Button from "components/CustomButtons/Button";
 
-import authNavbarStyle from "assets/jss/material-dashboard-pro-react/components/authNavbarStyle.jsx";
+import authNavbarStyle from "assets/jss/material-dashboard-pro-react/components/authNavbarStyleTemp.jsx";
 
 //import custom style 
 import pawsStyle from "assets/custom/pawsnfind.css"
