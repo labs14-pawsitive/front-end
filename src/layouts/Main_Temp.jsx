@@ -27,7 +27,7 @@ import TempNavBar from "components/Navbars/TempNavBar.jsx";
 import Footer from "components/Footer/Footer.jsx";
 
 import Main from "views/Main_Temp/Main.jsx";
-
+import StripeForm from '../views/Stripe/StripeForm.js';
 // import routes from "mainRoutes.js";
 
 import pageStyle from "assets/jss/material-dashboard-pro-react/layouts/authStyle.jsx";
@@ -94,18 +94,8 @@ class MainTemp extends React.Component {
     const { classes, ...rest } = this.props;
     return (
       <div>
-        <TempNavBar brandText="Pawsnfind" {...rest} />
-        <div className={classes.wrapper} ref={this.wrapper}>
-          
-          <div
-            className={classes.fullPage}
-            style={{ backgroundImage: "url(" + this.getBgImage() + ")" }}
-          >
-            <Main {...this.props}/>
-            
-            <Footer white />
-          </div>
-        </div>
+ 
+ <StripeForm/>
       </div>
     );
   }
