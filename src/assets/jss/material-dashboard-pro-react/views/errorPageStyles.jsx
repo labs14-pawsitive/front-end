@@ -14,7 +14,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import { title, whiteColor } from "assets/jss/material-dashboard-pro-react.jsx";
+import { title, whiteColor, blackColor } from "assets/jss/material-dashboard-pro-react.jsx";
 
 const errorPageStyles = () => ({
   contentCenter: {
@@ -24,7 +24,7 @@ const errorPageStyles = () => ({
     zIndex: "3",
     transform: "translate(-50%,-50%)",
     textAlign: "center",
-    color: whiteColor,
+    color: blackColor,
     padding: "0 15px",
     width: "100%",
     maxWidth: "880px"
@@ -32,7 +32,7 @@ const errorPageStyles = () => ({
   title: {
     ...title,
     fontSize: "13.7em",
-    color: whiteColor,
+    color: blackColor,
     letterSpacing: "14px",
     fontWeight: "700"
   },
