@@ -24,6 +24,8 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 // core components
 import MainNavBar from "components/Navbars/MainNavBar.jsx";
+import TempNavBar from "components/Navbars/TempNavBar.jsx";
+
 import Footer from "components/Footer/Footer.jsx";
 
 import MainPage from "views/Main/Main.jsx";
@@ -58,10 +60,14 @@ class MainLayout extends React.Component {
     const { classes, ...rest } = this.props;
     return (
       <div>
-        <MainNavBar brandText="Pawsnfind" {...rest} />
+        {window.location.pathname.indexOf('/error') !== -1 ? 
+        <TempNavBar brandText="Pawsnfind" {...rest} />   
+        :
+        <MainNavBar brandText="Pawsnfind" {...rest} />  
+        }
         <div className={classes.wrapper} ref={this.wrapper}>
           <div
-            className={classes.fullPage}
+            className={window.location.pathname.indexOf("/error") !== -1 ? classes.fullPageError : classes.fullPage}
             style={{ backgroundImage: "url(" + this.getBgImage() + ")" }}
           >
             <Switch>
@@ -74,7 +80,12 @@ class MainLayout extends React.Component {
               <Route path="/error" component={ErrorPage} />
               <Redirect from ="/" to="/error" />
             </Switch>
-            <Footer black/>
+            {window.location.pathname.indexOf('/error') !== -1 ? 
+              <Footer white/>
+              :
+              <Footer black/>
+            }
+            
           </div>
         </div>
       </div>

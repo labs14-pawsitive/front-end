@@ -24,7 +24,7 @@ const errorPageStyles = () => ({
     zIndex: "3",
     transform: "translate(-50%,-50%)",
     textAlign: "center",
-    color: blackColor,
+    color: whiteColor,
     padding: "0 15px",
     width: "100%",
     maxWidth: "880px"
@@ -32,7 +32,7 @@ const errorPageStyles = () => ({
   title: {
     ...title,
     fontSize: "13.7em",
-    color: blackColor,
+    color: whiteColor,
     letterSpacing: "14px",
     fontWeight: "700"
   },
