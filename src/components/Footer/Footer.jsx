@@ -102,12 +102,10 @@ function Footer({ ...props }) {
           <a
             href="/"
             className={anchor}
-            
 
             target={window.location.pathname.indexOf("/admin/") !== -1 ? "_blank" : ""}
           > Pawsnfind
           </a>
-          
         </p>
       </div>
     </footer>

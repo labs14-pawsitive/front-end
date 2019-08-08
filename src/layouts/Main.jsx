@@ -27,23 +27,21 @@ import MainNavBar from "components/Navbars/MainNavBar.jsx";
 import Footer from "components/Footer/Footer.jsx";
 
 import MainPage from "views/Main/Main.jsx";
-import AnimalPage from "views/Main/Animal.jsx";
+import AnimalPage from "views/MainAnimal/Animal.jsx";
 import ErrorPage from "views/Pages/ErrorPage.jsx";
-import ShelterPage from "views/Main/Shelter.jsx";
-import SearchPage from "views/Main/Search.jsx";
-import MarketingPage from "views/Main/Marketing.jsx";
-import TeamPage from "views/Main/Team.jsx";
+import ShelterPage from "views/MainShelter/Shelter.jsx";
+import SearchPage from "views/MainSearch/Search.jsx";
+import MarketingPage from "views/MainMarketing/Marketing.jsx";
+import TeamPage from "views/MainTeam/Team.jsx";
 
 import mainStyle from "assets/jss/material-dashboard-pro-react/layouts/mainStyle.jsx";
 
 import mainBG from "assets/img/bg-application.jpg";
 import error from "assets/img/bg-404lostPuppy.jpg";
 
-
 class MainLayout extends React.Component {
   wrapper = React.createRef();
 
- 
   componentDidMount() {
     document.body.style.overflow = "unset"; 
   }
