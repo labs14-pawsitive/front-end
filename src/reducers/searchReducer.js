@@ -2,9 +2,9 @@
 
 
 const initialState = {
-
+    
 }
 
-export const userReducer = (state = initialState, action) => {
+export const searchReducer = (state = initialState, action) => {
     return state;
 }

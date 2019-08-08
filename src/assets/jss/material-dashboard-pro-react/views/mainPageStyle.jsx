@@ -29,6 +29,13 @@ const mainPageStyle = () => ({
     fontSize: "1.125rem",
     marginTop: "0",
     marginBottom: "8px"
+  },
+  bodyStyle: {
+    zIndex: 3,
+    display:"flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width:"100%"
   }
 });
 

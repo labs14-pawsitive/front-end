@@ -17,7 +17,7 @@
 
 import React from "react";
 import PropTypes from "prop-types";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -28,18 +28,17 @@ import Footer from "components/Footer/Footer.jsx";
 
 import MainPage from "views/Main/Main.jsx";
 import AnimalPage from "views/Main/Animal.jsx";
+import ErrorPage from "views/Pages/ErrorPage.jsx";
+import ShelterPage from "views/Main/Shelter.jsx";
+import SearchPage from "views/Main/Search.jsx";
+import MarketingPage from "views/Main/Marketing.jsx";
+import TeamPage from "views/Main/Team.jsx";
 
-// import routes from "mainRoutes.js";
+import mainStyle from "assets/jss/material-dashboard-pro-react/layouts/mainStyle.jsx";
 
-import pageStyle from "assets/jss/material-dashboard-pro-react/layouts/authStyle.jsx";
+import mainBG from "assets/img/bg-application.jpg";
+import error from "assets/img/bg-404lostPuppy.jpg";
 
-// import register from "assets/img/register.jpeg";
-// import login from "assets/img/login.jpeg";
-// import lock from "assets/img/lock.jpeg";
-// import error from "assets/img/clint-mckoy.jpg";
-// import pricing from "assets/img/bg-pricing.jpeg";
-// import application from "assets/img/bg-application3.jpg";
-import mainBG from "assets/img/bg-application.jpg"
 
 class MainLayout extends React.Component {
   wrapper = React.createRef();
@@ -47,52 +46,15 @@ class MainLayout extends React.Component {
  
   componentDidMount() {
     document.body.style.overflow = "unset"; 
-    
   }
-  /*
-  getRoutes = routes => {
-    return routes.map((prop, key) => {
-      if (prop.collapse) {
-        return this.getRoutes(prop.views);
-      }
-      if (prop.layout === "/auth") {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
-      } else {
-        return null;
-      }
-    });
-  };
-  */
+  
   getBgImage = () => {
-    return mainBG;
-   
-  };
-  /*
-  getActiveRoute = routes => {
-    let activeRoute = "Pawsnfind";
-    for (let i = 0; i < routes.length; i++) {
-      if (routes[i].collapse) {
-        let collapseActiveRoute = this.getActiveRoute(routes[i].views);
-        if (collapseActiveRoute !== activeRoute) {
-          return collapseActiveRoute;
-        }
-      } else {
-        if (
-          window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
-        ) {
-          return routes[i].name;
-        }
-      }
+    if (window.location.pathname.indexOf("/error") !== -1) {
+      return error;
+    } else {
+      return null;
     }
-    return activeRoute;
   };
-  */ 
 
   render() {
     const { classes, ...rest } = this.props;
@@ -104,9 +66,17 @@ class MainLayout extends React.Component {
             className={classes.fullPage}
             style={{ backgroundImage: "url(" + this.getBgImage() + ")" }}
           >
-            <Route exact path="/" component={MainPage} />
-            <Route path="/animal/:id" component={AnimalPage} />
-            <Footer white />
+            <Switch>
+              <Route path="/animal/:id" component={AnimalPage} />
+              <Route path="/shelter/:id" component={ShelterPage}/>
+              <Route path="/search" component={SearchPage} />
+              <Route path="/shelterManagers" component={MarketingPage} />
+              <Route path="/team" component={TeamPage} />
+              <Route exact path="/" component={MainPage} />
+              <Route path="/error" component={ErrorPage} />
+              <Redirect from ="/" to="/error" />
+            </Switch>
+            <Footer white/>
           </div>
         </div>
       </div>
@@ -118,4 +88,4 @@ MainLayout.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(pageStyle)(MainLayout);
+export default withStyles(mainStyle)(MainLayout);

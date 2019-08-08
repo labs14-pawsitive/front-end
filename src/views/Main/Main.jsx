@@ -33,17 +33,12 @@ class MainPage extends React.Component {
     const { classes } = this.props;
     
     return (
-      <div className={classes.contentCenter}>
-        <GridContainer>
-          <GridItem md={12}>
+        <GridContainer className={classes.bodyStyle}>
+          <GridItem xs={10} >
             <h1 className={classes.title}>We're Live<sup>*</sup></h1>
-            <h2 className={classes.subTitle}>Search, discover, adopt your pets!</h2>
-            <h4 className={classes.description}>
-              Busy pawing on our keyboards so you can have a seamless adoption experience, very soon!
-            </h4>
+          
           </GridItem>
         </GridContainer>
-      </div>
     );
   }
 }

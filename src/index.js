@@ -60,15 +60,13 @@ ReactDOM.render(
     <Provider store = {store} >
         <Router history={hist}>
             <Switch>
-            <Route path="/callback" render={props => {handleAuthentication(props); return <Callback {...props} />}} />
-            <Route path="/application/:shelterId/:animalId" component={ApplicationLayout} />
-            <Route path="/application" component={ApplicationLayout} />
-            <PrivateRoute path="/shelter-signup" component={ShelterOnboarding}/>
-            <PrivateRouteShelter path="/admin" component={AdminLayout} />
-            <Route path="/" component = {MainLayout} />   
-            <Route exact path="/auth" component={AuthLayout} />
-            <Route path="/error" component={ErrorPage} />
-            <Redirect from ="/" to="/error" />
+                <Route exact path="/auth" component={AuthLayout} />
+                <Route path="/callback" render={props => {handleAuthentication(props); return <Callback {...props} />}} />
+                <Route path="/application/:shelterId/:animalId" component={ApplicationLayout} />
+                <Route path="/application" component={ApplicationLayout} />
+                <PrivateRoute path="/shelter-signup" component={ShelterOnboarding}/>
+                <PrivateRouteShelter path="/admin" component={AdminLayout} />
+                <Route path="/" component={MainLayout} />   
             </Switch>
         </Router>
     </Provider>,

@@ -18,7 +18,7 @@
 import React from "react";
 import cx from "classnames";
 import PropTypes from "prop-types";
-import { NavLink } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -81,7 +81,7 @@ class MainNavBar extends React.Component {
     var list = (
       <List className={classes.list}>
         <ListItem className={classes.listItem}>
-          <NavLink to={"/admin/dashboard"} className={classes.navLink}>
+          <NavLink to={"/shelterManagers"} className={classes.navLink}>
             <Dashboard className={classes.listItemIcon} />
             <ListItemText
               primary={"Shelter Managers"}
@@ -107,16 +107,19 @@ class MainNavBar extends React.Component {
         <Toolbar className={classes.container}>
           <Hidden smDown>
             <div className={classes.flex}>
-              <Button href="/" className={classes.title} color="transparent">
+              <NavLink to="/">
+              <Button className={classes.title} color="transparent">
                 <h3 style={logoStyle}>Pawsnfind</h3>
-              </Button>
+              </Button></NavLink>
             </div>
           </Hidden>
           <Hidden mdUp>
             <div className={classes.flex}>
-              <Button href="/" className={classes.title} color="transparent">
+              <NavLink to="/">
+              <Button className={classes.title} color="transparent">
                 <h4 style={logoStyle}>Pawsnfind</h4>
               </Button>
+              </NavLink>
             </div>
           </Hidden>
           <Hidden smDown>{list}</Hidden>
@@ -161,4 +164,4 @@ MainNavBar.propTypes = {
   brandText: PropTypes.string
 };
 
-export default withStyles(authNavbarStyle)(MainNavBar);
+export default withRouter(withStyles(authNavbarStyle)(MainNavBar));
