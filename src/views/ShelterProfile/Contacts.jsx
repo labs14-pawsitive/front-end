@@ -142,7 +142,7 @@ updateSubmit = async(e) => {
         name: this.state.contact.name,
         email: this.state.contact.email,
         phone: this.state.contact.phone,
-        shelter_id: localStorage.getItem('shelter_id')
+        shelter_id: this.props.shelterID
     }
 
     console.log('UPDATECHANGE', updatedContact)

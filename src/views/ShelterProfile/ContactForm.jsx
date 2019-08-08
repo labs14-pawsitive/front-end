@@ -149,11 +149,11 @@ class ContactForm extends React.Component {
             name: this.state.name,
             email: this.state.email,
             phone: this.state.phone,
-            shelter_id: localStorage.getItem('shelter_id')
+            shelter_id: this.props.shelterID
             }
 
         console.log(newContact)
-        this.props.addShelterCon(localStorage.getItem('shelter_id'), newContact)
+        this.props.addShelterCon(this.props.shelterID, newContact)
 
         .then( () => {
             this.props.updateShelter()
