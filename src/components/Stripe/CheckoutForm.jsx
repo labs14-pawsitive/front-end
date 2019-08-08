@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { injectStripe } from 'react-stripe-elements';
+import axios from 'axios';
 
 class CheckoutForm extends Component {
     constructor(props) {
@@ -12,20 +13,29 @@ class CheckoutForm extends Component {
     handleSubmit = e => {
         e.preventDefault();
     
-        let { token } = await this.props.stripe.createToken({name: this.state.name})
-        let amount = this.state.amount;
-        let response =
-            await fetch('http://localhost:8000/api/stripe/donate', {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify({
-                token: token.id,
-                amount: this.state.amount,
-                account: account_id
-            })
+        let { token } = await this.props.stripe.createToken({
+            name: this.state.name,
         })
+
+
+        axios
+            .post(`${process.env.REACT_APP_BACKEND_URL}/api/stripe/donate`, {
+                token: token.id,
+                data: { 
+                    amount: this.state.amount, 
+                    shelter_id: 1,
+                    user_id: 1
+                 } 
+            })
+            .then(res =>{ 
+                console.log(res)
+            })
+            .catch(err => {
+                console.log('Donate Error:', err)
+            })
+        
+
+
         if (response.ok){
             console.log('Purchase Complete')
             this.setState({complete: true})
