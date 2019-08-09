@@ -21,6 +21,8 @@ import { connect } from "react-redux";
 import ReactTable from "react-table";
 import { NavLink, Link } from "react-router-dom";
 import axios from 'axios';
+import {axiosWithAuth} from 'axiosWithAuth';
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Icon from "@material-ui/core/Icon";
@@ -46,11 +48,8 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import Danger from "components/Typography/Danger.jsx";
 
-
-
-import { dataTable } from "variables/general.jsx";
-
 import { cardTitle } from "assets/jss/material-dashboard-pro-react.jsx";
+
 
 const styles = {
   cardIconTitle: {
@@ -68,157 +67,52 @@ const styles = {
   },
 };
 
-class FollowerTable extends React.Component {
+class ReactTables extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      animals: [],
-      data: dataTable.dataRows.map((prop, key) => {
-        return {
-          id: key,
-          /*name: prop[0],
-          position: prop[1],
-          office: prop[2],
-          age: prop[3],*/
-          profilePic: prop[0],
-          name: prop[1],
-          status: prop[2],
-          location: prop[3],
-          actions: (
-            // we've added some custom button actions
-            <div className="actions-right">
-              {/* use this button to add a like kind of action */}
-              <NavLink to={`/admin/animal/${key}`}>
-                <Button
-                  justIcon
-                  round
-                  simple
-                  /*onClick={() => {
-                    let obj = this.state.data.find(o => o.id === key);
-                    alert(
-                      "You've clicked LIKE button on \n{ \nName: " +
-                        obj.name +
-                        ", \nposition: " +
-                        obj.position +
-                        ", \noffice: " +
-                        obj.office +
-                        ", \nage: " +
-                        obj.age +
-                        "\n}."
-                    );
-                  }}*/
-                  color="info"
-                  className="view"
-                >
-                  <Search />
-                </Button>
-              </NavLink>{" "}
-              {/* use this button to add a edit kind of action */}
-              <NavLink to={`/admin/editAnimal/${key}`}>
-                <Button
-                  justIcon
-                  round
-                  simple
-                  /*onClick={() => {
-                    let obj = this.state.data.find(o => o.id === key);
-                    alert(
-                      "You've clicked EDIT button on \n{ \nName: " +
-                        obj.name +
-                        ", \nposition: " +
-                        obj.position +
-                        ", \noffice: " +
-                        obj.office +
-                        ", \nage: " +
-                        obj.age +
-                        "\n}."
-                    );
-                  }}*/
-                  color="warning"
-                  className="edit"
-                >
-                  <Dvr />
-                </Button>
-              </NavLink>{" "}
-             {/* use this button to remove the data row */}
-             {/* <Button
-                justIcon
-                round
-                simple
-                onClick={() => {
-                  var data = this.state.data;
-                  data.find((o, i) => {
-                    if (o.id === key) {
-                      // here you should add some custom code so you can delete the data
-                      // from this component and from your server as well
-                      data.splice(i, 1);
-                      return true;
-                    }
-                    return false;
-                  });
-                  this.setState({ data: data });
-                }}
-                color="danger"
-                className="remove"
-              >
-                <Close />
-              </Button>*/}{" "}
-            </div>
-          )
-        };
-      })
+      followers: [],
+      shelterVerified: ""
+
     };
   }
+
+  
+  componentWillMount() {
+    //verifying shelter before proceeding
+    axiosWithAuth()
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
+      .then( result => {
+        this.setState({
+          shelterVerified : true
+        })
+        console.log(result)
+      })
+      .catch( error => {
+        console.log(error)
+        this.props.history.push('/')
+      })
+  }
+
 
   componentDidMount() {
     axios
     //.get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/shelter/${localStorage.getItem("shelter_id")}`)
-    .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/shelter/${localStorage.getItem('shelter_id')}`)
-    .then(animals => {
-      const picStyle = { width: '100%' }
-      console.log(animals)
+    .get(`${process.env.REACT_APP_BACKEND_URL}/api/shelters/${localStorage.getItem('shelter_id')}/follows`)
+    .then(followers => {
+      console.log(followers)
       this.setState({
-        animals : animals.data.map((animal, key) => {
+        followers : followers.data.map((follower, key) => {
         return {
           id: key,
-          animalID: animal.id,
-          profilePic: <img src={animal.img_url} style={picStyle}/>,
-          name: animal.name,
-          species: animal.species,
-          status: animal.animal_status,
-          location: animal.nickname,
-          actions: (
-            <div className="actions-right">
-              {/* view animal */}
-              <NavLink to={`/admin/animal/${animal.id}`}>
-                <Button
-                  justIcon
-                  round
-                  simple
-                  color="info"
-                  className="like"
-                >
-                  <Search />
-                </Button>
-              </NavLink>{" "}
-              {/* edit animal */}
-              <NavLink to={`/admin/editAnimal/${animal.id}`}>
-                <Button
-                  justIcon
-                  round
-                  simple
-                  color="warning"
-                  className="edit"
-                >
-                  <Dvr />
-                </Button>
-              </NavLink>{" "}
-           
-            </div>
-          )
+          userID: follower.user_id,
+          username: follower.username,
+          email: follower.email,
+          location: follower.zip,
         };
       })
       })
-      console.log("state" , this.state.animals)
+      console.log("state" , this.state.followers)
     })
     .catch(error => {
       console.log(error)
@@ -245,6 +139,8 @@ class FollowerTable extends React.Component {
       textAlign: "right"
     }
 
+    if(this.state.shelterVerified !== true) return <div>Verifying animals</div>
+
     return (
       <GridContainer>
          <GridItem xs={12} sm={6} md={6} lg={3}>
@@ -253,9 +149,9 @@ class FollowerTable extends React.Component {
                 <CardIcon color="warning">
                   <Icon>pets</Icon>
                 </CardIcon>
-                <p className={classes.cardCategory} style={card_category}>Total Followers</p>
+                <p className={classes.cardCategory} style={card_category}>All Followers</p>
                 <h3 className={classes.cardTitle} style={card_title}>
-                  {this.state.animals.length} <small>Followers</small>
+                  {this.state.followers.length} <small>Followers</small>
                 </h3>
               </CardHeader>
               <CardFooter stats>
@@ -267,7 +163,6 @@ class FollowerTable extends React.Component {
             </Card>
           </GridItem>
         <GridItem xs={12}>
-          {/*{this.state.animals.map(animal => <p>{animal.name}</p>)}*/}
           <Card>
             <CardHeader color="primary" icon>
               <CardIcon color="primary">
@@ -277,41 +172,26 @@ class FollowerTable extends React.Component {
             </CardHeader>
             <CardBody>
               <ReactTable
-                data={this.state.animals}
+                data={this.state.followers}
                 filterable
                 columns={[
-                  
                   {
-                    Header: "Profile Pic",
-                    accessor: "profilePic",
-                    sortable: false,
-                    filterable: false
+                    Header: "User ID",
+                    accessor: "userID",
+                    sortable: true,
+                    filterable: true
                   },
                   {
-                    Header: "Animal ID",
-                    accessor: "animalID"
+                    Header: "Username",
+                    accessor: "username"
                   },
                   {
-                    Header: "Name",
-                    accessor: "name"
-                  },
-                  {
-                    Header: "Species",
-                    accessor: "species"
-                  },
-                  {
-                    Header: "Status",
-                    accessor: "status"
+                    Header: "Email",
+                    accessor: "email"
                   },
                   {
                     Header: "Location",
-                    accessor: "location"
-                  },
-                  {
-                    Header: "Actions",
-                    accessor: "actions",
-                    sortable: false,
-                    filterable: false
+                    accessor: "zip"
                   }
                 ]}
                 defaultPageSize={10}
@@ -337,7 +217,7 @@ const mapStateToProps = (state) => {
   
 }
 
-FollowerTable.propTypes = {
+ReactTables.propTypes = {
   classes: PropTypes.object
 };
 
@@ -347,4 +227,5 @@ FollowerTable.propTypes = {
 export default connect(
   mapStateToProps,
   {}
-)(withStyles(styles)(FollowerTable))
+)(withStyles(styles)(ReactTables))
+
