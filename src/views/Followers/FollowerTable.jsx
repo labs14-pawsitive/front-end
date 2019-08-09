@@ -19,7 +19,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 // react component for creating dynamic tables
 import ReactTable from "react-table";
-import { NavLink, Link } from "react-router-dom";
 import axios from 'axios';
 import {axiosWithAuth} from 'axiosWithAuth';
 
@@ -31,22 +30,16 @@ import Icon from "@material-ui/core/Icon";
 import Update from "@material-ui/icons/Update";
 
 import Assignment from "@material-ui/icons/Assignment";
-import Dvr from "@material-ui/icons/Dvr";
-import Search from "@material-ui/icons/Search";
 import Favorite from "@material-ui/icons/Favorite";
-import Close from "@material-ui/icons/Close";
-import Warning from "@material-ui/icons/Warning";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
-import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
-import Danger from "components/Typography/Danger.jsx";
 
 import { cardTitle } from "assets/jss/material-dashboard-pro-react.jsx";
 
@@ -67,7 +60,7 @@ const styles = {
   },
 };
 
-class ReactTables extends React.Component {
+class FollowerTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -109,6 +102,7 @@ class ReactTables extends React.Component {
           username: follower.username,
           email: follower.email,
           location: follower.zip,
+          icon: <Favorite style={{color: '#e0286a'}}/>
         };
       })
       })
@@ -139,7 +133,7 @@ class ReactTables extends React.Component {
       textAlign: "right"
     }
 
-    if(this.state.shelterVerified !== true) return <div>Verifying animals</div>
+    if(this.state.shelterVerified !== true) return <div>Verifying Shelter</div>
 
     return (
       <GridContainer>
@@ -178,8 +172,7 @@ class ReactTables extends React.Component {
                   {
                     Header: "User ID",
                     accessor: "userID",
-                    sortable: true,
-                    filterable: true
+                    
                   },
                   {
                     Header: "Username",
@@ -192,6 +185,13 @@ class ReactTables extends React.Component {
                   {
                     Header: "Location",
                     accessor: "zip"
+                  },
+                  {
+                    Header: "",
+                    accessor: "icon",
+                    style: {textAlign: "center"},
+                    sortable: false,
+                    filterable: false
                   }
                 ]}
                 defaultPageSize={10}
@@ -217,7 +217,7 @@ const mapStateToProps = (state) => {
   
 }
 
-ReactTables.propTypes = {
+FollowerTable.propTypes = {
   classes: PropTypes.object
 };
 
@@ -227,5 +227,5 @@ ReactTables.propTypes = {
 export default connect(
   mapStateToProps,
   {}
-)(withStyles(styles)(ReactTables))
+)(withStyles(styles)(FollowerTable))
 
