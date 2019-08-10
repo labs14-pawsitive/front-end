@@ -213,8 +213,6 @@ class DonationTable extends React.Component {
 
   render() {
 
-  console.log(this.props)
-
     const { classes } = this.props;
     const card_category = {
       color: "#999",

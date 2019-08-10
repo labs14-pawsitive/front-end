@@ -27,6 +27,9 @@ class StripeOnboarding extends React.Component {
             inputField: '',
             email: '',
             emailConfirmed: '',
+            accountHolderName: '',
+            accountRoutingNumber: '',
+            shelter: {},
         }
 
     };
@@ -48,6 +51,23 @@ class StripeOnboarding extends React.Component {
     //         })
     // };
 
+    componentDidMount() {
+
+        axios
+            .get(`${process.env.REACT_APP_BACKEND_URL}/api/shelters/${localStorage.getItem('shelter_id')}`)
+            .then(shelter => {
+                console.log(shelter.data)
+                this.setState({
+                    shelter: shelter.data
+                })
+                console.log(this.state.shelter)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+
+    }
+
     handleInput = event => {
 
         this.setState({
@@ -60,10 +80,9 @@ class StripeOnboarding extends React.Component {
 
         const body = {
             email: this.state.email
-
         }
 
-        const id = 5;
+        const id = this.state.shelter.id;
 
         await axios
             .post(`http://127.0.0.1:8000/api/stripe/account`, body) // RETURNS NEWLY CREATED STRIPE ACCOUNT ID
@@ -100,7 +119,6 @@ class StripeOnboarding extends React.Component {
                 fontSize: '30px'
             },
             itemStyle: {
-                // padding: '10px',
                 width: '300px',
             },
             submitButtonStyle: {
@@ -146,7 +164,6 @@ class StripeOnboarding extends React.Component {
                                     <GridItem xs={12} sm={12} md={12} lg={12} xl={12} style={customStyle.itemStyle}>
                                         <CustomInput
                                             labelText="Email Confirm Again"
-                                            fullWidth="true"
                                             id="emailConfirmed"
                                             formControlProps={{
                                                 fullWidth: true
@@ -162,8 +179,14 @@ class StripeOnboarding extends React.Component {
                                     <GridItem xs={12} sm={12} md={12} lg={12} xl={12} style={customStyle.itemStyle}>
                                         <CustomInput
                                             labelText="Account Holder Name"
+                                            id="accountHolderName"
                                             formControlProps={{
                                                 fullWidth: true
+                                            }}
+                                            inputProps={{
+                                                type: "text",
+                                                onChange: this.handleInput,
+                                                value: this.state.accountHolderName,
                                             }}
                                         />
                                     </GridItem>
@@ -171,8 +194,14 @@ class StripeOnboarding extends React.Component {
                                     <GridItem xs={12} sm={12} md={12} lg={12} xl={12} style={customStyle.itemStyle}>
                                         <CustomInput
                                             labelText="Account Routing Number"
+                                            id="accountRoutingNumber"
                                             formControlProps={{
                                                 fullWidth: true
+                                            }}
+                                            inputProps={{
+                                                type: "text",
+                                                onChange: this.handleInput,
+                                                value: this.state.accountRoutingNumber,
                                             }}
                                         />
                                     </GridItem>
