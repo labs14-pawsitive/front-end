@@ -45,12 +45,11 @@ import CardIcon from "components/Card/CardIcon.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 import Danger from "components/Typography/Danger.jsx";
-
-
-
 import { dataTable } from "variables/general.jsx";
-
 import { cardTitle } from "assets/jss/material-dashboard-pro-react.jsx";
+
+// Stripe Onboarding component
+import StripeOnboarding from '../../../src/components/Stripe/StripeOnboarding/StripeOnboarding';
 
 const styles = {
   cardIconTitle: {
@@ -213,6 +212,9 @@ class DonationTable extends React.Component {
   }
 
   render() {
+
+  console.log(this.props)
+
     const { classes } = this.props;
     const card_category = {
       color: "#999",
@@ -253,6 +255,7 @@ class DonationTable extends React.Component {
               </CardFooter>
             </Card>
           </GridItem>
+        
         <GridItem xs={12}>
           {/*{this.state.animals.map(animal => <p>{animal.name}</p>)}*/}
           <Card>
@@ -308,6 +311,10 @@ class DonationTable extends React.Component {
               />
             </CardBody>
           </Card>
+        </GridItem>
+
+        <GridItem>
+            <StripeOnboarding />
         </GridItem>
       </GridContainer>
     );
