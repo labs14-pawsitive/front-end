@@ -93,8 +93,8 @@ export const getAllOptions = (shelterID) => dispatch => {
     
     dispatch({ type: GET_DROPDOWN_START })
     return axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/api/internal/paws/options/${shelterID}`)
-      
+      // .get(`${process.env.REACT_APP_BACKEND_URL}/api/internal/paws/options/${shelterID}`)
+      .get(`http://localhost:8000/api/internal/paws/options/${shelterID}`)
       .then(res => {
         dispatch({ type: GET_DROPDOWN_SUCCESS, payload: res.data })
         console.log('action: get all animal options info', res.data)
@@ -113,7 +113,7 @@ export const getAllOptions = (shelterID) => dispatch => {
       
       dispatch({ type: GET_ANIMAL_START })
       return axios
-        .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalID}`)
+        .get(`http://localhost:8000/api/animals/${animalID}`)
         //.get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalID}`)
         .then(res => {
           dispatch({ type: GET_ANIMAL_SUCCESS, payload: res.data })
@@ -137,9 +137,9 @@ export const getAllOptions = (shelterID) => dispatch => {
         
         dispatch({ type: POST_NOTES_START })
         return axios
-          .post(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalID}/admin`, note)
+          .post(`http://localhost:8000/api/animals/${animalID}/admin`, note)
           .then(res => axios
-            .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalID}`))
+            .get(`http://localhost:8000/api/animals/${animalID}`))
           .then(res => {
             dispatch({ type: GET_ANIMAL_SUCCESS, payload: res.data })
             console.log('action: update notes info', res.data)
@@ -164,9 +164,9 @@ export const getAllOptions = (shelterID) => dispatch => {
           
           dispatch({ type: UPDATE_NOTES_START })
           return axios
-            .put(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalID}/admin/${noteID}`,updateNote)
+            .put(`http://localhost:8000/api/animals/${animalID}/admin/${noteID}`,updateNote)
             .then(res => axios
-              .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalID}`))
+              .get(`http://localhost:8000/api/animals/${animalID}`))
             .then(res => {
               dispatch({ type: UPDATE_NOTES_SUCCESS, payload: res.data })
               console.log('action: update notes info', res.data)
@@ -186,9 +186,9 @@ export const getAllOptions = (shelterID) => dispatch => {
             
             dispatch({ type: DELETE_NOTES_START })
             return axios
-              .delete(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalID}/admin/${noteID}`)
+              .delete(`http://localhost:8000/api/animals/${animalID}/admin/${noteID}`)
               .then(res => axios
-                .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalID}`))
+                .get(`http://localhost:8000/api/animals/${animalID}`))
               .then(res => {
                 dispatch({ type: DELETE_NOTES_SUCCESS, payload: res.data })
                 console.log('action: delete notes info', res.data)
