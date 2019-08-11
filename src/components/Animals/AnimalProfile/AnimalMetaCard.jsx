@@ -38,52 +38,111 @@ class AnimalMetaCard extends React.Component {
                     <GridContainer xs={12} sm={12} md={6} lg={6} xl={6}>
                         <Card>
 
-                        <GridItem>
-                            <Typography>
-                                <p>Details</p>
-                            </Typography>
-                        </GridItem>
+                            <GridItem>
+                                <Typography>
+                                    <h1>Details</h1>
+                                </Typography>
+                            </GridItem>
 
                             <CardBody>
                                 <TextField
-                                label="Age"
-                                id="age"
-                                fullWidth="true"
-                                 />
-
-                                <TextField
-                                label="Gender"
-                                id="gender"
-                                fullWidth="true"
-                                 />
-
-                                <TextField 
-                                label="Color"
-                                id="color"
-                                fullWidth="true"
+                                    label="Age"
+                                    id="age"
+                                    fullWidth="true"
                                 />
 
                                 <TextField
-                                label="Breed"
-                                id="breed"
-                                fullWidth="true"
-                                 />
+                                    label="Gender"
+                                    id="gender"
+                                    fullWidth="true"
+                                />
 
                                 <TextField
-                                label="Size"
-                                id="size"
-                                fullWidth="true"
-                                 />
+                                    label="Color"
+                                    id="color"
+                                    fullWidth="true"
+                                />
 
                                 <TextField
-                                label="Coat Length"
-                                id="coat_length"
-                                fullWidth="true"
-                                 />
+                                    label="Breed"
+                                    id="breed"
+                                    fullWidth="true"
+                                />
+
+                                <TextField
+                                    label="Size"
+                                    id="size"
+                                    fullWidth="true"
+                                />
+
+                                <TextField
+                                    label="Coat Length"
+                                    id="coat_length"
+                                    fullWidth="true"
+                                />
 
                             </CardBody>
                         </Card>
                     </GridContainer>
+
+                    <GridContainer>
+                        <Card>
+
+
+                            <Typography>
+                                <h1> Description </h1>
+                            </Typography>
+
+
+                            <CardBody>
+                                <TextField
+                                    label="The Story"
+                                />
+
+                            </CardBody>
+                        </Card>
+                    </GridContainer>
+
+                    <GridContainer>
+                        <Card>
+
+                            <Typography>
+                                <h1> Contact </h1>
+                            </Typography>
+
+                            <CardBody>
+
+                                <TextField
+                                    label="Email"
+                                />
+
+                                <TextField
+                                    label="Phone Number"
+                                />
+
+                                <TextField
+                                    label="Location"
+                                />
+
+                                <TextField
+                                    label="Current Residence"
+                                />
+
+
+                            </CardBody>
+                        </Card>
+                    </GridContainer>
+
+                    <GridContainer>
+                        <Card>
+
+                            <Typography>
+                                <h1> Health & Personality </h1>
+                            </Typography>
+
+                        </Card>
+                    </GridContainer>
+
 
                 </GridContainer>
             </>

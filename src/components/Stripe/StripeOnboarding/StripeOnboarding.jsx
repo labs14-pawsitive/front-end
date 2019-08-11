@@ -8,47 +8,73 @@ import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 
+// icons
+import Assignment from "@material-ui/icons/Assignment";
+
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
+import CardIcon from "components/Card/CardIcon.jsx";
+import CardHeader from "components/Card/CardHeader.jsx";
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 
 // custom classes
 import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
+
+// stripe 
+import { injectStripe } from 'react-stripe-elements';
+
 
 
 class StripeOnboarding extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            inputField: '',
-            email: '',
-            emailConfirmed: '',
             account_holder_name: '',
-            routing_number: '',
+            email: '',
+            address_1: '',
+            address_2: '',
+            city: '',
+            state: '',
+            zip: '',
+            email: '',
+            phone_number: '',
+            bankToken: {},
+
+            inputField: '',
             shelter: {},
         }
 
     };
 
-    // testSubmit = async (e) => {
-    //     const body = {
-    //         email: 'idk@mail.com',
-    //     }
+    testSubmit = async (e) => {
+       
+        let { bankToken } = stripe.createToken('bank_account', {
+            country: 'US',
+            currency: 'usd',
+            routing_number: '110000000',
+            account_number: '000123456789',
+            account_holder_name: 'Jenny Rosen',
+            account_holder_type: 'individual',
+          }).then(function(result) {
+            // Handle result.error or result.token
+            
 
-    //     const id = 7;
+          });
 
-    //     await axios
-    //         .post(`http://127.0.0.1:8000/api/shelters/${id}/account`, body) 
-    //         .then(results => {
-    //             console.log(results)
-    //         })
-    //         .catch(error => {
-    //             console.log(error)
-    //         })
-    // };
+        // await fetch(`http://127.0.0.1:8000/api/stripe/account`, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-type': 'application/json'
+        //     },
+        //     body: JSON.stringify({
+        //         account_holder_name: bankToken.account_holder_name
+        //     }),
+        // } ) 
+     
+    };
 
     componentDidMount() {
 
@@ -81,7 +107,7 @@ class StripeOnboarding extends React.Component {
             email: this.state.email
         }
 
-        const id = this.state.shelter.id;
+        const id = 4;
 
         await axios
             .post(`http://127.0.0.1:8000/api/stripe/account`, body) // RETURNS NEWLY CREATED STRIPE ACCOUNT ID
@@ -106,6 +132,8 @@ class StripeOnboarding extends React.Component {
 
     render() {
 
+        const { classes } = this.props
+
         const customStyle = {
             formStyle: {
                 display: 'flex',
@@ -119,6 +147,7 @@ class StripeOnboarding extends React.Component {
             submitButtonStyle: {
                 width: '200px',
                 height: '40px',
+                marginRight: '20px',
             },
 
         }
@@ -126,46 +155,18 @@ class StripeOnboarding extends React.Component {
         return (
             <>
                 <GridContainer>
-                    <FormControl >
 
-                        <Card >
-                            <CardBody>
+                    <GridItem>
+                        <FormControl >
+                            <Card style={{ width:"600px" }}>
+                                <CardHeader color="primary" icon>
+                                    <CardIcon color="primary">
+                                        <Assignment />
+                                    </CardIcon>
+                                    <h4 className={classes.cardIconTitle}> Create Stripe Account </h4>
+                                </CardHeader>
 
-                                {/* <GridContainer style={customStyle.formStyle} > */}
-                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
-                                        <Typography style={customStyle.headerStyle} > Create Stripe Account </Typography>
-                                    </GridItem>
-
-
-                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
-                                        <CustomInput
-                                            labelText="Email"
-                                            id="email"
-                                            formControlProps={{
-                                                fullWidth: true
-                                            }}
-                                            inputProps={{
-                                                type: "text",
-                                                onChange: this.handleInput,
-                                                value: this.state.email,
-                                            }}
-                                        />
-                                    </GridItem>
-
-                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
-                                        <CustomInput
-                                            labelText="Email Confirm Again"
-                                            id="emailConfirmed"
-                                            formControlProps={{
-                                                fullWidth: true
-                                            }}
-                                            inputProps={{
-                                                type: "text",
-                                                onChange: this.handleInput,
-                                                value: this.state.emailConfirmed,
-                                            }}
-                                        />
-                                    </GridItem>
+                                <CardBody>
 
                                     <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
                                         <CustomInput
@@ -184,6 +185,153 @@ class StripeOnboarding extends React.Component {
 
                                     <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
                                         <CustomInput
+                                            labelText="Address1"
+                                            id="address_1"
+                                            formControlProps={{
+                                                fullWidth: true
+                                            }}
+                                            inputProps={{
+                                                type: "text",
+                                                onChange: this.handleInput,
+                                                value: this.state.address_1,
+                                            }}
+                                        />
+                                    </GridItem>
+
+                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
+                                        <CustomInput
+                                            labelText="Address2"
+                                            id="address_2"
+                                            formControlProps={{
+                                                fullWidth: true
+                                            }}
+                                            inputProps={{
+                                                type: "text",
+                                                onChange: this.handleInput,
+                                                value: this.state.address_2,
+                                            }}
+                                        />
+                                    </GridItem>
+
+                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
+                                        <CustomInput
+                                            labelText="City"
+                                            id="city"
+                                            formControlProps={{
+                                                fullWidth: true
+                                            }}
+                                            inputProps={{
+                                                type: "text",
+                                                onChange: this.handleInput,
+                                                value: this.state.city,
+                                            }}
+                                        />
+                                    </GridItem>
+
+                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
+                                        <CustomInput
+                                            labelText="State"
+                                            id="state"
+                                            formControlProps={{
+                                                fullWidth: true
+                                            }}
+                                            inputProps={{
+                                                type: "text",
+                                                onChange: this.handleInput,
+                                                value: this.state.state,
+                                            }}
+                                        />
+                                    </GridItem>
+
+                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
+                                        <CustomInput
+                                            labelText="Zip"
+                                            id="zip"
+                                            formControlProps={{
+                                                fullWidth: true
+                                            }}
+                                            inputProps={{
+                                                type: "text",
+                                                onChange: this.handleInput,
+                                                value: this.state.zip,
+                                            }}
+                                        />
+                                    </GridItem>
+
+                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
+                                        <CustomInput
+                                            labelText="Email"
+                                            id="email"
+                                            formControlProps={{
+                                                fullWidth: true
+                                            }}
+                                            inputProps={{
+                                                type: "text",
+                                                onChange: this.handleInput,
+                                                value: this.state.email,
+                                            }}
+                                        />
+                                    </GridItem>
+
+                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
+                                        <CustomInput
+                                            labelText="Phone Number"
+                                            id="phone_number"
+                                            formControlProps={{
+                                                fullWidth: true
+                                            }}
+                                            inputProps={{
+                                                type: "text",
+                                                onChange: this.handleInput,
+                                                value: this.state.phone_number,
+                                            }}
+                                        />
+                                    </GridItem>
+
+                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
+                                        <CustomInput
+                                            labelText="Routing Number"
+                                            id="routing_number"
+                                            formControlProps={{
+                                                fullWidth: true
+                                            }}
+                                            inputProps={{
+                                                type: "text",
+                                                onChange: this.handleInput,
+                                                // value: ,
+                                            }}
+                                        />
+                                    </GridItem>
+
+                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
+                                        <CustomInput
+                                            labelText="Account Number"
+                                            id="account_number"
+                                            formControlProps={{
+                                                fullWidth: true
+                                            }}
+                                            inputProps={{
+                                                type: "text",
+                                                onChange: this.handleInput,
+                                                value: this.state.account_number,
+                                            }}
+                                        />
+                                    </GridItem>
+
+
+                                    <GridContainer justify="flex-end" >
+                                        <Button
+                                            variant="contained"
+                                            color="secondary"
+                                            style={customStyle.submitButtonStyle}
+                                            onClick={this.testSubmit}
+                                        >
+                                            Submit
+                                    </Button>
+                                    </GridContainer>
+
+                                    {/* <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
+                                        <CustomInput
                                             labelText="Account Routing Number"
                                             id="accountRoutingNumber"
                                             formControlProps={{
@@ -195,24 +343,14 @@ class StripeOnboarding extends React.Component {
                                                 value: this.state.routing_number,
                                             }}
                                         />
-                                    </GridItem>
+                                    </GridItem> */}
 
-                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
-                                        <Button
-                                            variant="contained"
-                                            color="secondary"
-                                            style={customStyle.submitButtonStyle}
-                                            onClick={this.handleSubmit}
-                                        >
-                                            Submit
-                                    </Button>
-                                    </GridItem>
-                                {/* </GridContainer> */}
+                                </CardBody>
+                            </Card>
 
-                            </CardBody>
-                        </Card>
+                        </FormControl>
 
-                    </FormControl>
+                    </GridItem>
                 </GridContainer>
             </>
         )

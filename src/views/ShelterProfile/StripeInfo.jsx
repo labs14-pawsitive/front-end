@@ -165,6 +165,7 @@ function UserProfile(props) {
             </CardBody>
           </Card>
         </GridItem>
+
         <GridItem xs={12} sm={12} md={4}>
           <Card profile>
             <CardAvatar profile>
@@ -186,7 +187,6 @@ function UserProfile(props) {
             </CardBody>
           </Card>
         </GridItem>
-
 
         <GridItem>
             <StripeOnboarding />
