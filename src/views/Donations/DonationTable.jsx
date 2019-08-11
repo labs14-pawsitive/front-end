@@ -48,8 +48,6 @@ import Danger from "components/Typography/Danger.jsx";
 import { dataTable } from "variables/general.jsx";
 import { cardTitle } from "assets/jss/material-dashboard-pro-react.jsx";
 
-// Stripe Onboarding component
-import StripeOnboarding from '../../../src/components/Stripe/StripeOnboarding/StripeOnboarding';
 
 const styles = {
   cardIconTitle: {
@@ -311,9 +309,6 @@ class DonationTable extends React.Component {
           </Card>
         </GridItem>
 
-        <GridItem>
-            <StripeOnboarding />
-        </GridItem>
       </GridContainer>
     );
   }

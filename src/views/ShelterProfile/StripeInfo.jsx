@@ -39,6 +39,12 @@ import userProfileStyles from "assets/jss/material-dashboard-pro-react/views/use
 
 import avatar from "assets/img/faces/marc.jpg";
 
+// Stripe Onboarding component
+import StripeOnboarding from '../../components/Stripe/StripeOnboarding/StripeOnboarding';
+
+// Animal Profile Component
+import AnimalMetaCard from '../../components/Animals/AnimalProfile/AnimalMetaCard';
+
 function UserProfile(props) {
   const { classes } = props;
   return (
@@ -180,6 +186,16 @@ function UserProfile(props) {
             </CardBody>
           </Card>
         </GridItem>
+
+
+        <GridItem>
+            <StripeOnboarding />
+        </GridItem>
+
+        <GridItem>
+            <AnimalMetaCard />
+        </GridItem>
+
       </GridContainer>
     </div>
   );

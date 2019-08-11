@@ -19,7 +19,6 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
 
 
-
 class StripeOnboarding extends React.Component {
     constructor(props) {
         super(props);
@@ -27,8 +26,8 @@ class StripeOnboarding extends React.Component {
             inputField: '',
             email: '',
             emailConfirmed: '',
-            accountHolderName: '',
-            accountRoutingNumber: '',
+            account_holder_name: '',
+            routing_number: '',
             shelter: {},
         }
 
@@ -113,40 +112,32 @@ class StripeOnboarding extends React.Component {
                 flexDirection: 'column',
                 justify: 'center',
                 alignItems: 'center',
-                padding: '80px',
             },
             headerStyle: {
                 fontSize: '30px'
             },
-            itemStyle: {
-                width: '300px',
-            },
             submitButtonStyle: {
                 width: '200px',
                 height: '40px',
-            },
-            alignButton: {
-                marginTop: '20px',
-                justify: 'center',
             },
 
         }
 
         return (
             <>
-                <GridContainer style={{ padding: '20px' }}>
+                <GridContainer>
                     <FormControl >
 
                         <Card >
                             <CardBody>
 
-                                <GridContainer style={customStyle.formStyle} >
+                                {/* <GridContainer style={customStyle.formStyle} > */}
                                     <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
                                         <Typography style={customStyle.headerStyle} > Create Stripe Account </Typography>
                                     </GridItem>
 
 
-                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} style={customStyle.itemStyle}>
+                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
                                         <CustomInput
                                             labelText="Email"
                                             id="email"
@@ -161,7 +152,7 @@ class StripeOnboarding extends React.Component {
                                         />
                                     </GridItem>
 
-                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} style={customStyle.itemStyle}>
+                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
                                         <CustomInput
                                             labelText="Email Confirm Again"
                                             id="emailConfirmed"
@@ -176,7 +167,7 @@ class StripeOnboarding extends React.Component {
                                         />
                                     </GridItem>
 
-                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} style={customStyle.itemStyle}>
+                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
                                         <CustomInput
                                             labelText="Account Holder Name"
                                             id="accountHolderName"
@@ -186,12 +177,12 @@ class StripeOnboarding extends React.Component {
                                             inputProps={{
                                                 type: "text",
                                                 onChange: this.handleInput,
-                                                value: this.state.accountHolderName,
+                                                value: this.state.account_holder_name,
                                             }}
                                         />
                                     </GridItem>
 
-                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} style={customStyle.itemStyle}>
+                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
                                         <CustomInput
                                             labelText="Account Routing Number"
                                             id="accountRoutingNumber"
@@ -201,12 +192,12 @@ class StripeOnboarding extends React.Component {
                                             inputProps={{
                                                 type: "text",
                                                 onChange: this.handleInput,
-                                                value: this.state.accountRoutingNumber,
+                                                value: this.state.routing_number,
                                             }}
                                         />
                                     </GridItem>
 
-                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} style={customStyle.alignButton}>
+                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
                                         <Button
                                             variant="contained"
                                             color="secondary"
@@ -216,7 +207,7 @@ class StripeOnboarding extends React.Component {
                                             Submit
                                     </Button>
                                     </GridItem>
-                                </GridContainer>
+                                {/* </GridContainer> */}
 
                             </CardBody>
                         </Card>
