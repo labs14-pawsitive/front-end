@@ -61,20 +61,31 @@ class StripeOnboarding extends React.Component {
         // } ) 
 
 
-        const stripe = require("stripe")("pk_test_x16KAsU777aRjmWMukoNMKfG00PisbA3Vh");
+        // const stripe = require("stripe")("pk_test_x16KAsU777aRjmWMukoNMKfG00PisbA3Vh");
         // var stripe = Stripe("pk_test_x16KAsU777aRjmWMukoNMKfG00PisbA3Vh");
 
-        stripe.createToken('bank_account', {
-            country: 'US',
-            currency: 'usd',
-            routing_number: '110000000',
-            account_number: '000123456789',
-            account_holder_name: 'Jenny Rosen',
-            account_holder_type: 'individual',
-        }).then(function (result) {
-            // Handle result.error or result.token
-            console.log(result.token)
-        });
+        //     const stripe = window.Stripe("pk_test_x16KAsU777aRjmWMukoNMKfG00PisbA3Vh");
+
+        //    let { token } = stripe.createToken('bank_account', {
+        //         country: 'US',
+        //         currency: 'usd',
+        //         routing_number: '110000000',
+        //         account_number: '000123456789',
+        //         account_holder_name: 'Jenny Rosen',
+        //         account_holder_type: 'company',
+        //         bankToken: this.result.token.id,
+        //         shelterID: localStorage.getItem('shelter_id'),
+        //         address1: this.state.address_1,
+        //         address2: this.state.address_2,
+        //         city: this.state.city,
+        //         state: this.state.state,
+        //         zip: this.state.zip,
+        //         email: this.state.email,
+        //         phone: this.state.phone_number
+        //     }).then(function (result) {
+        //         // Handle result.error or result.token
+        //         console.log(result.token)
+        //     });
 
 
     };
@@ -107,29 +118,54 @@ class StripeOnboarding extends React.Component {
     handleSubmit = async (e) => {
 
         const body = {
-            email: this.state.email
+
+            email: this.state.email,
+
+            // bankToken: this.result.token.id,
         }
 
         const id = 4;
 
-        await axios
-            .post(`http://127.0.0.1:8000/api/stripe/account`, body) // RETURNS NEWLY CREATED STRIPE ACCOUNT ID
-            .then(async results => {
-                console.log(results)
-                console.log(results.data.id)
-                await axios
-                    .post(`http://127.0.0.1:8000/api/shelters/${id}/account`, { account_id: results.data.id }) // STORES STRIPE ACCOUNT ID IN SHELTERS TABLE
-                    .then(result => {
-                        console.log(result)
-                    })
-                    .catch(error => {
-                        console.log(error)
-                    })
+        const stripe = window.Stripe("pk_test_x16KAsU777aRjmWMukoNMKfG00PisbA3Vh");
+
+        let { token } = stripe.createToken('bank_account', {
+            country: 'US',
+            currency: 'usd',
+            routing_number: '110000000',
+            account_number: '000123456789',
+            account_holder_name: 'Jenny Rosen',
+            account_holder_type: 'company',
+            // shelterID: localStorage.getItem('shelter_id'),
+            // address1: this.state.address_1,
+            // address2: this.state.address_2,
+            // city: this.state.city,
+            // state: this.state.state,
+            // zip: this.state.zip,
+            // email: this.state.email,
+            // phone: this.state.phone_number,
+        }).then(async result => {
+            // Handle result.error or result.token
+            console.log(result.token)
+            await axios
+                .post(`http://127.0.0.1:8000/api/stripe/account`, body) // RETURNS NEWLY CREATED STRIPE ACCOUNT ID
+                .then(async results => {
+                    console.log(results)
+                    await axios
+                        .post(`http://127.0.0.1:8000/api/shelters/${id}/account`, { account_id: results.data.id }) // STORES STRIPE ACCOUNT ID IN SHELTERS TABLE
+                        .then(result => {
+                            console.log(result)
+                        })
+                        .catch(error => {
+                            console.log(error)
+                        })
+                })
+                .catch(error => {
+                    console.log(error)
+                })
             })
             .catch(error => {
                 console.log(error)
             })
-
     };
 
 
@@ -327,7 +363,7 @@ class StripeOnboarding extends React.Component {
                                             variant="contained"
                                             color="secondary"
                                             style={customStyle.submitButtonStyle}
-                                            onClick={this.testSubmit}
+                                            onClick={this.handleSubmit}
                                         >
                                             Submit
                                     </Button>
