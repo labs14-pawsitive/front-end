@@ -32,14 +32,13 @@ class StripeOnboarding extends React.Component {
         super(props);
         this.state = {
             account_holder_name: '',
-            email: '',
-            address_1: '',
-            address_2: '',
-            city: '',
-            state: '',
-            zip: '',
-            email: '',
-            phone_number: '',
+            address_1: '123 Rainbow Rd.',
+            address_2: 'None',
+            city: 'San Carlos',
+            state: 'CA',
+            zip: '94065',
+            email: 'jimtest@gmail.com',
+            phone_number: '777-777-7777',
             bankToken: {},
 
             inputField: '',
@@ -118,15 +117,24 @@ class StripeOnboarding extends React.Component {
     handleSubmit = async (e) => {
 
         const body = {
-
             email: this.state.email,
-
-            // bankToken: this.result.token.id,
+            shelterID: localStorage.getItem('shelter_id'),
+            address1: this.state.address_1,
+            address2: this.state.address_2,
+            city: this.state.city,
+            state: this.state.state,
+            zip: this.state.zip,
+            email: this.state.email,
+            phone: this.state.phone_number,
+            // token: result.token, 
+            bankToken: this.state.bankToken
         }
 
-        const id = 4;
+        const id = 3;
 
         const stripe = window.Stripe("pk_test_x16KAsU777aRjmWMukoNMKfG00PisbA3Vh");
+
+        const state = this.state;
 
         let { token } = stripe.createToken('bank_account', {
             country: 'US',
@@ -135,19 +143,27 @@ class StripeOnboarding extends React.Component {
             account_number: '000123456789',
             account_holder_name: 'Jenny Rosen',
             account_holder_type: 'company',
-            // shelterID: localStorage.getItem('shelter_id'),
-            // address1: this.state.address_1,
-            // address2: this.state.address_2,
-            // city: this.state.city,
-            // state: this.state.state,
-            // zip: this.state.zip,
-            // email: this.state.email,
-            // phone: this.state.phone_number,
         }).then(async result => {
             // Handle result.error or result.token
             console.log(result.token)
             await axios
-                .post(`http://127.0.0.1:8000/api/stripe/account`, body) // RETURNS NEWLY CREATED STRIPE ACCOUNT ID
+                .post(`http://127.0.0.1:8000/api/stripe/account`,
+                    {   
+                        first_name: 'Jenny',
+                        last_name: 'Rosen',
+                        routing_number: '110000000',
+                        account_number: '000123456789',
+                        shelterID: localStorage.getItem('shelter_id'),
+                        address1: state.address_1,
+                        address2: state.address_2,
+                        city: state.city,
+                        state: state.state,
+                        zip: state.zip,
+                        email: state.email,
+                        phone: state.phone_number,
+                        bankToken: result.token.id
+                    })
+                // RETURNS NEWLY CREATED STRIPE ACCOUNT ID
                 .then(async results => {
                     console.log(results)
                     await axios
@@ -162,7 +178,7 @@ class StripeOnboarding extends React.Component {
                 .catch(error => {
                     console.log(error)
                 })
-            })
+        })
             .catch(error => {
                 console.log(error)
             })
