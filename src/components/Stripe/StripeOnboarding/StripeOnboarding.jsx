@@ -27,7 +27,6 @@ import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/reg
 import { injectStripe } from 'react-stripe-elements';
 
 
-
 class StripeOnboarding extends React.Component {
     constructor(props) {
         super(props);
@@ -50,19 +49,6 @@ class StripeOnboarding extends React.Component {
     };
 
     testSubmit = async (e) => {
-       
-        let { bankToken } = stripe.createToken('bank_account', {
-            country: 'US',
-            currency: 'usd',
-            routing_number: '110000000',
-            account_number: '000123456789',
-            account_holder_name: 'Jenny Rosen',
-            account_holder_type: 'individual',
-          }).then(function(result) {
-            // Handle result.error or result.token
-            
-
-          });
 
         // await fetch(`http://127.0.0.1:8000/api/stripe/account`, {
         //     method: 'POST',
@@ -73,7 +59,24 @@ class StripeOnboarding extends React.Component {
         //         account_holder_name: bankToken.account_holder_name
         //     }),
         // } ) 
-     
+
+
+        const stripe = require("stripe")("pk_test_x16KAsU777aRjmWMukoNMKfG00PisbA3Vh");
+        // var stripe = Stripe("pk_test_x16KAsU777aRjmWMukoNMKfG00PisbA3Vh");
+
+        stripe.createToken('bank_account', {
+            country: 'US',
+            currency: 'usd',
+            routing_number: '110000000',
+            account_number: '000123456789',
+            account_holder_name: 'Jenny Rosen',
+            account_holder_type: 'individual',
+        }).then(function (result) {
+            // Handle result.error or result.token
+            console.log(result.token)
+        });
+
+
     };
 
     componentDidMount() {
@@ -158,7 +161,7 @@ class StripeOnboarding extends React.Component {
 
                     <GridItem>
                         <FormControl >
-                            <Card style={{ width:"600px" }}>
+                            <Card style={{ width: "600px" }}>
                                 <CardHeader color="primary" icon>
                                     <CardIcon color="primary">
                                         <Assignment />
@@ -359,3 +362,4 @@ class StripeOnboarding extends React.Component {
 };
 
 export default withStyles(regularFormsStyle)(StripeOnboarding);
+// export default injectStripe(StripeOnboarding);
