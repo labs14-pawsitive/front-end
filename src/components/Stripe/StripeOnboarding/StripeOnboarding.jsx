@@ -32,13 +32,17 @@ class StripeOnboarding extends React.Component {
         super(props);
         this.state = {
             account_holder_name: '',
-            address_1: '123 Rainbow Rd.',
-            address_2: 'None',
-            city: 'San Carlos',
-            state: 'CA',
-            zip: '94065',
-            email: 'jimtest@gmail.com',
-            phone_number: '777-777-7777',
+            address_1: '',
+            address_2: '',
+            city: '',
+            state: '',
+            zip: '',
+            email: '',
+            phone_number: '',
+            ssn_last_4: '',
+            dob_day: '',
+            dob_month: '',
+            dob_year: '',
             bankToken: {},
 
             inputField: '',
@@ -160,20 +164,15 @@ class StripeOnboarding extends React.Component {
                         state: state.state,
                         zip: state.zip,
                         email: state.email,
-                        phone: state.phone_number,
+                        phone: state.phone,
+                        ssn_last_4: state.ssn_last_4,
+                        dob_day: state.dob_day,
+                        dob_month: state.dob_month,
+                        dob_year: state.dob_year,
                         bankToken: result.token.id
                     })
-                // RETURNS NEWLY CREATED STRIPE ACCOUNT ID
-                .then(async results => {
+                .then( results => {
                     console.log(results)
-                    await axios
-                        .post(`http://127.0.0.1:8000/api/shelters/${id}/account`, { account_id: results.data.id }) // STORES STRIPE ACCOUNT ID IN SHELTERS TABLE
-                        .then(result => {
-                            console.log(result)
-                        })
-                        .catch(error => {
-                            console.log(error)
-                        })
                 })
                 .catch(error => {
                     console.log(error)
@@ -209,9 +208,6 @@ class StripeOnboarding extends React.Component {
 
         return (
             <>
-                <GridContainer>
-
-                    <GridItem>
                         <FormControl >
                             <Card style={{ width: "600px" }}>
                                 <CardHeader color="primary" icon>
@@ -345,6 +341,66 @@ class StripeOnboarding extends React.Component {
 
                                     <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
                                         <CustomInput
+                                            labelText="SSN Last Four Digits"
+                                            id="ssn_last_4"
+                                            formControlProps={{
+                                                fullWidth: true
+                                            }}
+                                            inputProps={{
+                                                type: "text",
+                                                onChange: this.handleInput,
+                                                value: this.state.ssn_last_4,
+                                            }}
+                                        />
+                                    </GridItem>
+
+                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
+                                        <CustomInput
+                                            labelText="DOB Day"
+                                            id="dob_day"
+                                            formControlProps={{
+                                                fullWidth: true
+                                            }}
+                                            inputProps={{
+                                                type: "text",
+                                                onChange: this.handleInput,
+                                                value: this.state.dob_day,
+                                            }}
+                                        />
+                                    </GridItem>
+
+                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
+                                        <CustomInput
+                                            labelText="DOB Month"
+                                            id="dob_month"
+                                            formControlProps={{
+                                                fullWidth: true
+                                            }}
+                                            inputProps={{
+                                                type: "text",
+                                                onChange: this.handleInput,
+                                                value: this.state.dob_month,
+                                            }}
+                                        />
+                                    </GridItem>
+
+                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
+                                        <CustomInput
+                                            labelText="DOB Year"
+                                            id="dob_year"
+                                            formControlProps={{
+                                                fullWidth: true
+                                            }}
+                                            inputProps={{
+                                                type: "text",
+                                                onChange: this.handleInput,
+                                                value: this.state.dob_year,
+                                            }}
+                                        />
+                                    </GridItem>
+
+                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
+                                        <CustomInput
                                             labelText="Routing Number"
                                             id="routing_number"
                                             formControlProps={{
@@ -385,28 +441,10 @@ class StripeOnboarding extends React.Component {
                                     </Button>
                                     </GridContainer>
 
-                                    {/* <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
-                                        <CustomInput
-                                            labelText="Account Routing Number"
-                                            id="accountRoutingNumber"
-                                            formControlProps={{
-                                                fullWidth: true
-                                            }}
-                                            inputProps={{
-                                                type: "text",
-                                                onChange: this.handleInput,
-                                                value: this.state.routing_number,
-                                            }}
-                                        />
-                                    </GridItem> */}
-
                                 </CardBody>
                             </Card>
 
                         </FormControl>
-
-                    </GridItem>
-                </GridContainer>
             </>
         )
     }

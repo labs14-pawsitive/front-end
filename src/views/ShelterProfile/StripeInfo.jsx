@@ -187,16 +187,19 @@ function UserProfile(props) {
             </CardBody>
           </Card>
         </GridItem>
+        </GridContainer>
 
-        <GridItem>
-            <StripeOnboarding />
-        </GridItem>
+        <GridContainer>
+                <GridItem>
+                    <StripeOnboarding />
+                </GridItem>
 
-        <GridItem>
-            <AnimalMetaCard />
-        </GridItem>
-
+                <GridItem>
+                    <AnimalMetaCard />
+                </GridItem>
       </GridContainer>
+
+
     </div>
   );
 }
