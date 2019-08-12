@@ -163,18 +163,15 @@ class MainPage extends React.Component {
       },
       speciesGridStyle: {
         marginBottom: "30px",
-
       },
       speciesFormStyle: {
         width: "60%"
       },
-
       buttonStyle: {
         marginTop: "15px",
         marginBottom: "15px",
         width: "100%",
         height: "50px"
-
       },
       buttonGridStyle: {
         margin: "auto"
@@ -192,7 +189,6 @@ class MainPage extends React.Component {
         textAlign: "center"
       },
       imageMainStyle: {
-
         backgroundImage: "url(" + backgroundImag1 + ")",
         backgroundSize: 'cover',
         backgroundPosition: 'center',
@@ -203,7 +199,12 @@ class MainPage extends React.Component {
         display: "flex",
         background: "white",
         flexWrap: 'wrap',
-        border: "1px solid black",
+        borderRadius:"3%",
+        // borderBottomTopRadius:"50% 10%",
+        //         borderBottomBottomRadius:"50% 10%",
+        //         borderBottomLeftRadius:"50% 10%",
+        //         borderBottomRightRadius:"50% 10%",
+        // border: "1px solid black",
         paddingTop:"10px"
       },
       eachGridStyle: {
@@ -227,8 +228,6 @@ class MainPage extends React.Component {
         display: "flex",
         justifyContent: "center",
       }
-
-
     }
 
 
