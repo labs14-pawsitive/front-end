@@ -27,6 +27,8 @@ import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 
 import mainPageStyle from "assets/jss/material-dashboard-pro-react/views/mainPageStyle.jsx";
+import CustomCarousel from "../../components/Carousel /Carousel.jsx";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 class AnimalPage extends React.Component {
   render() {
@@ -35,7 +37,8 @@ class AnimalPage extends React.Component {
     return (
       <GridContainer className={classes.bodyStyle}>
         <GridItem xs={10}>
-          <h1 className={classes.title}>I'm An Animal<sup>*</sup></h1>
+          
+          <CustomCarousel />
         
         </GridItem>
       </GridContainer>
