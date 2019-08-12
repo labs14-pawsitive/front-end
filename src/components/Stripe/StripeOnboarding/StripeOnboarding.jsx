@@ -43,6 +43,8 @@ class StripeOnboarding extends React.Component {
             dob_day: '',
             dob_month: '',
             dob_year: '',
+            file_front: '',
+            file_back: '',
             bankToken: {},
 
             inputField: '',
@@ -143,16 +145,16 @@ class StripeOnboarding extends React.Component {
         let { token } = stripe.createToken('bank_account', {
             country: 'US',
             currency: 'usd',
-            routing_number: '110000000',
-            account_number: '000123456789',
-            account_holder_name: 'Jenny Rosen',
+            routing_number: this.state.routing_number,
+            account_number: this.state.account_number,
+            account_holder_name: this.state.account_holder_name,
             account_holder_type: 'company',
         }).then(async result => {
             // Handle result.error or result.token
             console.log(result.token)
             await axios
                 .post(`http://127.0.0.1:8000/api/stripe/account`,
-                    {   
+                    {
                         first_name: 'Jenny',
                         last_name: 'Rosen',
                         routing_number: '110000000',
@@ -171,7 +173,7 @@ class StripeOnboarding extends React.Component {
                         dob_year: state.dob_year,
                         bankToken: result.token.id
                     })
-                .then( results => {
+                .then(results => {
                     console.log(results)
                 })
                 .catch(error => {
@@ -208,243 +210,255 @@ class StripeOnboarding extends React.Component {
 
         return (
             <>
-                        <FormControl >
-                            <Card style={{ width: "600px" }}>
-                                <CardHeader color="primary" icon>
-                                    <CardIcon color="primary">
-                                        <Assignment />
-                                    </CardIcon>
-                                    <h4 className={classes.cardIconTitle}> Create Stripe Account </h4>
-                                </CardHeader>
+                <FormControl >
+                    <Card style={{ width: "600px" }}>
+                        <CardHeader color="primary" icon>
+                            <CardIcon color="primary">
+                                <Assignment />
+                            </CardIcon>
+                            <h4 className={classes.cardIconTitle}> Create Stripe Account </h4>
+                        </CardHeader>
 
-                                <CardBody>
+                        <CardBody>
 
-                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
-                                        <CustomInput
-                                            labelText="Account Holder Name"
-                                            id="accountHolderName"
-                                            formControlProps={{
-                                                fullWidth: true
-                                            }}
-                                            inputProps={{
-                                                type: "text",
-                                                onChange: this.handleInput,
-                                                value: this.state.account_holder_name,
-                                            }}
-                                        />
-                                    </GridItem>
+                            <GridContainer>
+                                <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
+                                    <CustomInput
+                                        labelText="Account Holder Full Name"
+                                        id="account_holder_name"
+                                        formControlProps={{
+                                            fullWidth: true
+                                        }}
+                                        inputProps={{
+                                            type: "text",
+                                            onChange: this.handleInput,
+                                            value: this.state.account_holder_name,
+                                        }}
+                                    />
+                                </GridItem>
+                            </GridContainer>
 
-                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
-                                        <CustomInput
-                                            labelText="Address1"
-                                            id="address_1"
-                                            formControlProps={{
-                                                fullWidth: true
-                                            }}
-                                            inputProps={{
-                                                type: "text",
-                                                onChange: this.handleInput,
-                                                value: this.state.address_1,
-                                            }}
-                                        />
-                                    </GridItem>
+                            <GridContainer>
+                                <GridItem xs={6} sm={6} md={6} lg={6} xl={6} >
+                                    <CustomInput
+                                        labelText="Address1"
+                                        id="address_1"
+                                        formControlProps={{
+                                            fullWidth: true
+                                        }}
+                                        inputProps={{
+                                            type: "text",
+                                            onChange: this.handleInput,
+                                            value: this.state.address_1,
+                                        }}
+                                    />
+                                </GridItem>
 
-                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
-                                        <CustomInput
-                                            labelText="Address2"
-                                            id="address_2"
-                                            formControlProps={{
-                                                fullWidth: true
-                                            }}
-                                            inputProps={{
-                                                type: "text",
-                                                onChange: this.handleInput,
-                                                value: this.state.address_2,
-                                            }}
-                                        />
-                                    </GridItem>
+                                <GridItem xs={6} sm={6} md={6} lg={6} xl={6} >
+                                    <CustomInput
+                                        labelText="Address2"
+                                        id="address_2"
+                                        formControlProps={{
+                                            fullWidth: true
+                                        }}
+                                        inputProps={{
+                                            type: "text",
+                                            onChange: this.handleInput,
+                                            value: this.state.address_2,
+                                        }}
+                                    />
+                                </GridItem>
+                            </GridContainer>
 
-                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
-                                        <CustomInput
-                                            labelText="City"
-                                            id="city"
-                                            formControlProps={{
-                                                fullWidth: true
-                                            }}
-                                            inputProps={{
-                                                type: "text",
-                                                onChange: this.handleInput,
-                                                value: this.state.city,
-                                            }}
-                                        />
-                                    </GridItem>
+                            <GridContainer>
+                                <GridItem xs={4} sm={4} md={4} lg={4} xl={4} >
+                                    <CustomInput
+                                        labelText="City"
+                                        id="city"
+                                        formControlProps={{
+                                            fullWidth: true
+                                        }}
+                                        inputProps={{
+                                            type: "text",
+                                            onChange: this.handleInput,
+                                            value: this.state.city,
+                                        }}
+                                    />
+                                </GridItem>
 
-                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
-                                        <CustomInput
-                                            labelText="State"
-                                            id="state"
-                                            formControlProps={{
-                                                fullWidth: true
-                                            }}
-                                            inputProps={{
-                                                type: "text",
-                                                onChange: this.handleInput,
-                                                value: this.state.state,
-                                            }}
-                                        />
-                                    </GridItem>
+                                <GridItem xs={4} sm={4} md={4} lg={4} xl={4} >
+                                    <CustomInput
+                                        labelText="State"
+                                        id="state"
+                                        formControlProps={{
+                                            fullWidth: true
+                                        }}
+                                        inputProps={{
+                                            type: "text",
+                                            onChange: this.handleInput,
+                                            value: this.state.state,
+                                        }}
+                                    />
+                                </GridItem>
 
-                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
-                                        <CustomInput
-                                            labelText="Zip"
-                                            id="zip"
-                                            formControlProps={{
-                                                fullWidth: true
-                                            }}
-                                            inputProps={{
-                                                type: "text",
-                                                onChange: this.handleInput,
-                                                value: this.state.zip,
-                                            }}
-                                        />
-                                    </GridItem>
+                                <GridItem xs={4} sm={4} md={4} lg={4} xl={4} >
+                                    <CustomInput
+                                        labelText="Zip"
+                                        id="zip"
+                                        formControlProps={{
+                                            fullWidth: true
+                                        }}
+                                        inputProps={{
+                                            type: "text",
+                                            onChange: this.handleInput,
+                                            value: this.state.zip,
+                                        }}
+                                    />
+                                </GridItem>
+                            </GridContainer>
 
-                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
-                                        <CustomInput
-                                            labelText="Email"
-                                            id="email"
-                                            formControlProps={{
-                                                fullWidth: true
-                                            }}
-                                            inputProps={{
-                                                type: "text",
-                                                onChange: this.handleInput,
-                                                value: this.state.email,
-                                            }}
-                                        />
-                                    </GridItem>
+                            <GridContainer>
+                                <GridItem xs={6} sm={6} md={6} lg={6} xl={6} >
+                                    <CustomInput
+                                        labelText="Email"
+                                        id="email"
+                                        formControlProps={{
+                                            fullWidth: true
+                                        }}
+                                        inputProps={{
+                                            type: "text",
+                                            onChange: this.handleInput,
+                                            value: this.state.email,
+                                        }}
+                                    />
+                                </GridItem>
 
-                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
-                                        <CustomInput
-                                            labelText="Phone Number"
-                                            id="phone_number"
-                                            formControlProps={{
-                                                fullWidth: true
-                                            }}
-                                            inputProps={{
-                                                type: "text",
-                                                onChange: this.handleInput,
-                                                value: this.state.phone_number,
-                                            }}
-                                        />
-                                    </GridItem>
+                                <GridItem xs={6} sm={6} md={6} lg={6} xl={6} >
+                                    <CustomInput
+                                        labelText="Phone Number"
+                                        id="phone_number"
+                                        formControlProps={{
+                                            fullWidth: true
+                                        }}
+                                        inputProps={{
+                                            type: "text",
+                                            onChange: this.handleInput,
+                                            value: this.state.phone_number,
+                                        }}
+                                    />
+                                </GridItem>
+                            </GridContainer>
 
-                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
-                                        <CustomInput
-                                            labelText="SSN Last Four Digits"
-                                            id="ssn_last_4"
-                                            formControlProps={{
-                                                fullWidth: true
-                                            }}
-                                            inputProps={{
-                                                type: "text",
-                                                onChange: this.handleInput,
-                                                value: this.state.ssn_last_4,
-                                            }}
-                                        />
-                                    </GridItem>
+                            <GridContainer>
+                                <GridItem xs={4} sm={4} md={4} lg={4} xl={4} >
+                                    <CustomInput
+                                        labelText="DOB Day"
+                                        id="dob_day"
+                                        formControlProps={{
+                                            fullWidth: true
+                                        }}
+                                        inputProps={{
+                                            type: "text",
+                                            onChange: this.handleInput,
+                                            value: this.state.dob_day,
+                                        }}
+                                    />
+                                </GridItem>
 
-                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
-                                        <CustomInput
-                                            labelText="DOB Day"
-                                            id="dob_day"
-                                            formControlProps={{
-                                                fullWidth: true
-                                            }}
-                                            inputProps={{
-                                                type: "text",
-                                                onChange: this.handleInput,
-                                                value: this.state.dob_day,
-                                            }}
-                                        />
-                                    </GridItem>
+                                <GridItem xs={4} sm={4} md={4} lg={4} xl={4} >
+                                    <CustomInput
+                                        labelText="DOB Month"
+                                        id="dob_month"
+                                        formControlProps={{
+                                            fullWidth: true
+                                        }}
+                                        inputProps={{
+                                            type: "text",
+                                            onChange: this.handleInput,
+                                            value: this.state.dob_month,
+                                        }}
+                                    />
+                                </GridItem>
 
-                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
-                                        <CustomInput
-                                            labelText="DOB Month"
-                                            id="dob_month"
-                                            formControlProps={{
-                                                fullWidth: true
-                                            }}
-                                            inputProps={{
-                                                type: "text",
-                                                onChange: this.handleInput,
-                                                value: this.state.dob_month,
-                                            }}
-                                        />
-                                    </GridItem>
+                                <GridItem xs={4} sm={4} md={4} lg={4} xl={4} >
+                                    <CustomInput
+                                        labelText="DOB Year"
+                                        id="dob_year"
+                                        formControlProps={{
+                                            fullWidth: true
+                                        }}
+                                        inputProps={{
+                                            type: "text",
+                                            onChange: this.handleInput,
+                                            value: this.state.dob_year,
+                                        }}
+                                    />
+                                </GridItem>
+                            </GridContainer>
 
-                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
-                                        <CustomInput
-                                            labelText="DOB Year"
-                                            id="dob_year"
-                                            formControlProps={{
-                                                fullWidth: true
-                                            }}
-                                            inputProps={{
-                                                type: "text",
-                                                onChange: this.handleInput,
-                                                value: this.state.dob_year,
-                                            }}
-                                        />
-                                    </GridItem>
+                            <GridContainer>
+                                <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
+                                    <CustomInput
+                                        labelText="SSN Last Four Digits"
+                                        id="ssn_last_4"
+                                        formControlProps={{
+                                            fullWidth: true
+                                        }}
+                                        inputProps={{
+                                            type: "text",
+                                            onChange: this.handleInput,
+                                            value: this.state.ssn_last_4,
+                                        }}
+                                    />
+                                </GridItem>
 
-                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
-                                        <CustomInput
-                                            labelText="Routing Number"
-                                            id="routing_number"
-                                            formControlProps={{
-                                                fullWidth: true
-                                            }}
-                                            inputProps={{
-                                                type: "text",
-                                                onChange: this.handleInput,
-                                                // value: ,
-                                            }}
-                                        />
-                                    </GridItem>
+                                <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
+                                    <CustomInput
+                                        labelText="Routing Number"
+                                        id="routing_number"
+                                        formControlProps={{
+                                            fullWidth: true
+                                        }}
+                                        inputProps={{
+                                            type: "text",
+                                            onChange: this.handleInput,
+                                            // value: ,
+                                        }}
+                                    />
+                                </GridItem>
 
-                                    <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
-                                        <CustomInput
-                                            labelText="Account Number"
-                                            id="account_number"
-                                            formControlProps={{
-                                                fullWidth: true
-                                            }}
-                                            inputProps={{
-                                                type: "text",
-                                                onChange: this.handleInput,
-                                                value: this.state.account_number,
-                                            }}
-                                        />
-                                    </GridItem>
+                                <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
+                                    <CustomInput
+                                        labelText="Account Number"
+                                        id="account_number"
+                                        formControlProps={{
+                                            fullWidth: true
+                                        }}
+                                        inputProps={{
+                                            type: "text",
+                                            onChange: this.handleInput,
+                                            value: this.state.account_number,
+                                        }}
+                                    />
+                                </GridItem>
+                            </GridContainer>
 
 
-                                    <GridContainer justify="flex-end" >
-                                        <Button
-                                            variant="contained"
-                                            color="secondary"
-                                            style={customStyle.submitButtonStyle}
-                                            onClick={this.handleSubmit}
-                                        >
-                                            Submit
+                            <GridContainer justify="flex-end" >
+                                <Button
+                                    variant="contained"
+                                    color="secondary"
+                                    style={customStyle.submitButtonStyle}
+                                    onClick={this.handleSubmit}
+                                >
+                                    Submit
                                     </Button>
-                                    </GridContainer>
+                            </GridContainer>
 
-                                </CardBody>
-                            </Card>
+                        </CardBody>
+                    </Card>
 
-                        </FormControl>
+                </FormControl>
             </>
         )
     }

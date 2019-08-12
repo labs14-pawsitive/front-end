@@ -35,7 +35,7 @@ class AnimalMetaCard extends React.Component {
             <>
                 <GridContainer>
 
-                    <GridContainer xs={12} sm={12} md={6} lg={6} xl={6}>
+                    <GridContainer>
                         <Card>
 
                             <GridItem>
@@ -97,6 +97,7 @@ class AnimalMetaCard extends React.Component {
                             <CardBody>
                                 <TextField
                                     label="The Story"
+                                    fullWidth="true"
                                 />
 
                             </CardBody>
@@ -114,18 +115,22 @@ class AnimalMetaCard extends React.Component {
 
                                 <TextField
                                     label="Email"
+                                    fullWidth="true"
                                 />
 
                                 <TextField
                                     label="Phone Number"
+                                    fullWidth="true"
                                 />
 
                                 <TextField
                                     label="Location"
+                                    fullWidth="true"
                                 />
 
                                 <TextField
                                     label="Current Residence"
+                                    fullWidth="true"
                                 />
 
 
