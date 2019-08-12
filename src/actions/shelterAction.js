@@ -9,7 +9,7 @@ export const fetchShelter = shelterID => dispatch => {
     dispatch({ type: GET_SHELTER_START })
     return axios
     
-    .get(`${process.env.REACT_APP_BACKEND_URL}/api/shelters/${shelterID}`)
+    .get(`http://localhost:8000api/shelters/${shelterID}`)
     .then(res => {
         dispatch({ type: GET_SHELTER_SUCCESS, payload: res.data })
     })

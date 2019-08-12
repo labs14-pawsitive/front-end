@@ -1,5 +1,7 @@
 import { title, whiteColor, blackColor } from "assets/jss/material-dashboard-pro-react.jsx";
 
+import backgroundImage from 'assets/img/main-page/adorable-animal-beach-928449.jpg'
+
 const mainPageStyle = () => ({
   contentCenter: {
     position: "absolute",
@@ -36,8 +38,12 @@ const mainPageStyle = () => ({
     alignItems: "center",
     justifyContent: "center",
     width:"100%",
-    color: blackColor
+    color: blackColor,
+    height:"auto",
+    // background: `url(${"backgroundImage"}) noRepeat center center fixed`,
+    // backgroundSize: "cover"
 
+    // `url(${"../static/DSC_1037.jpg"})`
   }
 });
 

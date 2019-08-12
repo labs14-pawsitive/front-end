@@ -9,7 +9,7 @@ export const addAnimal  = animal => dispatch => {
     dispatch ({type: ADD_ANIMAL_START});
     console.log(animal)
     return axios
-        .post(`${process.env.REACT_APP_BACKEND_URL}/api/animals`, animal)
+        .post('http://localhost:8000/api/animals', animal)
         .then(res => {
             dispatch ({type: ADD_ANIMAL_SUCCESS, payload: res.data})
             return res.data
@@ -39,7 +39,7 @@ export const fetchOptions  = (shelterId) => dispatch => {
     dispatch ({type: FETCH_OPTIONS_START});
     // const headers = {Authorization: localStorage.getItem('token')}
     return axios
-    .get(`${process.env.REACT_APP_BACKEND_URL}/api/internal/paws/options/${shelterId}`)
+    .get(`http://localhost:8000/api/internal/paws/options/${shelterId}`)
     .then(res => {
         console.log(res)
         dispatch ({type: UPDATE_BREEDS, payload: res.data.breeds})
@@ -71,7 +71,7 @@ export const updateAnimal = (updateinfo,animalId,animalMetaId) => dispatch => {
  
   dispatch({ type: EDIT_ANIMAL_INFO_START })
   return axios
-    .put(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalId}/meta/${animalMetaId}`, updateinfo)
+    .put(`http://localhost:8000/api/animals/${animalId}/meta/${animalMetaId}`, updateinfo)
     .then(res => axios
       .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalId}`))
     .then(res => {

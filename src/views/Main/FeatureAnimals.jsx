@@ -20,8 +20,7 @@ const styles = theme => ({
         height: 200
     },
     card: {
-        // maxWidth: 200,
-        // minWidth: 200,
+       
         height: 250,
         boxShadow: "2px 4px 5px -1px rgba(0,0,0,0.49)"
     }
