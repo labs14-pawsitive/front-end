@@ -32,6 +32,8 @@ class StripeOnboarding extends React.Component {
         super(props);
         this.state = {
             account_holder_name: '',
+            routing_number: '110000000',
+            account_number: '000123456789',
             address_1: '',
             address_2: '',
             city: '',
@@ -122,22 +124,6 @@ class StripeOnboarding extends React.Component {
 
     handleSubmit = async (e) => {
 
-        const body = {
-            email: this.state.email,
-            shelterID: localStorage.getItem('shelter_id'),
-            address1: this.state.address_1,
-            address2: this.state.address_2,
-            city: this.state.city,
-            state: this.state.state,
-            zip: this.state.zip,
-            email: this.state.email,
-            phone: this.state.phone_number,
-            // token: result.token, 
-            bankToken: this.state.bankToken
-        }
-
-        const id = 3;
-
         const stripe = window.Stripe("pk_test_x16KAsU777aRjmWMukoNMKfG00PisbA3Vh");
 
         const state = this.state;
@@ -145,9 +131,9 @@ class StripeOnboarding extends React.Component {
         let { token } = stripe.createToken('bank_account', {
             country: 'US',
             currency: 'usd',
-            routing_number: this.state.routing_number,
-            account_number: this.state.account_number,
-            account_holder_name: this.state.account_holder_name,
+            routing_number: state.routing_number,
+            account_number: state.account_number,
+            account_holder_name: state.account_holder_name,
             account_holder_type: 'company',
         }).then(async result => {
             // Handle result.error or result.token
@@ -157,8 +143,8 @@ class StripeOnboarding extends React.Component {
                     {
                         first_name: 'Jenny',
                         last_name: 'Rosen',
-                        routing_number: '110000000',
-                        account_number: '000123456789',
+                        routing_number: state.routing_number,
+                        account_number: state.account_number,
                         shelterID: localStorage.getItem('shelter_id'),
                         address1: state.address_1,
                         address2: state.address_2,
@@ -166,7 +152,7 @@ class StripeOnboarding extends React.Component {
                         state: state.state,
                         zip: state.zip,
                         email: state.email,
-                        phone: state.phone,
+                        phone: state.phone_number,
                         ssn_last_4: state.ssn_last_4,
                         dob_day: state.dob_day,
                         dob_month: state.dob_month,
@@ -422,7 +408,7 @@ class StripeOnboarding extends React.Component {
                                         inputProps={{
                                             type: "text",
                                             onChange: this.handleInput,
-                                            // value: ,
+                                            value: this.state.routing_number,
                                         }}
                                     />
                                 </GridItem>
