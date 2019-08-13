@@ -33,12 +33,29 @@ const mainPageStyle = () => ({
   bodyStyle: {
     zIndex: 3,
     display:"flex",
-    alignItems: "center",
     justifyContent: "center",
     width:"100%",
     color: blackColor
 
+  },
+  picturesStyle: {
+    margin: "auto",
+    display : "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    alignContent: "space-around",
+  },
+
+  petpicStyle: {
+    maxWidth: "300px",
+    maxHeight: "300px",
+    overflow: "hidden",
+    display: "block",
+    margin: "auto",
+    marginTop: "10px",
   }
 });
+
 
 export default mainPageStyle;
