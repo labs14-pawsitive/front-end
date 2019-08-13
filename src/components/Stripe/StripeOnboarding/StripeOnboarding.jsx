@@ -31,7 +31,8 @@ class StripeOnboarding extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            account_holder_name: '',
+            first_name: '',
+            last_name: '',
             routing_number: '110000000',
             account_number: '000123456789',
             address_1: '',
@@ -48,7 +49,6 @@ class StripeOnboarding extends React.Component {
             file_front: '',
             file_back: '',
             bankToken: {},
-
             inputField: '',
             shelter: {},
         }
@@ -133,7 +133,7 @@ class StripeOnboarding extends React.Component {
             currency: 'usd',
             routing_number: state.routing_number,
             account_number: state.account_number,
-            account_holder_name: state.account_holder_name,
+            account_holder_name: `${state.first_name}` + `${state.last_name}`,
             account_holder_type: 'company',
         }).then(async result => {
             // Handle result.error or result.token
@@ -141,8 +141,8 @@ class StripeOnboarding extends React.Component {
             await axios
                 .post(`http://127.0.0.1:8000/api/stripe/account`,
                     {
-                        first_name: 'Jenny',
-                        last_name: 'Rosen',
+                        first_name: state.first_name,
+                        last_name: state.last_name,
                         routing_number: state.routing_number,
                         account_number: state.account_number,
                         shelterID: localStorage.getItem('shelter_id'),
@@ -208,21 +208,37 @@ class StripeOnboarding extends React.Component {
                         <CardBody>
 
                             <GridContainer>
-                                <GridItem xs={12} sm={12} md={12} lg={12} xl={12} >
+                                <GridItem xs={6} sm={6} md={6} lg={6} xl={6} >
                                     <CustomInput
-                                        labelText="Account Holder Full Name"
-                                        id="account_holder_name"
+                                        labelText="Account Holder First Name"
+                                        id="first_name"
                                         formControlProps={{
                                             fullWidth: true
                                         }}
                                         inputProps={{
                                             type: "text",
                                             onChange: this.handleInput,
-                                            value: this.state.account_holder_name,
+                                            value: this.state.first_name,
+                                        }}
+                                    />
+                                </GridItem>
+
+                                <GridItem xs={6} sm={6} md={6} lg={6} xl={6} >
+                                    <CustomInput
+                                        labelText="Account Holder Last Name"
+                                        id="last_name"
+                                        formControlProps={{
+                                            fullWidth: true
+                                        }}
+                                        inputProps={{
+                                            type: "text",
+                                            onChange: this.handleInput,
+                                            value: this.state.last_name,
                                         }}
                                     />
                                 </GridItem>
                             </GridContainer>
+
 
                             <GridContainer>
                                 <GridItem xs={6} sm={6} md={6} lg={6} xl={6} >

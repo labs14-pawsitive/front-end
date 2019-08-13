@@ -174,6 +174,8 @@ class ApplicationView extends React.Component {
 
   render() {
 
+    console.log(this.state.user)
+
     const { classes } = this.props;
 
     const customStyle = {

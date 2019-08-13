@@ -130,8 +130,7 @@ class CreateNotes extends React.Component {
 
     render() {
 
-        console.log('PROPS APPLICATION', this.props.application)
-        console.log('SHELTER USER ID', this.props.application.shelter_user_id)
+        console.log('PROPS', this.props)
 
         const { classes } = this.props;
 
@@ -157,6 +156,7 @@ class CreateNotes extends React.Component {
         };
 
         return (
+            
             <>
        
                 <Typography style={customStyle.headerStyle} >
