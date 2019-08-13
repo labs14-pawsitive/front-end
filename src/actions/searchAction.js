@@ -21,7 +21,7 @@ export const UPDATE_DISPLAYED_ANIMALS_ERROR = 'UPDATE_DISPLAYED_ANIMALS_ERROR';
 export const updateDisplayedAnimals = (options={}) => dispatch => {
     dispatch({ type: UPDATE_DISPLAYED_ANIMALS_START})
     // TODO (SL): hard coded zip code and radius
-    const fakeSearchObj = {zipcode: '11701', radius: 50, breed_id: []}
+    const fakeSearchObj = {zipcode: '27513', radius: 50, breed_id: []}
     const searchObj = {
         ...fakeSearchObj, 
         ...options

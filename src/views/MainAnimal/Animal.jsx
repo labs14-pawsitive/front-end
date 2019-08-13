@@ -38,7 +38,9 @@ class AnimalPage extends React.Component {
       <GridContainer className={classes.bodyStyle}>
         <GridItem xs={10}>
           
-          <CustomCarousel />
+          <CustomCarousel 
+            animalId={this.props.match.params.id}
+          />
         
         </GridItem>
       </GridContainer>

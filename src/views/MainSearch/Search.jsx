@@ -90,11 +90,20 @@ class SearchPage extends React.Component {
 
   render() {
     const { classes } = this.props;
+
+    const customStyle = {
+      formControlStyle: {
+        width: "80%",
+        margin: "20px",
+        border: "1px solid black"
+      }
+
+    }
     
     return (
       <GridContainer className={classes.bodyStyle}>
-        <GridItem xs={12} sm={12} md={2}>
-          <FormControl className={classes.formControl}>
+        <GridItem xs={12} sm={12} md={4}>
+          <FormControl style={customStyle.formControlStyle} className={classes.formControl}>
             <InputLabel htmlFor="select-multiple-checkbox">Breed</InputLabel>
             <Select
               multiple
@@ -116,8 +125,8 @@ class SearchPage extends React.Component {
           </FormControl>
         </GridItem>
 
-        <GridItem xs={12} sm={12} md={2}>
-          <FormControl className={classes.formControl}>
+        <GridItem xs={12} sm={12} md={4}>
+          <FormControl style={customStyle.formControlStyle} className={classes.formControl}>
             <InputLabel htmlFor="select-multiple-checkbox">Species</InputLabel>
             <Select
               multiple
@@ -139,22 +148,22 @@ class SearchPage extends React.Component {
           </FormControl>
         </GridItem>
 
-        <GridItem xs={12} sm={12} md={2}>
-          <FormControl className={classes.formControl}>
+        <GridItem xs={12} sm={12} md={4}>
+          <FormControl style={customStyle.formControlStyle} className={classes.formControl}>
             <InputLabel htmlFor="select-multiple-checkbox">Size</InputLabel>
             <Select
               multiple
               value={this.props.searchSelections.size_ids}
               onChange={e => this.handleToggle(e, "size_ids")}
               input={<Input id="select-multiple-checkbox" />}
-              renderValue={selected => selected.join(', ')}
+              renderValue={selected => this.displayOptionLabels(this.props.sizeOptions, "size", selected).join(', ')}
               MenuProps={{
                 name: 'size_ids'
               }}
             >
               {(this.props.sizeOptions || []).map(size => (
                 <MenuItem key={size.id} value={size.id} name={size.size}>
-                  <Checkbox checked={this.props.searchSelections.size_ids.indexOf(size.size) > -1} />
+                  <Checkbox checked={this.props.searchSelections.size_ids.indexOf(size.id) > -1} />
                   <ListItemText primary={size.size} />
                 </MenuItem>
               ))}
@@ -163,21 +172,21 @@ class SearchPage extends React.Component {
         </GridItem>
 
         <GridItem xs={12} sm={12} md={2}>
-          <FormControl className={classes.formControl}>
+          <FormControl style={customStyle.formControlStyle} className={classes.formControl}>
             <InputLabel htmlFor="select-multiple-checkbox">Age</InputLabel>
             <Select
               multiple
               value={this.props.searchSelections.age_ids}
               onChange={e => this.handleToggle(e, "age_ids")}
               input={<Input id="select-multiple-checkbox" />}
-              renderValue={selected => selected.join(', ')}
+              renderValue={selected => this.displayOptionLabels(this.props.agesOptions, "age", selected).join(', ')}
               MenuProps={{
                 name: 'age_ids'
               }}
             >
               {(this.props.agesOptions || []).map(age => (
                 <MenuItem key={age.id} value={age.id} name={age.age}>
-                  <Checkbox checked={this.props.searchSelections.age_ids.indexOf(age.age) > -1} />
+                  <Checkbox checked={this.props.searchSelections.age_ids.indexOf(age.id) > -1} />
                   <ListItemText primary={age.age} />
                 </MenuItem>
               ))}
@@ -186,21 +195,21 @@ class SearchPage extends React.Component {
         </GridItem>
 
         <GridItem xs={12} sm={12} md={2}>
-          <FormControl className={classes.formControl}>
+          <FormControl style={customStyle.formControlStyle} className={classes.formControl}>
             <InputLabel htmlFor="select-multiple-checkbox">Coat Length</InputLabel>
             <Select
               multiple
               value={this.props.searchSelections.coatLength_ids}
               onChange={e => this.handleToggle(e, "coatLength_ids")}
               input={<Input id="select-multiple-checkbox" />}
-              renderValue={selected => selected.join(', ')}
+              renderValue={selected => this.displayOptionLabels(this.props.coatLengthOptions, "coat_length", selected).join(', ')}
               MenuProps={{
                 name: 'coatLength_ids'
               }}
             >
               {(this.props.coatLengthOptions || []).map(coat => (
                 <MenuItem key={coat.id} value={coat.id} name={coat.coat_length}>
-                  <Checkbox checked={this.props.searchSelections.coatLength_ids.indexOf(coat.coat_length) > -1} />
+                  <Checkbox checked={this.props.searchSelections.coatLength_ids.indexOf(coat.id) > -1} />
                   <ListItemText primary={coat.coat_length} />
                 </MenuItem>
               ))}
