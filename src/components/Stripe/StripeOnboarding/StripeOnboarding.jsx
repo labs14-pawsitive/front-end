@@ -23,14 +23,34 @@ import CustomInput from "components/CustomInput/CustomInput.jsx";
 // custom classes
 import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
 
-// stripe 
-import { injectStripe } from 'react-stripe-elements';
+// text mask for form
+import MaskedInput from "react-text-mask";
+import PropTypes from "prop-types";
 
+function TextMaskCustom(props) {
+    const { inputRef, ...other } = props;
+
+    return (
+        <MaskedInput 
+            { ...other } 
+            ref={ref => {
+                inputRef( ref ? ref.inputElement : null )
+            }}
+            mask={['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+            placeholderChar={'\u2000'}
+        />
+    )
+}
+
+TextMaskCustom.propTypes = {
+    inputRef: PropTypes.func.isRequired,
+};
 
 class StripeOnboarding extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            editMode: false,
             first_name: '',
             last_name: '',
             routing_number: '110000000',
@@ -55,48 +75,6 @@ class StripeOnboarding extends React.Component {
 
     };
 
-    testSubmit = async (e) => {
-
-        // await fetch(`http://127.0.0.1:8000/api/stripe/account`, {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-type': 'application/json'
-        //     },
-        //     body: JSON.stringify({
-        //         account_holder_name: bankToken.account_holder_name
-        //     }),
-        // } ) 
-
-
-        // const stripe = require("stripe")("pk_test_x16KAsU777aRjmWMukoNMKfG00PisbA3Vh");
-        // var stripe = Stripe("pk_test_x16KAsU777aRjmWMukoNMKfG00PisbA3Vh");
-
-        //     const stripe = window.Stripe("pk_test_x16KAsU777aRjmWMukoNMKfG00PisbA3Vh");
-
-        //    let { token } = stripe.createToken('bank_account', {
-        //         country: 'US',
-        //         currency: 'usd',
-        //         routing_number: '110000000',
-        //         account_number: '000123456789',
-        //         account_holder_name: 'Jenny Rosen',
-        //         account_holder_type: 'company',
-        //         bankToken: this.result.token.id,
-        //         shelterID: localStorage.getItem('shelter_id'),
-        //         address1: this.state.address_1,
-        //         address2: this.state.address_2,
-        //         city: this.state.city,
-        //         state: this.state.state,
-        //         zip: this.state.zip,
-        //         email: this.state.email,
-        //         phone: this.state.phone_number
-        //     }).then(function (result) {
-        //         // Handle result.error or result.token
-        //         console.log(result.token)
-        //     });
-
-
-    };
-
     componentDidMount() {
 
         axios
@@ -113,6 +91,15 @@ class StripeOnboarding extends React.Component {
             })
 
     }
+
+    testEditMode = event => {
+
+        event.preventDefault();
+
+        this.setState({
+            editMode: !this.state.editMode
+        })
+    };
 
     handleInput = event => {
 
@@ -191,6 +178,9 @@ class StripeOnboarding extends React.Component {
                 height: '40px',
                 marginRight: '20px',
             },
+            fieldAlert: {
+                color: "#333333 !important",
+            }
 
         }
 
@@ -312,7 +302,7 @@ class StripeOnboarding extends React.Component {
                                         }}
                                         inputProps={{
                                             type: "text",
-                                            onChange: this.handleInput,
+                                            onChange: (event) => this.handleInput(event),
                                             value: this.state.zip,
                                         }}
                                     />
@@ -346,7 +336,9 @@ class StripeOnboarding extends React.Component {
                                             type: "text",
                                             onChange: this.handleInput,
                                             value: this.state.phone_number,
+                                            inputComponent: TextMaskCustom,
                                         }}
+                                        style={ this.state.editMode ? "" : customStyle.fieldAlert }
                                     />
                                 </GridItem>
                             </GridContainer>
@@ -468,4 +460,4 @@ class StripeOnboarding extends React.Component {
 };
 
 export default withStyles(regularFormsStyle)(StripeOnboarding);
-// export default injectStripe(StripeOnboarding);
+
