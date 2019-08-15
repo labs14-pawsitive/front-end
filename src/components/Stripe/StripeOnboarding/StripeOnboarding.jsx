@@ -481,7 +481,7 @@ class StripeOnboarding extends React.Component {
 
                                 <GridItem xs={6} sm={6} md={6} lg={6} xl={6} >
                                     <CustomInput
-                                        labelText="Address2 (if applicable)"
+                                        labelText="Address2"
                                         id="address_2"
                                         success={this.state.address_2State === "success"}
                                         error={this.state.address_2State === "error"}
@@ -543,7 +543,6 @@ class StripeOnboarding extends React.Component {
                                         }}
                                         inputProps={{
                                             type: "text",
-                                            onChange: (event) => this.handleInput(event),
                                             onChange: event => this.change(event, "zip", "digit-only", 5),
                                             value: this.state.zip,
                                         }}
