@@ -27,7 +27,7 @@ Animal Rescue organizations have so much to manage, but their biggest concern is
 [![Netlify Status](https://api.netlify.com/api/v1/badges/b5c4db1c-b10d-42c3-b157-3746edd9e81d/deploy-status)](https://pawsnfind.com/)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-####Rescue Dashboard
+#### Rescue Dashboard
 
 -    Sign up and onboarding
 -    View summary of operations including total animals, donations, and total applications
@@ -36,19 +36,19 @@ Animal Rescue organizations have so much to manage, but their biggest concern is
 -    Internal notes on each animal
 -    View, update status and internal notes for applications received
 
-####Animal Locator 
+#### Animal Locator 
 -   Visitors can search for pets based on zip code radius and animal type
 -   Results page gives visitors an option to narrow their search by breed, size, gender, coat length and age of animals
 -  Detailed animal page shows more info about each animal and allows vistors to complete an adoption application, donate, and follow the animal
 -  Detailed page about each rescue organization with contact info and list of their animals
 
-##Tech Stack
+## Tech Stack
 
 ### Front end built using:
 
 #### _React with React Router and Redux_
 
-#####Dependancies:
+##### Dependancies:
     @material-ui/core: 4.1.0,
     @material-ui/icons: 4.1.0,
     auth0: 2.18.0,
@@ -92,7 +92,7 @@ Animal Rescue organizations have so much to manage, but their biggest concern is
 
 #### [Back end](https://github.com/Pawsnfind/back-end) built using:
 
-####NodeJS with Express
+#### NodeJS with Express
 
 -    PostgreSQL
 -    Knex
