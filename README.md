@@ -6,7 +6,7 @@ You can find the deployed project at [Pawsnfind.com](https://pawsnfind.com).
 
 ## Project Overview
 
-Pet rescue organizations have so much to manage, but their biggest concern is making sure pets go to a great home. Pawsnfind will allow rescues to manage their operations while making it easier for adopters to find their perfect pet and connect with the rescue.
+Animal Rescue organizations have so much to manage, but their biggest concern is making sure pets go to a great home. Pawsnfind allows rescues to manage their operations while making it easier for adopters to find their perfect pet and connect with the rescue.
 
  [Trello Board](https://trello.com/b/8947SC7z/labs-14-pawsitive)
 
@@ -27,114 +27,135 @@ Pet rescue organizations have so much to manage, but their biggest concern is ma
 [![Netlify Status](https://api.netlify.com/api/v1/badges/b5c4db1c-b10d-42c3-b157-3746edd9e81d/deploy-status)](https://pawsnfind.com/)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-### 4️⃣ Key Features
+####Rescue Dashboard
 
--    feature one
--    feature two
--    feature three
--    feature four
--    feature five
+-    Sign up and onboarding
+-    View summary of operations including total animals, donations, and total applications
+-    Add and edit rescue contacts and locations
+-    Add, edit, view animals for animal locator site
+-    Internal notes on each animal
+-    View, update status and internal notes for applications received
 
-## 1️⃣ Tech Stack
+####Animal Locator 
+-   Visitors can search for pets based on zip code radius and animal type
+-   Results page gives visitors an option to narrow their search by breed, size, gender, coat length and age of animals
+-  Detailed animal page shows more info about each animal and allows vistors to complete an adoption application, donate, and follow the animal
+-  Detailed page about each rescue organization with contact info and list of their animals
+
+##Tech Stack
 
 ### Front end built using:
 
-#### _Front end framework goes here_
+#### _React with React Router and Redux_
 
-🚫 Why did you choose this framework?
+#####Dependancies:
+    @material-ui/core: 4.1.0,
+    @material-ui/icons: 4.1.0,
+    auth0: 2.18.0,
+    auth0-js: 9.11.2,
+    axios: 0.18.0,
+    bootstrap: 4.3.1,
+    chartist: 0.10.1,
+    classnames: 2.2.6,
+    dotenv: 8.0.0,
+    history: 4.9.0,
+    jwt-decode: 2.2.0,
+    logger: 0.0.1,
+    material-ui-dropzone: 2.4.0,
+    moment: 2.24.0,
+    node-sass: 4.12.0,
+    nouislider: 13.1.5,
+    perfect-scrollbar: 1.4.0,
+    react: 16.8.6,
+    react-big-calendar: 0.21.0,
+    react-bootstrap-sweetalert: 4.4.1,
+    react-chartist: 0.13.3,
+    react-datetime: 2.16.3,
+    react-dom:16.8.6,
+    react-google-maps: 9.4.5,
+    react-input-mask: 2.0.4,
+    react-jss: 8.6.1,
+    react-jvectormap: 0.0.12,
+    react-redux: 7.0.3,
+    react-router-dom: 5.0.1,
+    react-scripts: 3.0.1,
+    react-swipeable-views: 0.13.3,
+    react-table: 6.10.0,
+    react-tagsinput: 3.19.0,
+    react-text-mask: 5.4.3,
+    reactstrap: 8.0.0,
+    redux: 4.0.1,
+    redux-logger: 3.0.6,
+    redux-thunk: 2.3.0
 
--    point one
--    point two
--    point three
--    point four
+#### Front end deployed to `Netlify` [Pawsnfind.com](https://pawsnfind.com)
 
-🚫List the rest of the front end features and libraries in the same format as the framework above.
+#### [Back end](https://github.com/Pawsnfind/back-end) built using:
 
-#### Front end deployed to `🚫insert service here`
+####NodeJS with Express
 
-#### [Back end](🚫link to back end repo here) built using:
+-    PostgreSQL
+-    Knex
+-    Rest API
 
-#### 🚫 back end framework goes here
-
--    point one
--    point two
--    point three
-
-🚫 List the rest of the back end end features and libraries in the same format as the framework above
 
 # APIs
 
-## 2️⃣ Authentication API here
+## [AuthO](https://auth0.com/)
 
-🚫Replace text below with a description of the API
+A service that provides authentication which allows users to easily register and login securely using multiple identity providers. Analytics are also provided by Auth0. Pawsnfind uses AuthO for registration with either email or google and to login into both shelter and user accounts.
 
-Water's like me. It's laaazy ... Boy, it always looks for the easiest way to do things A little happy sunlight shining through there. Let all these little things happen. Don't fight them. Learn to use them. Even the worst thing we can do here is good.
+## [Stripe](https://stripe.com/en-ca/connect)
 
-## 2️⃣ Payment API here
+Provides a way to securely accept payments. Pawsnfind uses a feature in the Stripe API called connect. It allows Pawsnfind as a platform to transfer donations directly from adopters to rescue organizations.
 
-🚫Replace text below with a description of the API
+## [Propublica](https://projects.propublica.org/nonprofits/api)
 
-This is the way you take out your flustrations. Get away from those little Christmas tree things we used to make in school. Isn't it fantastic that you can change your mind and create all these happy things? Everything's not great in life, but we can still find beauty in it.
+Propublica Nonprofit Explorer API provides a way to verify EIN numbers are valid and are non profit organizations. Pawsnfind uses it in the rescue on boarding process to validate the EIN number entered by the organization rep.
 
-## 3️⃣ Misc API here
+#NPM Modules
 
-🚫Replace text below with a description of the API
+## [Zipcodes](https://www.npmjs.com/package/zipcodes)
 
-You can do anything your heart can imagine. In life you need colors. This is where you take out all your hostilities and frustrations. It's better than kicking the puppy dog around and all that so. I'm sort of a softy, I couldn't shoot Bambi except with a camera. Trees get lonely too, so we'll give him a little friend. We'll lay all these little funky little things in there.
+This module allows Pawsnfind to conduct a radius search for a zip code that is input by a visitor. 
 
-## 3️⃣ Misc API here
 
-🚫Replace text below with a description of the API
-
-When you do it your way you can go anywhere you choose. Let your heart take you to wherever you want to be. If I paint something, I don't want to have to explain what it is. A tree needs to be your friend if you're going to paint him. That's a son of a gun of a cloud. Even the worst thing we can do here is good.
-
-## 3️⃣ Misc API here
-
-🚫Replace text below with a description of the API
-
-Volunteering your time; it pays you and your whole community fantastic dividends. Maybe there's a happy little waterfall happening over here. You can spend all day playing with mountains. We don't have to be committed. We are just playing here. You have freedom here. The only guide is your heart. It's cold, but it's beautiful.
-
-# 3️⃣ Environment Variables
+# Environment Variables
 
 In order for the app to function correctly, the user must set up their own environment variables. There should be a .env file containing the following:
 
-🚫These are just examples, replace them with the specifics for your app
-
-    *  REACT_APP_apiKey - this is your Google API key, which can be generated in the Google Cloud Console
-    *  REACT_APP_authDomain - when you set up your Firebase project, this information will be in the dashboard
-    *  REACT_APP_databaseURL - in the Firebase dashboard
-    *  REACT_APP_projectID - in the Firebase dashboard
-    *  REACT_APP_storageBucket - in the Firebase dashboard
-    *  REACT_APP_messagingSenderId - in the Firebase dashboard
-    *  REACT_APP_stripe_API - this is your public Stripe API key, generated in the Stripe dashboard
-    *  REACT_APP_backendURL - optional for your local development server
+    *  REACT_APP_AUTH0_CALLBACK_URL - for development using a local server 
+    *  REACT_APP_AUTH0_CLIENT_ID - provided in the Auth0 dashboard
+    *  REACT_APP_AUTH0_DOMAIN - provided in the Auth0 dashboard
+    *  REACT_APP_AUTH0_LOGOUT_DOMAIN - provided in the Auth0 dashboard
+    *  REACT_APP_AUTH0_LOGOUT_URL - optional for your local development server
+    *  REACT_APP_BACKEND_URL - optional for your local development server
+    *  stripe_pk - provide by stripe
     *  REACT_APP_clientid - this is the Stripe_connect clientID, generated in Stripe_connect settings
-    *  REACT_APP_stripe_plan - this is the ID for a second Stripe subscription plan, generated under Stripe products
+   
 
-# 5️⃣ Content Licenses
+# Content Licenses
 
-🚫For all content - images, icons, etc, use this table to document permission of use. Remove the two placeholders and add you content to this table
-
-| Image Filename | Source / Creator | License                                                                      |
+| Name | Source / Creator | License                                                                      |
 | -------------- | ---------------- | ---------------------------------------------------------------------------- |
-| doodles.png    | Nicole Bennett   | [Creative Commons](https://www.toptal.com/designers/subtlepatterns/doodles/) |
-| rings.svg      | Sam Herbert      | [MIT](https://github.com/SamHerbert/SVG-Loaders)                             |
+| Material Dashboard Pro React  | Creative Tim  | [Developer](https://www.creative-tim.com/license?ref=license-page-material-dashboard-pro-react) |
 
-# 4️⃣ Testing
+# Testing
 
-🚫Document what you used for testing and why
+The following are used for testing:
+-  testing-library/react
+-  Jest
+-  react test renderer
 
-# 4️⃣ Installation Instructions
+#Installation Instructions
 
-🚫explain how to install the required dependencies to get this project up and running with yarn and NPM
+Clone this repo and use the following commands to get started
+
+    * npm install - installs dependencies locally
+    * npm start - starts the production server after a build is created
 
 ## Other Scripts
-
-🚫replace these examples with your own
-
-    * typecheck - runs the TypeScript compiler
     * build - creates a build of the application
-    * start - starts the production server after a build is created
     * test - runs tests in **tests** directory \* eject - copy the configuration files and dependencies into the project so you have full control over them
 
 # Contributing
@@ -175,5 +196,4 @@ These contribution guidelines have been adapted from [this good-Contributing.md-
 
 ## Documentation
 
-See [Backend Documentation](🚫_link to your backend readme here_) for details on the backend of our project.
-
+See [Backend Documentation](https://github.com/Pawsnfind/back-end) for details on the backend of our project.
