@@ -190,14 +190,12 @@ function UserProfile(props) {
         </GridContainer>
 
         <GridContainer>
+
                 <GridItem>
                     <StripeOnboarding />
                 </GridItem>
 
-                <GridItem>
-                    <AnimalMetaCard />
-                </GridItem>
-      </GridContainer>
+       </GridContainer>
 
 
     </div>

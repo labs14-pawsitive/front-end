@@ -129,9 +129,7 @@ class CreateNotes extends React.Component {
     };
 
     render() {
-
-        console.log('PROPS', this.props)
-
+        
         const { classes } = this.props;
 
         const customStyle = {
