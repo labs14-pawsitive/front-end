@@ -4,6 +4,14 @@
 
 You can find the deployed project at [Pawsnfind.com](https://pawsnfind.com).
 
+## Project Overview
+
+Pet rescue organizations have so much to manage, but their biggest concern is making sure pets go to a great home. Pawsnfind will allow rescues to manage their operations while making it easier for adopters to find their perfect pet and connect with the rescue.
+
+ [Trello Board](https://trello.com/b/8947SC7z/labs-14-pawsitive)
+
+ [Product Canvas](https://www.notion.so/Pawsnfind-1c8b27ec71124ca09a76b0c94d277cec)
+
 ## Contributors
 | [Ming Liu](https://github.com/skysthelimit68) | [Christopher Riffle](https://github.com/cmr629) | [Sarah Lee](https://github.com/sarahlee671) | [James Pak](https://github.com/jimpakdev) | [Aruna Benjamin](https://github.com/arunabenji29) |   [Hung Pham](https://github.com/ghungpham)    | [Lenna Mau](https://github.com/lennamau)  |                   
 | :----------------: | :--------------: | :------------: | :-------------------: | :-------------: | :-------------: | :---------------: |
@@ -18,13 +26,6 @@ You can find the deployed project at [Pawsnfind.com](https://pawsnfind.com).
 ![React](https://img.shields.io/badge/react-v16.8.6-blue.svg)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/b5c4db1c-b10d-42c3-b157-3746edd9e81d/deploy-status)](https://pawsnfind.com/)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
-
-## Project Overview
-
- [Trello Board](https://trello.com/b/8947SC7z/labs-14-pawsitive)
-
- [Product Canvas](https://www.notion.so/Pawsnfind-1c8b27ec71124ca09a76b0c94d277cec)
-
 
 ### 4️⃣ Key Features
 
