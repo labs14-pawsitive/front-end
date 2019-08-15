@@ -29,7 +29,8 @@ import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 
-import mainPageStyle from "assets/jss/material-dashboard-pro-react/views/mainPageStyle.jsx";
+import bgheader from "assets/img/shelter_img.png";
+import shelterPageStyle from "assets/jss/material-dashboard-pro-react/views/shelterPageStyle";
 
 class ShelterPage extends React.Component {
     constructor(props) {
@@ -56,37 +57,31 @@ class ShelterPage extends React.Component {
         console.log(`Shelter Error: ${shelterErr}, Animals Error: ${animalsRes}`)})
     }
 
-  
+    getBgImage = () => {
+      return bgheader;
+    };
   
   render() {
     const { classes } = this.props;
     
     return (
-      <GridContainer className={classes.bodyStyle}>
-        <GridItem xs={12} sm={12} md={3}>
-          <GridItem xs={12} sm={12} md={12}>
-          <h1 className={classes.subTitle}>{this.state.shelter.shelter}</h1>
-          <h4>{this.state.shelter.name}</h4>
-          <h4>{this.state.shelter.email}</h4>
-          <h4>{this.state.shelter.phone}</h4>
+      <>
+      <div className={classes.header}
+      style={{ backgroundImage: "url(" + this.getBgImage() + ")" }}>
+
+        <GridContainer className={classes.contentCenter}>
+          <GridItem xs={12} sm={12} md={7}>
+            <h1 className={classes.title}>{this.state.shelter.shelter}</h1>
           </GridItem>
-          <GridItem xs={12} sm={12} md={12}>
-            <Button color="rose">Donate Here</Button>
+          <GridItem xs={12} sm={12} md={7}></GridItem>
+          <GridItem xs={12} sm={12} md={8}>
+          <Button className={classes.topButtons}>Follow</Button>
+          <Button className={classes.topButtons}>Donate</Button>
           </GridItem>
-          <GridItem xs={12} sm={12} md={12}>
-            <Button color="rose">Follow this Shelter</Button>
-          </GridItem>
-        </GridItem>
-        <GridItem xs={12} sm={12} md={7}>
-        <div className={classes.picturesStyle}>
-        {this.state.animals.map(animal => {
-          return (
-          <div key={animal.id}><img src={animal.img_url} className={classes.petpicStyle}></img></div>
-          )
-        })}
+          <GridItem xs={12} sm={12} md={4}></GridItem>
+        </GridContainer>
         </div>
-        </GridItem>
-      </GridContainer>
+      </>
   );
   }
 }
@@ -98,4 +93,4 @@ ShelterPage.propTypes = {
 
 
 
-export default withStyles(mainPageStyle)(ShelterPage);
+export default withStyles(shelterPageStyle)(ShelterPage);
