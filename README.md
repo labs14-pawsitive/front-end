@@ -111,9 +111,9 @@ Provides a way to securely accept payments. Pawsnfind uses a feature in the Stri
 
 ## [Propublica](https://projects.propublica.org/nonprofits/api)
 
-Propublica Nonprofit Explorer API provides a way to verify EIN numbers are valid and are non profit organizations. Pawsnfind uses it in the rescue on boarding process to validate the EIN number entered by the organization rep.
+Propublica Nonprofit Explorer API provides a way to verify EIN numbers are valid and non profit organizations. Pawsnfind uses it in the rescue on boarding process to validate the EIN number entered by the organization rep.
 
-#NPM Modules
+# NPM Modules
 
 ## [Zipcodes](https://www.npmjs.com/package/zipcodes)
 
