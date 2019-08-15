@@ -33,12 +33,12 @@ Animal Rescue organizations have so much to manage, but their biggest concern is
 -    View summary of operations including total animals, donations, and total applications
 -    Add and edit rescue contacts and locations
 -    Add, edit, view animals for animal locator site
--    Internal notes on each animal
+-    Internal notes for each animal
 -    View, update status and internal notes for applications received
 
 #### Animal Locator 
 -   Visitors can search for pets based on zip code radius and animal type
--   Results page gives visitors an option to narrow their search by breed, size, gender, coat length and age of animals
+-   Results page gives visitors an option to narrow their search by breed, size, gender, coat length and age of animal
 -  Detailed animal page shows more info about each animal and allows vistors to complete an adoption application, donate, and follow the animal
 -  Detailed page about each rescue organization with contact info and list of their animals
 
@@ -103,7 +103,7 @@ Animal Rescue organizations have so much to manage, but their biggest concern is
 
 ## [AuthO](https://auth0.com/)
 
-A service that provides authentication which allows users to easily register and login securely using multiple identity providers. Analytics are also provided by Auth0. Pawsnfind uses AuthO for registration with either email or google and to login into both shelter and user accounts.
+A service that provides authentication which allows users to securely register and login using multiple identity providers. Analytics are also provided by Auth0. Pawsnfind uses AuthO for registration with either email or google and to login into both rescue and user accounts.
 
 ## [Stripe](https://stripe.com/en-ca/connect)
 
