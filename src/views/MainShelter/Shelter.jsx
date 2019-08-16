@@ -65,11 +65,18 @@ class ShelterPage extends React.Component {
     const { classes } = this.props;
     
     return (
-      <>
+      <div className={classes.wrapper} >
       <div className={classes.header}
       style={{ backgroundImage: "url(" + this.getBgImage() + ")" }}>
+      
+      <GridContainer className={classes.shelterCard}>
+        <GridItem xs={12} sm={6} md={6}><h6 className={classes.cardType}>321 Main Street,<br></br> Central Town, NJ 20005</h6> </GridItem>
+        <GridItem xs={12} sm={6} md={6}><h6 className={classes.cardType}>{this.state.shelter.email}</h6></GridItem>  
+        <GridItem xs={12} sm={6} md={6}><h6 className={classes.cardType}>{this.state.shelter.phone}</h6></GridItem>  
+        <GridItem xs={12} sm={6} md={6}><h6 className={classes.cardType}>{this.state.shelter.name}</h6></GridItem>   
+      </GridContainer>
 
-        <GridContainer className={classes.contentCenter}>
+        <GridContainer className={classes.contentHeader}>
           <GridItem xs={12} sm={12} md={7}>
             <h1 className={classes.title}>{this.state.shelter.shelter}</h1>
           </GridItem>
@@ -81,7 +88,7 @@ class ShelterPage extends React.Component {
           <GridItem xs={12} sm={12} md={4}></GridItem>
         </GridContainer>
         </div>
-      </>
+      </div>
   );
   }
 }
