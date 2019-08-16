@@ -30,6 +30,10 @@ import GridItem from "components/Grid/GridItem.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 
 import bgheader from "assets/img/shelter_img.png";
+import houseIcon from "assets/img/007-house.png";
+import mailIcon from "assets/img/013-mail.png";
+import phoneIcon from "assets/img/020-telephone-3.png";
+import serviceIcon from "assets/img/036-customer-service.png";
 import shelterPageStyle from "assets/jss/material-dashboard-pro-react/views/shelterPageStyle";
 
 class ShelterPage extends React.Component {
@@ -69,13 +73,6 @@ class ShelterPage extends React.Component {
       <div className={classes.header}
       style={{ backgroundImage: "url(" + this.getBgImage() + ")" }}>
       
-      <GridContainer className={classes.shelterCard}>
-        <GridItem xs={12} sm={6} md={6}><h6 className={classes.cardType}>321 Main Street,<br></br> Central Town, NJ 20005</h6> </GridItem>
-        <GridItem xs={12} sm={6} md={6}><h6 className={classes.cardType}>{this.state.shelter.email}</h6></GridItem>  
-        <GridItem xs={12} sm={6} md={6}><h6 className={classes.cardType}>{this.state.shelter.phone}</h6></GridItem>  
-        <GridItem xs={12} sm={6} md={6}><h6 className={classes.cardType}>{this.state.shelter.name}</h6></GridItem>   
-      </GridContainer>
-
         <GridContainer className={classes.contentHeader}>
           <GridItem xs={12} sm={12} md={7}>
             <h1 className={classes.title}>{this.state.shelter.shelter}</h1>
@@ -87,6 +84,12 @@ class ShelterPage extends React.Component {
           </GridItem>
           <GridItem xs={12} sm={12} md={4}></GridItem>
         </GridContainer>
+        <GridContainer className={classes.shelterCard}>
+        <GridItem xs={12} sm={6} md={6} style={{ minHeight: '40px'}}><img src={houseIcon} className={classes.imageIcon}></img><h6 className={classes.cardType}>321 Main Street <br></br>Central Town, NJ 20005</h6> </GridItem>
+        <GridItem xs={12} sm={6} md={6} style={{ minHeight: '40px'}}><img src={mailIcon} className={classes.imageIcon}></img><h6 className={classes.cardType}>{this.state.shelter.email}</h6></GridItem>  
+        <GridItem xs={12} sm={6} md={6} style={{ minHeight: '40px'}}><img src={phoneIcon} className={classes.imageIcon}></img><h6 className={classes.cardType}>{this.state.shelter.phone}</h6></GridItem>  
+        <GridItem xs={12} sm={6} md={6} style={{ minHeight: '40px'}}><img src={serviceIcon} className={classes.imageIcon}></img><h6 className={classes.cardType}>{this.state.shelter.name}</h6></GridItem>   
+      </GridContainer>
         </div>
       </div>
   );

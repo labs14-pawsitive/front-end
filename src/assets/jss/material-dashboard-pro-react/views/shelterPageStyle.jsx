@@ -27,11 +27,26 @@ shelterCard: {
 
 cardType: {
         fontSize: "0.9rem",
-        marginTop: "10px",
+        marginTop: "20px",
         marginBottom: "10px",
         fontFamily: "'Lato', sans-serif",
         textTransform: "none",
+        display: "inline-block",
+        color: "#959595",
       },
+
+imageIcon: {
+        display: "inline-block",
+        width: "30px",
+        height: "auto",
+        marginTop: "10px",
+        marginBottom: "20px",
+        marginRight: "30px",
+        marginLeft: "50px",
+        "&:hover": {
+            marginBottom: "30px"
+        }
+    },
 
 header: {
     backgroundSize: "cover",
@@ -42,10 +57,14 @@ header: {
 
 topButtons: {
        backgroundColor: "#A464A3",
+       marginTop: "25px",
        marginRight: "15px",
        boxShadow: "5px 5px 0 #C9AAA9",
        fontSize: "1em",
-       fontWeight: "700"
+       fontWeight: "700",
+       "&:hover": {
+        backgroundColor: "#A464A3"
+    }
    },
 
 contentHeader: {
@@ -57,7 +76,6 @@ contentHeader: {
     padding: "10% 12.5%",
     fontFamily: "Roboto, sans-serif",
   },
-
 
   contentCenter: {
     position: "absolute",
