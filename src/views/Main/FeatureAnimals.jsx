@@ -73,7 +73,7 @@ class FeatureAnimals extends React.Component {
         };
 
         return (
-            <GridItem xs={12} sm={10} md={10}>
+            <GridItem xs={12} sm={4} md={4} xl={2}>
                 <Card
                         component="p"
                         className={classes.card}

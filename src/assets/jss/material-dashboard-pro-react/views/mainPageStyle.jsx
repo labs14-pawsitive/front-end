@@ -39,7 +39,7 @@ const mainPageStyle = () => ({
     justifyContent: "center",
     width:"100%",
     color: blackColor,
-    height:"auto",
+    // height:"auto",
     // background: `url(${"backgroundImage"}) noRepeat center center fixed`,
     // backgroundSize: "cover"
 
