@@ -37,7 +37,6 @@ import AnimalCard from "components/AnimalCard/AnimalCard.jsx"
 
 class MainPage extends React.Component {
 
-
     render() {
     const { classes } = this.props;
     
@@ -60,7 +59,7 @@ class MainPage extends React.Component {
             </GridItem>
           </GridItem> 
           <GridItem xs={10} sm={10} md={10} style={{minHeight: "200px", marginTop: "-120px", zIndex:"5", backgroundColor: "#fcfcfc", borderRadius: "5px", boxShadow: "0 0 5px #33333330"}} >
-            <GridItem sx={12}>
+            <GridItem xs={12}>
               Just Testing
             </GridItem>
           </GridItem>

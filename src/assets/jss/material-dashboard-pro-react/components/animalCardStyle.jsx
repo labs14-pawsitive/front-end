@@ -78,7 +78,7 @@ const animalCardStyle = () => ({
     textAlign: "center",
     fontSize: "0.8rem",
     overflow: "hidden",
-    whiteSpace: "nowarp",
+    whiteSpace: "nowrap",
     textOverflow: "ellipsis",
     padding: "0 10px",
     lineHeight:"1.2",
