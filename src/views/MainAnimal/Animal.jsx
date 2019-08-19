@@ -44,7 +44,9 @@ constructor(props) {
   super(props)
   this.state = {
     animal: {},
+    animal_meta: {},
     shelter: {},
+    location: {},
   }
 }
 
@@ -52,17 +54,19 @@ async componentDidMount() {
 
     await axios
     .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${this.props.match.params.id}`)
-    .then( result => {
+    .then( async result => {
       console.log(result)
       this.setState({ 
-        animal: result.data
+        animal: result.data,
+        animal_meta: result.data.meta
       })
-      axios
+      await axios
             .get(`${process.env.REACT_APP_BACKEND_URL}/api/shelters/${this.state.animal.shelter_location_id}`) // ${this.state.animal.shelter_location_id}
-            .then( result => {
+            .then( async result => {
               console.log(result)
               this.setState({
-                shelter: result.data
+                shelter: result.data,
+                location: result.data.location[0]
               })
             })
             .catch( error => {
@@ -79,7 +83,7 @@ async componentDidMount() {
 
   render() {
 
-    console.log(this.state)
+    console.log( this.state.animal_meta )
 
     const { classes, ...rest } = this.props;
 
@@ -191,21 +195,21 @@ async componentDidMount() {
     return (
       <div>
 
-                  <GridContainer style={{ marginTop: "1200px" }}>
-                      <GridItem style={{ justify: "center", marginTop: "200px" }}>
+                  <GridContainer style={{ marginTop: "1200px" }} xs={12} sm={12} md={12} lg={12} xl={12}>
+                      <GridItem style={{ justify: "center", marginTop: "200px" }} xs={6} sm={6} md={6} lg={6} xl={6}>
                           {/* <CustomCarousel /> */}
                           <h1>LEFT SIDE: CAROUSEL</h1>
                       </GridItem>
 
-                      <GridItem>
+                      <GridItem xs={6} sm={6} md={6} lg={6} xl={6}>
 
                           <GridItem style={{ marginTop: "120px" }}>
                               <GridItem style={{ justify: "center", width: "400px" }} >
-                                    <Typography
+                                    <Button
                                     style={customStyle.adoptionStatusStyle}
                                     >
-                                        AVAILABLE FOR ADOPTION
-                                    </Typography>
+                                        {this.state.animal.animal_status}
+                                    </Button>
                                </GridItem>
                           </GridItem>
 
@@ -227,7 +231,7 @@ async componentDidMount() {
                               <GridItem>
                                   <TextField 
                                   fullWidth="true"
-                                  value="BOO"
+                                  value={this.state.animal.name}
                                   InputProps={{
                                     disableUnderline: true,
                                     style: {
@@ -242,18 +246,17 @@ async componentDidMount() {
 
                           <GridItem style={{ marginTop: "40px" }} >
                                 <GridItem>
-                                    <TextField
-                                      multiline
-                                      fullWidth="true"
-                                      value="I'm an adult boy who is on the large side.  I am a mixed breed dog who has short hair.  
-                                      I am neutered, up to date with all the shots.  I am house trained and good with other dogs."
-                                      InputProps={{
-                                        disableUnderline: true,
-                                        style: {
-                                          color: "white",
-                                          fontSize: "20px",
-                                          lineHeight: "30px",
-                                        },
+                                      <TextField
+                                          multiline
+                                          fullWidth="true"
+                                          value= { `I'm an ${this.state.animal_meta.age} ${this.state.animal_meta.is_male ? "boy" : "girl" } who is on the ${this.state.animal_meta.size} side. I am a ${this.state.animal_meta.breed} who has ${this.state.animal_meta.coat_length} length hair.  I am ${this.state.animal_meta.is_neutered_spayed ? "neutered" : "not neutered" }, ${this.state.animal_meta.is_vaccinated ? "up to date on all shots" : "and in need of shots from the vet"}.  I am ${this.state.animal_meta.is_house_trained ? "house trained" : "in need of training"} and ${this.state.animal_meta.is_good_with_dogs ? "good with other dogs" : "not friendly with other dogs"}.` }
+                                          InputProps={{
+                                            disableUnderline: true,
+                                            style: {
+                                              color: "white",
+                                              fontSize: "20px",
+                                              lineHeight: "30px",
+                                            },
                                       }}
                                       style={customStyle.animalSummaryStyle}
                                       />
@@ -286,29 +289,29 @@ async componentDidMount() {
 
                   <GridContainer style={{ marginTop: "40px" }}>
                   <Card style={customStyle.shelterInfoCard}>
-                        <GridItem style={{ marginLeft: "40px" }}>
+                        <GridItem style={{ marginLeft: "100px" }}>
                             <GridItem style={customStyle.regularItemStyle}>
                                         <GridItem style={{ marginTop: "5px" }}>
                                           ICON HERE
                                         </GridItem>
 
                                         <GridItem>
-                                        <TextField
-                                                multiline
-                                                fullWidth="true"
-                                                value="321 Main Street,"
-                                                InputProps={{
-                                                  disableUnderline: true,
-                                                }}
-                                        />
-                                        <TextField
-                                                multiline
-                                                fullWidth="true"
-                                                value="Central Town, NJ 20120"
-                                                InputProps={{
-                                                  disableUnderline: true,
-                                                }}
-                                        />
+                                            <TextField
+                                                    multiline
+                                                    fullWidth="true"
+                                                    value={ `${this.state.location.street_address},` }
+                                                    InputProps={{
+                                                      disableUnderline: true,
+                                                    }}
+                                            />
+                                            <TextField
+                                                    multiline
+                                                    fullWidth="true"
+                                                    value={ `${this.state.location.city}, ` + `${this.state.location.state}, ` + `${this.state.location.zipcode}`}
+                                                    InputProps={{
+                                                      disableUnderline: true,
+                                                    }}
+                                            />
                                         </GridItem>
                             </GridItem>
 
@@ -318,14 +321,14 @@ async componentDidMount() {
                                         </GridItem>
 
                                         <GridItem>
-                                        <TextField
-                                                multiline
-                                                fullWidth="true"
-                                                value="(321) 123-4567"
-                                                InputProps={{
-                                                  disableUnderline: true,
-                                                }}
-                                        />
+                                            <TextField
+                                                    multiline
+                                                    fullWidth="true"
+                                                    value={this.state.shelter.phone}
+                                                    InputProps={{
+                                                      disableUnderline: true,
+                                                    }}
+                                            />
                                         </GridItem>
                             </GridItem>
                         </GridItem>
@@ -341,7 +344,7 @@ async componentDidMount() {
                                             <TextField
                                                     multiline
                                                     fullWidth="true"
-                                                    value="saramarescue@gmail.com"
+                                                    value={this.state.shelter.email}
                                                     InputProps={{
                                                       disableUnderline: true,
                                                     }}
@@ -359,7 +362,7 @@ async componentDidMount() {
                                             <TextField
                                                     multiline
                                                     fullWidth="true"
-                                                    value="Sarama Animal Rescue"
+                                                    value={this.state.shelter.shelter}
                                                     InputProps={{
                                                       disableUnderline: true,
                                                     }}
@@ -383,19 +386,19 @@ async componentDidMount() {
                                     </GridItem>
 
                                    <GridItem>
-                                    <TextField
-                                      label="Breed"
-                                      value="Mixed Breed Dog"
-                                      InputProps={{
-                                        disableUnderline: true,
-                                      }}
-                                      InputLabelProps={{
-                                        style: {
-                                          fontSize: "20px",
-                                          fontWeight: "bold",
-                                        }
-                                      }}
-                                    />
+                                      <TextField
+                                        label="Breed"
+                                        value={this.state.animal_meta.breed}
+                                        InputProps={{
+                                          disableUnderline: true,
+                                        }}
+                                        InputLabelProps={{
+                                          style: {
+                                            fontSize: "20px",
+                                            fontWeight: "bold",
+                                          }
+                                        }}
+                                      />
                                    </GridItem>
                               </GridItem>
 
@@ -409,7 +412,7 @@ async componentDidMount() {
                                   <GridItem >
                                     <TextField
                                       label="Age"
-                                      value="Adult"
+                                      value={this.state.animal_meta.age}
                                       InputProps={{
                                         disableUnderline: true,
                                       }}
@@ -432,7 +435,7 @@ async componentDidMount() {
                                   <GridItem >
                                     <TextField
                                       label="Size"
-                                      value="Large"
+                                      value={this.state.animal_meta.size}
                                       InputProps={{
                                         disableUnderline: true,
                                       }}
@@ -457,7 +460,7 @@ async componentDidMount() {
                                   <GridItem >
                                   <TextField
                                     label="Coat Length"
-                                    value="Medium"
+                                    value={this.state.animal_meta.coat_length}
                                     InputProps={{
                                       disableUnderline: true,
                                     }}
@@ -480,7 +483,7 @@ async componentDidMount() {
                                   <GridItem >
                                     <TextField
                                       label="Gender"
-                                      value="Male"
+                                      value={ this.state.animal.is_male ? "Male" : "Female" }
                                       InputProps={{
                                         disableUnderline: true,
                                       }}
@@ -503,7 +506,7 @@ async componentDidMount() {
                                       <GridItem >
                                         <TextField
                                           label="Color"
-                                          value="Golden"
+                                          value={this.state.animal_meta.color}
                                           InputProps={{
                                             disableUnderline: true,
                                           }}
@@ -526,7 +529,7 @@ async componentDidMount() {
                                   <GridItem > 
                                     <TextField
                                       label="Vaccination"
-                                      value="Up-to-date on all shots"
+                                      value={ this.state.animal.is_vaccinated ? "Up-to-date on all shots" : "Requires shots" }
                                       InputProps={{
                                         disableUnderline: true,
                                       }}
@@ -549,7 +552,7 @@ async componentDidMount() {
                                   <GridItem > 
                                     <TextField
                                       label="Spayed / Neutered"
-                                      value="Yes"
+                                      value={ this.state.animal.is_neutered_spayed ? "Yes" : "No" }
                                       InputProps={{
                                         disableUnderline: true,
                                       }}
@@ -572,7 +575,7 @@ async componentDidMount() {
                                   <GridItem > 
                                     <TextField
                                       label="House-trained"
-                                      value="Yes"
+                                      value={ this.state.animal.is_house_trained ? "Yes" : "No" }
                                       InputProps={{
                                         disableUnderline: true,
                                       }}
@@ -603,8 +606,7 @@ async componentDidMount() {
                                             multiline
                                             label="My Story"
                                             fullWidth="true"
-                                            value="Boo is an energetic big boy with the heart of gold.  
-                                                  He is a hugger who loves nothing but snuggle with you on the couch watching TV."
+                                            value={this.state.animal_meta.description}
                                             InputProps={{
                                                     disableUnderline: true,
                                                   }}
@@ -631,7 +633,7 @@ async componentDidMount() {
                                             multiline
                                             label="My Health"
                                             fullWidth="true"
-                                            value="Boo just went to the vet and got a clean bill of health!  Super fit and super healthy!"
+                                            value={this.state.animal_meta.health}
                                             InputProps={{
                                               disableUnderline: true,
                                             }}
@@ -660,7 +662,7 @@ async componentDidMount() {
                                         <TextField
                                             multiline
                                             fullWidth="true"
-                                            value="I Need A Kid-Free Home"
+                                            value={ this.state.animal_meta.is_good_with_kids ? "I Am Good With Kids" : "I Need A Kid-Free Home" } 
                                             InputProps={{
                                               disableUnderline: true,
                                               style: {
@@ -683,7 +685,7 @@ async componentDidMount() {
                                         <TextField
                                             multiline
                                             fullWidth="true"
-                                            value="I Am Good With Dogs"
+                                            value={ this.state.animal_meta.is_good_with_dogs? "I Get Along With Dogs" : "I Do Not Get Along With Other Dogs" }
                                             InputProps={{
                                               disableUnderline: true,
                                               style: {
@@ -707,7 +709,7 @@ async componentDidMount() {
                                         <TextField
                                             multiline
                                             fullWidth="true"
-                                            value="I Need a Cat-Free Home"
+                                            value={ this.state.animal_meta.is_good_with_cats ? "I Get Along With Cats" : "I Need a Cat-Free Home" }
                                             InputProps={{
                                               disableUnderline: true,
                                               style: {
