@@ -11,15 +11,15 @@ wrapper: {
 
 shelterCard: {
     width: "80%",
-    position: "absolute",
     marginLeft: "auto",
     marginRight: "auto",
+    marginTop: "-50px",
     left: "0",
     right: "0",
     top: "60%",
     borderRadius: "4px",
     boxShadow: "0 0px 5px rgba(0,0,0,0.19)",
-    zIndex: "3",
+    zIndex: "5",
     textAlign: "left",
     alignItems: "center",
     backgroundColor: "white",
@@ -43,9 +43,6 @@ imageIcon: {
         marginBottom: "20px",
         marginRight: "30px",
         marginLeft: "50px",
-        "&:hover": {
-            marginBottom: "30px"
-        }
     },
 
 header: {
@@ -53,6 +50,7 @@ header: {
     backgroundPosition: "center center",
     backgroundRepeat: "no-repeat",
     minHeight: "65vh",
+    zIndex: "3",
    },
 
 topButtons: {
@@ -69,68 +67,40 @@ topButtons: {
 
 contentHeader: {
     position: "relative",
-    zIndex: "1",
-    textAlign: "left",
-    color: whiteColor,
-    width: "100%",
-    padding: "10% 12.5%",
-    fontFamily: "Roboto, sans-serif",
-  },
-
-  contentCenter: {
-    position: "absolute",
-    top: "20%",
-    left: "10%",
     zIndex: "3",
     textAlign: "left",
     color: whiteColor,
-    padding: "0 15px",
     width: "100%",
-    maxWidth: "880px",
+    paddingTop: "10%",
+    paddingLeft: "12.5%",
     fontFamily: "Roboto, sans-serif",
   },
+
   title: {
     ...title,
-    fontSize: "3.4em",
+    fontSize: "3.5em",
     color: "#383636",
     letterSpacing: "14px",
     fontWeight: "800",
     textTransform: "uppercase",
     textShadow: "8px 8px 0px #BCB3A0"
   },
-  subTitle: {
-    fontSize: "2.25rem",
-    marginTop: "0",
-    marginBottom: "8px"
-  },
-  description: {
-    fontSize: "1.125rem",
-    marginTop: "0",
-    marginBottom: "8px"
-  },
-  bodyStyle: {
-    zIndex: 3,
-    display:"flex",
-    justifyContent: "center",
-    width:"100%",
-    color: blackColor
 
-  },
   picturesStyle: {
-    margin: "auto",
-    display : "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-around",
-    alignContent: "space-around",
+    width: "100%",
+    margin: "0 auto",
+    zIndex: "3",
   },
 
   petpicStyle: {
-    maxWidth: "300px",
-    maxHeight: "300px",
+    width: "250px",
+    height: "250px",
+    border: "2px solid white",
+    borderRadius: "4px",
+    boxShadow: "0 0px 10px rgba(0,0,0,0.19)",
     overflow: "hidden",
     display: "block",
-    margin: "auto",
+    marginRight: "10px",
     marginTop: "10px",
   }
 });
