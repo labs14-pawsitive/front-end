@@ -46,7 +46,7 @@ Animal Rescue organizations have so much to manage, but their biggest concern is
 
 ### Front end built using:
 
-#### _React with React Router and Redux_
+#### _React with React Router and Redux using Material UI_
 
 ##### Dependancies:
     @material-ui/core: 4.1.0,
@@ -119,6 +119,10 @@ Propublica Nonprofit Explorer API provides a way to verify EIN numbers are valid
 
 This module allows Pawsnfind to conduct a radius search for a zip code that is input by a visitor. 
 
+## [React Responsive Carousel](https://www.npmjs.com/package/react-responsive-carousel)
+
+This displays pictures of animals in a responsive carousel.
+
 
 # Environment Variables
 
@@ -139,6 +143,7 @@ In order for the app to function correctly, the user must set up their own envir
 | Name | Source / Creator | License                                                                      |
 | -------------- | ---------------- | ---------------------------------------------------------------------------- |
 | Material Dashboard Pro React  | Creative Tim  | [Developer](https://www.creative-tim.com/license?ref=license-page-material-dashboard-pro-react) |
+| Icons | Freepic | [flaticon.com(https://www.flaticon.com/terms-of-use)] |
 
 # Testing
 
