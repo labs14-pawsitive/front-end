@@ -143,7 +143,7 @@ In order for the app to function correctly, the user must set up their own envir
 | Name | Source / Creator | License                                                                      |
 | -------------- | ---------------- | ---------------------------------------------------------------------------- |
 | Material Dashboard Pro React  | Creative Tim  | [Developer](https://www.creative-tim.com/license?ref=license-page-material-dashboard-pro-react) |
-| Icons | Freepic | [flaticon.com](https://www.flaticon.com/terms-of-use)] |
+| Icons | Freepik | [flaticon.com](https://www.flaticon.com/terms-of-use) |
 
 # Testing
 
