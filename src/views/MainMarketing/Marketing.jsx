@@ -26,19 +26,63 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 
-import mainPageStyle from "assets/jss/material-dashboard-pro-react/views/mainPageStyle.jsx";
+import Button from "components/CustomButtons/Button.jsx";
+
+
+
+import marketingPageStyle from "assets/jss/material-dashboard-pro-react/views/marketingPageStyle.jsx";
 
 class MarketingPage extends React.Component {
   render() {
     const { classes } = this.props;
     
     return (
-      <GridContainer className={classes.bodyStyle}>
-        <GridItem xs={10} >
-          <h1 className={classes.title}>I Sell Services<sup>*</sup></h1>
-        
+      <>
+      <div className={classes.div_1}>
+        <GridContainer style={{width: "70%", margin:"0 auto"}}>
+        <GridItem xs={12} s={12} md={8} >
+          <h1 className={classes.headerTitle}>Promote and Manage Shelter<sup>*</sup></h1>
+          <h4 className={classes.description} style={{color: "white"}}>All from One App</h4>
+          <Button className={classes.signupButton}>Sign Up</Button>
         </GridItem>
+        </GridContainer>
+      </div>
+      <div className={classes.iconsBar}>
+      <GridContainer style={{ display: "flex",justifyContent: "center", alignItems: "center"}}>
+      <GridItem xs={12} sm={12} md={4} >
+        <h1 className={classes.barType}>Promote & Manage Animals</h1>
+      </GridItem>
+      <GridItem xs={12} sm={12} md={4} >
+        <h1 className={classes.barType}>Accept & Manage Applications Online</h1>
+      </GridItem>
+      <GridItem xs={12} sm={12} md={4} >
+        <h1 className={classes.barType}>Accept & Manage & Track Donations</h1>
+      </GridItem>
       </GridContainer>
+      </div>
+      <div className={classes.div_2}>
+      <GridContainer style={{width: "80%", margin:"0 auto"}} >
+      <GridItem xs={12} sm={12} md={6} >
+        <h1 className={classes.subTitle}>Shelter Management Snapshot</h1>
+        <h4 className={classes.description} style={{color:"#9A9A9A"}}> Get all the important data from your shelter operation at one page.</h4>
+      </GridItem>
+      </GridContainer>
+    </div>
+    <div className={classes.div_3}>
+    <GridContainer style={{width: "80%", margin:"0 auto"}}>
+      <GridItem xs={12} sm={12} md={12} >
+        <h1 className={classes.subTitle}>Promote Adoptable Animals</h1>
+      </GridItem>
+    </GridContainer>
+    </div>
+    <div className={classes.div_4}>
+    <GridContainer style={{width: "80%", margin:"0 auto"}}>
+      <GridItem xs={12} sm={12} md={12} >
+        <h1 className={classes.subTitle}>Paperless Online Application</h1>
+      </GridItem>
+    </GridContainer>
+    </div>
+    </>
   );
   }
 }
@@ -47,4 +91,4 @@ MarketingPage.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(mainPageStyle)(MarketingPage);
+export default withStyles(marketingPageStyle)(MarketingPage);

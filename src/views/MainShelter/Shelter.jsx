@@ -94,17 +94,7 @@ class ShelterPage extends React.Component {
         <GridItem xs={12} sm={6} md={6} style={{ minHeight: '40px'}}><img src={serviceIcon} className={classes.imageIcon}></img><h6 className={classes.cardType}>{this.state.shelter.name}</h6></GridItem>   
       </GridContainer>
          <div className={classes.picturesStyle}>
-           
-        {/* {this.state.animals.map(animal => {
-          return (
-          <div 
-          key={animal.id}><PetsList animal={animal} classes={this.props.classes} />
-          </div>
-          )
-        })}
-        </div> */}
-
-        <GridContainer xs={10} style={{margin:"100px auto 0"}}>
+        <GridContainer xs={10} style={{margin:"50px auto 0"}}>
               {this.state.animals.map(animal => <AnimalCard animal={animal}/>)}  
             </GridContainer> 
         </div>
