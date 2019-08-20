@@ -377,7 +377,9 @@ class MainPage extends React.Component {
       topLeft: {
         // border: "1px solid black",
         paddingTop: "100px",
-        paddingLeft: "146px",
+        // paddingLeft: "146px",
+        paddingLeft: "21%",
+        paddingRight: "21%",
         position: "relative",
         paddingBottom: "100px",
       },
@@ -405,7 +407,19 @@ class MainPage extends React.Component {
         zindex: "4", 
         display: "flex" 
         }} >
-          <GridItem xs={12} sm={10} md={9} style={customStyle.textTopGrid}>
+          {/* <GridItem xs={12} sm={10} md={9} style={customStyle.textTopGrid}>
+            <div style={customStyle.topLeft}>
+              <div style={customStyle.textBoxTop}>
+                <p style={customStyle.textP1}>Search, Discover</p>
+                <p style={customStyle.textP2}>ADOPT YOUR PET</p>
+              </div>
+              <Button size="large" style={customStyle.signUpButton}
+                variant="contained" className={classes.button} onClick={this.handleSearch}>
+                SIGN UP
+              </Button>
+            </div>
+          </GridItem> */}
+          <GridItem xs={12} sm={12} md={9} style={customStyle.textTopGrid}>
             <div style={customStyle.topLeft}>
               <div style={customStyle.textBoxTop}>
                 <p style={customStyle.textP1}>Search, Discover</p>
@@ -418,16 +432,19 @@ class MainPage extends React.Component {
             </div>
           </GridItem>
           <Hidden smDown>
-            <GridItem md={10} style={{
+            <GridItem md={9} xl={10} style={{
 
               zIndex: "7",
               minHeight: "500px",
               backgroundImage: "url(" + dogImage + ")",
-              backgroundPosition: "right",
+              // backgroundPosition: "center right",
+              backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
               backgroundSize: "auto 100%",
               position: "relative",
-              marginTop: "100px"
+              marginTop: "100px",
+              marginRight: "140px",
+              // backgroundAttachment: fixed
             }}>
             </GridItem>
           </Hidden>
