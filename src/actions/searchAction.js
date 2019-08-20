@@ -6,6 +6,7 @@ export const SEARCH_OPTION_ERROR = 'SEARCH_OPTION_ERROR';
 
 export const updateSearchOption = (changedAttribute, value) => dispatch => {
     dispatch({ type: SEARCH_OPTION_START});
+    console.log(changedAttribute)
     const payload = {
         optionName: changedAttribute,
         value: value
@@ -20,12 +21,12 @@ export const UPDATE_DISPLAYED_ANIMALS_ERROR = 'UPDATE_DISPLAYED_ANIMALS_ERROR';
 
 export const updateDisplayedAnimals = (options={}) => dispatch => {
     dispatch({ type: UPDATE_DISPLAYED_ANIMALS_START})
-    // TODO (SL): hard coded zip code and radius
-    const fakeSearchObj = {zipcode: '27513', radius: 50, breed_id: []}
-    const searchObj = {
-        ...fakeSearchObj, 
+
+    let searchObj = {
         ...options
     }
+    console.log(searchObj)
+ 
     return axios
     .post('http://localhost:8000/api/search/advancedSearch', searchObj)
     .then(res => {

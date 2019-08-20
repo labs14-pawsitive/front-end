@@ -12,11 +12,12 @@ const initialState = {
     searchSelections: {
         breed_ids: [],
         species_ids: [],
-        is_male: false,
+        is_male: [],
         size_ids: [],
         age_ids: [],
         coatLength_ids: [],
-        zipcode: 0
+        zipcode: null,
+        radius: []
     },
     displayedAnimals: [],
     error: '',

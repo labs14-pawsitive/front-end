@@ -4,6 +4,7 @@ import axios from 'axios';
 import { withStyles } from "@material-ui/core/styles";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
+import './carousel.css';
 
 class CustomCarousel extends React.Component {
   constructor(props) {
@@ -28,8 +29,17 @@ class CustomCarousel extends React.Component {
   render() {
     const customStyles = {
       carousel: {
-        width: "80%",
-        margin: "30px"
+        width: "100%",
+        margin: "80px 20px 20px 20px",
+        thumbWidth: "500px"
+      
+        
+        
+        // minHeight: "500px"
+
+      },
+      override: {
+        dynamicHeight: "100px"
       }
     }
 
@@ -38,8 +48,8 @@ class CustomCarousel extends React.Component {
 
     return (
       <GridContainer style={customStyles.carousel}>
-        <GridItem xs={12} sm={12} md={6}>
-          <Carousel autoPlay infiniteLoop>
+        <GridItem xs={12} sm={12} md={6} >
+          <Carousel style={customStyles.override} autoPlay infiniteLoop>
             {
               Array.from(images).map(image => {
                 return (

@@ -33,21 +33,34 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
 import Chip from '@material-ui/core/Chip';
-import {fetchOptions} from '../../actions/animalAction'
-import {updateSearchOption, updateDisplayedAnimals} from '../../actions/searchAction'
+import {fetchOptions} from '../../actions/animalAction';
+import {updateSearchOption, updateDisplayedAnimals} from '../../actions/searchAction';
+import AnimalCard from '../../components/AnimalCard/AnimalCard.jsx';
 
 import mainPageStyle from "assets/jss/material-dashboard-pro-react/views/mainPageStyle.jsx";
+import { flexbox } from '@material-ui/system';
 
 class SearchPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      radiusOptions: [10, 25, 50, 100]
     }
   }
   
   componentDidMount() {
-    this.props.fetchOptions(1)
-    this.props.updateDisplayedAnimals()
+    this.props.fetchOptions(0)
+    const {searchSelections} = this.props
+    const options = {
+      breed_id: searchSelections.breed_ids,
+      species_id: searchSelections.species_ids,
+      size_id: searchSelections.size_ids,
+      age_id: searchSelections.age_ids,
+      coat_length_id: searchSelections.coatLength_ids,
+      zipcode: searchSelections.zipcode,
+      is_male: searchSelections.is_male
+    }
+    this.props.updateDisplayedAnimals(options)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -56,10 +69,14 @@ class SearchPage extends React.Component {
     const options = {
       breed_id: searchSelections.breed_ids,
       species_id: searchSelections.species_ids,
-      size_id: searchSelections.species_ids,
+      size_id: searchSelections.size_ids,
       age_id: searchSelections.age_ids,
-      coat_length_id: searchSelections.coatLength_ids
+      coat_length_id: searchSelections.coatLength_ids,
+      zipcode: searchSelections.zipcode,
+      is_male: searchSelections.is_male
     }
+    console.log("OPTIONS:")
+    console.log(options)
     if(this.detectChanges(searchSelections)) {
       this.props.updateDisplayedAnimals(options)
     }
@@ -71,7 +88,9 @@ class SearchPage extends React.Component {
     searchSelections.species_ids != this.props.searchSelections.species_ids ||
     searchSelections.size_ids != this.props.searchSelections.size_ids ||
     searchSelections.age_ids != this.props.searchSelections.age_ids ||
-    searchSelections.coatLength_ids != this.props.searchSelections.coatLength_ids
+    searchSelections.coatLength_ids != this.props.searchSelections.coatLength_ids ||
+    searchSelections.zipcode != this.props.searchSelections.zipcode ||
+    searchSelections.is_male != this.props.searchSelections.is_male
 
   }
   
@@ -84,6 +103,7 @@ class SearchPage extends React.Component {
     }
 
   handleToggle(event, name) {
+    console.log(event.target.value)
     //when option is selected, update option in redux
     this.props.updateSearchOption(name, event.target.value)
   }
@@ -93,16 +113,110 @@ class SearchPage extends React.Component {
 
     const customStyle = {
       formControlStyle: {
-        width: "80%",
-        margin: "20px",
-        border: "1px solid black"
+        width: "100%",
+        margin: "20px 20px 20px 0px",
+        border: "2px solid gray",
+        borderRadius: "5px",
+        // boxShadow: "5px 5px 5px grey",
+        backgroundColor: "white",
+        padding: "5px"
+      },
+      gridContainerStyle: {
+        width: "100%",
+        padding: "100px 0px 20px 20px",
+        backgroundColor: "#349FAD"
+      },
+
+      filterContainerStyle: {
+        // backgroundColor: "white",
+        // padding: "100px 0px 20px 20px",
+        margin: "20px 30px"
+
+        
+      },
+      animalCardStyle: {
+        marginTop: "20px",
+
+     
+        width: "100%",
+        display: "flexbox",
+        flexDirection: "row",
+        justifyContent: "center",
+        flexWrap: "wrap",
+        backgroundColor: "lightgrey"
       }
+
+
+
+
 
     }
     
     return (
-      <GridContainer className={classes.bodyStyle}>
-        <GridItem xs={12} sm={12} md={4}>
+    
+      <GridContainer style={customStyle.gridContainerStyle} className={classes.bodyStyle}>
+        <GridContainer style={customStyle.filterContainerStyle}>
+
+        <GridItem xs={12} sm={6} md={3}>
+          <FormControl xs={12} md={12} style={customStyle.formControlStyle} className={classes.formControl}>
+            <InputLabel htmlFor="select-multiple-checkbox">Species</InputLabel>
+            <Select
+              multiple
+              value={this.props.searchSelections.species_ids}
+              onChange={e => this.handleToggle(e, "species_ids")}
+              input={<Input id="select-multiple-checkbox" />}
+              renderValue={selected => this.displayOptionLabels(this.props.speciesOptions, "species", selected).join(', ')}
+              MenuProps={{
+                name: 'species_ids'
+              }}
+            >
+              {(this.props.speciesOptions || []).map(species => (
+                <MenuItem key={species.id} value={species.id} name={species.species}>
+                  <Checkbox checked={this.props.searchSelections.species_ids.indexOf(species.id) > -1} />
+                  <ListItemText primary={species.species} />
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </GridItem>
+
+        <GridItem xs={12} sm={6} md={3}>
+          <FormControl style={customStyle.formControlStyle} className={classes.formControl}>
+            <TextField 
+              name="zipcode"
+              value={this.props.searchSelections.zipcode}
+              label="Zipcode"
+              className={classes.textField}
+              onChange={e => this.handleToggle(e, 'zipcode')}
+            />
+          </FormControl>
+        </GridItem>
+
+        <GridItem xs={12} sm={6} md={3}>
+          <FormControl style={customStyle.formControlStyle} className={classes.formControl}>
+            <InputLabel htmlFor="select-multiple-checkbox">Distance</InputLabel>
+            <Select
+              multiple
+              value={this.props.searchSelections.radius}
+              onChange={e => this.handleToggle(e, "radius")}
+              input={<Input id="select-multiple-checkbox" />}
+              renderValue={selected => selected.join(', ')}
+              MenuProps={{
+                name: 'radius'
+              }}
+            >
+              {this.state.radiusOptions.map(radius => (
+                <MenuItem key={radius} value={radius} name={radius}>
+                  <Checkbox checked={this.props.searchSelections.radius.indexOf(radius) > -1} />
+                  <ListItemText primary={radius} />
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </GridItem>
+
+
+        <GridItem xs={12} sm={6} md={3}>
           <FormControl style={customStyle.formControlStyle} className={classes.formControl}>
             <InputLabel htmlFor="select-multiple-checkbox">Breed</InputLabel>
             <Select
@@ -125,30 +239,41 @@ class SearchPage extends React.Component {
           </FormControl>
         </GridItem>
 
-        <GridItem xs={12} sm={12} md={4}>
+        <GridItem xs={12} sm={6} md={3}>
           <FormControl style={customStyle.formControlStyle} className={classes.formControl}>
-            <InputLabel htmlFor="select-multiple-checkbox">Species</InputLabel>
+            <InputLabel htmlFor="select-multiple-checkbox">Gender</InputLabel>
             <Select
               multiple
-              value={this.props.searchSelections.species_ids}
-              onChange={e => this.handleToggle(e, "species_ids")}
+              // value={this.props.searchSelections.is_male ? 'male': 'female'}
+              value={this.props.searchSelections.is_male}
+              name='is_male'
+              onChange={e => this.handleToggle(e, "is_male")}
               input={<Input id="select-multiple-checkbox" />}
-              renderValue={selected => this.displayOptionLabels(this.props.speciesOptions, "species", selected).join(', ')}
-              MenuProps={{
-                name: 'species_ids'
-              }}
+              // renderValue={selected => this.displayOptionLabels(this.props.searchSelections.is_male, "is_male", selected).join(', ')}
+              renderValue={value => value.includes(true) && value.includes(false) ? "Male, Female" : (value.includes(true) ? "Male" : (value.includes(false) ? "Female" : ""))}
+              // MenuProps={{
+              //   name: 'is_male'
+              // }}
             >
-              {(this.props.speciesOptions || []).map(species => (
-                <MenuItem key={species.id} value={species.id} name={species.species}>
-                  <Checkbox checked={this.props.searchSelections.species_ids.indexOf(species.id) > -1} />
-                  <ListItemText primary={species.species} />
+              {/* {(this.props.searchSelections.is_male || []).map(gender => ( */}
+                <MenuItem key={1}  name={"male"} value={true}>
+                  <Checkbox label="male"></Checkbox>
+                  Male
                 </MenuItem>
-              ))}
+                 <MenuItem key={2} name={"female"} value={false}>
+                   <Checkbox label="female"></Checkbox>
+                  Female
+                 </MenuItem>
+            }
+                
+   
             </Select>
           </FormControl>
         </GridItem>
 
-        <GridItem xs={12} sm={12} md={4}>
+
+
+        <GridItem xs={12} sm={6} md={3}>
           <FormControl style={customStyle.formControlStyle} className={classes.formControl}>
             <InputLabel htmlFor="select-multiple-checkbox">Size</InputLabel>
             <Select
@@ -171,7 +296,7 @@ class SearchPage extends React.Component {
           </FormControl>
         </GridItem>
 
-        <GridItem xs={12} sm={12} md={2}>
+        <GridItem xs={12} sm={6} md={3}>
           <FormControl style={customStyle.formControlStyle} className={classes.formControl}>
             <InputLabel htmlFor="select-multiple-checkbox">Age</InputLabel>
             <Select
@@ -194,7 +319,7 @@ class SearchPage extends React.Component {
           </FormControl>
         </GridItem>
 
-        <GridItem xs={12} sm={12} md={2}>
+        <GridItem xs={12} sm={6} md={3}>
           <FormControl style={customStyle.formControlStyle} className={classes.formControl}>
             <InputLabel htmlFor="select-multiple-checkbox">Coat Length</InputLabel>
             <Select
@@ -216,27 +341,31 @@ class SearchPage extends React.Component {
             </Select>
           </FormControl>
         </GridItem>
-        <GridItem xs={12} sm={12} md={2}>
-          <TextField 
-            name="zipcode"
-            value={this.props.searchSelections.zipcode}
-            label="Zipcode"
-            className={classes.textField}
-            value={this.props.searchSelections.locationsOptions}
-            onChange={e => this.handleToggle(e, 'zipcode')}
-            margin="normal"
-            variant="outlined"
-          />
-        </GridItem>
-
-
-          {this.props.displayedAnimals.map(animal => (
-            <p key={animal.id}>{animal.name}</p>
-          ))}
-
+        </GridContainer>
+          
+        {/* <GridItem xs={12} sm={12} md={4} > */}
         
-
+          <GridContainer style={customStyle.animalCardStyle}>
+              {this.props.displayedAnimals.map(animal => (
+              
+                <AnimalCard key={animal.id} animal={animal}/>
+              ))}
+          </GridContainer>
+         
+          
+        {/* </GridItem> */}
       </GridContainer>
+      
+
+
+
+      // <GridItem style={customStyle.gridContainerStyle} className={classes.bodyStyle}>
+      //   <GridItem xs={12} sm={12} md={2}>
+      //     {this.props.displayedAnimals.map(animal => (
+      //       <p key={animal.id}>{animal.name}</p>
+      //     ))}
+      //   </GridItem>
+      // </GridItem>
     );
   }
 }

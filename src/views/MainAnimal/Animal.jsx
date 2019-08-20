@@ -32,11 +32,16 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 class AnimalPage extends React.Component {
   render() {
+    // const customStyles = {
+    //   carousel: {
+    //     maxHeight: "300px"
+    //   }
+    // }
     const { classes } = this.props;
     
     return (
-      <GridContainer className={classes.bodyStyle}>
-        <GridItem xs={10}>
+      <GridContainer className={classes.bodyStyle} >
+        <GridItem xs={12} sm={10} md={8}>
           
           <CustomCarousel 
             animalId={this.props.match.params.id}
