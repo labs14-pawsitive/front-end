@@ -125,6 +125,27 @@ export const getAllOptions = (shelterID) => dispatch => {
         })
     }  
 
+
+    export const FETCH_ANIMALS_BY_SHELTER_START = 'FETCH_ANIMALS_BY_SHELTER_START'
+    export const FETCH_ANIMALS_BY_SHELTER_SUCCESS = 'FETCH_ANIMALS_BY_SHELTER_SUCCESS'
+    export const FETCH_ANIMALS_BY_SHELTER_FAILURE = 'FETCH_ANIMALS_BY_SHELTER_FAILURE'
+    
+    export const getPublicAnimalInfoByCount = (count) => dispatch => {
+        
+        dispatch({ type: FETCH_ANIMALS_BY_SHELTER_START })
+        return axios
+          .get(`http://localhost:8000/api/animals/public/count/${count}`)
+          //.get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalID}`)
+          .then(res => {
+            dispatch({ type: FETCH_ANIMALS_BY_SHELTER_SUCCESS, payload: res.data })
+            console.log('action: FETCH_ANIMALS_BY_SHELTER_SUCCESS', res.data)
+          })
+          .catch(err => {
+            dispatch({ type: FETCH_ANIMALS_BY_SHELTER_FAILURE, payload: err.response })
+            console.log('action: FETCH_ANIMALS_BY_SHELTER_FAILURE error: ', err.response)
+          })
+      } 
+
     export const POST_NOTES_START = 'POST_NOTES_START'
     export const POST_NOTES_SUCCESS = 'POST_NOTES_SUCCESS'
     export const POST_NOTES_FAILURE = 'POST_NOTES_FAILURE'
