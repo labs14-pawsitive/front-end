@@ -55,11 +55,12 @@ const marketingPageStyle = () => ({
         zIndex: "3",
         float: "right",
         marginRight: "3%",
-        marginTop : "-300px",
+        marginTop : "-320px",
         position: "relative",
+        maxWidth: "700px",
     },
     div_2_pic :{
-        width: "530px",
+        width: "510px",
         height: "auto",
         float: "right",
         zIndex: "3",
@@ -100,6 +101,21 @@ const marketingPageStyle = () => ({
         zIndex: "1",
       },
 
+      div3img : {
+        zIndex: "3",
+        float: "right",
+        marginRight: "2.5%",
+        marginTop : "-300px",
+        position: "relative",
+        maxWidth: "700px",
+    },
+    div_3_pic :{
+        width: "500px",
+        height: "auto",
+        float: "right",
+        zIndex: "3",
+    },
+
       div_4: {
         position: "relative",
         width: "100%",
@@ -110,6 +126,20 @@ const marketingPageStyle = () => ({
         zIndex: "1",
       },
 
+      div4img : {
+        zIndex: "3",
+        float: "right",
+        marginRight: "2.5%",
+        marginTop : "-350px",
+        position: "relative",
+        maxWidth: "700px",
+    },
+    div_4_pic :{
+        width: "500px",
+        height: "auto",
+        float: "right",
+        zIndex: "3",
+    },
       containerWrapper: {
         maxWidth: "80%",
         margin: "0 auto",
@@ -118,7 +148,7 @@ const marketingPageStyle = () => ({
       signupButton: {
         backgroundColor: "#A464A3",
         marginTop: "30px",
-        marginRight: "15px",
+        marginLeft: "40px",
         boxShadow: "2px 2px 3px #588CA9",
         fontSize: "1em",
         fontWeight: "700",

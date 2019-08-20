@@ -18,6 +18,7 @@
 
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -53,8 +54,8 @@ class MarketingPage extends React.Component {
         <GridContainer style={{width: "70%", margin:"0 auto"}}>
         <GridItem xs={12} sm={12} md={8} >
           <h1 className={classes.headerTitle}>Promote and Manage Shelter</h1>
-          <h4 className={classes.description} style={{color: "white"}}>All from One App</h4>
-          <Button className={classes.signupButton}>Sign Up</Button>
+          <h4 className={classes.description} style={{color: "white", textShadow: "1px 1px 1px black"}}>All from One App</h4>
+          <Link to={"/shelter-signup"}><Button className={classes.signupButton}>Sign Up</Button></Link>
         </GridItem>
         </GridContainer>
         <Hidden smDown>
@@ -100,8 +101,8 @@ class MarketingPage extends React.Component {
     </GridContainer>
     </div>
     <Hidden smDown>
-        <div className={classes.div2img}>
-        <img src= {div_3pic} className={classes.div_2_pic}></img>
+        <div className={classes.div3img}>
+        <img src= {div_3pic} className={classes.div_3_pic}></img>
       </div>
       </Hidden> 
     <div className={classes.div_4}>
@@ -114,8 +115,8 @@ class MarketingPage extends React.Component {
     </GridContainer>
     </div>
     <Hidden smDown>
-        <div className={classes.div2img}>
-        <img src= {div_4pic} className={classes.div_2_pic}></img>
+        <div className={classes.div4img}>
+        <img src= {div_4pic} className={classes.div_4_pic}></img>
       </div>
       </Hidden> 
     </>
