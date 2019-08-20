@@ -5,6 +5,9 @@ import { withStyles } from "@material-ui/core/styles";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 
+// carousel style
+import "./Carousel.css";
+
 class CustomCarousel extends React.Component {
   constructor(props) {
     super(props)
@@ -16,7 +19,7 @@ class CustomCarousel extends React.Component {
 
   componentDidMount() {
     return axios
-      .get(`http://localhost:8000/api/pictures/animal/10`)
+      .get(`http://localhost:8000/api/pictures/animal/34`)
       .then(response => {
         console.log(response)
         const { img_url, img_id, animal_id } = response
@@ -26,19 +29,23 @@ class CustomCarousel extends React.Component {
   }
 
   render() {
+
     const customStyles = {
       carousel: {
-        width: "80%",
-        margin: "30px"
+        width: "90%",
+        maxWidth: "1000px",
+        margin: "80px 0px 20px 20px",
       }
     }
+
+    
 
     const { images } = this.state
     if (!images.length) return <div>Images are not fetched yet!</div>
 
     return (
-      <GridContainer style={customStyles.carousel}>
-        <GridItem xs={12} sm={12} md={6}>
+      <GridContainer > 
+        <GridItem xs={12} sm={12} md={6} style={customStyles.carousel}>
           <Carousel autoPlay infiniteLoop>
             {
               Array.from(images).map(image => {
