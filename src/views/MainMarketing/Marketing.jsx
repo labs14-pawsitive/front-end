@@ -21,13 +21,19 @@ import PropTypes from "prop-types";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
+import Hidden from '@material-ui/core/Hidden';
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 
-import Button from "components/CustomButtons/Button.jsx";
 
+import Button from "components/CustomButtons/Button.jsx";
+import headerbg from "assets/img/pawsnfind_marketing_BG.png";
+import div_1pic from "assets/img/marketing_img.png";
+import div_2pic from "assets/img/marketing_img_dashboard_iso.png";
+import div_3pic from "assets/img/marketing_img_animalCards_iso.png";
+import div_4pic from "assets/img/marketing_img_application_iso.png";
 
 
 import marketingPageStyle from "assets/jss/material-dashboard-pro-react/views/marketingPageStyle.jsx";
@@ -35,17 +41,27 @@ import marketingPageStyle from "assets/jss/material-dashboard-pro-react/views/ma
 class MarketingPage extends React.Component {
   render() {
     const { classes } = this.props;
+  
+    const getBgImage = () => {
+      return headerbg;
+    };
     
     return (
       <>
-      <div className={classes.div_1}>
+      <div className={classes.div_1}
+      style={{ backgroundImage: "url(" + getBgImage() + ")" }}>
         <GridContainer style={{width: "70%", margin:"0 auto"}}>
-        <GridItem xs={12} s={12} md={8} >
+        <GridItem xs={12} sm={12} md={8} >
           <h1 className={classes.headerTitle}>Promote and Manage Shelter</h1>
           <h4 className={classes.description} style={{color: "white"}}>All from One App</h4>
           <Button className={classes.signupButton}>Sign Up</Button>
         </GridItem>
         </GridContainer>
+        <Hidden smDown>
+        <div className={classes.div1img}>
+        <img src= {div_1pic} className={classes.div_1_pic}></img>
+      </div>
+      </Hidden> 
       </div>
       <div className={classes.iconsBar}>
       <GridContainer style={{ display: "flex",justifyContent: "center", alignItems: "center"}}>
@@ -68,7 +84,12 @@ class MarketingPage extends React.Component {
         <h4 className={classes.description} style={{marginTop: "1.5rem"}}>From tracking your recent donations and applications to getting a visualized chart on how your fundraising efforts is going.</h4>
       </GridItem>
       </GridContainer>
-    </div>
+      </div>
+      <Hidden smDown>
+        <div className={classes.div2img}>
+        <img src= {div_2pic} className={classes.div_2_pic}></img>
+      </div>
+      </Hidden> 
     <div className={classes.div_3}>
     <GridContainer style={{width: "80%", margin:"0 auto"}}>
       <GridItem xs={12} sm={12} md={6} >
@@ -78,6 +99,11 @@ class MarketingPage extends React.Component {
       </GridItem>
     </GridContainer>
     </div>
+    <Hidden smDown>
+        <div className={classes.div2img}>
+        <img src= {div_3pic} className={classes.div_2_pic}></img>
+      </div>
+      </Hidden> 
     <div className={classes.div_4}>
     <GridContainer style={{width: "80%", margin:"0 auto"}}>
       <GridItem xs={12} sm={12} md={6} >
@@ -87,6 +113,11 @@ class MarketingPage extends React.Component {
       </GridItem>
     </GridContainer>
     </div>
+    <Hidden smDown>
+        <div className={classes.div2img}>
+        <img src= {div_4pic} className={classes.div_2_pic}></img>
+      </div>
+      </Hidden> 
     </>
   );
   }

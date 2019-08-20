@@ -11,7 +11,22 @@ const marketingPageStyle = () => ({
       height: "35rem",
       backgroundColor: "#309FAD",
       zIndex: "1",
+      backgroundSize: "cover",
+      backgroundPosition: "center center",
+      backgroundRepeat: "no-repeat",
     },
+
+    div1img : {
+        float: "right",
+        marginRight: "140px",
+        marginTop: "-100px"
+    },
+    div_1_pic :{
+        width: "450px",
+        height: "auto",
+        float: "right",
+    },
+
 
     headerTitle: {
         ...title,
@@ -30,11 +45,25 @@ const marketingPageStyle = () => ({
         position: "relative",
         width: "100%",
         margin: "0 auto",
-        height: "25rem",
+        minHeight: "20rem",
         background: "rgb(242,242,242)",
         background: "linear-gradient(180deg, rgba(242,242,242,1) 29%, rgba(214,230,232,1) 100%)",
         zIndex: "1",
       },
+
+    div2img : {
+        zIndex: "3",
+        float: "right",
+        marginRight: "3%",
+        marginTop : "-300px",
+        position: "relative",
+    },
+    div_2_pic :{
+        width: "530px",
+        height: "auto",
+        float: "right",
+        zIndex: "3",
+    },
 
     iconsBar : {
         width: "80%",
@@ -66,7 +95,7 @@ const marketingPageStyle = () => ({
         width: "100%",
         top: "0",
         margin: "0 auto",
-        height: "25rem",
+        minHeight: "25rem",
         backgroundColor: "#FCFCFC",
         zIndex: "1",
       },
@@ -75,7 +104,7 @@ const marketingPageStyle = () => ({
         position: "relative",
         width: "100%",
         margin: "0 auto",
-        height: "25rem",
+        minHeight: "25rem",
         background: "rgb(242,242,242)",
         background: "linear-gradient(180deg, rgba(242,242,242,1) 29%, rgba(214,230,232,1) 100%)",
         zIndex: "1",
@@ -88,7 +117,7 @@ const marketingPageStyle = () => ({
 
       signupButton: {
         backgroundColor: "#A464A3",
-        marginTop: "15px",
+        marginTop: "30px",
         marginRight: "15px",
         boxShadow: "2px 2px 3px #588CA9",
         fontSize: "1em",
