@@ -46,21 +46,42 @@ class ShelterPage extends React.Component {
       }
     }
   
+
   componentDidMount() {
-    axios.all([
-      axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/shelters/${this.props.match.params.id}`),
-      axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/shelter/${this.props.match.params.id}`)
-    ])
-      .then(axios.spread((shelterRes, animalsRes) => {
-        this.setState({
-          shelter: shelterRes.data,
-          animals: animalsRes.data,
-        })
-        console.log(this.state.shelter, this.state.animals)
-      }))
-      .catch((shelterErr, animalsRes) => { 
-        console.log(`Shelter Error: ${shelterErr}, Animals Error: ${animalsRes}`)})
+    // axios.all([
+    //   axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/shelters/${this.props.match.params.id}`),
+    //   axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/shelter/${this.props.match.params.id}`)
+    // ])
+    //   .then(axios.spread((shelterRes, animalsRes) => {
+    //     this.setState({
+    //       shelter: shelterRes.data,
+    //       animals: animalsRes.data,
+    //     })
+    //     console.log(this.state.shelter, this.state.animals)
+    //   }))
+    //   .catch((shelterErr, animalsRes) => { 
+    //     console.log(`Shelter Error: ${shelterErr}, Animals Error: ${animalsRes}`)})
+    
+    let userID = () => {
+      if (localStorage.getItem('user_id')){
+        return localStorage.getItem('user_id')
+      } else { return 0 }
     }
+
+
+      axios
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/shelters/public/${this.props.match.params.id}/${userID()}`)
+      .then(res => { 
+          this.setState({
+            shelter: res.data,
+            animals: res.data.animals,
+          })
+      })
+      .catch(err => { 
+        console.log(`Shelter Error: ${err}`)
+      })
+    
+      }
 
     getBgImage = () => {
       return bgheader;
@@ -68,6 +89,7 @@ class ShelterPage extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const { shelter } = this.state;
     
     return (
       <>
@@ -77,7 +99,7 @@ class ShelterPage extends React.Component {
       
         <GridContainer className={classes.contentHeader}>
           <GridItem xs={12} sm={12} md={7}>
-            <h1 className={classes.title}>{this.state.shelter.shelter}</h1>
+            <h1 className={classes.title}>{shelter.shelter}</h1>
           </GridItem>
           <GridItem xs={12} sm={12} md={7}></GridItem>
           <GridItem xs={12} sm={12} md={8}>
@@ -88,10 +110,10 @@ class ShelterPage extends React.Component {
         </GridContainer>
         </div>
         <GridContainer className={classes.shelterCard}>
-        <GridItem xs={12} sm={6} md={6} style={{ minHeight: '40px'}}><img src={houseIcon} className={classes.imageIcon}></img><h6 className={classes.cardType}>321 Main Street <br></br>Central Town, NJ 20005</h6> </GridItem>
-        <GridItem xs={12} sm={6} md={6} style={{ minHeight: '40px'}}><img src={mailIcon} className={classes.imageIcon}></img><h6 className={classes.cardType}>{this.state.shelter.email}</h6></GridItem>  
-        <GridItem xs={12} sm={6} md={6} style={{ minHeight: '40px'}}><img src={phoneIcon} className={classes.imageIcon}></img><h6 className={classes.cardType}>{this.state.shelter.phone}</h6></GridItem>  
-        <GridItem xs={12} sm={6} md={6} style={{ minHeight: '40px'}}><img src={serviceIcon} className={classes.imageIcon}></img><h6 className={classes.cardType}>{this.state.shelter.name}</h6></GridItem>   
+        <GridItem xs={12} sm={6} md={6} style={{ minHeight: '40px'}}><img src={houseIcon} className={classes.imageIcon}></img><h6 className={classes.cardType}>{shelter.street_address}<br></br>{shelter.city}, {shelter.state} {shelter.zipcode}</h6> </GridItem>
+        <GridItem xs={12} sm={6} md={6} style={{ minHeight: '40px'}}><img src={mailIcon} className={classes.imageIcon}></img><h6 className={classes.cardType}>{shelter.email}</h6></GridItem>  
+        <GridItem xs={12} sm={6} md={6} style={{ minHeight: '40px'}}><img src={phoneIcon} className={classes.imageIcon}></img><h6 className={classes.cardType}>{shelter.phone}</h6></GridItem>  
+        <GridItem xs={12} sm={6} md={6} style={{ minHeight: '40px'}}><img src={serviceIcon} className={classes.imageIcon}></img><h6 className={classes.cardType}>{shelter.name}</h6></GridItem>   
       </GridContainer>
          <div className={classes.picturesStyle}>
         <GridContainer xs={10} style={{margin:"50px auto 0"}}>

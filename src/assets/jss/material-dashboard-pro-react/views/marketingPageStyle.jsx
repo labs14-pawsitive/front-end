@@ -172,7 +172,7 @@ const marketingPageStyle = () => ({
   description: {
     fontSize: "1.125rem",
     marginTop: "8px",
-    marginBottom: "8px"
+    marginBottom: "20px"
   },
   bodyStyle: {
     zIndex: 3,
