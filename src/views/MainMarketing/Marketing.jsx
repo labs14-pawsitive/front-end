@@ -41,7 +41,7 @@ class MarketingPage extends React.Component {
       <div className={classes.div_1}>
         <GridContainer style={{width: "70%", margin:"0 auto"}}>
         <GridItem xs={12} s={12} md={8} >
-          <h1 className={classes.headerTitle}>Promote and Manage Shelter<sup>*</sup></h1>
+          <h1 className={classes.headerTitle}>Promote and Manage Shelter</h1>
           <h4 className={classes.description} style={{color: "white"}}>All from One App</h4>
           <Button className={classes.signupButton}>Sign Up</Button>
         </GridItem>
@@ -65,20 +65,25 @@ class MarketingPage extends React.Component {
       <GridItem xs={12} sm={12} md={6} >
         <h1 className={classes.subTitle}>Shelter Management Snapshot</h1>
         <h4 className={classes.description} style={{color:"#9A9A9A"}}> Get all the important data from your shelter operation at one page.</h4>
+        <h4 className={classes.description} style={{marginTop: "1.5rem"}}>From tracking your recent donations and applications to getting a visualized chart on how your fundraising efforts is going.</h4>
       </GridItem>
       </GridContainer>
     </div>
     <div className={classes.div_3}>
     <GridContainer style={{width: "80%", margin:"0 auto"}}>
-      <GridItem xs={12} sm={12} md={12} >
+      <GridItem xs={12} sm={12} md={6} >
         <h1 className={classes.subTitle}>Promote Adoptable Animals</h1>
+        <h4 className={classes.description} style={{color:"#9A9A9A"}}> Show your current adoptable animals to potential adopters who are looking for their new best friend!</h4>
+        <h4 className={classes.description} style={{marginTop: "1.5rem"}}>Adding and updating information about your adorable animals will take less time. Allowing potential adopters to follow the animals and directly donate to your shelter cause.</h4>
       </GridItem>
     </GridContainer>
     </div>
     <div className={classes.div_4}>
     <GridContainer style={{width: "80%", margin:"0 auto"}}>
-      <GridItem xs={12} sm={12} md={12} >
+      <GridItem xs={12} sm={12} md={6} >
         <h1 className={classes.subTitle}>Paperless Online Application</h1>
+        <h4 className={classes.description} style={{color:"#9A9A9A"}}> Streamline your application process so that you will have more time looking for the right adopter!</h4>
+        <h4 className={classes.description} style={{marginTop: "1.5rem"}}>Potential adopters can find your application form easily. You can manage incoming applications and make notes on them, making the application process painless.</h4>
       </GridItem>
     </GridContainer>
     </div>

@@ -58,6 +58,7 @@ const marketingPageStyle = () => ({
         textTransform: "none",
         display: "block",
         color: "black",
+        fontWeight: "400",
       },
 
     div_3: {
