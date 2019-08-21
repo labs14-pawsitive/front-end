@@ -382,6 +382,7 @@ class MainPage extends React.Component {
         paddingRight: "21%",
         position: "relative",
         paddingBottom: "100px",
+        textAlign: "left"
       },
       backdrop: {
         background: "url(" + backgroundImag + ")",
@@ -402,9 +403,9 @@ class MainPage extends React.Component {
         style={{ 
           background: "url(" + backgroundImag + ")", 
           backgroundRepeat: "no-repeat",
-          backgroundPosition: "right",
+          backgroundPosition: "center right",
           backgroundSize: "cover",
-        zindex: "4", 
+        // zIndex: "4", 
         display: "flex" 
         }} >
           {/* <GridItem xs={12} sm={10} md={9} style={customStyle.textTopGrid}>
@@ -419,7 +420,7 @@ class MainPage extends React.Component {
               </Button>
             </div>
           </GridItem> */}
-          <GridItem xs={12} sm={12} md={9} style={customStyle.textTopGrid}>
+          <GridItem xs={12} sm={12} md={10} style={customStyle.textTopGrid}>
             <div style={customStyle.topLeft}>
               <div style={customStyle.textBoxTop}>
                 <p style={customStyle.textP1}>Search, Discover</p>
@@ -432,18 +433,20 @@ class MainPage extends React.Component {
             </div>
           </GridItem>
           <Hidden smDown>
-            <GridItem md={9} xl={10} style={{
+            <GridItem md={12} xl={10} style={{
 
               zIndex: "7",
-              minHeight: "500px",
+              minHeight: "400px",
+              maxHeight: "500px",
               backgroundImage: "url(" + dogImage + ")",
               // backgroundPosition: "center right",
-              backgroundPosition: "center",
+              backgroundPosition: "right bottom",
               backgroundRepeat: "no-repeat",
               backgroundSize: "auto 100%",
               position: "relative",
               marginTop: "100px",
               marginRight: "140px",
+              marginBottom:"20px"
               // backgroundAttachment: fixed
             }}>
             </GridItem>
@@ -452,7 +455,7 @@ class MainPage extends React.Component {
 
         <GridItem xs={10} sm={10} md={10}
           style={{
-            minHeight: "200px",
+            // minHeight: "200px",
             marginTop: "-60px",
             zIndex: "6",
             backgroundColor: "#f5f4f4",
@@ -461,7 +464,7 @@ class MainPage extends React.Component {
           }} >
 
           <GridItem xs={12} sm={11} md={12} style={customStyle.subGridStyle}>
-            <div style={{ display: "flex", flexWrap: 'wrap', padding: "56px 10px", width: "100%" }}>
+            <div style={{ display: "flex", flexWrap: 'wrap', padding: "30px 10px", width: "100%" }}>
               <GridItem xs={12} sm={12} md={3} style={customStyle.eachGridStyle}>
                 <FormControl variant="outlined" className={classes.formControl} style={customStyle.speciesFormStyle} >
 
@@ -565,7 +568,7 @@ class MainPage extends React.Component {
         <GridContainer xs={12} sm={12} md={12} style={{
           width: "100%",
           paddingTop: "158px",
-          marginTop: "-141px",
+          marginTop: "-90px",
           backgroundColor: "#e7e7e7"
         }}>
             <GridContainer xs={10} sm={10} md={10} xl={12} style={customStyle.ImageStyle}>
