@@ -23,8 +23,8 @@ class CheckoutForm extends Component {
                 token: token.id,
                 data: { 
                     amount: this.state.amount, 
-                    shelter_id: 1,
-                    user_id: 1
+                    shelter_id: this.props.match.params.id,
+                    user_id: localStorage.getItem('user_id'),
                  } 
             })
             .then(res =>{ 

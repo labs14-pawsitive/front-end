@@ -48,10 +48,10 @@ class MarketingPage extends React.Component {
     };
     
     return (
-      <>
+      <div className={classes.container}>
       <div className={classes.div_1}
       style={{ backgroundImage: "url(" + getBgImage() + ")" }}>
-        <GridContainer style={{width: "70%", margin:"0 auto"}}>
+        <GridContainer style={{width: "80%", margin:"0 auto"}}>
         <GridItem xs={12} sm={12} md={8} >
           <h1 className={classes.headerTitle}>Promote and Manage Shelter</h1>
           <h4 className={classes.description} style={{color: "white", textShadow: "1px 1px 1px black"}}>All from One App</h4>
@@ -119,7 +119,7 @@ class MarketingPage extends React.Component {
         <img src= {div_4pic} className={classes.div_4_pic}></img>
       </div>
       </Hidden> 
-    </>
+    </div>
   );
   }
 }

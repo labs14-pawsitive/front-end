@@ -3,12 +3,18 @@ import { relative } from "path";
 
 const marketingPageStyle = () => ({
 
+    container: {
+      width: "100%",
+      maxWidth: "1600px",
+    },
+
     div_1: {
       position: "relative",
       width: "100%",
+      maxWidth: "1600px",
       top: "0",
       margin: "0 auto",
-      height: "35rem",
+      height: "38rem",
       backgroundColor: "#309FAD",
       zIndex: "1",
       backgroundSize: "cover",
@@ -18,8 +24,8 @@ const marketingPageStyle = () => ({
 
     div1img : {
         float: "right",
-        marginRight: "140px",
-        marginTop: "-100px"
+        marginRight: "100px",
+        marginTop: "-150px"
     },
     div_1_pic :{
         width: "450px",
@@ -30,7 +36,7 @@ const marketingPageStyle = () => ({
 
     headerTitle: {
         ...title,
-        marginTop: "6rem",
+        marginTop: "10rem",
         marginBottom: "0.9rem",
         fontSize: "3.5em",
         color: whiteColor,
@@ -44,6 +50,7 @@ const marketingPageStyle = () => ({
     div_2: {
         position: "relative",
         width: "100%",
+        maxWidth: "1600px",
         margin: "0 auto",
         minHeight: "20rem",
         background: "rgb(242,242,242)",
@@ -68,6 +75,7 @@ const marketingPageStyle = () => ({
 
     iconsBar : {
         width: "80%",
+        maxWidth: "1200px",
         height: "9.5rem",
         marginLeft: "auto",
         marginRight: "auto",
@@ -94,6 +102,7 @@ const marketingPageStyle = () => ({
     div_3: {
         position: "relative",
         width: "100%",
+        maxWidth: "1600px",
         top: "0",
         margin: "0 auto",
         minHeight: "25rem",
@@ -119,6 +128,7 @@ const marketingPageStyle = () => ({
       div_4: {
         position: "relative",
         width: "100%",
+        maxWidth: "1600px",
         margin: "0 auto",
         minHeight: "25rem",
         background: "rgb(242,242,242)",
@@ -165,7 +175,7 @@ const marketingPageStyle = () => ({
   },
   subTitle: {
     fontSize: "2.25rem",
-    marginTop: "5%",
+    marginTop: "13%",
     marginBottom: "8px",
     fontWeight: "700"
   },

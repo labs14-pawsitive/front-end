@@ -42,7 +42,9 @@ class ShelterPage extends React.Component {
       super(props)
       this.state = {
         shelter: {},
-        animals: []
+        animals: [],
+        hasStripe: false,
+        shelterFollow: false,
       }
     }
   
@@ -75,6 +77,8 @@ class ShelterPage extends React.Component {
           this.setState({
             shelter: res.data,
             animals: res.data.animals,
+            hasStripe: res.data.hasStripe,
+            shelterFollow: res.data.shelterFollow,
           })
       })
       .catch(err => { 
@@ -103,8 +107,8 @@ class ShelterPage extends React.Component {
           </GridItem>
           <GridItem xs={12} sm={12} md={7}></GridItem>
           <GridItem xs={12} sm={12} md={8}>
-          <Button className={classes.topButtons}>Follow</Button>
-          <Button className={classes.topButtons}>Donate</Button>
+          <Button className={classes.topButtons}>{this.state.shelterFollow? "Unfollow" : "Follow"}</Button> 
+          {this.state.hasStripe? <Button className={classes.topButtons}>Donate</Button> : null}
           </GridItem>
           <GridItem xs={12} sm={12} md={4}></GridItem>
         </GridContainer>
