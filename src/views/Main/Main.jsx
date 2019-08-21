@@ -370,18 +370,20 @@ class MainPage extends React.Component {
       },
       textBoxTop: {
         marginBottom: "20px",
+        width:"164%"
       },
       imageTopGrid: {
         marginTop: "167px",
       },
       topLeft: {
         // border: "1px solid black",
-        paddingTop: "100px",
-        // paddingLeft: "146px",
-        paddingLeft: "21%",
-        paddingRight: "21%",
-        position: "relative",
-        paddingBottom: "100px",
+        // paddingTop: "100px",
+        // // paddingLeft: "146px",
+        // paddingLeft: "21%",
+        // paddingRight: "21%",
+        // position: "relative",
+        // paddingBottom: "100px",
+        margin:"100px 14%",
         textAlign: "left"
       },
       backdrop: {
@@ -420,7 +422,7 @@ class MainPage extends React.Component {
               </Button>
             </div>
           </GridItem> */}
-          <GridItem xs={12} sm={12} md={10} style={customStyle.textTopGrid}>
+          <GridItem xs={12} sm={12} md={11} style={customStyle.textTopGrid}>
             <div style={customStyle.topLeft}>
               <div style={customStyle.textBoxTop}>
                 <p style={customStyle.textP1}>Search, Discover</p>
