@@ -44,6 +44,7 @@ import CardFooter from "components/Card/CardFooter.jsx";
 import { widgetStories, bugs, website, server } from "variables/general.jsx";
 
 import image from "assets/img/faces/card-profile1-square.jpg";
+import bg from "assets/img/bg-team.jpg";
 
 import mainPageStyle from "assets/jss/material-dashboard-pro-react/views/mainPageStyle.jsx";
 
@@ -106,30 +107,94 @@ const styles = {
 };
 
 class TeamPage extends React.Component {
+  componentDidMount() {
+    window.scrollTo(0, 0)
+  }
+  
   render() {
     const { classes } = this.props;
+    
     const customStyle = {
       alignment: {
         display: "flex",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        paddingTop: "50px"
       },
       mainContainer: {
         zIndex: 3,
         display:"flex",
         alignItems: "center",
         justifyContent: "center",
-        width:"100%"
+        width:"100%",
+        //paddingTop: "150px",
+        paddingBottom: "150px",
+        background: "#e7e7e7",
+        margin:0
+      },
+       avatarStyle: {
+          marginTop: "-75px",
+          maxWidth: "150px",
+          maxHeight: "150px"
       }
     }
     return (
       <div>
         <GridContainer style={customStyle.mainContainer}>
-          
-          <GridItem xs={12} sm={12} md={12}>
+          <GridItem xs={12} style={{boxShadow: "0 0 30px #00000050", height:"500px", backgroundImage:"linear-gradient(#00000080, #00000015),url(" + bg + ")", backgroundSize:"cover", backgroundPosition: "center center"}}>
+
+          </GridItem>
+          <GridItem xs={10} sm={10} md={10}>             
+          <h1>About Our Team</h1>
+
             <GridContainer style={customStyle.alignment}>
-             
-              <GridItem xs={10} sm={8} md={4} >
+              <GridItem xs={11} sm={8} md={5} lg={4}>
+                <Card testimonial>
+                <CardAvatar testimonial testimonialFooter style={customStyle.avatarStyle}>
+                      <a href="#pablo" onClick={e => e.preventDefault()}>
+                        <img src="https://ca.slack-edge.com/T4JUEB3ME-UFH4T28HX-64713d6bec86-512" alt="..." />
+                      </a>
+                    </CardAvatar>
+                  {/*<div className={classes.testimonialIcon}>
+                      <FormatQuote />
+                  </div>*/}
+                  <CardBody style={{marginTop: "60px"}}>
+                    <h5 className={classes.cardTestimonialDescription}>
+                      Highly motivated full stack developer who is awesome at making things happen! 
+                      Attention to detail, just the one your company is looking for.
+                    </h5>
+                  </CardBody>
+                  <CardFooter testimonial>
+                    <h4 className={classes.cardTitle}>Aruna Benjamin</h4>
+                    <h6 className={classes.cardCategory}>@TEAMMEMBER!</h6>
+                    
+                  </CardFooter>
+                </Card>
+              </GridItem>
+
+              <GridItem xs={11} sm={8} md={5} lg={4}>
+                <Card testimonial>
+                  <div className={classes.testimonialIcon}>
+                    <FormatQuote />
+                  </div>
+                  <CardBody>
+                    <h5 className={classes.cardTestimonialDescription}>
+                    Highly motivated full stack developer who is awesome at making things happen! Attention to detail, just the one your company is looking for.
+                    </h5>
+                  </CardBody>
+                  <CardFooter testimonial>
+                    <h4 className={classes.cardTitle}>Sarah Lee</h4>
+                    <h6 className={classes.cardCategory}>@TEAMMEMBER2</h6>
+                    <CardAvatar testimonial testimonialFooter>
+                      <a href="#pablo" onClick={e => e.preventDefault()}>
+                        <img src={image} alt="..." />
+                      </a>
+                    </CardAvatar>
+                  </CardFooter>
+                </Card>
+              </GridItem>
+
+              <GridItem xs={11} sm={8} md={5} lg={4}>
                 <Card testimonial>
                   <div className={classes.testimonialIcon}>
                     <FormatQuote />
@@ -141,7 +206,7 @@ class TeamPage extends React.Component {
                     </h5>
                   </CardBody>
                   <CardFooter testimonial>
-                    <h4 className={classes.cardTitle}>Team Member 1</h4>
+                    <h4 className={classes.cardTitle}>Ming Liu</h4>
                     <h6 className={classes.cardCategory}>@TEAMMEMBER!</h6>
                     <CardAvatar testimonial testimonialFooter>
                       <a href="#pablo" onClick={e => e.preventDefault()}>
@@ -152,7 +217,7 @@ class TeamPage extends React.Component {
                 </Card>
               </GridItem>
 
-              <GridItem xs={10} sm={8} md={4}>
+              <GridItem xs={11} sm={8} md={5} lg={4}>
                 <Card testimonial>
                   <div className={classes.testimonialIcon}>
                     <FormatQuote />
@@ -163,7 +228,7 @@ class TeamPage extends React.Component {
                     </h5>
                   </CardBody>
                   <CardFooter testimonial>
-                    <h4 className={classes.cardTitle}>Team Member 2</h4>
+                    <h4 className={classes.cardTitle}>Lenna Mau</h4>
                     <h6 className={classes.cardCategory}>@TEAMMEMBER2</h6>
                     <CardAvatar testimonial testimonialFooter>
                       <a href="#pablo" onClick={e => e.preventDefault()}>
@@ -173,6 +238,79 @@ class TeamPage extends React.Component {
                   </CardFooter>
                 </Card>
               </GridItem>
+
+              <GridItem xs={11} sm={8} md={5} lg={4}>
+                <Card testimonial>
+                  <div className={classes.testimonialIcon}>
+                    <FormatQuote />
+                  </div>
+                  <CardBody>
+                    <h5 className={classes.cardTestimonialDescription}>
+                      Highly motivated full stack developer who is awesome at making things happen! 
+                      Attention to detail, just the one your company is looking for.
+                    </h5>
+                  </CardBody>
+                  <CardFooter testimonial>
+                    <h4 className={classes.cardTitle}>James Pak</h4>
+                    <h6 className={classes.cardCategory}>@TEAMMEMBER!</h6>
+                    <CardAvatar testimonial testimonialFooter>
+                      <a href="#pablo" onClick={e => e.preventDefault()}>
+                        <img src={image} alt="..." />
+                      </a>
+                    </CardAvatar>
+                  </CardFooter>
+                </Card>
+              </GridItem>
+
+              <GridItem xs={11} sm={8} md={5} lg={4}>
+                <Card testimonial>
+                  <div className={classes.testimonialIcon}>
+                    <FormatQuote />
+                  </div>
+                  <CardBody>
+                    <h5 className={classes.cardTestimonialDescription}>
+                    Highly motivated full stack developer who is awesome at making things happen! Attention to detail, just the one your company is looking for.
+                    </h5>
+                  </CardBody>
+                  <CardFooter testimonial>
+                    <h4 className={classes.cardTitle}>Hung Pham</h4>
+                    <h6 className={classes.cardCategory}>@TEAMMEMBER2</h6>
+                    <CardAvatar testimonial testimonialFooter>
+                      <a href="#pablo" onClick={e => e.preventDefault()}>
+                        <img src={image} alt="..." />
+                      </a>
+                    </CardAvatar>
+                  </CardFooter>
+                </Card>
+              </GridItem>
+
+              <GridItem xs={11} sm={8} md={5} lg={4}>
+                <Card testimonial>
+                  <div className={classes.testimonialIcon}>
+                    <FormatQuote />
+                  </div>
+                  <CardBody>
+                    <h5 className={classes.cardTestimonialDescription}>
+                      Highly motivated full stack developer who is awesome at making things happen! 
+                      Attention to detail, just the one your company is looking for.
+                    </h5>
+                  </CardBody>
+                  <CardFooter testimonial>
+                    <h4 className={classes.cardTitle}>Christopher Riffle</h4>
+                    <h6 className={classes.cardCategory}>@TEAMMEMBER!</h6>
+                    <CardAvatar testimonial testimonialFooter>
+                      <a href="#pablo" onClick={e => e.preventDefault()}>
+                        <img src={image} alt="..." />
+                      </a>
+                    </CardAvatar>
+                  </CardFooter>
+                </Card>
+              </GridItem>
+
+              
+
+
+
             </GridContainer>
           </GridItem>
         </GridContainer>

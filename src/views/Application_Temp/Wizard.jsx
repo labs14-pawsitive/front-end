@@ -49,7 +49,7 @@ class ApplicationWizard extends React.Component {
               { stepName: "About You", stepComponent: Step1, stepId: "about" },
               { stepName: "About Your Home", stepComponent: Step2, stepId: "home" },
               { stepName: "References", stepComponent: Step3, stepId: "references" },
-              { stepName: "Notes and Declarations", stepComponent: Step4, stepId: "declaration" }
+              { stepName: "Declaration", stepComponent: Step4, stepId: "declaration" }
 
             ]}
             title="Adoption Application"

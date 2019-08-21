@@ -16,7 +16,7 @@
 */
 import React from "react";
 import PropTypes from "prop-types";
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -39,6 +39,11 @@ import CardBody from "components/Card/CardBody.jsx";
 import pricingPageStyle from "assets/jss/material-dashboard-pro-react/views/pricingPageStyle.jsx";
 
 class Onboarding extends React.Component {
+
+  componentDidMount() {
+    localStorage.setItem('onboarding', true)
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -57,17 +62,17 @@ class Onboarding extends React.Component {
             <Card pricing raised>
               <CardBody pricing>
                 <h3 className={`${classes.cardTitle} ${classes.marginTop30}`}>
-                I would like to fill out an application form
+                I would like to find my perfect pet
                 </h3>
                 <div className={classes.icon}>
                   <Pets className={classes.iconRose} />
                 </div>
         
-                <NavLink to={`/application/${localStorage.getItem('shelterId')}/${localStorage.getItem('animalId')}`}>
+                <Link to={"/"}>
                 <Button round color="rose">
-                  Fill out an Application
+                  Browse Animals
                 </Button>
-                </NavLink>
+                </Link>
               </CardBody>
             </Card>
           </GridItem>
@@ -76,7 +81,7 @@ class Onboarding extends React.Component {
             <Card pricing raised>
               <CardBody pricing>
                 <h3 className={`${classes.cardTitle} ${classes.marginTop30}`}>
-                  I manage a shelter and would like to register my shelter
+                  I would like to register my shelter
                 </h3>
                 <div className={classes.icon}>
                   <Store className={classes.iconRose} />

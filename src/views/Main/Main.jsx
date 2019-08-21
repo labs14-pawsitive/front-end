@@ -20,6 +20,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import axios from 'axios';
 
+import Auth from "components/Auth/Auth.js"
+import SweetAlert from "react-bootstrap-sweetalert";
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 
@@ -35,8 +38,84 @@ import mainPageStyle from "assets/jss/material-dashboard-pro-react/views/mainPag
 
 import AnimalCard from "components/AnimalCard/AnimalCard.jsx"
 
-class MainPage extends React.Component {
+import Application from "components/Application/Application.jsx"
 
+const auth = new Auth();
+
+
+class MainPage extends React.Component {
+    constructor (props) {
+      super(props);
+      this.state = {
+        alert: null,
+        animal_id: 3,
+      }
+    }
+
+    setAlert = (str) => {
+     if(!localStorage.getItem('token') && !localStorage.getItem('user_id')) {
+        this.warningAlert(str);
+      } else {
+        this.hideAlert();
+      }
+    }
+
+    warningAlert = (str) => {
+      this.setState({
+        alert: (
+          <SweetAlert
+            warning
+            showCancel
+            cancelBtnCssClass={
+              this.props.classes.button + " " + this.props.classes.success
+            }
+            style={{ display: "block", marginTop: "-100px", color: "#777", fontFamily: "Roboto", padding:"50px", lineHeight: "1.2" }}
+            //title={`You need to login / signup in order to ${str}`}
+            //title="OOH MY PAWS!!!"
+            titleStyle={{fontWeight:"500"}}
+            onConfirm={() => this.routeToAuth()}
+            onCancel={this.hideAlert}
+            confirmBtnCssClass={
+              this.props.classes.button + " " + this.props.classes.success
+            }
+            confirmBtnText="Signup / Login"
+          >
+            <h2 style={{fontWeight: '500'}}>OOH MY PAWS</h2>
+            <h4 style={{color:"#333333"}}>{`You need to login/sign up in order to ${str}`}</h4>
+          </SweetAlert>
+        )
+      });
+    }
+
+    routeToAuth = () => {
+        localStorage.setItem("animalId", this.state.animal_id)
+        auth.login();
+    }
+
+    hideAlert = () =>  {
+      this.setState({
+        alert: null
+      });
+    }
+
+    setFollow = () => {
+      if(!localStorage.getItem('token') && !localStorage.getItem('user_id')) {
+        this.warningAlert('follow me');
+      } else {
+        console.log("i can follow/unfollow this animal now")
+        this.hideAlert();
+      }
+    }
+
+    setDonate = () => {
+      if(!localStorage.getItem('token') && !localStorage.getItem('user_id')) {
+        this.warningAlert('make a donation');
+      } else {
+        console.log("i can make donation to this animal/shelter now")
+        this.hideAlert();
+      }
+    }
+ 
     render() {
     const { classes } = this.props;
     
@@ -47,8 +126,21 @@ class MainPage extends React.Component {
       {id: 2, name: "Cutie Pie", img_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyGMzMi2ZQdBIHQkdLbIrolWVePbaFhN-zMBbwhqKag26SVN3lDw", is_male: false, breed: "Mixed Breed Dog", age: "Adult" },
       {id: 14, name: "Lucky", img_url: "https://live-cdn.shelterluv.com/sites/default/files/animal_pics/3451/2019/04/10/08/20190410085205.png", is_male: true, breed: "Mixed Breed Dog", age: "Adult" },
       {id: 4, name: "Tina", img_url: "https://epi.azureedge.net/website-images/images/a-year-in-the-life-dog/dog_7_600x400.jpg?sfvrsn=edc6d67b_2", is_male: false, breed: "Mixed Breed Dog", age: "Adult" },
-
     ]
+
+    const customStyle = {
+      buttonStyle: {
+        backgroundColor: "#A464A3",
+        marginTop: "25px",
+        marginRight: "15px",
+        boxShadow: "5px 5px 0 #C9AAA9",
+        fontSize: "1em",
+        fontWeight: "700",
+        "&:hover": {
+          backgroundColor: "#A464A3"
+        }
+      }
+    }
 
     return (
       <GridContainer style={{background: "linear-gradient(180deg, #349fad, #268592)", paddingTop: "100px", margin:'0', width:"100%"}}>
@@ -57,6 +149,23 @@ class MainPage extends React.Component {
             <GridItem xs={12} sm={8}>
               <div style={{color:"white", textShadow: "5px 5px #00000030"}}>ADOPT YOUR PET<sup>*</sup></div>
             </GridItem>
+
+
+
+            {this.state.alert} 
+            <Button style={customStyle.buttonStyle} onClick = {this.setFollow}>Follow Me</Button>
+                       <Button style={customStyle.buttonStyle} onClick = {this.setDonate}>Donate</Button>
+
+            {localStorage.getItem("user_id") && localStorage.getItem('token') ? 
+            <Application animalId={26} shelterId={11} />
+            :
+            <Button style={customStyle.buttonStyle} onClick = {() => this.setAlert("continue with application process")}>Adopt Me</Button>
+            }
+
+
+
+
+
           </GridItem> 
           <GridItem xs={10} sm={10} md={10} style={{minHeight: "200px", marginTop: "-120px", zIndex:"5", backgroundColor: "#fcfcfc", borderRadius: "5px", boxShadow: "0 0 5px #33333330"}} >
             <GridItem xs={12}>
