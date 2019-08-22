@@ -35,7 +35,9 @@ import div_1pic from "assets/img/marketing_img.png";
 import div_2pic from "assets/img/marketing_img_dashboard_iso.png";
 import div_3pic from "assets/img/marketing_img_animalCards_iso.png";
 import div_4pic from "assets/img/marketing_img_application_iso.png";
-
+import applicationIcon from "assets/img/appliation-rose.png";
+import breedIcon from "assets/img/breed-rose.png";
+import donationIcon from  "assets/img/donation-rose.png";
 
 import marketingPageStyle from "assets/jss/material-dashboard-pro-react/views/marketingPageStyle.jsx";
 
@@ -67,12 +69,15 @@ class MarketingPage extends React.Component {
       <div className={classes.iconsBar}>
       <GridContainer style={{ display: "flex",justifyContent: "center", alignItems: "center"}}>
       <GridItem xs={12} sm={12} md={4} >
+        <img className={classes.icon} src= {breedIcon}></img>
         <h1 className={classes.barType}>Promote & Manage Animals</h1>
       </GridItem>
       <GridItem xs={12} sm={12} md={4} >
+      <img className={classes.icon} src= {applicationIcon}></img>
         <h1 className={classes.barType}>Accept & Manage Applications Online</h1>
       </GridItem>
       <GridItem xs={12} sm={12} md={4} >
+      <img className={classes.icon} src= {donationIcon}></img>
         <h1 className={classes.barType}>Accept & Manage & Track Donations</h1>
       </GridItem>
       </GridContainer>

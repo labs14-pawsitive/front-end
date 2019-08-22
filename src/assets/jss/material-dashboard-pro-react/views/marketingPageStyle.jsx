@@ -76,7 +76,7 @@ const marketingPageStyle = () => ({
     iconsBar : {
         width: "80%",
         maxWidth: "1200px",
-        height: "9.5rem",
+        // height: "9.5rem",
         marginLeft: "auto",
         marginRight: "auto",
         marginTop: "-50px",
@@ -90,6 +90,14 @@ const marketingPageStyle = () => ({
         alignItems: "center",
         backgroundColor: "white",
     },
+
+    icon : {
+       width: "50px",
+       height: "auto",
+       marginBottom: "10px",
+       marginTop: "25px",
+
+    },
     barType: {
         fontSize: "0.9rem",
         fontFamily: "'Lato', sans-serif",
@@ -97,6 +105,7 @@ const marketingPageStyle = () => ({
         display: "block",
         color: "black",
         fontWeight: "400",
+        marginBottom: "25px"
       },
 
     div_3: {
