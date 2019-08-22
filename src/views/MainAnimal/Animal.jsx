@@ -30,18 +30,21 @@ import mainPageStyle from "assets/jss/material-dashboard-pro-react/views/mainPag
 import CustomCarousel from "../../components/Carousel /Carousel.jsx";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
+
 class AnimalPage extends React.Component {
   render() {
-    // const customStyles = {
-    //   carousel: {
-    //     maxHeight: "300px"
-    //   }
-    // }
+    const customStyles = {
+      carousel: {
+        // display: "flex",
+        // marginLeft: "50px",
+        // alignItems: "center"
+      }
+    }
     const { classes } = this.props;
     
     return (
       <GridContainer className={classes.bodyStyle} >
-        <GridItem xs={12} sm={10} md={8}>
+        <GridItem xs={12} sm={12} md={7} style={customStyles.carousel}>
           
           <CustomCarousel 
             animalId={this.props.match.params.id}

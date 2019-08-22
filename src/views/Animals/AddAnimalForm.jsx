@@ -21,25 +21,18 @@ import {addAnimal, fetchOptions} from '../../actions/animalAction';
 import ImageUpload from '../../components/ImageUpload/ImageUpload'
 import { axiosWithAuth } from 'axiosWithAuth';
 
-
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import FormLabel from "@material-ui/core/FormLabel";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import Radio from "@material-ui/core/Radio";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 
-// @material-ui/icons
-import MailOutline from "@material-ui/icons/MailOutline";
+// @material-ui/icons;
 import Check from "@material-ui/icons/Check";
-import Clear from "@material-ui/icons/Clear";
-import Contacts from "@material-ui/icons/Contacts";
-import FiberManualRecord from "@material-ui/icons/FiberManualRecord";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -51,9 +44,9 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardText from "components/Card/CardText.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
-// import ImageUpload from "components/CustomUpload/ImageUpload.jsx";
 import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
 import CustomDropdown from "components/CustomDropdown/CustomDropdown";
+import AnimalUploadedPhotos from "components/Animals/AnimalUploadedPhotos.jsx";
 
 class AddAnimalForm extends React.Component {
   constructor(props) {
@@ -72,7 +65,6 @@ class AddAnimalForm extends React.Component {
         age_id: null,
         shelter_location_id: null,
         profile_img_id: null,
- 
         is_male: false,
         is_house_trained: false,
         is_neutered_spayed: false,
@@ -93,10 +85,10 @@ class AddAnimalForm extends React.Component {
         is_good_with_cats: true,
         is_vaccinated: true,
         is_mixed: true,
-        
       },
       checked: [],
-      shelterVerified : ''
+      shelterVerified : '',
+      uploadedImages: []
     };
     
     this.handleChange = this.handleChange.bind(this);
@@ -136,66 +128,23 @@ class AddAnimalForm extends React.Component {
       })
   }
 
+  removeImage = (id) => {
+    console.log(id)
+    console.log(this.state)
+    const newImages = this.state.animal.images.filter(image => image.image_id !== id)
+    const newUploadedImages = this.state.uploadedImages.filter(image => image.image_id !== id)
+    this.setState({
+      animal: {
+        ...this.state.animal,
+        images: newImages
+      },
+      uploadedImages: newUploadedImages
+    })  
+  }
+
   componentDidMount () {
- 
     const shelterId = localStorage.getItem('shelter_id')
-  
-
     this.props.fetchOptions(this.state.animal.shelter_id)
-
-    // this.setState({
-    //   animal: {
-    //     name: "snowflake",
-    //     color: "white",
-    //     health: "healthy",
-    //     description: "happy dog",
-    //     species_id: 1,
-    //     breed_id: 4,
-    //     animal_status_id: 2,
-    //     size_id: 3,
-    //     coat_length_id: 3,
-    //     age_id: 3,
-    //     shelter_location_id: 1,
-    //     states_id: 5,
-    //     shelter_id: 1,
-    //     is_male: false,
-    //     is_house_trained: false,
-    //     is_neutered_spayed: true,
-    //     is_good_with_kids: true,
-    //     is_good_with_dogs: true,
-    //     is_good_with_cats: false,
-    //     is_vaccinated: false,
-    //     profile_img_id: null,
-    //     is_mixed: 1
-    //   },
-    //   validation: {
-    //     name: true,
-    //     color: true,
-    //     health: true,
-    //     description: true,
-    //     species_id: true,
-    //     breed_id: true,
-    //     animal_status_id: true,
-    //     size_id: true,
-    //     coat_length_id: true,
-    //     age_id: true,
-    //     shelter_location_id: true,
-    //     states_id: true,
-    //     is_male: true,
-    //     is_house_trained: true,
-    //     is_neutered_spayed: true,
-    //     is_good_with_kids: true,
-    //     is_good_with_dogs: true,
-    //     is_good_with_cats: true,
-    //     is_vaccinated: true,
-    //     is_mixed: true,
-    //     shelter_id: true,
-    //     profile_img_id: true,
-
-    //   },
-    //   checked: [],
-    // });
- 
   }
 
   handleImgUploadResponse = response => {
@@ -203,6 +152,10 @@ class AddAnimalForm extends React.Component {
     if (!response.error) {
       const images = response.map(item => item.image)
       this.setState({
+        uploadedImages: [
+          ...this.state.uploadedImages,
+          ...images
+        ],
         animal: {
           ...this.state.animal,
           images: images,
@@ -331,7 +284,6 @@ class AddAnimalForm extends React.Component {
         ...this.state.animal,
         [value]: !this.state.animal[value]
       },
-      
     });
   }
 
@@ -366,7 +318,8 @@ class AddAnimalForm extends React.Component {
               is_good_with_dogs: false,
               is_good_with_cats: false,
               is_vaccinated: false,
-              is_mixed: false
+              is_mixed: false,
+              uploadedImages: []
             },
             checked: [],
           })
@@ -384,7 +337,15 @@ class AddAnimalForm extends React.Component {
 
     const styles = {
       photo: {
-        textAlign: "center"
+        marginBottom: "25px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center"
+      },
+      uploadedImages: {
+        maxWidth: "100%",
+        display: "flex",
+        justifyContent: "center",
       },
       formControl: {
         width:"100%"
@@ -399,7 +360,7 @@ class AddAnimalForm extends React.Component {
         minWidth: "100%"
       },
       dropdownOptions: {
-        minWidth: "100%"
+        minWidth: "100%",
       },
     }
 
@@ -456,20 +417,24 @@ class AddAnimalForm extends React.Component {
     return (
       
       <GridContainer>
-        <GridItem 
-          xs={12} sm={12} md={12}
-          style={styles.photo}
-        >
-          <legend>Add Animal Profile Image</legend>
-          <ImageUpload 
-            height="250px" 
-            width="250px" 
-            borderRadius="5px" 
-            imageLimit={6} 
-            editable={true} 
-            callback={this.handleImgUploadResponse} 
-            url={`${process.env.REACT_APP_BACKEND_URL}/api/pictures`}
-          />
+        <GridItem xs={12} sm={12} md={12} lg={4}>
+          <GridItem  xs={12} sm={12} md={12} style={styles.photo}>
+            <legend>Add Animal Profile Image</legend>
+            <ImageUpload
+              optionalImage={this.state.animal.images.length ? this.state.animal.images[0].image_url : "default"} 
+              height="300px" 
+              width="300px" 
+              borderRadius="5px" 
+              imageLimit={6} 
+              editable={true} 
+              callback={this.handleImgUploadResponse} 
+              url={`${process.env.REACT_APP_BACKEND_URL}/api/pictures`}
+            />
+          </GridItem>
+        </GridItem>
+
+        <GridItem xs={12} sm={12} md={12} lg={8} style={styles.uploadedImages}>
+            <AnimalUploadedPhotos images={this.state.uploadedImages} removeImage={this.removeImage}/>
         </GridItem>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
@@ -516,8 +481,8 @@ class AddAnimalForm extends React.Component {
                     }}
                   />
                 </GridItem>
-
                 </GridContainer>
+
                 <CustomInput
                   success={this.state.validation.health}
                   error={this.state.validation.health === false}
@@ -532,6 +497,7 @@ class AddAnimalForm extends React.Component {
                     onChange: event => this.handleChange(event, "health", "length", 2)
                   }}
                 />
+
                 <CustomInput
                   success={this.state.validation.description}
                   error={this.state.validation.description === false}
@@ -656,7 +622,6 @@ class AddAnimalForm extends React.Component {
                           style:styles.dropdown
                         }}
 
-                        
                         id="age_id"
                         onChange={this.handleChange}
                         externalHandleClick={this.handleChange}

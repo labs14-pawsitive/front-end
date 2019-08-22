@@ -29,27 +29,20 @@ class CustomCarousel extends React.Component {
   render() {
     const customStyles = {
       carousel: {
-        width: "100%",
-        margin: "80px 20px 20px 20px",
-        thumbWidth: "500px"
-      
-        
-        
-        // minHeight: "500px"
-
-      },
-      override: {
-        dynamicHeight: "100px"
+        width: "90%",
+        // maxWidth: "1000px",
+        margin: "80px 0px 20px 20px",
       }
+
     }
 
     const { images } = this.state
     if (!images.length) return <div>Images are not fetched yet!</div>
 
     return (
-      <GridContainer style={customStyles.carousel}>
-        <GridItem xs={12} sm={12} md={6} >
-          <Carousel style={customStyles.override} autoPlay infiniteLoop>
+      <GridContainer >
+        <GridItem xs={8} sm={8} md={5} >
+          <Carousel autoPlay infiniteLoop>
             {
               Array.from(images).map(image => {
                 return (
