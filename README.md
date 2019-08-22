@@ -46,7 +46,10 @@ Animal Rescue organizations have so much to manage, but their biggest concern is
 
 ### Front end built using:
 
-#### _React with React Router and Redux using Material UI_
+- React 
+- React Router 
+- Redux 
+- Material UI
 
 ##### Dependancies:
     @material-ui/core: 4.1.0,
