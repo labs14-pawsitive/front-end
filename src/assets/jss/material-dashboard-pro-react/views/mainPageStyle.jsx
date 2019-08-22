@@ -38,6 +38,7 @@ const mainPageStyle = () => ({
     width:"100%"
   },
   wrapper: {
+    justifyContent: "center",
     height: "auto",
     minHeight: "100vh",
     margin: "0 auto",
@@ -67,7 +68,7 @@ const mainPageStyle = () => ({
     marginTop: "100px",
    },
    shelterCard: {
-    width: "80%",
+    width: "85%",
     marginLeft: "auto",
     marginRight: "auto",
     marginTop: "50px",
@@ -83,8 +84,23 @@ const mainPageStyle = () => ({
     justifyContent: "center",
     padding: "30px",
   },
-
-
+  iconStyle: {
+    width: "50px",
+    height: "auto",
+    marginRight: "30px",
+  },
+  iconStyle2: {
+    width: "50px",
+    height: "auto",
+    marginRight: "20px",
+  },
+  animalNameStyle: {
+        color: "white",
+        fontWeight: "bold",
+        fontSize: "100px",
+        textShadow: "5px 5px #2b2b2b51"
+  }
+  
 
 });
 

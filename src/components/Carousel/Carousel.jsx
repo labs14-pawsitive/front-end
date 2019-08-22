@@ -33,7 +33,6 @@ class CustomCarousel extends React.Component {
     const customStyles = {
       carousel: {
         width: "90%",
-        maxWidth: "1000px",
         margin: "80px 0px 20px 20px",
         marginLeft: "140px",
       }
