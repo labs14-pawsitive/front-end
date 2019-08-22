@@ -35,6 +35,7 @@ class CustomCarousel extends React.Component {
         width: "90%",
         maxWidth: "1000px",
         margin: "80px 0px 20px 20px",
+        marginLeft: "140px",
       }
     }
 
@@ -45,7 +46,7 @@ class CustomCarousel extends React.Component {
 
     return (
       <GridContainer > 
-        <GridItem xs={12} sm={12} md={6} style={customStyles.carousel}>
+        <GridItem xs={6} sm={8} md={8} lg={8} xl={8} style={customStyles.carousel}>
           <Carousel autoPlay infiniteLoop>
             {
               Array.from(images).map(image => {

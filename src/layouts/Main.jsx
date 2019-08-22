@@ -61,7 +61,7 @@ class MainLayout extends React.Component {
         <MainNavBar brandText="Pawsnfind" {...rest} />
         <div className={classes.wrapper} ref={this.wrapper}>
           <div
-            className={classes.fullPage}
+            className={window.location.pathname.indexOf("/error") !== -1 ? classes.fullPageError : null}
             style={{ backgroundImage: "url(" + this.getBgImage() + ")" }}
           >
             <Switch>
@@ -75,8 +75,10 @@ class MainLayout extends React.Component {
               <Redirect from ="/" to="/error" />
             </Switch>
             {/* <Footer white/> */}
+
           </div>
         </div>
+        
       </div>
     );
   }

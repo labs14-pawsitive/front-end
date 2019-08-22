@@ -48,9 +48,42 @@ const mainPageStyle = () => ({
     backgroundSize: "cover",
     backgroundPosition: "center center",
     backgroundRepeat: "no-repeat",
+    background: "linear-gradient(to bottom, #349FAD 0%, #349FAD 45%, #000000 45%, lightgrey 45%, lightgrey 50%)",
     minHeight: "65vh",
     zIndex: "3",
    },
+   buttonstyle: {
+    display: "flex", 
+    justify: "center", 
+    alignItems: "center",
+   },
+   floatRightStyle: {
+    float: "right", 
+    position: "relative",
+   },
+   floatLeftStyle: {
+    float: "left", 
+    position: "relative",
+    marginTop: "100px",
+   },
+   shelterCard: {
+    width: "80%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginTop: "50px",
+    left: "0",
+    right: "0",
+    top: "60%",
+    borderRadius: "4px",
+    boxShadow: "0 0px 5px rgba(0,0,0,0.19)",
+    zIndex: "5",
+    textAlign: "left",
+    alignItems: "center",
+    backgroundColor: "white",
+    justifyContent: "center",
+    padding: "30px",
+  },
+
 
 
 });
