@@ -64,11 +64,14 @@ const styles = {
   },
 };
 
-class DonationTable extends React.Component {
+class Donations extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      followers: [],
+      donations: [],
+      totalDonations : "",
+      recentDonations : "",
+      topDonors : [], 
       shelterVerified: ""
 
     };
@@ -94,27 +97,38 @@ class DonationTable extends React.Component {
 
   componentDidMount() {
     axios
-    //.get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/shelter/${localStorage.getItem("shelter_id")}`)
-    .get(`${process.env.REACT_APP_BACKEND_URL}/api/shelters/${localStorage.getItem('shelter_id')}/follows`)
-    .then(followers => {
-      console.log(followers)
+    .get(`${process.env.REACT_APP_BACKEND_URL}/api/donations/dashboardData/${localStorage.getItem('shelter_id')}`)
+    .then(results => {
+      console.log(results)
       this.setState({
-        followers : followers.data.map((follower, key) => {
+        donations : results.data.donations.map((donation, key) => {
         return {
           id: key,
-          userID: follower.user_id,
-          username: follower.username,
-          email: follower.email,
-          location: follower.zip,
+          donationId: donation.id,
+          username: donation.username,
+          email: donation.email,
+          amount: parseInt(donation.amount),
+          date: `${donation.month}/${donation.day}/${donation.year}`,
           icon: <Favorite style={{color: '#e0286a'}}/>
         };
+      }),
+      totalDonations : results.data.totalDonations[0].total,
+      recentDonations : results.data.recentDonations[0].total,
+      topDonors : results.data.topDonations
       })
-      })
-      console.log("state" , this.state.followers)
+      console.log("state" , this.state)
     })
     .catch(error => {
       console.log(error)
     })
+  }
+
+  getTopDonationRows = () => {
+    let result = []
+     this.state.topDonors.map((donor, key) => {
+       result.push([`${key+1}`,  `${donor.username}`, `${donor.total}`, `${donor.number_of_donations}`])
+    })
+    return result;
   }
 
   render() {
@@ -186,6 +200,8 @@ class DonationTable extends React.Component {
       textAlign: "right"
     }
 
+    let topDonationRows = this.getTopDonationRows();
+
     if(this.state.shelterVerified !== true) return <div>Verifying Shelter</div>
 
     return (
@@ -200,7 +216,7 @@ class DonationTable extends React.Component {
                 </CardIcon>
                 <p className={classes.cardCategory} style={card_category}>Recent Donations</p>
                 <h3 className={classes.cardTitle} style={card_title}>
-                  <small>$</small>{this.state.followers.length} 
+                  <small>$</small>{this.state.recentDonations} 
                 </h3>
               </CardHeader>
               <CardFooter stats>
@@ -219,7 +235,7 @@ class DonationTable extends React.Component {
                 </CardIcon>
                 <p className={classes.cardCategory} style={card_category}>Total Donations</p>
                 <h3 className={classes.cardTitle} style={card_title}>
-                  <small>$</small>{this.state.followers.length} 
+                  <small>$</small>{this.state.totalDonations} 
                 </h3>
               </CardHeader>
               <CardFooter stats>
@@ -248,12 +264,7 @@ class DonationTable extends React.Component {
                   hover
                   tableHeaderColor="warning"
                   tableHead={["Rank", "Username", "Total Donation", "# of Donations"]}
-                  tableData={[
-                    ["1", "Dakota Rice", "$36,738", "3"],
-                    ["2", "Minerva Hooper", "$23,789", "5"],
-                    ["3", "Sage Rodriguez", "$56,142", "2"],
-                    ["4", "Philip Chaney", "$38,735", "8"]
-                  ]}
+                  tableData={topDonationRows}
                 />
               </CardBody>
             </Card>
@@ -268,12 +279,12 @@ class DonationTable extends React.Component {
             </CardHeader>
             <CardBody>
               <ReactTable
-                data={this.state.followers}
+                data={this.state.donations}
                 filterable
                 columns={[
                   {
-                    Header: "User ID",
-                    accessor: "userID",
+                    Header: "Donation ID",
+                    accessor: "donationId",
                     
                   },
                   {
@@ -285,15 +296,16 @@ class DonationTable extends React.Component {
                     accessor: "email"
                   },
                   {
-                    Header: "Location",
-                    accessor: "zip"
+                    Header: "Donation Amount",
+                    accessor: "amount"
+                  },
+                  {
+                    Header: "Date",
+                    accessor: "date"
                   },
                   {
                     Header: "",
-                    accessor: "icon",
-                    style: {textAlign: "center"},
-                    sortable: false,
-                    filterable: false
+                    accessor: "icon"
                   }
                 ]}
                 defaultPageSize={10}
@@ -319,7 +331,7 @@ const mapStateToProps = (state) => {
   
 }
 
-DonationTable.propTypes = {
+Donations.propTypes = {
   classes: PropTypes.object
 };
 
@@ -329,4 +341,4 @@ DonationTable.propTypes = {
 export default connect(
   mapStateToProps,
   {}
-)(withStyles(styles)(DonationTable))
+)(withStyles(styles)(Donations))

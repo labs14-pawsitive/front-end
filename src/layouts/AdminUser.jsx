@@ -21,7 +21,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import axios from "axios"
 import { connect } from "react-redux";
 import { axiosWithAuth } from 'axiosWithAuth';
-
+import { get_user } from '../actions/userAction';
 
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
@@ -36,13 +36,13 @@ import Footer from "components/Footer/Footer.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.jsx";
 
-import routes from "routes.js";
+import routes from "userRoutes.js";
 
 import appStyle from "assets/jss/material-dashboard-pro-react/layouts/adminStyle.jsx";
 
 var ps;
 
-class Dashboard extends React.Component {
+class UserDashboard extends React.Component {
   state = {
     mobileOpen: false,
     miniActive: false,
@@ -52,7 +52,7 @@ class Dashboard extends React.Component {
     hasImage: true,
     fixedClasses: "dropdown",
     logo: require("assets/img/logo-white.svg"),
-    shelter : {}
+    
   };
   mainPanel = React.createRef();
 
@@ -62,9 +62,9 @@ class Dashboard extends React.Component {
   }
   
     componentWillMount() {
-      //verifying shelter before proceeding
+      //verifying user before proceeding
       axiosWithAuth()
-        .get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
+        .get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/user/${localStorage.getItem('user_id')}`)
         .then( result => {
           console.log(result)
         })
@@ -76,36 +76,26 @@ class Dashboard extends React.Component {
 
   componentDidMount() {
     
-    //window.onpopstate = this.onBackButtonEvent;
+    this.getUser(localStorage.getItem('user_id'));
 
-    axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/api/shelters/${localStorage.getItem('shelter_id')}`)
-      .then( shelter => {
-      console.log(shelter.data)
-      this.setState({
-        shelter: shelter.data
-      })
-      console.log(this.state.shelter)
-    })
-    .catch( error => {
-      console.log(error)
-    })
-
-    if (navigator.platform.indexOf("Win") > -1) {
+        if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(this.mainPanel.current, {
         suppressScrollX: true,
         suppressScrollY: false
       });
-      document.body.style.overflow = "hidden";
+
+    document.body.style.overflow = "hidden";
     }
     window.addEventListener("resize", this.resizeFunction);
   }
+  
   componentWillUnmount() {
     if (navigator.platform.indexOf("Win") > -1) {
       ps.destroy();
     }
     window.removeEventListener("resize", this.resizeFunction);
   }
+
   componentDidUpdate(e) {
     
     if (e.history.location.pathname !== e.location.pathname) {
@@ -115,12 +105,19 @@ class Dashboard extends React.Component {
       }
     }
   }
+
+  getUser = async(user_id) => {
+    await this.props.get_user(user_id)
+  }
+/*
   handleImageClick = image => {
     this.setState({ image: image });
   };
+
   handleColorClick = color => {
     this.setState({ color: color });
   };
+
   handleBgColorClick = bgColor => {
     switch (bgColor) {
       case "white":
@@ -132,6 +129,7 @@ class Dashboard extends React.Component {
     }
     this.setState({ bgColor: bgColor });
   };
+*/
   handleFixedClick = () => {
     if (this.state.fixedClasses === "dropdown") {
       this.setState({ fixedClasses: "dropdown show" });
@@ -139,12 +137,15 @@ class Dashboard extends React.Component {
       this.setState({ fixedClasses: "dropdown" });
     }
   };
+
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
   };
+
   getRoute = () => {
-    return window.location.pathname !== "/admin/full-screen-maps";
+    return window.location.pathname !== "/userDash/full-screen-maps";
   };
+
   getActiveRoute = routes => {
     let activeRoute = "Default Brand Text";
     for (let i = 0; i < routes.length; i++) {
@@ -163,12 +164,13 @@ class Dashboard extends React.Component {
     }
     return activeRoute;
   };
+
   getRoutes = routes => {
     return routes.map((prop, key) => {
       if (prop.collapse) {
         return this.getRoutes(prop.views);
       }
-      if (prop.layout === "/admin") {
+      if (prop.layout === "/userDash") {
         return (
           <Route
             path={prop.layout + prop.path}
@@ -181,14 +183,17 @@ class Dashboard extends React.Component {
       }
     });
   };
+
   sidebarMinimize = () => {
     this.setState({ miniActive: !this.state.miniActive });
   };
+
   resizeFunction = () => {
     if (window.innerWidth >= 960) {
       this.setState({ mobileOpen: false });
     }
   };
+
   render() {
     const { classes, ...rest } = this.props;
     const mainPanel =
@@ -199,13 +204,12 @@ class Dashboard extends React.Component {
         [classes.mainPanelWithPerfectScrollbar]:
           navigator.platform.indexOf("Win") > -1
       });
+
     return (
       <div className={classes.wrapper}>
         <Sidebar
           routes={routes}
-          logoText={this.state.shelter.shelter}
-          //logo={this.state.logo}
-          //image={this.state.image}
+          logoText={this.props.user.username}
           handleDrawerToggle={this.handleDrawerToggle}
           open={this.state.mobileOpen}
           color={this.state.color}
@@ -213,6 +217,7 @@ class Dashboard extends React.Component {
           miniActive={this.state.miniActive}
           {...rest}
         />
+
         <div className={mainPanel} ref={this.mainPanel}>
           <AdminNavbar
             sidebarMinimize={this.sidebarMinimize.bind(this)}
@@ -227,7 +232,7 @@ class Dashboard extends React.Component {
               <div className={classes.container}>
                 <Switch>
                   {this.getRoutes(routes)}
-                  <Redirect from="/admin" to="/admin/dashboard" />
+                  <Redirect from="/userDash" to="/userDash/dashboard" />
                 </Switch>
               </div>
             </div>
@@ -235,7 +240,7 @@ class Dashboard extends React.Component {
             <div className={classes.map}>
               <Switch>
                 {this.getRoutes(routes)}
-                <Redirect from="/admin" to="/admin/dashboard" />
+                <Redirect from="/userDash" to="/userDash/dashboard" />
               </Switch>
             </div>
           )}
@@ -249,20 +254,17 @@ class Dashboard extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    //userID : state.userReducer.userID,
-    shelterID : state.shelterReducer.shelterID,
-    shelterWorkerID : state.userReducer.shelterWorkerID,
-    roleID : state.userReducer.roleID
+    user : state.userReducer.user,
   }
 }
 
-Dashboard.propTypes = {
+UserDashboard.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
 
 export default connect(
   mapStateToProps,
-  {}
-)(withStyles(appStyle)(Dashboard))
+  { get_user }
+)(withStyles(appStyle)(UserDashboard))
 

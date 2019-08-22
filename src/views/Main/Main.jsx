@@ -72,7 +72,7 @@ class MainPage extends React.Component {
             style={{ display: "block", marginTop: "-100px", color: "#777", fontFamily: "Roboto", padding:"50px", lineHeight: "1.2" }}
             //title={`You need to login / signup in order to ${str}`}
             //title="OOH MY PAWS!!!"
-            titleStyle={{fontWeight:"500"}}
+            //titleStyle={{fontWeight:"500"}}
             onConfirm={() => this.routeToAuth()}
             onCancel={this.hideAlert}
             confirmBtnCssClass={
@@ -138,14 +138,15 @@ class MainPage extends React.Component {
         fontWeight: "700",
         "&:hover": {
           backgroundColor: "#A464A3"
-        }
+        },
+        
       }
     }
 
     return (
       <GridContainer style={{background: "linear-gradient(180deg, #349fad, #268592)", paddingTop: "100px", margin:'0', width:"100%"}}>
         <GridContainer className={classes.bodyStyle} style={{margin: "0"}}>
-          <GridItem xs={10} sm={10} md={9} style={{ zIndex: "6", minHeight: "600px", backgroundImage: "url(" + HomeImg + ")", backgroundPosition: "right", backgroundRepeat: "no-repeat", backgroundSize: "auto" }}>
+          <GridItem xs={10} sm={10} md={9} style={{ zIndex: "10", minHeight: "600px", backgroundImage: "url(" + HomeImg + ")", backgroundPosition: "right", backgroundRepeat: "no-repeat", backgroundSize: "auto" }}>
             <GridItem xs={12} sm={8}>
               <div style={{color:"white", textShadow: "5px 5px #00000030"}}>ADOPT YOUR PET<sup>*</sup></div>
             </GridItem>
@@ -154,18 +155,13 @@ class MainPage extends React.Component {
 
             {this.state.alert} 
             <Button style={customStyle.buttonStyle} onClick = {this.setFollow}>Follow Me</Button>
-                       <Button style={customStyle.buttonStyle} onClick = {this.setDonate}>Donate</Button>
+            <Button style={customStyle.buttonStyle} onClick = {this.setDonate}>Donate</Button>
 
             {localStorage.getItem("user_id") && localStorage.getItem('token') ? 
             <Application animalId={26} shelterId={11} />
             :
             <Button style={customStyle.buttonStyle} onClick = {() => this.setAlert("continue with application process")}>Adopt Me</Button>
             }
-
-
-
-
-
           </GridItem> 
           <GridItem xs={10} sm={10} md={10} style={{minHeight: "200px", marginTop: "-120px", zIndex:"5", backgroundColor: "#fcfcfc", borderRadius: "5px", boxShadow: "0 0 5px #33333330"}} >
             <GridItem xs={12}>

@@ -28,9 +28,11 @@ import reducer from './reducers';
 import Auth from 'components/Auth/Auth.js';
 import PrivateRoute from 'PrivateRoute.js';
 import PrivateRouteShelter from 'PrivateRouteShelter.js';
+import PrivateRouteUser from 'PrivateRouteUser.js';
 
 import AuthLayout from "layouts/Auth.jsx";
 import AdminLayout from "layouts/Admin.jsx";
+import UserLayout from "layouts/AdminUser.jsx";
 import ApplicationLayout from "layouts/Application_Temp.jsx";
 import MainLayout from "layouts/Main.jsx";
 import Callback from "layouts/Callback.jsx";
@@ -62,10 +64,13 @@ ReactDOM.render(
             <Switch>
                 <Route exact path="/auth" component={AuthLayout} />
                 <Route path="/callback" render={props => {handleAuthentication(props); return <Callback {...props} />}} />
+                {/* 
                 <Route path="/application/:shelterId/:animalId" component={ApplicationLayout} />
                 <Route path="/application" component={ApplicationLayout} />
+                */}
                 <PrivateRoute path="/shelter-signup" component={ShelterOnboarding}/>
                 <PrivateRouteShelter path="/admin" component={AdminLayout} />
+                <PrivateRouteUser path="/userDash" component={UserLayout} />
                 <Route path="/" component={MainLayout} />   
             </Switch>
         </Router>

@@ -21,22 +21,18 @@ import Dashboard from "views/Dashboard/Dashboard2.jsx";
 import AnimalView from "views/Animals/AnimalView";
 import AnimalTable from "views/Animals/AnimalTable";
 import AddAnimalForm from "views/Animals/AddAnimalForm";
-import EditAnimalForm from "views/Animals/EditAnimalForm";
 import ApplicationView from "views/Applications/ApplicationView.jsx"
 import ApplicationTable from "views/Applications/ApplicationTable";
 import ShelterProfile from "views/ShelterProfile/ShelterProfile";
 import StripeInfo from "views/ShelterProfile/StripeInfo";
 import SubscriptionPlan from "views/ShelterProfile/SubscriptionPlan";
-import DonationTable from "views/Donations/DonationTable.jsx";
+import Donations from "views/Donations/Donations.jsx";
 import FollowerTable from "views/Followers/FollowerTable.jsx";
-
 
 // @material-ui/icons
 
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import LibraryBooks from "@material-ui/icons/LibraryBooks";
-
-
 
 var dashRoutes = [
   {
@@ -97,16 +93,7 @@ var dashRoutes = [
               component: AnimalView,
               layout: "/admin",
               invisible: true
-          },
-          /*
-          {
-                path:"/editAnimal/:id",
-                name: "Edit Animal",
-                component: EditAnimalForm,
-                layout: "/admin",
-                invisible: true
-        },
-        */
+          }
       ]
   },
   {
@@ -121,12 +108,6 @@ var dashRoutes = [
             component: ApplicationTable,
             layout: "/admin"
         },
-       /* {
-            path:"/allApplications",
-            name: "All Applications",
-            component: ExtendedForms,
-            layout: "/admin"
-        }, */
         {
             path:"/application/:id",
             name: "Application",
@@ -136,12 +117,11 @@ var dashRoutes = [
         }
     ]
 },
-
 {
     path: "/donations",
     name: "Donations",
     icon: "money",
-    component: DonationTable,
+    component: Donations,
     layout: "/admin"
   },
   {

@@ -82,7 +82,7 @@ import shelterDashboardStyle from "assets/jss/material-dashboard-pro-react/views
 //let monthlyDonation = [];
 //let monthlyApplication = [];
 
-class Dashboard extends React.Component {
+class UserDashboard extends React.Component {
   state = {
     months: getFullMonths(),
     animal_3 : [],
@@ -512,8 +512,8 @@ class Dashboard extends React.Component {
   }
 }
 
-Dashboard.propTypes = {
+UserDashboard.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(shelterDashboardStyle)(Dashboard);
+export default withStyles(shelterDashboardStyle)(UserDashboard);
