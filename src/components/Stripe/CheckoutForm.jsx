@@ -59,7 +59,7 @@ class CheckoutForm extends Component {
             .post(`${process.env.REACT_APP_BACKEND_URL}/api/stripe/donate`, {
                 token: token.id,
                 data: { 
-                    amount: this.state.amount, 
+                    amount: (this.state.amount * 100), 
                     shelter_id: this.props.shelterID,
                     user_id: localStorage.getItem('user_id'),
                  } 
