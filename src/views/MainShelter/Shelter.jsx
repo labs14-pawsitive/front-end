@@ -37,6 +37,8 @@ import phoneIcon from "assets/img/020-telephone-3.png";
 import serviceIcon from "assets/img/036-customer-service.png";
 import shelterPageStyle from "assets/jss/material-dashboard-pro-react/views/shelterPageStyle";
 
+import StripeDonation from  "components/Stripe/StripeDonation.jsx";
+
 class ShelterPage extends React.Component {
     constructor(props) {
       super(props)
@@ -108,7 +110,7 @@ class ShelterPage extends React.Component {
           <GridItem xs={12} sm={12} md={7}></GridItem>
           <GridItem xs={12} sm={12} md={8}>
           <Button className={classes.topButtons}>{this.state.shelterFollow? "Unfollow" : "Follow"}</Button> 
-          {this.state.hasStripe? <Button className={classes.topButtons}>Donate</Button> : null}
+          {this.state.hasStripe? <StripeDonation shelter={shelter} /> : null}
           </GridItem>
           <GridItem xs={12} sm={12} md={4}></GridItem>
         </GridContainer>
