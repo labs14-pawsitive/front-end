@@ -21,6 +21,9 @@ import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
 import AnimalCard from "components/AnimalCard/AnimalCard.jsx";
+import SweetAlert from "react-bootstrap-sweetalert";
+import Auth from "components/Auth/Auth.js"
+
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -38,6 +41,7 @@ import serviceIcon from "assets/img/036-customer-service.png";
 import shelterPageStyle from "assets/jss/material-dashboard-pro-react/views/shelterPageStyle";
 
 import StripeDonation from  "components/Stripe/StripeDonation.jsx";
+const auth = new Auth();
 
 class ShelterPage extends React.Component {
     constructor(props) {
@@ -47,9 +51,13 @@ class ShelterPage extends React.Component {
         animals: [],
         hasStripe: false,
         shelterFollow: false,
+        alert: null,
       }
     }
   
+
+
+
 
   componentDidMount() {
     // axios.all([
@@ -93,6 +101,59 @@ class ShelterPage extends React.Component {
       return bgheader;
     };
 
+    setAlert = (str) => {
+      if(!localStorage.getItem('token') && !localStorage.getItem('user_id')) {
+         this.warningAlert(str);
+       } else {
+         this.hideAlert();
+       }
+     }
+     
+     routeToAuth = () => {
+      localStorage.setItem("publicShelterID", this.props.match.params.id)
+      auth.login();
+  }
+    warningAlert = (str) => {
+    this.setState({
+      alert: (
+        <SweetAlert
+          warning
+          showCancel
+          cancelBtnCssClass={
+            this.props.classes.button + " " + this.props.classes.success
+          }
+          style={{ display: "block", marginTop: "-100px", color: "#777", fontFamily: "Roboto", padding:"50px", lineHeight: "1.2" }}
+          titleStyle={{fontWeight:"500"}}
+          onConfirm={() => this.routeToAuth()}
+          onCancel={this.hideAlert}
+          confirmBtnCssClass={
+            this.props.classes.button + " " + this.props.classes.success
+          }
+          confirmBtnText="Signup / Login"
+        >
+          <h2 style={{fontWeight: '500'}}>OOH MY PAWS</h2>
+          <h4 style={{color:"#333333"}}>{`You need to login/sign up in order to ${str}`}</h4>
+        </SweetAlert>
+      )
+    });
+  }
+  hideAlert = () =>  {
+    this.setState({
+      alert: null
+    });
+  }
+
+  setFollow = () => {
+    if(!localStorage.getItem('token') && !localStorage.getItem('user_id')) {
+      this.warningAlert('follow this shelter');
+    } else {
+      console.log("i can follow/unfollow this shelter now")
+      this.hideAlert();
+    }
+  }
+
+
+
   render() {
     const { classes } = this.props;
     const { shelter } = this.state;
@@ -110,7 +171,11 @@ class ShelterPage extends React.Component {
           </GridItem>
           <GridItem xs={12} sm={12} md={7}></GridItem>
           <GridItem xs={12} sm={12} md={8}>
-          <Button className={classes.topButtons}>{this.state.shelterFollow? "Unfollow" : "Follow"}</Button> 
+          {this.state.alert} 
+          <Button className={classes.topButtons} onClick = {this.setFollow}>
+          {this.state.shelterFollow? "Unfollow" : "Follow"}
+          </Button>
+
           {this.state.hasStripe? <StripeDonation shelter={shelter} id={id} /> : null}
           </GridItem>
           <GridItem xs={12} sm={12} md={4}></GridItem>
