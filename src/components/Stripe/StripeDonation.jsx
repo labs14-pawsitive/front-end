@@ -97,10 +97,11 @@ class StripeDonation extends React.Component {
 
         return (
             <>
-            {this.state.alert}
+   
             <Button className={classes.topButtons} onClick={this.setDonate}>
                 Donation
             </Button> 
+            {this.state.alert}
                 <Dialog open={this.state.open} onClose={this.handleClose} fullWidth={this.state.fullWidth}>
             <StripeProvider apiKey ="pk_test_x16KAsU777aRjmWMukoNMKfG00PisbA3Vh" >
             <Elements>

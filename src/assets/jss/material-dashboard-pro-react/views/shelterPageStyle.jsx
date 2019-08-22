@@ -1,5 +1,5 @@
 import { title, whiteColor, blackColor } from "assets/jss/material-dashboard-pro-react.jsx";
-
+import  buttonStyle  from "assets/jss/material-dashboard-pro-react/components/buttonStyle.jsx";
 const shelterPageStyle = () => ({
 wrapper: {
     height: "auto",
@@ -50,7 +50,7 @@ header: {
     backgroundPosition: "center center",
     backgroundRepeat: "no-repeat",
     minHeight: "65vh",
-    zIndex: "3",
+    zIndex: "10",
    },
 
 topButtons: {
@@ -62,13 +62,17 @@ topButtons: {
        fontSize: "1em",
        fontWeight: "700",
        "&:hover": {
-        backgroundColor: "#A464A3"
-    }
+        backgroundColor: "#A464A3",
+
+    },
+      "&:active": {
+        backgroundColor: "green",
+      }
    },
 
 contentHeader: {
     position: "relative",
-    zIndex: "3",
+    zIndex: "10",
     textAlign: "left",
     color: whiteColor,
     width: "100%",
@@ -103,7 +107,10 @@ contentHeader: {
     display: "block",
     marginRight: "10px",
     marginTop: "10px",
-  }
+  },
+
+  ...buttonStyle,
+
 });
 
 
