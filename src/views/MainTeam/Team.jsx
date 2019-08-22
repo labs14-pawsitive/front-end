@@ -154,11 +154,11 @@ class TeamPage extends React.Component {
             <h1
               style={{
                 textAlign: "center",
-                fontWeight: "bolder",
+                fontWeight: "bold",
                 marginBottom: "30px"
               }}
             >
-              About Our Team
+              Meet the Team
             </h1>
 
             <GridContainer style={customStyle.alignment}>
