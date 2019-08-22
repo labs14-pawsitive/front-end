@@ -35,12 +35,6 @@ const mainPageStyle = () => ({
     display:"flex",
     alignItems: "center",
     justifyContent: "center",
-<<<<<<< HEAD
-    width:"100%",
-    color: blackColor
-
-  }
-=======
     width:"100%"
   },
   wrapper: {
@@ -59,7 +53,6 @@ const mainPageStyle = () => ({
    },
 
 
->>>>>>> fe-dev-james
 });
 
 export default mainPageStyle;
