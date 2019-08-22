@@ -47,7 +47,7 @@ class StripeDonation extends React.Component {
        }
        
        routeToAuth = () => {
-        localStorage.setItem("publicShelterID", this.props.id)
+        localStorage.setItem("shelterId", this.props.id)
         auth.login();
     }
       warningAlert = (str) => {

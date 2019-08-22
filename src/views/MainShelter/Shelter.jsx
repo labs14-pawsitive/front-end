@@ -94,7 +94,8 @@ class ShelterPage extends React.Component {
       .catch(err => { 
         console.log(`Shelter Error: ${err}`)
       })
-    
+      
+      localStorage.removeItem('shelterId')
       }
 
     getBgImage = () => {
@@ -110,7 +111,7 @@ class ShelterPage extends React.Component {
      }
      
      routeToAuth = () => {
-      localStorage.setItem("publicShelterID", this.props.match.params.id)
+      localStorage.setItem("shelterId", this.props.match.params.id)
       auth.login();
   }
     warningAlert = (str) => {
