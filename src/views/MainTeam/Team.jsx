@@ -48,7 +48,6 @@ import bg from "assets/img/bg-team.jpg";
 
 import mainPageStyle from "assets/jss/material-dashboard-pro-react/views/mainPageStyle.jsx";
 
-
 import {
   cardTitle,
   roseColor
@@ -108,12 +107,12 @@ const styles = {
 
 class TeamPage extends React.Component {
   componentDidMount() {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
   }
-  
+
   render() {
     const { classes } = this.props;
-    
+
     const customStyle = {
       alignment: {
         display: "flex",
@@ -123,195 +122,345 @@ class TeamPage extends React.Component {
       },
       mainContainer: {
         zIndex: 3,
-        display:"flex",
+        display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        width:"100%",
+        width: "100%",
         //paddingTop: "150px",
         paddingBottom: "150px",
         background: "#e7e7e7",
-        margin:0
+        margin: 0
       },
-       avatarStyle: {
-          marginTop: "-75px",
-          maxWidth: "150px",
-          maxHeight: "150px"
+      avatarStyle: {
+        marginTop: "-75px",
+        maxWidth: "175px",
+        maxHeight: "175px"
       }
-    }
+    };
     return (
       <div>
         <GridContainer style={customStyle.mainContainer}>
-          <GridItem xs={12} style={{boxShadow: "0 0 30px #00000050", height:"500px", backgroundImage:"linear-gradient(#00000080, #00000015),url(" + bg + ")", backgroundSize:"cover", backgroundPosition: "center center"}}>
-
+          <GridItem
+            xs={12}
+            style={{
+              boxShadow: "0 0 30px #00000050",
+              height: "500px",
+              backgroundImage:
+                "linear-gradient(#00000080, #00000015),url(" + bg + ")",
+              backgroundSize: "cover",
+              backgroundPosition: "center center"
+            }}
+          ></GridItem>
+          <GridItem xs={10} sm={10} md={10}>
+            <h1
+              style={{
+                textAlign: "center",
+                fontWeight: "bolder",
+                marginBottom: "70px"
+              }}
+            >
+              About Our Team
+            </h1>
           </GridItem>
-          <GridItem xs={10} sm={10} md={10}>             
-          <h1>About Our Team</h1>
 
-            <GridContainer style={customStyle.alignment}>
-              <GridItem xs={11} sm={8} md={5} lg={4}>
-                <Card testimonial>
-                <CardAvatar testimonial testimonialFooter style={customStyle.avatarStyle}>
-                      <a href="#pablo" onClick={e => e.preventDefault()}>
-                        <img src="https://ca.slack-edge.com/T4JUEB3ME-UFH4T28HX-64713d6bec86-512" alt="..." />
-                      </a>
-                    </CardAvatar>
-                  {/*<div className={classes.testimonialIcon}>
-                      <FormatQuote />
-                  </div>*/}
-                  <CardBody style={{marginTop: "60px"}}>
-                    <h5 className={classes.cardTestimonialDescription}>
-                      Highly motivated full stack developer who is awesome at making things happen! 
-                      Attention to detail, just the one your company is looking for.
-                    </h5>
-                  </CardBody>
-                  <CardFooter testimonial>
-                    <h4 className={classes.cardTitle}>Aruna Benjamin</h4>
-                    <h6 className={classes.cardCategory}>@TEAMMEMBER!</h6>
-                    
-                  </CardFooter>
-                </Card>
-              </GridItem>
+          <GridItem xs={11} sm={8} md={5} lg={4}>
+            <Card testimonial style={{ marginBottom: "65px" }}>
+              <CardAvatar
+                testimonial
+                testimonialFooter
+                style={customStyle.avatarStyle}
+              >
+                <a href="#pablo" onClick={e => e.preventDefault()}>
+                  <img
+                    src="https://ca.slack-edge.com/T4JUEB3ME-UG1NB3NDT-5148b962dfda-512"
+                    alt="..."
+                  />
+                </a>
+              </CardAvatar>
+              <CardHeader style={{ paddingBottom: "0" }}>
+                <h4
+                  className={classes.cardTitle}
+                  style={{
+                    fontWeight: "600",
+                    marginTop: "67px",
+                    marginBottom: "0px"
+                  }}
+                >
+                  Aruna Benjamin
+                </h4>
+              </CardHeader>
 
-              <GridItem xs={11} sm={8} md={5} lg={4}>
-                <Card testimonial>
-                  <div className={classes.testimonialIcon}>
-                    <FormatQuote />
-                  </div>
-                  <CardBody>
-                    <h5 className={classes.cardTestimonialDescription}>
-                    Highly motivated full stack developer who is awesome at making things happen! Attention to detail, just the one your company is looking for.
-                    </h5>
-                  </CardBody>
-                  <CardFooter testimonial>
-                    <h4 className={classes.cardTitle}>Sarah Lee</h4>
-                    <h6 className={classes.cardCategory}>@TEAMMEMBER2</h6>
-                    <CardAvatar testimonial testimonialFooter>
-                      <a href="#pablo" onClick={e => e.preventDefault()}>
-                        <img src={image} alt="..." />
-                      </a>
-                    </CardAvatar>
-                  </CardFooter>
-                </Card>
-              </GridItem>
+              <CardBody>
+                <h5
+                  className={classes.cardTestimonialDescription}
+                  style={{ fontStyle: "normal", fontWeight: "400" }}
+                >
+                  Highly motivated full stack developer who is awesome at making
+                  things happen! Attention to detail, just the one your company
+                  is looking for.
+                </h5>
+              </CardBody>
+              <CardFooter testimonial>
+                <h6 className={classes.cardCategory}>@TEAMMEMBER!</h6>
+              </CardFooter>
+            </Card>
+          </GridItem>
 
-              <GridItem xs={11} sm={8} md={5} lg={4}>
-                <Card testimonial>
-                  <div className={classes.testimonialIcon}>
-                    <FormatQuote />
-                  </div>
-                  <CardBody>
-                    <h5 className={classes.cardTestimonialDescription}>
-                      Highly motivated full stack developer who is awesome at making things happen! 
-                      Attention to detail, just the one your company is looking for.
-                    </h5>
-                  </CardBody>
-                  <CardFooter testimonial>
-                    <h4 className={classes.cardTitle}>Ming Liu</h4>
-                    <h6 className={classes.cardCategory}>@TEAMMEMBER!</h6>
-                    <CardAvatar testimonial testimonialFooter>
-                      <a href="#pablo" onClick={e => e.preventDefault()}>
-                        <img src={image} alt="..." />
-                      </a>
-                    </CardAvatar>
-                  </CardFooter>
-                </Card>
-              </GridItem>
+          <GridItem xs={11} sm={8} md={5} lg={4}>
+            <Card testimonial style={{ marginBottom: "65px" }}>
+              <CardAvatar
+                testimonial
+                testimonialFooter
+                style={customStyle.avatarStyle}
+              >
+                <a href="#pablo" onClick={e => e.preventDefault()}>
+                  <img
+                    src="https://ca.slack-edge.com/T4JUEB3ME-UG1NB3NDT-5148b962dfda-512"
+                    alt="..."
+                  />
+                </a>
+              </CardAvatar>
+              <CardHeader style={{ paddingBottom: "0" }}>
+                <h4
+                  className={classes.cardTitle}
+                  style={{
+                    fontWeight: "600",
+                    marginTop: "67px",
+                    marginBottom: "0px"
+                  }}
+                >
+                  Sarah Lee
+                </h4>
+              </CardHeader>
 
-              <GridItem xs={11} sm={8} md={5} lg={4}>
-                <Card testimonial>
-                  <div className={classes.testimonialIcon}>
-                    <FormatQuote />
-                  </div>
-                  <CardBody>
-                    <h5 className={classes.cardTestimonialDescription}>
-                    Highly motivated full stack developer who is awesome at making things happen! Attention to detail, just the one your company is looking for.
-                    </h5>
-                  </CardBody>
-                  <CardFooter testimonial>
-                    <h4 className={classes.cardTitle}>Lenna Mau</h4>
-                    <h6 className={classes.cardCategory}>@TEAMMEMBER2</h6>
-                    <CardAvatar testimonial testimonialFooter>
-                      <a href="#pablo" onClick={e => e.preventDefault()}>
-                        <img src={image} alt="..." />
-                      </a>
-                    </CardAvatar>
-                  </CardFooter>
-                </Card>
-              </GridItem>
+              <CardBody>
+                <h5
+                  className={classes.cardTestimonialDescription}
+                  style={{ fontStyle: "normal", fontWeight: "400" }}
+                >
+                  Highly motivated full stack developer who is awesome at making
+                  things happen! Attention to detail, just the one your company
+                  is looking for.
+                </h5>
+              </CardBody>
+              <CardFooter testimonial>
+                <h6 className={classes.cardCategory}>@TEAMMEMBER!</h6>
+              </CardFooter>
+            </Card>
+          </GridItem>
 
-              <GridItem xs={11} sm={8} md={5} lg={4}>
-                <Card testimonial>
-                  <div className={classes.testimonialIcon}>
-                    <FormatQuote />
-                  </div>
-                  <CardBody>
-                    <h5 className={classes.cardTestimonialDescription}>
-                      Highly motivated full stack developer who is awesome at making things happen! 
-                      Attention to detail, just the one your company is looking for.
-                    </h5>
-                  </CardBody>
-                  <CardFooter testimonial>
-                    <h4 className={classes.cardTitle}>James Pak</h4>
-                    <h6 className={classes.cardCategory}>@TEAMMEMBER!</h6>
-                    <CardAvatar testimonial testimonialFooter>
-                      <a href="#pablo" onClick={e => e.preventDefault()}>
-                        <img src={image} alt="..." />
-                      </a>
-                    </CardAvatar>
-                  </CardFooter>
-                </Card>
-              </GridItem>
+          <GridItem xs={11} sm={8} md={5} lg={4}>
+            <Card testimonial style={{ marginBottom: "65px" }}>
+              <CardAvatar
+                testimonial
+                testimonialFooter
+                style={customStyle.avatarStyle}
+              >
+                <a href="#pablo" onClick={e => e.preventDefault()}>
+                  <img
+                    src="https://ca.slack-edge.com/T4JUEB3ME-UG1NB3NDT-5148b962dfda-512"
+                    alt="..."
+                  />
+                </a>
+              </CardAvatar>
+              <CardHeader style={{ paddingBottom: "0" }}>
+                <h4
+                  className={classes.cardTitle}
+                  style={{
+                    fontWeight: "600",
+                    marginTop: "67px",
+                    marginBottom: "0px"
+                  }}
+                >
+                  Ming Liu
+                </h4>
+              </CardHeader>
+              <CardBody>
+                <h5
+                  className={classes.cardTestimonialDescription}
+                  style={{ fontStyle: "normal", fontWeight: "400" }}
+                >
+                  Highly motivated full stack developer who is awesome at making
+                  things happen! Attention to detail, just the one your company
+                  is looking for.
+                </h5>
+              </CardBody>
+              <CardFooter testimonial>
+                <h6 className={classes.cardCategory}>@TEAMMEMBER!</h6>
+              </CardFooter>
+            </Card>
+          </GridItem>
 
-              <GridItem xs={11} sm={8} md={5} lg={4}>
-                <Card testimonial>
-                  <div className={classes.testimonialIcon}>
-                    <FormatQuote />
-                  </div>
-                  <CardBody>
-                    <h5 className={classes.cardTestimonialDescription}>
-                    Highly motivated full stack developer who is awesome at making things happen! Attention to detail, just the one your company is looking for.
-                    </h5>
-                  </CardBody>
-                  <CardFooter testimonial>
-                    <h4 className={classes.cardTitle}>Hung Pham</h4>
-                    <h6 className={classes.cardCategory}>@TEAMMEMBER2</h6>
-                    <CardAvatar testimonial testimonialFooter>
-                      <a href="#pablo" onClick={e => e.preventDefault()}>
-                        <img src={image} alt="..." />
-                      </a>
-                    </CardAvatar>
-                  </CardFooter>
-                </Card>
-              </GridItem>
+          <GridItem xs={11} sm={8} md={5} lg={4}>
+            <Card testimonial style={{ marginBottom: "65px" }}>
+              <CardAvatar
+                testimonial
+                testimonialFooter
+                style={customStyle.avatarStyle}
+              >
+                <a href="#pablo" onClick={e => e.preventDefault()}>
+                  <img
+                    src="https://ca.slack-edge.com/T4JUEB3ME-UG1NB3NDT-5148b962dfda-512"
+                    alt="..."
+                  />
+                </a>
+              </CardAvatar>
+              <CardHeader style={{ paddingBottom: "0" }}>
+                <h4
+                  className={classes.cardTitle}
+                  style={{
+                    fontWeight: "600",
+                    marginTop: "67px",
+                    marginBottom: "0px"
+                  }}
+                >
+                  Lenna Mau
+                </h4>
+              </CardHeader>
 
-              <GridItem xs={11} sm={8} md={5} lg={4}>
-                <Card testimonial>
-                  <div className={classes.testimonialIcon}>
-                    <FormatQuote />
-                  </div>
-                  <CardBody>
-                    <h5 className={classes.cardTestimonialDescription}>
-                      Highly motivated full stack developer who is awesome at making things happen! 
-                      Attention to detail, just the one your company is looking for.
-                    </h5>
-                  </CardBody>
-                  <CardFooter testimonial>
-                    <h4 className={classes.cardTitle}>Christopher Riffle</h4>
-                    <h6 className={classes.cardCategory}>@TEAMMEMBER!</h6>
-                    <CardAvatar testimonial testimonialFooter>
-                      <a href="#pablo" onClick={e => e.preventDefault()}>
-                        <img src={image} alt="..." />
-                      </a>
-                    </CardAvatar>
-                  </CardFooter>
-                </Card>
-              </GridItem>
+              <CardBody>
+                <h5
+                  className={classes.cardTestimonialDescription}
+                  style={{ fontStyle: "normal", fontWeight: "400" }}
+                >
+                  Highly motivated full stack developer who is awesome at making
+                  things happen! Attention to detail, just the one your company
+                  is looking for.
+                </h5>
+              </CardBody>
+              <CardFooter testimonial>
+                <h6 className={classes.cardCategory}>@TEAMMEMBER!</h6>
+              </CardFooter>
+            </Card>
+          </GridItem>
 
-              
+          <GridItem xs={11} sm={8} md={5} lg={4}>
+            <Card testimonial style={{ marginBottom: "65px" }}>
+              <CardAvatar
+                testimonial
+                testimonialFooter
+                style={customStyle.avatarStyle}
+              >
+                <a href="#pablo" onClick={e => e.preventDefault()}>
+                  <img
+                    src="https://ca.slack-edge.com/T4JUEB3ME-UG1NB3NDT-5148b962dfda-512"
+                    alt="..."
+                  />
+                </a>
+              </CardAvatar>
+              <CardHeader style={{ paddingBottom: "0" }}>
+                <h4
+                  className={classes.cardTitle}
+                  style={{
+                    fontWeight: "600",
+                    marginTop: "67px",
+                    marginBottom: "0px"
+                  }}
+                >
+                  James Pak
+                </h4>
+              </CardHeader>
 
+              <CardBody>
+                <h5
+                  className={classes.cardTestimonialDescription}
+                  style={{ fontStyle: "normal", fontWeight: "400" }}
+                >
+                  Highly motivated full stack developer who is awesome at making
+                  things happen! Attention to detail, just the one your company
+                  is looking for.
+                </h5>
+              </CardBody>
+              <CardFooter testimonial>
+                <h6 className={classes.cardCategory}>@TEAMMEMBER!</h6>
+              </CardFooter>
+            </Card>
+          </GridItem>
 
+          <GridItem xs={11} sm={8} md={5} lg={4}>
+            <Card testimonial style={{ marginBottom: "65px" }}>
+              <CardAvatar
+                testimonial
+                testimonialFooter
+                style={customStyle.avatarStyle}
+              >
+                <a href="#pablo" onClick={e => e.preventDefault()}>
+                  <img
+                    src="https://ca.slack-edge.com/T4JUEB3ME-UG1NB3NDT-5148b962dfda-512"
+                    alt="..."
+                  />
+                </a>
+              </CardAvatar>
+              <CardHeader style={{ paddingBottom: "0" }}>
+                <h4
+                  className={classes.cardTitle}
+                  style={{
+                    fontWeight: "600",
+                    marginTop: "67px",
+                    marginBottom: "0px"
+                  }}
+                >
+                  Hung Pham
+                </h4>
+              </CardHeader>
 
-            </GridContainer>
+              <CardBody>
+                <h5
+                  className={classes.cardTestimonialDescription}
+                  style={{ fontStyle: "normal", fontWeight: "400" }}
+                >
+                  Highly motivated full stack developer who is awesome at making
+                  things happen! Attention to detail, just the one your company
+                  is looking for.
+                </h5>
+              </CardBody>
+              <CardFooter testimonial>
+                <h6 className={classes.cardCategory}>@TEAMMEMBER!</h6>
+              </CardFooter>
+            </Card>
+          </GridItem>
+
+          <GridItem xs={11} sm={8} md={5} lg={4}>
+            <Card testimonial style={{ marginBottom: "65px" }}>
+              <CardAvatar
+                testimonial
+                testimonialFooter
+                style={customStyle.avatarStyle}
+              >
+                <a href="#pablo" onClick={e => e.preventDefault()}>
+                  <img
+                    src="https://ca.slack-edge.com/T4JUEB3ME-UG1NB3NDT-5148b962dfda-512"
+                    alt="..."
+                  />
+                </a>
+              </CardAvatar>
+              <CardHeader style={{ paddingBottom: "0" }}>
+                <h4
+                  className={classes.cardTitle}
+                  style={{
+                    fontWeight: "600",
+                    marginTop: "67px",
+                    marginBottom: "0px"
+                  }}
+                >
+                  Christopher Riffle
+                </h4>
+              </CardHeader>
+
+              <CardBody>
+                <h5
+                  className={classes.cardTestimonialDescription}
+                  style={{ fontStyle: "normal", fontWeight: "400" }}
+                >
+                  Highly motivated full stack developer who is awesome at making
+                  things happen! Attention to detail, just the one your company
+                  is looking for.
+                </h5>
+              </CardBody>
+              <CardFooter testimonial>
+                <h6 className={classes.cardCategory}>@TEAMMEMBER!</h6>
+              </CardFooter>
+            </Card>
           </GridItem>
         </GridContainer>
       </div>
