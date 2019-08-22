@@ -17,11 +17,13 @@ const createOptions = () => {
       style: {
         base: {
           fontSize: '14px',
-          color: '#424770',
+          color: 'black',
           fontFamily: 'Roboto, sans-serif',
           borderBottom: '1px solid silver',
           '::placeholder': {
-            color: '#aab7c4',
+            color: 'black',
+            fontWeight: "200",
+            fontSize: "14px",
           },
         },
         invalid: {
@@ -32,7 +34,7 @@ const createOptions = () => {
   };
   
 
-class CheckoutForm extends React.Component {
+class CheckoutForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -41,13 +43,14 @@ class CheckoutForm extends React.Component {
             complete: false,
             fullWidth: true,
         }
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
    
-    handleSubmit = e => {
+    async handleSubmit(e) {
         e.preventDefault();
     
-        let { token } = this.props.stripe.createToken({
+        let { token } = await this.props.stripe.createToken({
             name: this.state.name,
         })
 
@@ -57,13 +60,17 @@ class CheckoutForm extends React.Component {
                 token: token.id,
                 data: { 
                     amount: this.state.amount, 
-                    shelter_id: this.props.match.params.id,
+                    shelter_id: this.props.shelterID,
                     user_id: localStorage.getItem('user_id'),
                  } 
             })
             .then(res =>{ 
                 console.log(res)
-                this.setState({complete: true})
+                this.setState({
+                    amount: "",
+                    name: "",
+                    complete: true
+                })
             })
             .catch(err => {
                 console.log('Donate Error:', err)
@@ -72,7 +79,17 @@ class CheckoutForm extends React.Component {
 
     changeHandler = e => {
         this.setState({ [e.target.id] : e.target.value })
-    }    
+    }
+    
+    closeClick = e => {
+        e.preventDefault()
+        this.props.handleClose()
+        this.setState({
+            amount: "",
+            name: "",
+            complete: false,
+        })
+    }
 
     render() {
         if (this.state.complete) return <h1>Purchase Complete</h1>
@@ -122,7 +139,12 @@ class CheckoutForm extends React.Component {
               </GridContainer>
                </DialogContent>
                <DialogActions>
-              <Button color="rose" onClick={this.handleSubmit}>Donate</Button>
+               <Button color="rose" 
+                onClick= {this.closeClick} 
+                style={{marginRight: "20px"}}>Cancel</Button>
+              <Button color="rose" 
+                onClick= {this.handleSubmit} 
+                style={{marginRight: "20px"}}>{this.state.complete? "Close" : "Donate"}</Button>
               </DialogActions>
             </div>
         );

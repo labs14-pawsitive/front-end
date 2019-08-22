@@ -96,6 +96,7 @@ class ShelterPage extends React.Component {
   render() {
     const { classes } = this.props;
     const { shelter } = this.state;
+    const { id } = this.props.match.params
     
     return (
       <>
@@ -110,7 +111,7 @@ class ShelterPage extends React.Component {
           <GridItem xs={12} sm={12} md={7}></GridItem>
           <GridItem xs={12} sm={12} md={8}>
           <Button className={classes.topButtons}>{this.state.shelterFollow? "Unfollow" : "Follow"}</Button> 
-          {this.state.hasStripe? <StripeDonation shelter={shelter} /> : null}
+          {this.state.hasStripe? <StripeDonation shelter={shelter} id={id} /> : null}
           </GridItem>
           <GridItem xs={12} sm={12} md={4}></GridItem>
         </GridContainer>

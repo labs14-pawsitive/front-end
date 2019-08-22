@@ -54,6 +54,7 @@ header: {
    },
 
 topButtons: {
+      
        backgroundColor: "#A464A3",
        marginTop: "25px",
        marginRight: "15px",

@@ -287,8 +287,6 @@ class ContactForm extends React.Component {
                     <DialogTitle id="form-dialog-title">
                         Add A Contact
                     </DialogTitle>
-                    <DialogContentText>
-                    </DialogContentText>
                     <DialogContent>
                         <CustomInput 
                         success={this.state.nameState === "success"}

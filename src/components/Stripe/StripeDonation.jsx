@@ -45,7 +45,10 @@ class StripeDonation extends React.Component {
             
             <StripeProvider apiKey ="pk_test_x16KAsU777aRjmWMukoNMKfG00PisbA3Vh" >
             <Elements>
-               <InjectedCheckoutForm shelter={this.props.shelter} /> 
+               <InjectedCheckoutForm 
+               shelter={this.props.shelter} 
+               shelterID={this.props.id}
+               handleClose ={this.handleClose} /> 
             </Elements>
             </StripeProvider>
 
