@@ -95,12 +95,10 @@ Animal Rescue organizations have so much to manage, but their biggest concern is
 
 #### [Back end](https://github.com/Pawsnfind/back-end) built using:
 
-#### NodeJS with Express
-
--    PostgreSQL
--    Knex
--    Rest API
-
+- NodeJS 
+- Express
+- PostgreSQL
+- Knex
 
 # APIs
 
