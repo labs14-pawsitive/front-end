@@ -50,7 +50,12 @@ const pagesStyle = theme => ({
       width: "100%",
       border: "none !important"
     },
+    // "&:before": {
+    //   backgroundColor: "rgba(" + hexToRgb(blackColor) + ", 0.65)"
+      
+    // },
     "&:before": {
+
       //backgroundColor: "rgba(" + hexToRgb(blackColor) + ", 0.65)"
       //backgroundColor: 'white'
       
@@ -87,11 +92,7 @@ const pagesStyle = theme => ({
       width: "100%",
       border: "none !important"
     },
-    "&:before": {
-      backgroundColor: "rgba(" + hexToRgb(blackColor) + ", 0.65)"
-      //backgroundColor: 'white'
-      
-    },
+
     "&:before,&:after": {
       display: "block",
       content: '""',

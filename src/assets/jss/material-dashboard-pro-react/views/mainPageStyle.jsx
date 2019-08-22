@@ -35,10 +35,31 @@ const mainPageStyle = () => ({
     display:"flex",
     alignItems: "center",
     justifyContent: "center",
+<<<<<<< HEAD
     width:"100%",
     color: blackColor
 
   }
+=======
+    width:"100%"
+  },
+  wrapper: {
+    height: "auto",
+    minHeight: "100vh",
+    margin: "0 auto",
+    position: "relative",
+    top: "0",
+  },
+  header: {
+    backgroundSize: "cover",
+    backgroundPosition: "center center",
+    backgroundRepeat: "no-repeat",
+    minHeight: "65vh",
+    zIndex: "3",
+   },
+
+
+>>>>>>> fe-dev-james
 });
 
 export default mainPageStyle;
