@@ -5,6 +5,7 @@ import {
 } from '../actions/mainPageAction.js'
 
 const initialState = {
+    initialSearchForm:{},
     speciesSearchResult: [],
     searchingSpecies: false
 }
@@ -12,12 +13,15 @@ const initialState = {
 export const mainPageReducer = (state = initialState, action) => {
     switch (action.type) {
         case SEARCH_SPECIES_START:
+            console.log('reducers action for SEARCH_SPECIES_START ', action)
             return {
                 ...state,
                 searchingSpecies: true,
 
             };
         case SEARCH_SPECIES_SUCCESS:
+
+                console.log('reducers action for SEARCH_SPECIES_SUCCESS ', action.initialSearchForm)
             return {
                 ...state,
                 searchingSpecies: false,

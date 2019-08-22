@@ -207,14 +207,19 @@ class MainPage extends React.Component {
       zipcode: Number(this.state.zipcode),
       radius: this.state.distance
 
-    }
+    } 
 
     console.log('front end search object ', searchObject)
 
     if (this.isValidated()) {
-
+      // this.props.initialSearchForm = {...searchObject}
+      console.log('reducer form entered data ',searchObject )
       this.props.initialSearch(searchObject)
-        .then(res => console.log('initial search results ', res))
+        .then(
+          res =>{ 
+          console.log('initial search results ', res)
+          this.props.history.push('/search/advancedSearch')
+          })
         .catch(error => console.log('initial search error ', error))
     }
   }
@@ -377,12 +382,6 @@ class MainPage extends React.Component {
       },
       topLeft: {
         // border: "1px solid black",
-        // paddingTop: "100px",
-        // // paddingLeft: "146px",
-        // paddingLeft: "21%",
-        // paddingRight: "21%",
-        // position: "relative",
-        // paddingBottom: "100px",
         margin:"100px 14%",
         textAlign: "left"
       },
@@ -407,21 +406,8 @@ class MainPage extends React.Component {
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center right",
           backgroundSize: "cover",
-        // zIndex: "4", 
         display: "flex" 
         }} >
-          {/* <GridItem xs={12} sm={10} md={9} style={customStyle.textTopGrid}>
-            <div style={customStyle.topLeft}>
-              <div style={customStyle.textBoxTop}>
-                <p style={customStyle.textP1}>Search, Discover</p>
-                <p style={customStyle.textP2}>ADOPT YOUR PET</p>
-              </div>
-              <Button size="large" style={customStyle.signUpButton}
-                variant="contained" className={classes.button} onClick={this.handleSearch}>
-                SIGN UP
-              </Button>
-            </div>
-          </GridItem> */}
           <GridItem xs={12} sm={12} md={11} style={customStyle.textTopGrid}>
             <div style={customStyle.topLeft}>
               <div style={customStyle.textBoxTop}>
@@ -441,7 +427,6 @@ class MainPage extends React.Component {
               minHeight: "400px",
               maxHeight: "500px",
               backgroundImage: "url(" + dogImage + ")",
-              // backgroundPosition: "center right",
               backgroundPosition: "right bottom",
               backgroundRepeat: "no-repeat",
               backgroundSize: "auto 100%",
@@ -449,7 +434,6 @@ class MainPage extends React.Component {
               marginTop: "100px",
               marginRight: "140px",
               marginBottom:"20px"
-              // backgroundAttachment: fixed
             }}>
             </GridItem>
           </Hidden>
@@ -457,7 +441,6 @@ class MainPage extends React.Component {
 
         <GridItem xs={10} sm={10} md={10}
           style={{
-            // minHeight: "200px",
             marginTop: "-60px",
             zIndex: "6",
             backgroundColor: "#f5f4f4",
@@ -595,7 +578,9 @@ MainPage.propTypes = {
 const mapStateToProps = (state) => {
   return {
     species: state.animalReducer.dropdownAnimalOptions.species,
-    allAnimals: state.animalReducer.allAnimals
+    allAnimals: state.animalReducer.allAnimals,
+    initialSearchForm:state.mainPageReducer.initialSearchForm,
+    
   }
 }
 
