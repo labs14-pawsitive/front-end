@@ -23,13 +23,14 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import InputLabel from '@material-ui/core/InputLabel';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Hidden from '@material-ui/core/Hidden';
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
-
 
 // custom styles
 import mainPageStyle from "assets/jss/material-dashboard-pro-react/views/mainPageStyle.jsx";
@@ -43,15 +44,15 @@ import addressIcon from "assets/img/address.png"
 import phoneIcon from "assets/img/phone.png"
 import rescueIcon from "assets/img/rescue.png"
 import emailIcon from "assets/img/email.png"
-import breedIcon from "assets/img/breed-rose.png"
-import ageIcon from "assets/img/age-rose.png"
-import sizeIcon from "assets/img/size-rose.png"
-import coatLengthIcon from "assets/img/coat_length-rose.png"
-import genderIcon from "assets/img/gender-rose.png"
-import colorIcon from "assets/img/color-rose.png"
-import vaccinationIcon from "assets/img/vaccination-rose.png"
-import neuterSpayedIcon from "assets/img/neuterSpayed-rose.png"
-import houseTrainedIcon from "assets/img/houseTrained-rose.png"
+import breedIcon from "assets/img/breed.png"
+import ageIcon from "assets/img/age.png"
+import sizeIcon from "assets/img/size.png"
+import coatLengthIcon from "assets/img/coat_length.png"
+import genderIcon from "assets/img/gender.png"
+import colorIcon from "assets/img/color.png"
+import vaccinationIcon from "assets/img/vaccination.png"
+import neuterSpayedIcon from "assets/img/neuterSpayed.png"
+import houseTrainedIcon from "assets/img/houseTrained.png"
 import myStoryIcon from "assets/img/my_story.png"
 import myHealthIcon from "assets/img/my_health.png"
 import noCatIcon from "assets/img/no_cat-grey.png"
@@ -61,12 +62,22 @@ import catFriendlyIcon from "assets/img/cat_friendly-grey.png"
 import dogFriendlyIcon from "assets/img/dog_friendly-grey.png"
 import kidFriendlyIcon from "assets/img/kid_friendly-grey.png"
 
+// media query
+import MediaQuery from 'react-responsive';
+
+// modals
+import Auth from "components/Auth/Auth.js"
+import SweetAlert from "react-bootstrap-sweetalert";
+import Application from "components/Application/Application.jsx"
+
+const auth = new Auth()
+
 class AnimalPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       animal: {},
-
+      alert: null,
     }
   }
 
@@ -78,8 +89,6 @@ class AnimalPage extends React.Component {
         return localStorage.getItem('user_id')
       } else { return 0 }
     }
-
-
 
     await axios
       .get(` ${process.env.REACT_APP_BACKEND_URL}/api/animals/public/${this.props.match.params.id}/${userID()} `)
@@ -94,6 +103,50 @@ class AnimalPage extends React.Component {
       })
 
   }
+
+  setAlert = (str) => {
+    if(!localStorage.getItem('token') && !localStorage.getItem('user_id')) {
+       this.warningAlert(str);
+     } else {
+       this.hideAlert();
+     }
+   }
+
+   warningAlert = (str) => {
+    this.setState({
+      alert: (
+        <SweetAlert
+          warning
+          showCancel
+          cancelBtnCssClass={
+            this.props.classes.button + " " + this.props.classes.success
+          }
+          style={{ display: "block", marginTop: "-100px", color: "#777", fontFamily: "Roboto", padding:"50px", lineHeight: "1.2" }}
+          title=""
+          onConfirm={() => this.routeToAuth()}
+          onCancel={this.hideAlert}
+          confirmBtnCssClass={
+            this.props.classes.button + " " + this.props.classes.success
+          }
+          confirmBtnText="Signup / Login"
+        >
+          <h2 style={{fontWeight: '500'}}>OOH MY PAWS</h2>
+          <h4 style={{color:"#333333"}}>{`You need to login/sign up in order to ${str}`}</h4>
+        </SweetAlert>
+      )
+    });
+  }
+
+  routeToAuth = () => {
+    localStorage.setItem("animalId", this.state.animal.id) // check 
+    auth.login();
+}
+
+hideAlert = () => {
+  this.setState({
+    alert: null
+  })
+}
 
   addNewFollow = e => {
 
@@ -115,6 +168,8 @@ class AnimalPage extends React.Component {
   wrapper = React.createRef();
 
   render() {
+
+    console.log(this.state)
 
     const { classes, ...rest } = this.props;
 
@@ -141,8 +196,8 @@ class AnimalPage extends React.Component {
         justifyContent: "center",
         display: "flex",
         flexDirection: "row",
-        marginBottom: "40px",
-      },
+        marginBottom: "25px",
+        },
       myHealthStyle: {
         justifyContent: "center",
         display: "flex",
@@ -161,6 +216,8 @@ class AnimalPage extends React.Component {
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
+        marginTop: "20px",
+        marginBottom: "20px",
       },
       goodWithCatStyle: {
         justifyContent: "center",
@@ -205,15 +262,24 @@ class AnimalPage extends React.Component {
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "row",
-        padding: "30px",
-        marginBottom: "30px",
+        margin: "10px",
+
       },
       cardItemStyle2: {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "row",
-        padding: "30px",
+        margin: "10px",
+
+      },
+      rescueItemStyle: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "row",
+        margin: "10px",
+        marginTop: "20px",
       },
 
 
@@ -227,15 +293,15 @@ class AnimalPage extends React.Component {
       <div className={classes.wrapper} ref={this.wrapper}>
         <div className={classes.header}>
 
-          <GridContainer xs={12} sm={12} md={12} lg={12} xl={12} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <GridContainer xs={12} sm={12} md={12} lg={12} xl={12} style={{ display: "flex", justifyContent: "center", alignItems: "center", margin: "0px",  }}>
 
-          <GridItem className={classes.floatLeftStyle} xs={12} sm={12} md={6} lg={6} xl={6}>
+            <GridItem xs={7} sm={5} md={3} lg={5} xl={6}>
               <CustomCarousel animalId={this.props.match.params.id} />
             </GridItem>
 
             <GridItem xs={12} sm={12} md={6} lg={6} xl={6} className={classes.floatRightStyle}>
 
-              <GridItem style={{ marginTop: "100px" }}>
+              <GridItem>
                 <GridItem>
                   <InputLabel
                     style={customStyle.adoptionStatusStyle}
@@ -250,7 +316,7 @@ class AnimalPage extends React.Component {
                 <GridItem>
                   <TextField
                     value={this.state.animal.name}
-                    label={"Hello my name is,"}
+                    label={"Hello, my name is,"}
                     className={classes.animalNameStyle}
                     InputProps={{
                       disableUnderline: true,
@@ -258,7 +324,7 @@ class AnimalPage extends React.Component {
                         color: "white",
                         fontWeight: "bold",
                         fontSize: "50px",
-                        // textShadow: "5px 5px #2b2b2b51"
+                        textShadow: "5px 5px #2b2b2b51"
                       }
                     }}
                     InputLabelProps={{
@@ -297,35 +363,37 @@ class AnimalPage extends React.Component {
                 </GridItem>
               </GridItem>
 
-              <GridItem xs={false} sm={12} md={12} lg={12} xl={12} style={{ marginTop: "120px", marginBottom: "120px" }}></GridItem>
+             
+              <Hidden smDown>
+              <GridItem md={12} lg={12} xl={12} style={{ marginTop: "120px", marginBottom: "120px" }}></GridItem>
+              </Hidden>
 
-              {/* <GridItem xs={12} sm={12} md={12} lg={12} xl={12}> */}
+              <GridItem style={{ display: "flex", justifyContent: "center", alignItems: "center" }} xs={12} sm={12} md={12} lg={12} xl={12}>
 
                 <GridContainer style={{ display: "flex", justifyContent: "center", alignItems: "center" }} xs={12} sm={12} md={12} lg={12} xl={12}>
-                  <GridItem xs={10} sm={4} md={4} lg={4} xl={4}>
-                        
+                  {this.state.alert}
+                  <GridItem xs={10} sm={4} >
                         <Button
-                          fullWidth="true"
                           style={customStyle.buttonStyle}
                           onClick={this.addNewFollow}
+                          fullWidth="true"
                         >
                           {this.state.animal.animalFollow ? "Followed" : "Follow Me"}
                         </Button>
-                     
                   </GridItem>
 
-                  <GridItem xs={10} sm={4} md={4} lg={4} xl={4}>
-                    <Button
-                      fullWidth="true"
-                      style={customStyle.buttonStyle}
-                    >
-                      Adopt Me
-                   </Button>
-                  </GridItem>
+            {localStorage.getItem("user_id") && localStorage.getItem('token') ? 
+            
+            <Application animalId={this.state.animal.id} shelterId={this.state.animal.shelter_id} />
+            :
+            <GridItem xs={10} sm={4} >
+              <Button fullWidth="true" style={customStyle.buttonStyle} onClick = {() => this.setAlert("continue with application process")}>Adopt Me</Button>
+            </GridItem>
+            } 
 
-                  <GridItem xs={10} sm={4} md={4} lg={4} xl={4}>
+                  <GridItem xs={10} sm={4} >
                     <Button
-                      fullWidth="true"
+                    fullWidth="true"
                       style={customStyle.buttonStyle}
                     >
                       Donate
@@ -334,14 +402,14 @@ class AnimalPage extends React.Component {
                 </GridContainer>
 
               </GridItem>
-            {/* </GridItem> */}
+            </GridItem>
 
           </GridContainer>
 
 
           <GridContainer className={classes.shelterCard}>
 
-            <GridItem xs={12} sm={6} md={6} >
+            <GridItem xs={12} sm={6} md={6}>
               <GridItem xs={10} sm={10} md={10} lg={10} xl={10} style={customStyle.cardItemStyle}>
                 <img className={classes.iconStyle} src={addressIcon}></img>
 
@@ -357,7 +425,6 @@ class AnimalPage extends React.Component {
                   <TextField
                     multiline
                     fullWidth="true"
-                    style={{ marginTop: "-60px" }}
                     value={`${this.state.animal.city}, ` + `${this.state.animal.state}, ` + `${this.state.animal.zipcode}`}
                     InputProps={{
                       disableUnderline: true,
@@ -365,27 +432,7 @@ class AnimalPage extends React.Component {
                   />
                 </div>
               </GridItem>
-            </GridItem>
 
-            <GridItem xs={12} sm={6} md={6} >
-              <GridItem xs={10} sm={10} md={10} lg={10} xl={10} style={customStyle.cardItemStyle}>
-                <img className={classes.iconStyle} src={emailIcon}></img>
-
-                <div>
-                  <TextField
-                    multiline
-                    fullWidth="true"
-                    value={this.state.animal.email}
-                    InputProps={{
-                      disableUnderline: true,
-                    }}
-                  />
-                </div>
-
-              </GridItem>
-            </GridItem>
-
-            <GridItem xs={12} sm={6} md={6} >
               <GridItem xs={10} sm={10} md={10} lg={10} xl={10} style={customStyle.cardItemStyle2}>
                 <img className={classes.iconStyle} src={phoneIcon}></img>
 
@@ -402,8 +449,24 @@ class AnimalPage extends React.Component {
               </GridItem>
             </GridItem>
 
-            <GridItem xs={12} sm={6} md={6} >
-              <GridItem xs={10} sm={10} md={10} lg={10} xl={10} style={customStyle.cardItemStyle2}>
+            <GridItem xs={12} sm={6} md={6}>
+              <GridItem xs={10} sm={10} md={10} lg={10} xl={10} style={customStyle.cardItemStyle}>
+                <img className={classes.iconStyle} src={emailIcon}></img>
+
+                <div>
+                  <TextField
+                    multiline
+                    fullWidth="true"
+                    value={this.state.animal.email}
+                    InputProps={{
+                      disableUnderline: true,
+                    }}
+                  />
+                </div>
+
+              </GridItem>
+
+              <GridItem xs={10} sm={10} md={10} lg={10} xl={10} style={customStyle.rescueItemStyle}>
                 <img className={classes.iconStyle} src={rescueIcon}></img>
 
                 <div>
@@ -419,15 +482,50 @@ class AnimalPage extends React.Component {
               </GridItem>
             </GridItem>
 
+
+            {/* <GridItem xs={12} sm={6} md={6} >
+              <GridItem xs={10} sm={10} md={10} lg={10} xl={10} style={customStyle.cardItemStyle2}>
+                <img className={classes.iconStyle} src={phoneIcon}></img>
+
+                <div>
+                  <TextField
+                    multiline
+                    fullWidth="true"
+                    value={this.state.animal.phone}
+                    InputProps={{
+                      disableUnderline: true,
+                    }}
+                  />
+                </div>
+              </GridItem>
+            </GridItem> */}
+
+            {/* <GridItem xs={12} sm={6} md={6} >
+              <GridItem xs={10} sm={10} md={10} lg={10} xl={10} style={customStyle.cardItemStyle2}>
+                <img className={classes.iconStyle} src={rescueIcon}></img>
+
+                <div>
+                <TextField
+                  multiline
+                  fullWidth="true"
+                  value={this.state.animal.shelter}
+                  InputProps={{
+                    disableUnderline: true,
+                  }}
+                />
+                </div>
+              </GridItem>
+            </GridItem> */}
+
           </GridContainer>
 
 
-          <GridContainer style={{ marginLeft: "auto", marginRight: "auto" }}>
+          <GridContainer xs={12} sm={12} md={12} lg={12} xl={12} style={{ marginRight: "auto", marginLeft: "auto" }}>
 
             <GridContainer xs={12} sm={12} md={5} lg={5} xl={5} style={customStyle.leftSectionStyle}>
 
             <GridItem xs={4} sm={4} md={4} lg={4} xl={4}></GridItem>
-              <GridItem style={customStyle.leftRowStyle} xs={10} sm={10} md={8} lg={8} xl={8}>
+              <GridItem style={customStyle.leftRowStyle} xs={10} sm={10} md={8} lg={8} xl={8} >
 
                 <GridItem>
                   <img className={classes.iconStyle2} src={breedIcon}></img>
@@ -523,6 +621,7 @@ class AnimalPage extends React.Component {
                 <GridItem>
                   <img className={classes.iconStyle2} src={genderIcon}></img>
                 </GridItem>
+
                 <GridItem >
                   <TextField
                     label="Gender"
@@ -545,6 +644,7 @@ class AnimalPage extends React.Component {
                 <GridItem>
                   <img className={classes.iconStyle2} src={colorIcon}></img>
                 </GridItem>
+
                 <GridItem >
                   <TextField
                     label="Color"
@@ -567,6 +667,7 @@ class AnimalPage extends React.Component {
                 <GridItem>
                   <img className={classes.iconStyle} src={vaccinationIcon}></img>
                 </GridItem>
+
                 <GridItem >
                   <TextField
                     label="Vaccination"
@@ -589,6 +690,7 @@ class AnimalPage extends React.Component {
                 <GridItem>
                   <img className={classes.iconStyle2} src={neuterSpayedIcon}></img>
                 </GridItem>
+
                 <GridItem >
                   <TextField
                     label="Spayed / Neutered"
@@ -611,6 +713,7 @@ class AnimalPage extends React.Component {
                 <GridItem>
                   <img className={classes.iconStyle2} src={houseTrainedIcon}></img>
                 </GridItem>
+
                 <GridItem >
                   <TextField
                     label="House-trained"
@@ -632,12 +735,12 @@ class AnimalPage extends React.Component {
 
             <GridContainer xs={12} sm={12} md={7} lg={7} xl={7} style={{ display: "flex", justifyContent: "center", marginTop: "50px", marginBottom: "40px", borderLeft: "2px solid grey" }} >
 
-              <GridItem style={customStyle.myStoryStyle} xs={10} sm={10} md={7} lg={7} xl={7}>
-                <GridItem>
+              <GridItem style={customStyle.myStoryStyle} xs={10} sm={10} md={6} lg={6} xl={6}>
+                  <GridItem>
                   <img className={classes.iconStyle2} src={myStoryIcon}></img>
-                </GridItem>
+                  </GridItem>
 
-                <GridItem>
+                  <GridItem>
                   <TextField
                     multiline
                     label="My Story"
@@ -653,18 +756,16 @@ class AnimalPage extends React.Component {
                       }
                     }}
                   />
+                  </GridItem>
                 </GridItem>
-              </GridItem>
-
-              <GridItem xs={3} sm={3} md={3} lg={3} xl={3}></GridItem>
-
-
-              <GridItem style={customStyle.myHealthStyle} xs={10} sm={10} md={7} lg={7} xl={7}>
-                <GridItem>
+              <GridItem xs={4} sm={4} md={4} lg={4} xl={4}></GridItem>
+            
+              <GridItem style={customStyle.myHealthStyle} xs={10} sm={10} md={6} lg={6} xl={6}>
+                    <GridItem>
                   <img className={classes.iconStyle2} src={myHealthIcon}></img>
-                </GridItem>
+                  </GridItem>
 
-                <GridItem>
+                  <GridItem>
                   <TextField
                     multiline
                     label="My Health"
@@ -681,18 +782,17 @@ class AnimalPage extends React.Component {
                     }}
                     style={customStyle.storySectionStyle}
                   />
-                </GridItem>
+                  </GridItem>
               </GridItem>
+              <GridItem xs={4} sm={4} md={4} lg={4} xl={4}></GridItem>
 
-              <GridItem xs={3} sm={3} md={3} lg={3} xl={3}></GridItem>
 
+              <GridItem style={customStyle.kidFreeStyle} xs={10} sm={10} md={6} lg={6} xl={6}>
+                  <GridItem>
+                  <img className={classes.iconStyle2} src={ this.state.animal.is_good_with_kids ? kidFriendlyIcon : noKidIcon }></img>
+                  </GridItem>
 
-              <GridItem style={customStyle.kidFreeStyle} xs={10} sm={10} md={7} lg={7} xl={7}>
-                <GridItem>
-                  <img className={classes.iconStyle2} src={ this.state.animal.is_good_with_kids ? noKidIcon : kidFriendlyIcon }></img>
-                </GridItem>
-
-                <GridItem>
+                  <GridItem>
                   <TextField
                     multiline
                     fullWidth="true"
@@ -704,21 +804,21 @@ class AnimalPage extends React.Component {
                       }
                     }}
                   />
-                </GridItem>
+                  </GridItem>
+  
               </GridItem>
+              <GridItem xs={4} sm={4} md={4} lg={4} xl={4}></GridItem>
 
-              <GridItem xs={3} sm={3} md={3} lg={3} xl={3}></GridItem>
+              <GridItem style={customStyle.goodWithDogStyle} xs={10} sm={10} md={6} lg={6} xl={6}>
+                  <GridItem>
+                  <img className={classes.iconStyle2} src={ this.state.animal.is_good_with_dogs ? dogFriendlyIcon : noDogIcon }></img>
+                  </GridItem>
 
-              <GridItem style={customStyle.goodWithDogStyle} xs={10} sm={10} md={7} lg={7} xl={7}>
-                <GridItem>
-                  <img className={classes.iconStyle2} src={ this.state.animal_is_good_with_dogs ? noDogIcon : dogFriendlyIcon}></img>
-                </GridItem>
-
-                <GridItem>
+                    <GridItem>
                   <TextField
                     multiline
                     fullWidth="true"
-                    value={this.state.animal.is_good_with_dogs ? "I Get Along With Dogs" : "I Do Not Get Along With Other Dogs"}
+                    value={this.state.animal.is_good_with_dogs ? "I Am Good With Dogs" : "I Need A Dog-Free Home"}
                     InputProps={{
                       disableUnderline: true,
                       style: {
@@ -726,21 +826,20 @@ class AnimalPage extends React.Component {
                       }
                     }}
                   />
-                </GridItem>
+                  </GridItem>
               </GridItem>
+              <GridItem xs={4} sm={4} md={4} lg={4} xl={4}></GridItem>
 
-              <GridItem xs={3} sm={3} md={3} lg={3} xl={3}></GridItem>
+              <GridItem style={customStyle.goodWithCatStyle} xs={10} sm={10} md={6} lg={6} xl={6}>
+                  <GridItem>
+                  <img className={classes.iconStyle2} src={ this.state.animal.is_good_with_cats ? catFriendlyIcon : noCatIcon }></img>
+                  </GridItem>
 
-              <GridItem style={customStyle.goodWithCatStyle} xs={10} sm={10} md={7} lg={7} xl={7}>
-                <GridItem>
-                  <img className={classes.iconStyle2} src={ this.state.is_good_with_cats ? noCatIcon : catFriendlyIcon }></img>
-                </GridItem>
-
-                <GridItem>
+                  <GridItem>
                   <TextField
                     multiline
                     fullWidth="true"
-                    value={this.state.animal.is_good_with_cats ? "I Get Along With Cats" : "I Need a Cat-Free Home"}
+                    value={this.state.animal.is_good_with_cats ? "I Am Good With Cats" : "I Need a Cat-Free Home"}
                     InputProps={{
                       disableUnderline: true,
                       style: {
@@ -748,12 +847,11 @@ class AnimalPage extends React.Component {
                       }
                     }}
                   />
-                </GridItem>
+                  </GridItem>
               </GridItem>
+              <GridItem xs={4} sm={4} md={4} lg={4} xl={4}></GridItem>
 
-              <GridItem xs={3} sm={3} md={3} lg={3} xl={3}></GridItem>
-
-              <GridItem xs={10} sm={10} md={10} lg={10} xl={10}></GridItem>
+              <GridItem xs={false} sm={10} md={10} lg={10} xl={10} style={{ marginTop: "360px" }}></GridItem>
 
 
             </GridContainer>

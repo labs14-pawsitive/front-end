@@ -31,32 +31,35 @@ class CustomCarousel extends React.Component {
   render() {
 
     const customStyles = {
-      carousel: {
-        width: "90%",
-        margin: "80px 0px 20px 20px",
-        marginLeft: "140px",
-      }
+      // carousel: {
+      //   width: "90%",
+      //   margin: "80px 0px 20px 20px",
+      //   marginLeft: "140px",
+      // }
     }
 
-    
+    // style={customStyles.carousel}
 
     const { images } = this.state
     if (!images.length) return <div>Images are not fetched yet!</div>
 
     return (
-      <GridContainer > 
-        <GridItem xs={6} sm={8} md={8} lg={8} xl={8} style={customStyles.carousel}>
+      // <GridContainer > 
+        // <GridItem xs={6} sm={8} md={8} lg={8} xl={8}>
           <Carousel autoPlay infiniteLoop>
+            {/* //  <Carousel> */}
             {
               Array.from(images).map(image => {
                 return (
-                  <img src={ image.img_url } />
+                  <div style={{ backgroundImage: `url(${ image.img_url })`, backgroundSize: "cover", backgroundPosition: "center center" }}>
+                    <img style={{ opacity: "0" }} src={ image.img_url } />
+                  </div>
                   )
               })
             }
          </Carousel>
-        </GridItem>
-      </GridContainer>
+        // </GridItem>
+      // </GridContainer>
     )
   }
 }

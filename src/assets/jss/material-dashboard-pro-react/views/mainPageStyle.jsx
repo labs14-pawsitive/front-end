@@ -1,4 +1,5 @@
 import { title, whiteColor } from "assets/jss/material-dashboard-pro-react.jsx";
+import buttonStyle from "assets/jss/material-dashboard-pro-react/components/buttonStyle.jsx";
 
 const mainPageStyle = () => ({
   contentCenter: {
@@ -37,6 +38,7 @@ const mainPageStyle = () => ({
     justifyContent: "center",
     width:"100%"
   },
+
   wrapper: {
     justifyContent: "center",
     height: "auto",
@@ -44,12 +46,14 @@ const mainPageStyle = () => ({
     margin: "0 auto",
     position: "relative",
     top: "0",
+    paddingTop: "150px",
+    backgroundColor: "#349FAD",
   },
   header: {
     backgroundSize: "cover",
     backgroundPosition: "center center",
     backgroundRepeat: "no-repeat",
-    background: "linear-gradient(to bottom, #349FAD 0%, #349FAD 45%, #000000 45%, lightgrey 45%, lightgrey 50%)",
+    background: "linear-gradient(to bottom, #349FAD 0%, #349FAD 40%, #000000 40%, lightgrey 40%, lightgrey 50%)",
     minHeight: "65vh",
     zIndex: "3",
    },
@@ -82,24 +86,27 @@ const mainPageStyle = () => ({
     alignItems: "center",
     backgroundColor: "white",
     justifyContent: "center",
-    padding: "30px",
+    paddingTop: "20px",
+    paddingBottom: "20px",
   },
   iconStyle: {
-    width: "50px",
+    width: "40px",
     height: "auto",
     marginRight: "30px",
   },
   iconStyle2: {
-    width: "50px",
-    height: "auto",
+    width: "40px",
+    height: "40px",
     marginRight: "20px",
+    marginBottom: "7.5px",
   },
   animalNameStyle: {
         color: "white",
         fontWeight: "bold",
         fontSize: "100px",
-        textShadow: "5px 5px #2b2b2b51"
-  }
+        // textShadow: "5px 5px #2b2b2b51"
+  },
+  ...buttonStyle,
   
 
 });

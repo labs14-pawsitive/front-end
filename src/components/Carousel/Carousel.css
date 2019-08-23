@@ -5,17 +5,20 @@
     min-height: 70px;
     max-width: 100px;
     border-radius: 5px;
+    opacity: 1 !important;
 }
 
 .carousel .slide img {
-    width: 100% !important;
-    height: 100% !important;
-    min-width: 250px;
-    max-width: 400px;
+    /* width: 100% !important;
+    height: 100% !important; */
     height: auto;
+    max-width: 100%;
+    /* min-width: 250px;
+    max-width: 250px; */
+    /* height: auto; */
     min-height: 350px;
     max-height: 450px;
-    border-radius: 5px;
+    border-radius: 5px; 
     /* max-height: 400px;  
     width: auto; */
     /* min-height: 400px;
