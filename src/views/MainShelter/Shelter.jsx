@@ -150,9 +150,49 @@ class ShelterPage extends React.Component {
     } else {
       console.log("i can follow/unfollow this shelter now")
       this.hideAlert();
+      if (this.state.shelterFollow){
+         this.unfollowShelter()
+      } else {
+         this.followShelter()
+      }
     }
   }
 
+  followShelter = () => {
+
+    // const userId = localStorage.getItem('user_id')
+    const follow = {
+      shelter_id: this.props.match.params.id,
+      user_id : localStorage.getItem('user_id')
+    }
+
+    axios
+      .post(`${process.env.REACT_APP_BACKEND_URL}/api/shelters/${this.props.match.params.id}/follows`, follow)
+      .then(res => { 
+          this.setState({
+            shelterFollow: true,
+          })
+          console.log("Successfully follow", res)
+      })
+      .catch(err => { 
+        console.log(`Shelter Error: ${err}`)
+      })
+  }
+
+  unfollowShelter = () => {
+    const userId = localStorage.getItem('user_id')
+    axios
+      .delete(`${process.env.REACT_APP_BACKEND_URL}/api/shelters/${this.props.match.params.id}/${userId}/follows`)
+      .then(res => { 
+          this.setState({
+            shelterFollow: false,
+          })
+          console.log("Successfully unfollow", res)
+      })
+      .catch(err => { 
+        console.log(`Shelter Error: ${err}`)
+      })
+  }
 
 
   render() {
