@@ -1,11 +1,19 @@
 //initialState set for testing
 
-import {GET_USER_START, GET_USER_SUCCESS, GET_USER_FAIL} from '../actions/userAction.js'
+import {
+    GET_USER_START, 
+    GET_USER_SUCCESS, 
+    GET_USER_FAIL,
+    UPDATE_USER_PROFILE_START, 
+    UPDATE_USER_PROFILE_SUCCESS, 
+    UPDATE_USER_PROFILE_FAIL
+} from '../actions/userAction.js'
 
 const initialState = {
     user : {},
     error : "",
     gettingUser : false,
+    updatingUser:false
 }
 
 
@@ -32,6 +40,25 @@ export const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 gettingUser: false,
+                error: action.payload
+            }
+            case UPDATE_USER_PROFILE_START:
+            return {
+                ...state,
+                updatingUser: true,
+                error: ""
+            }
+        case UPDATE_USER_PROFILE_SUCCESS:
+            return {
+                ...state,
+                updatingUser: false,
+                error: "",
+                user: action.payload
+            }
+        case UPDATE_USER_PROFILE_FAIL:
+            return {
+                ...state,
+                updatingUser: false,
                 error: action.payload
             }
         default:

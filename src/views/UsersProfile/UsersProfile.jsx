@@ -19,6 +19,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { getAllOptions } from '../../actions/animalAction'
+import { update_user_profile } from '../../actions/userAction'
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -43,6 +44,8 @@ import FormControl from "@material-ui/core/FormControl";
 import MenuItem from "@material-ui/core/MenuItem";
 import Input from '@material-ui/core/Input';
 import TextField from '@material-ui/core/TextField';
+import CustomSnackBar from './CustomSnackBar'
+import SnackBarInfo from './SnackBarInfo'
 
 import userProfileStyles from "assets/jss/material-dashboard-pro-react/views/userProfileStyles.jsx";
 
@@ -63,9 +66,11 @@ class UserProfile extends React.Component {
         city: "",
         state: "",
         zipcode: "",
-        phone_number: ""
+        phone_number: "",
+        state_id:null
       },
-      isUpdate: false
+      isUpdate: false,
+      updated:false
     }
   }
 
@@ -76,12 +81,10 @@ class UserProfile extends React.Component {
           user: {
             username: this.props.user.username,
             email: this.props.user.email,
-            streetAddress: this.props.user.streetAddress,
+            streetAddress: this.props.user.street_address,
             city: this.props.user.city,
             state: this.props.user.state,
-            zipcode: this.props.user.zipcode,
-            // firstName: this.props.user.name ,
-            // lastName: this.props.user.name ,
+            zipcode: this.props.user.zip,
             firstName: this.props.user.name ? this.props.user.name.split(' ')[0] : '',
             lastName: this.props.user.name ? this.props.user.name.split(' ')[1] : '',
             phone_number: this.props.user.phone_number
@@ -91,6 +94,24 @@ class UserProfile extends React.Component {
       .catch(error => {
         console.log('component did mount in userprofile error', error)
       })
+  }
+
+  componentDidUpdate(prevProps){
+
+    if(this.props.user !== prevProps.user){
+    this.setState({
+      user: {
+        username: this.props.user.username,
+        email: this.props.user.email,
+        streetAddress: this.props.user.street_address,
+        city: this.props.user.city,
+        state: this.props.user.state,
+        zipcode: this.props.user.zip,
+        firstName: this.props.user.name ? this.props.user.name.split(' ')[0] : '',
+        lastName: this.props.user.name ? this.props.user.name.split(' ')[1] : '',
+        phone_number: this.props.user.phone_number
+      }
+    })}
   }
 
   handleChange = (event) => {
@@ -103,12 +124,17 @@ class UserProfile extends React.Component {
   }
 
   handleState = (event) => {
+
+    const targetID = this.props.states ? this.props.states.find(state => state.state === event.target.value).id : ''
+
+    if(targetID){
     this.setState({
       user: {
         ...this.state.user,
-        [event.target.name]: event.target.value
+        [event.target.name]: event.target.value,
+        state_id:targetID
       }
-    })
+    })}
   }
 
   handleToggle = () => {
@@ -126,18 +152,24 @@ class UserProfile extends React.Component {
       console.log('update state : ', this.state.isUpdate)
 
       const UserObj = {
-        username: this.props.user.username,
-        email: this.props.user.email,
-        // firstName: this.state.user.firstName,
         name: `${this.state.user.firstName} ${this.state.user.lastName}`,
-        streetAddress: this.state.user.streetAddress,
+        street_address: this.state.user.streetAddress,
         city: this.state.user.city,
-        state: this.state.user.state,
-        zipcode: this.state.user.zipcode,
+        state_id: this.state.user.state_id,
+        zip: this.state.user.zipcode,
         phone_number: this.state.user.phone_number
       }
 
       console.log('updated info is :', UserObj)
+
+      this.props.update_user_profile(this.props.user.id, UserObj)
+      .then(res => 
+        {console.log('updated user profile data ', res)
+        this.setState({
+          updated: true
+        })
+        })
+      .catch(error => { console.log('updated user profile error ', error)})
 
       this.setState({
         isUpdate: false
@@ -197,6 +229,8 @@ class UserProfile extends React.Component {
                 <h4 className={classes.cardIconTitle}>
                   Edit Profile - <small>Complete your profile</small>
                 </h4>
+                {this.state.updated && !this.state.isUpdate && this.props.user.shelter && <SnackBarInfo shelter={this.props.user.shelter}/>}
+                {this.state.isUpdate && <CustomSnackBar />}
               </CardHeader>
 
               <CardBody>
@@ -338,8 +372,6 @@ class UserProfile extends React.Component {
                     <CustomInput
                       labelText="Zipcode"
                       id="zipcode"
-                      // value={this.state.user.zipcode}
-                      // onChange={this.handleChange}
                       formControlProps={{
                         fullWidth: true
                       }}
@@ -403,5 +435,5 @@ UserProfile.propTypes = {
 
 export default connect(
   mapStateToProps,
-  { getAllOptions }
+  { getAllOptions, update_user_profile }
 )(withStyles(userProfileStyles)(UserProfile))
