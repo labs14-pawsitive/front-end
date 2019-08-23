@@ -70,6 +70,9 @@ import Auth from "components/Auth/Auth.js"
 import SweetAlert from "react-bootstrap-sweetalert";
 import Application from "components/Application/Application.jsx"
 
+// stripe donation
+import StripeDonation from  "components/Stripe/StripeDonation.jsx";
+
 const auth = new Auth()
 
 class AnimalPage extends React.Component {
@@ -77,7 +80,9 @@ class AnimalPage extends React.Component {
     super(props)
     this.state = {
       animal: {},
+      shelter: {},
       alert: null,
+    
     }
   }
 
@@ -105,14 +110,14 @@ class AnimalPage extends React.Component {
   }
 
   setAlert = (str) => {
-    if(!localStorage.getItem('token') && !localStorage.getItem('user_id')) {
-       this.warningAlert(str);
-     } else {
-       this.hideAlert();
-     }
-   }
+    if (!localStorage.getItem('token') && !localStorage.getItem('user_id')) {
+      this.warningAlert(str);
+    } else {
+      this.hideAlert();
+    }
+  }
 
-   warningAlert = (str) => {
+  warningAlert = (str) => {
     this.setState({
       alert: (
         <SweetAlert
@@ -121,7 +126,7 @@ class AnimalPage extends React.Component {
           cancelBtnCssClass={
             this.props.classes.button + " " + this.props.classes.success
           }
-          style={{ display: "block", marginTop: "-100px", color: "#777", fontFamily: "Roboto", padding:"50px", lineHeight: "1.2" }}
+          style={{ display: "block", marginTop: "-100px", color: "#777", fontFamily: "Roboto", padding: "50px", lineHeight: "1.2" }}
           title=""
           onConfirm={() => this.routeToAuth()}
           onCancel={this.hideAlert}
@@ -130,8 +135,8 @@ class AnimalPage extends React.Component {
           }
           confirmBtnText="Signup / Login"
         >
-          <h2 style={{fontWeight: '500'}}>OOH MY PAWS</h2>
-          <h4 style={{color:"#333333"}}>{`You need to login/sign up in order to ${str}`}</h4>
+          <h2 style={{ fontWeight: '500' }}>OOH MY PAWS</h2>
+          <h4 style={{ color: "#333333" }}>{`You need to login/sign up in order to ${str}`}</h4>
         </SweetAlert>
       )
     });
@@ -140,13 +145,13 @@ class AnimalPage extends React.Component {
   routeToAuth = () => {
     localStorage.setItem("animalId", this.state.animal.id) // check 
     auth.login();
-}
+  }
 
-hideAlert = () => {
-  this.setState({
-    alert: null
-  })
-}
+  hideAlert = () => {
+    this.setState({
+      alert: null
+    })
+  }
 
   addNewFollow = e => {
 
@@ -197,7 +202,7 @@ hideAlert = () => {
         display: "flex",
         flexDirection: "row",
         marginBottom: "25px",
-        },
+      },
       myHealthStyle: {
         justifyContent: "center",
         display: "flex",
@@ -252,36 +257,43 @@ hideAlert = () => {
         fontWeight: "700",
         "&:hover": {
           backgroundColor: "#A464A3"
-        }
+        },
       },
       animalSummaryStyle: {
         maxWidth: "480px",
       },
-      cardItemStyle: {
+      addressItemStyle: {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "row",
-        margin: "10px",
 
       },
-      cardItemStyle2: {
+      emailItemStyle: {
+        display: "flex",
+        // justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "row",
+      },
+      phoneItemStyle: {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "row",
-        margin: "10px",
+        marginTop: "20px",
 
       },
       rescueItemStyle: {
         display: "flex",
-        justifyContent: "center",
+        // justifyContent: "center",
         alignItems: "center",
         flexDirection: "row",
-        margin: "10px",
         marginTop: "20px",
       },
-
+      adoptMeButton: {
+        display: "flex",
+        justifyContent: "center",
+      },
 
 
     }
@@ -293,13 +305,13 @@ hideAlert = () => {
       <div className={classes.wrapper} ref={this.wrapper}>
         <div className={classes.header}>
 
-          <GridContainer xs={12} sm={12} md={12} lg={12} xl={12} style={{ display: "flex", justifyContent: "center", alignItems: "center", margin: "0px",  }}>
+          <GridContainer xs={12} sm={12} md={12} lg={12} xl={12} style={{ display: "flex", justifyContent: "center", alignItems: "center", margin: "0px", }}>
 
-            <GridItem xs={7} sm={5} md={3} lg={5} xl={6}>
+            <GridItem xs={12} sm={12} md={6} lg={6} xl={6} style={{ display: "flex", justifyContent: "center", alignItems: "center", marginBottom: "30px" }}>
               <CustomCarousel animalId={this.props.match.params.id} />
             </GridItem>
 
-            <GridItem xs={12} sm={12} md={6} lg={6} xl={6} className={classes.floatRightStyle}>
+            <GridItem xs={12} sm={12} md={6} lg={6} xl={6} style={{ marginBottom: "50px" }}>
 
               <GridItem>
                 <GridItem>
@@ -312,36 +324,20 @@ hideAlert = () => {
               </GridItem>
 
               <GridItem style={{ marginTop: "40px" }} >
-
                 <GridItem>
-                  <TextField
-                    value={this.state.animal.name}
-                    label={"Hello, my name is,"}
-                    className={classes.animalNameStyle}
-                    InputProps={{
-                      disableUnderline: true,
-                      style: {
-                        color: "white",
-                        fontWeight: "bold",
-                        fontSize: "50px",
-                        textShadow: "5px 5px #2b2b2b51"
-                      }
-                    }}
-                    InputLabelProps={{
-                      style: {
-                        color: "white",
-                        fontSize: "30px",
-                        fontWeight: "400",
-                        letterSpacing: "6px",
-                        paddingBottom: "20px",
-                      }
-                    }}
-                  />
-                </GridItem>
+                  <div>
+                    <p style={{ color: "white", fontSize: "30px", fontWeight: "400", letterSpacing: "6px", paddingBottom: "20px", }} >
+                      Hello, my name is,
+                      </p>
 
+                    <p style={{ color: "white", fontWeight: "bold", fontSize: "50px", textShadow: "5px 5px #2b2b2b61", textTransform: "uppercase" }}>
+                      {this.state.animal.name}
+                    </p>
+                  </div>
+                </GridItem>
               </GridItem>
 
-              <GridItem style={{ marginTop: "20px" }} >
+              <GridItem style={{ marginTop: "40px" }} >
                 <GridItem>
                   <TextField
                     multiline
@@ -363,41 +359,37 @@ hideAlert = () => {
                 </GridItem>
               </GridItem>
 
-             
+
               <Hidden smDown>
-              <GridItem md={12} lg={12} xl={12} style={{ marginTop: "120px", marginBottom: "120px" }}></GridItem>
+                <GridItem md={12} lg={12} xl={12} style={{ marginTop: "30px" }}></GridItem>
               </Hidden>
 
               <GridItem style={{ display: "flex", justifyContent: "center", alignItems: "center" }} xs={12} sm={12} md={12} lg={12} xl={12}>
 
                 <GridContainer style={{ display: "flex", justifyContent: "center", alignItems: "center" }} xs={12} sm={12} md={12} lg={12} xl={12}>
                   {this.state.alert}
-                  <GridItem xs={10} sm={4} >
-                        <Button
-                          style={customStyle.buttonStyle}
-                          onClick={this.addNewFollow}
-                          fullWidth="true"
-                        >
-                          {this.state.animal.animalFollow ? "Followed" : "Follow Me"}
-                        </Button>
+                  <GridItem xs={10} sm={4} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    <Button
+                      className={classes.hungButtonStyle}
+                      onClick={this.addNewFollow}
+                     
+                    >
+                      {this.state.animal.animalFollow ? "Followed" : "Follow Me"}
+                    </Button>
                   </GridItem>
 
-            {localStorage.getItem("user_id") && localStorage.getItem('token') ? 
-            
-            <Application animalId={this.state.animal.id} shelterId={this.state.animal.shelter_id} />
-            :
-            <GridItem xs={10} sm={4} >
-              <Button fullWidth="true" style={customStyle.buttonStyle} onClick = {() => this.setAlert("continue with application process")}>Adopt Me</Button>
-            </GridItem>
-            } 
+                 
+                  {localStorage.getItem("user_id") && localStorage.getItem('token') ?
 
-                  <GridItem xs={10} sm={4} >
-                    <Button
-                    fullWidth="true"
-                      style={customStyle.buttonStyle}
-                    >
-                      Donate
-                   </Button>
+                    <Application animalId={this.state.animal.id} shelterId={this.state.animal.shelter_id} />
+                    :
+                      <GridItem style={customStyle.adoptMeButton} >
+                          <Button style={customStyle.buttonStyle} onClick={() => this.setAlert("continue with application process")}>Adopt Me</Button>
+                      </GridItem>
+                  }
+               
+                  <GridItem xs={10} sm={4} style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", maxWidth: "250px" }}>
+                    <StripeDonation />
                   </GridItem>
                 </GridContainer>
 
@@ -406,11 +398,14 @@ hideAlert = () => {
 
           </GridContainer>
 
+          <Hidden smDown>
+                <GridItem md={12} lg={12} xl={12} style={{ marginBottom: "0px" }}></GridItem>
+          </Hidden>
 
           <GridContainer className={classes.shelterCard}>
 
-            <GridItem xs={12} sm={6} md={6}>
-              <GridItem xs={10} sm={10} md={10} lg={10} xl={10} style={customStyle.cardItemStyle}>
+          <GridItem xs={12} sm={6} md={6} >
+              <GridItem xs={10} sm={10} md={10} lg={10} xl={10} style={customStyle.addressItemStyle}>
                 <img className={classes.iconStyle} src={addressIcon}></img>
 
                 <div style={{ display: "flex", flexDirection: "column" }}>
@@ -425,6 +420,7 @@ hideAlert = () => {
                   <TextField
                     multiline
                     fullWidth="true"
+                    style={{ marginTop: "-60px" }}
                     value={`${this.state.animal.city}, ` + `${this.state.animal.state}, ` + `${this.state.animal.zipcode}`}
                     InputProps={{
                       disableUnderline: true,
@@ -432,8 +428,28 @@ hideAlert = () => {
                   />
                 </div>
               </GridItem>
+            </GridItem>
 
-              <GridItem xs={10} sm={10} md={10} lg={10} xl={10} style={customStyle.cardItemStyle2}>
+            <GridItem xs={12} sm={6} md={6} >
+              <GridItem xs={10} sm={10} md={10} lg={10} xl={10} style={customStyle.emailItemStyle}>
+                <img className={classes.iconStyle} src={emailIcon}></img>
+
+                <div>
+                  <TextField
+                    multiline
+                    fullWidth="true"
+                    value={this.state.animal.email}
+                    InputProps={{
+                      disableUnderline: true,
+                    }}
+                  />
+                </div>
+
+              </GridItem>
+            </GridItem>
+
+            <GridItem xs={12} sm={6} md={6} >
+              <GridItem xs={10} sm={10} md={10} lg={10} xl={10} style={customStyle.phoneItemStyle}>
                 <img className={classes.iconStyle} src={phoneIcon}></img>
 
                 <div>
@@ -449,23 +465,7 @@ hideAlert = () => {
               </GridItem>
             </GridItem>
 
-            <GridItem xs={12} sm={6} md={6}>
-              <GridItem xs={10} sm={10} md={10} lg={10} xl={10} style={customStyle.cardItemStyle}>
-                <img className={classes.iconStyle} src={emailIcon}></img>
-
-                <div>
-                  <TextField
-                    multiline
-                    fullWidth="true"
-                    value={this.state.animal.email}
-                    InputProps={{
-                      disableUnderline: true,
-                    }}
-                  />
-                </div>
-
-              </GridItem>
-
+            <GridItem xs={12} sm={6} md={6} >
               <GridItem xs={10} sm={10} md={10} lg={10} xl={10} style={customStyle.rescueItemStyle}>
                 <img className={classes.iconStyle} src={rescueIcon}></img>
 
@@ -481,6 +481,50 @@ hideAlert = () => {
                 </div>
               </GridItem>
             </GridItem>
+
+            {/* <GridItem xs={12} sm={6} md={6} style={{ display: "flex", flexDirection: "column" }}>
+              <GridItem xs={10} sm={10} md={10} lg={10} xl={10} style={customStyle.addressItemStyle}>
+                <img className={classes.iconStyle} src={addressIcon}></img>
+
+                <div style={{ fontSize: "16px" }}>
+                  <div>
+                    {`${this.state.animal.street_address},`}
+                  </div>
+
+                  <div>
+                    {`${this.state.animal.city}, ` + `${this.state.animal.state}, ` + `${this.state.animal.zipcode}`}
+                  </div>
+                </div>
+              </GridItem>
+
+             
+              <GridItem xs={10} sm={10} md={10} lg={10} xl={10} style={customStyle.phoneItemStyle}>
+                <img className={classes.iconStyle} src={phoneIcon}></img>
+
+                <div style={{ fontSize: "16px" }}>
+                  {this.state.animal.phone} 
+                </div>
+              </GridItem>
+            </GridItem>
+
+            <GridItem xs={12} sm={6} md={6} style={{ display: "flex", flexDirection: "column" }}>
+              <GridItem xs={10} sm={10} md={10} lg={10} xl={10} style={customStyle.emailItemStyle}>
+                <img className={classes.iconStyle} src={emailIcon}></img>
+
+                <div style={{ fontSize: "16px" }}>
+                  {this.state.animal.email}
+                </div>
+
+              </GridItem>
+
+              <GridItem xs={10} sm={10} md={10} lg={10} xl={10} style={customStyle.rescueItemStyle}>
+                <img className={classes.iconStyle} src={rescueIcon}></img>
+
+                <div style={{ fontSize: "16px" }}>
+                    {this.state.animal.shelter}
+                </div>
+              </GridItem>
+            </GridItem> */}
 
 
             {/* <GridItem xs={12} sm={6} md={6} >
@@ -524,10 +568,10 @@ hideAlert = () => {
 
             <GridContainer xs={12} sm={12} md={5} lg={5} xl={5} style={customStyle.leftSectionStyle}>
 
-            <GridItem xs={4} sm={4} md={4} lg={4} xl={4}></GridItem>
+              <GridItem xs={4} sm={4} md={4} lg={4} xl={4}></GridItem>
               <GridItem style={customStyle.leftRowStyle} xs={10} sm={10} md={8} lg={8} xl={8} >
 
-                <GridItem>
+                <GridItem style={{ marginRight: "-20px" }}>
                   <img className={classes.iconStyle2} src={breedIcon}></img>
                 </GridItem>
 
@@ -550,7 +594,7 @@ hideAlert = () => {
 
               <GridItem xs={4} sm={4} md={4} lg={4} xl={4}></GridItem>
               <GridItem style={customStyle.leftRowStyle} xs={10} sm={10} md={8} lg={8} xl={8}>
-                <GridItem>
+                <GridItem style={{ marginRight: "-20px" }}>
                   <img className={classes.iconStyle2} src={ageIcon}></img>
                 </GridItem>
 
@@ -573,7 +617,7 @@ hideAlert = () => {
 
               <GridItem xs={4} sm={4} md={4} lg={4} xl={4}></GridItem>
               <GridItem style={customStyle.leftRowStyle} xs={10} sm={10} md={8} lg={8} xl={8}>
-                <GridItem>
+                <GridItem style={{ marginRight: "-20px" }}>
                   <img className={classes.iconStyle2} src={sizeIcon}></img>
                 </GridItem>
                 <GridItem >
@@ -595,7 +639,7 @@ hideAlert = () => {
 
               <GridItem xs={4} sm={4} md={4} lg={4} xl={4}></GridItem>
               <GridItem style={customStyle.leftRowStyle} xs={10} sm={10} md={8} lg={8} xl={8}>
-                <GridItem>
+                <GridItem style={{ marginRight: "-20px" }}>
                   <img className={classes.iconStyle2} src={coatLengthIcon}></img>
                 </GridItem>
 
@@ -618,7 +662,7 @@ hideAlert = () => {
 
               <GridItem xs={4} sm={4} md={4} lg={4} xl={4}></GridItem>
               <GridItem style={customStyle.leftRowStyle} xs={10} sm={10} md={8} lg={8} xl={8}>
-                <GridItem>
+                <GridItem style={{ marginRight: "-20px" }}>
                   <img className={classes.iconStyle2} src={genderIcon}></img>
                 </GridItem>
 
@@ -641,7 +685,7 @@ hideAlert = () => {
 
               <GridItem xs={4} sm={4} md={4} lg={4} xl={4}></GridItem>
               <GridItem style={customStyle.leftRowStyle} xs={10} sm={10} md={8} lg={8} xl={8}>
-                <GridItem>
+                <GridItem style={{ marginRight: "-20px" }}>
                   <img className={classes.iconStyle2} src={colorIcon}></img>
                 </GridItem>
 
@@ -664,7 +708,7 @@ hideAlert = () => {
 
               <GridItem xs={4} sm={4} md={4} lg={4} xl={4}></GridItem>
               <GridItem style={customStyle.leftRowStyle} xs={10} sm={10} md={8} lg={8} xl={8}>
-                <GridItem>
+                <GridItem style={{ marginRight: "-20px" }}>
                   <img className={classes.iconStyle} src={vaccinationIcon}></img>
                 </GridItem>
 
@@ -687,7 +731,7 @@ hideAlert = () => {
 
               <GridItem xs={4} sm={4} md={4} lg={4} xl={4}></GridItem>
               <GridItem style={customStyle.leftRowStyle} xs={10} sm={10} md={8} lg={8} xl={8}>
-                <GridItem>
+                <GridItem style={{ marginRight: "-20px" }}>
                   <img className={classes.iconStyle2} src={neuterSpayedIcon}></img>
                 </GridItem>
 
@@ -710,7 +754,7 @@ hideAlert = () => {
 
               <GridItem xs={4} sm={4} md={4} lg={4} xl={4}></GridItem>
               <GridItem style={customStyle.leftRowStyle} xs={10} sm={10} md={8} lg={8} xl={8}>
-                <GridItem>
+                <GridItem style={{ marginRight: "-20px" }}>
                   <img className={classes.iconStyle2} src={houseTrainedIcon}></img>
                 </GridItem>
 
@@ -736,11 +780,11 @@ hideAlert = () => {
             <GridContainer xs={12} sm={12} md={7} lg={7} xl={7} style={{ display: "flex", justifyContent: "center", marginTop: "50px", marginBottom: "40px", borderLeft: "2px solid grey" }} >
 
               <GridItem style={customStyle.myStoryStyle} xs={10} sm={10} md={6} lg={6} xl={6}>
-                  <GridItem>
+                <GridItem style={{ marginRight: "-20px" }}>
                   <img className={classes.iconStyle2} src={myStoryIcon}></img>
-                  </GridItem>
+                </GridItem>
 
-                  <GridItem>
+                <GridItem>
                   <TextField
                     multiline
                     label="My Story"
@@ -756,16 +800,16 @@ hideAlert = () => {
                       }
                     }}
                   />
-                  </GridItem>
                 </GridItem>
+              </GridItem>
               <GridItem xs={4} sm={4} md={4} lg={4} xl={4}></GridItem>
-            
-              <GridItem style={customStyle.myHealthStyle} xs={10} sm={10} md={6} lg={6} xl={6}>
-                    <GridItem>
-                  <img className={classes.iconStyle2} src={myHealthIcon}></img>
-                  </GridItem>
 
-                  <GridItem>
+              <GridItem style={customStyle.myHealthStyle} xs={10} sm={10} md={6} lg={6} xl={6}>
+                <GridItem style={{ marginRight: "-20px" }}>
+                  <img className={classes.iconStyle2} src={myHealthIcon}></img>
+                </GridItem>
+
+                <GridItem style={{ marginBottom: "20px" }}>
                   <TextField
                     multiline
                     label="My Health"
@@ -782,17 +826,17 @@ hideAlert = () => {
                     }}
                     style={customStyle.storySectionStyle}
                   />
-                  </GridItem>
+                </GridItem>
               </GridItem>
               <GridItem xs={4} sm={4} md={4} lg={4} xl={4}></GridItem>
 
 
               <GridItem style={customStyle.kidFreeStyle} xs={10} sm={10} md={6} lg={6} xl={6}>
-                  <GridItem>
-                  <img className={classes.iconStyle2} src={ this.state.animal.is_good_with_kids ? kidFriendlyIcon : noKidIcon }></img>
-                  </GridItem>
+                <GridItem style={{ marginRight: "-20px" }}>
+                  <img className={classes.iconStyle2} src={this.state.animal.is_good_with_kids ? kidFriendlyIcon : noKidIcon}></img>
+                </GridItem>
 
-                  <GridItem>
+                <GridItem>
                   <TextField
                     multiline
                     fullWidth="true"
@@ -804,17 +848,17 @@ hideAlert = () => {
                       }
                     }}
                   />
-                  </GridItem>
-  
+                </GridItem>
+
               </GridItem>
               <GridItem xs={4} sm={4} md={4} lg={4} xl={4}></GridItem>
 
               <GridItem style={customStyle.goodWithDogStyle} xs={10} sm={10} md={6} lg={6} xl={6}>
-                  <GridItem>
-                  <img className={classes.iconStyle2} src={ this.state.animal.is_good_with_dogs ? dogFriendlyIcon : noDogIcon }></img>
-                  </GridItem>
+                <GridItem style={{ marginRight: "-20px" }}>
+                  <img className={classes.iconStyle2} src={this.state.animal.is_good_with_dogs ? dogFriendlyIcon : noDogIcon}></img>
+                </GridItem>
 
-                    <GridItem>
+                <GridItem>
                   <TextField
                     multiline
                     fullWidth="true"
@@ -826,16 +870,16 @@ hideAlert = () => {
                       }
                     }}
                   />
-                  </GridItem>
+                </GridItem>
               </GridItem>
               <GridItem xs={4} sm={4} md={4} lg={4} xl={4}></GridItem>
 
               <GridItem style={customStyle.goodWithCatStyle} xs={10} sm={10} md={6} lg={6} xl={6}>
-                  <GridItem>
-                  <img className={classes.iconStyle2} src={ this.state.animal.is_good_with_cats ? catFriendlyIcon : noCatIcon }></img>
-                  </GridItem>
+                <GridItem style={{ marginRight: "-20px" }}>
+                  <img className={classes.iconStyle2} src={this.state.animal.is_good_with_cats ? catFriendlyIcon : noCatIcon}></img>
+                </GridItem>
 
-                  <GridItem>
+                <GridItem>
                   <TextField
                     multiline
                     fullWidth="true"
@@ -847,7 +891,7 @@ hideAlert = () => {
                       }
                     }}
                   />
-                  </GridItem>
+                </GridItem>
               </GridItem>
               <GridItem xs={4} sm={4} md={4} lg={4} xl={4}></GridItem>
 

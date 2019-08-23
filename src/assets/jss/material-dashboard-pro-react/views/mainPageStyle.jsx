@@ -53,7 +53,7 @@ const mainPageStyle = () => ({
     backgroundSize: "cover",
     backgroundPosition: "center center",
     backgroundRepeat: "no-repeat",
-    background: "linear-gradient(to bottom, #349FAD 0%, #349FAD 40%, #000000 40%, lightgrey 40%, lightgrey 50%)",
+    background: "linear-gradient(to bottom, #349FAD 0%, #349FAD 35%, #000000 35%, lightgrey 35%, lightgrey 50%)",
     minHeight: "65vh",
     zIndex: "3",
    },
@@ -75,7 +75,7 @@ const mainPageStyle = () => ({
     width: "85%",
     marginLeft: "auto",
     marginRight: "auto",
-    marginTop: "50px",
+    marginTop: "20px",
     left: "0",
     right: "0",
     top: "60%",
@@ -106,6 +106,19 @@ const mainPageStyle = () => ({
         fontSize: "100px",
         // textShadow: "5px 5px #2b2b2b51"
   },
+  hungButtonStyle: {
+    backgroundColor: "#A464A3",
+    marginTop: "25px",
+    boxShadow: "5px 5px 0 #C9AAA9",
+    fontSize: "1em",
+    fontWeight: "700",
+    "&:hover": {
+     backgroundColor: "#A464A3",
+ },
+   "&:active": {
+     backgroundColor: "green",
+   }
+},
   ...buttonStyle,
   
 
