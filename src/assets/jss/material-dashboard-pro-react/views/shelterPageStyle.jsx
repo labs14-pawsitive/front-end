@@ -63,11 +63,10 @@ topButtons: {
        fontWeight: "700",
        "&:hover": {
         backgroundColor: "#A464A3",
-
-    },
-      "&:active": {
-        backgroundColor: "green",
-      }
+      },
+      "&:visted": {
+        backgroundColor: "#A464A3",
+      },
    },
 
 contentHeader: {
