@@ -57,7 +57,7 @@ topButtons: {
       
        backgroundColor: "#A464A3",
        marginTop: "25px",
-       marginRight: "15px",
+      //  marginRight: "15px",
        boxShadow: "5px 5px 0 #C9AAA9",
        fontSize: "1em",
        fontWeight: "700",

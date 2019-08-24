@@ -134,6 +134,39 @@ class AnimalPage extends React.Component {
     });
   }
 
+  setAlertFollows = (str) => {
+    if (!localStorage.getItem('token') && !localStorage.getItem('user_id')) {
+      this.warningAlertFollows(str);
+    } else {
+      this.hideAlert();
+    }
+  };
+
+  warningAlertFollows = (str) => {
+    this.setState({
+      alert: (
+        <SweetAlert
+            warning
+            showCancel
+            cancelBtnCssClass={
+              this.props.classes.button + " " + this.props.classes.success
+            }
+            style={{ display: "block", marginTop: "-100px", color: "#777", fontFamily: "Roboto", padding: "50px", lineHeight: "1.2" }}
+            title=""
+            onConfirm={() => this.routeToAuth()}
+            onCancel={this.hideAlert}
+            confirmBtnCssClass={
+              this.props.classes.button + " " + this.props.classes.success
+            }
+            confirmBtnText="Signup / Login"
+            >
+              <h2 style={{ fontWeight: "500" }}> OOH MY PAWS </h2>
+              <h4 style={{ color: "#333333" }}> {`You need to login/sign up in order to ${str}`} </h4>
+        </SweetAlert>
+      )
+    })
+  }
+
   routeToAuth = () => {
     localStorage.setItem("animalId", this.state.animal.id)
     auth.login();
@@ -144,6 +177,8 @@ class AnimalPage extends React.Component {
       alert: null
     })
   };
+
+  
 
   addNewFollow = async e => {
 
@@ -278,9 +313,6 @@ class AnimalPage extends React.Component {
           backgroundColor: "#A464A3"
         },
       },
-      animalSummaryStyle: {
-        maxWidth: "480px",
-      },
       addressItemStyle: {
         display: "flex",
         justifyContent: "center",
@@ -348,22 +380,9 @@ class AnimalPage extends React.Component {
 
                 <GridItem style={{ marginTop: "40px" }} >
                     <GridItem>
-                      <TextField
-                        multiline
-                        fullWidth="true"
-                        value={`I'm an ${this.state.animal.age} ${this.state.animal.is_male ? "boy" : "girl"} who is on the ${this.state.animal.size} side. I am a ${this.state.animal.breed} who has ${this.state.animal.coat_length} length hair.  I am ${this.state.animal.is_neutered_spayed ? "neutered" : "not neutered"}, ${this.state.animal.is_vaccinated ? "up to date on all shots" : "and in need of shots from the vet"}.  I am ${this.state.animal.is_house_trained ? "house trained" : "in need of training"} and ${this.state.animal.is_good_with_dogs ? "good with other dogs" : "not friendly with other dogs"}.`}
-                        InputProps={{
-                          disableUnderline: true,
-                          style: {
-                            color: "white",
-                            fontSize: "24px",
-                            fontWeight: "400",
-                            letterSpacing: "6px",
-                            lineHeight: "30px",
-                          }
-                        }}
-                        style={customStyle.animalSummaryStyle}
-                      />
+                          <div style={{ color: "white", fontSize: "24px", fontWeight: "400", letterSpacing: "6px", lineHeight: "30px", maxWidth: "480px", }} >
+                          I'm an <span style={{ textTransform: "lowercase" }}>{this.state.animal.age}</span> {this.state.animal.is_male ? "boy" : "girl"} who is on the <span style={{ textTransform: "lowercase" }}> {this.state.animal.size} </span> side. I am a {this.state.animal.breed} who has <span style={{ textTransform: "lowercase" }}>{this.state.animal.coat_length}</span> length hair.  I am {this.state.animal.is_neutered_spayed ? "neutered" : "not neutered"}, {this.state.animal.is_vaccinated ? "up to date on all shots" : "and in need of shots from the vet"}.  I am {this.state.animal.is_house_trained ? "house trained" : "in need of training"} and {this.state.animal.is_good_with_dogs ? "good with other dogs" : "not friendly with other dogs"}.
+                          </div>
                     </GridItem>
               </GridItem>
 
@@ -379,12 +398,23 @@ class AnimalPage extends React.Component {
 
                           {/* FOLLOW ME BUTTON */}
                           <GridItem xs={12} sm={3} md={3} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                              <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                              { localStorage.getItem("user_id") && localStorage.getItem('token') 
+                              ?
                               <Button
                                 className={classes.hungButtonStyle2}
                                 onClick={ this.state.animal.animalFollow ? this.unfollowAnimal : this.addNewFollow }
                               >
                                 {this.state.animal.animalFollow ? "Followed" : "Follow Me"}
                               </Button>
+                              :
+                              <div style={{ display: "flex !important", justifyContent: "center !important" }}>
+                              <Button className={classes.hungButtonStyle} onClick={() => this.setAlert("follow this animal")}>
+                                {"Follow Me"}
+                              </Button>
+                              </div>
+                              }
+                              </div>
                           </GridItem>
 
                           {/* ADOPT ME BUTTON */}
