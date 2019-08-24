@@ -25,14 +25,17 @@ import { update_user_profile } from '../../actions/userAction'
 import withStyles from "@material-ui/core/styles/withStyles";
 import InputLabel from "@material-ui/core/InputLabel";
 
+import MaskedInput from 'react-text-mask';
+
 // @material-ui/icons
 import PermIdentity from "@material-ui/icons/PermIdentity";
+
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import Button from "components/CustomButtons/Button.jsx";
-import CustomInput from "components/CustomInput/CustomInput.jsx";
+import CustomInput from "components/CustomInput/UserCustomInput.jsx";
 import Clearfix from "components/Clearfix/Clearfix.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
@@ -51,6 +54,66 @@ import userProfileStyles from "assets/jss/material-dashboard-pro-react/views/use
 
 import avatar from "assets/img/faces/marc.jpg";
 
+
+function moveZipCursor(event) {
+  let digits = event.target.value.replace(/\D/g, '');
+  event.target.setSelectionRange(digits.length, digits.length);
+}
+
+//text mask for zip 5 digit 
+function ZipMaskCustom(props) {
+  const { inputRef, ...other } = props;
+
+  return (
+    <MaskedInput
+      {...other}
+      ref={ref => {
+        inputRef(ref ? ref.inputElement : null);
+      }}
+      mask={[/\d/, /\d/, /\d/, /\d/, /\d/]}
+      placeholderChar={'\u2000'}
+    //showMask
+    />
+  );
+}
+
+ZipMaskCustom.propTypes = {
+  inputRef: PropTypes.func.isRequired,
+};
+
+
+function movePhoneCursor(event) {
+  let digits = event.target.value.replace(/\D/g, '').length;
+  if (digits <= 3) {
+    event.target.setSelectionRange(digits + 1, digits + 1);
+  } else if (digits > 3 && digits <= 6) {
+    event.target.setSelectionRange(digits + 3, digits + 3);
+  } else if (digits > 6 && digits <= 10) {
+    event.target.setSelectionRange(digits + 4, digits + 4)
+  }
+}
+
+
+function PhoneMaskCustom(props) {
+  const { inputRef, ...other } = props;
+
+  return (
+    <MaskedInput
+      {...other}
+      ref={ref => {
+        inputRef(ref ? ref.inputElement : null);
+      }}
+      mask={['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+      placeholderChar={'\u2000'}
+    //showMask
+    />
+  );
+}
+
+PhoneMaskCustom.propTypes = {
+  inputRef: PropTypes.func.isRequired,
+};
+
 //refactor this to a class component
 
 class UserProfile extends React.Component {
@@ -67,10 +130,20 @@ class UserProfile extends React.Component {
         state: "",
         zipcode: "",
         phone_number: "",
-        state_id:null
+        state_id: null
+      },
+      fieldState: {
+        firstNameState: 'success',
+        lastNameState: 'success',
+        streetAddressState: "success",
+        cityState: "success",
+        stateState: "success",
+        zipcodeState: "success",
+        phone_numberState: "success",
+        state_idState: "success"
       },
       isUpdate: false,
-      updated:false
+      updated: false
     }
   }
 
@@ -96,25 +169,117 @@ class UserProfile extends React.Component {
       })
   }
 
-  componentDidUpdate(prevProps){
+  componentDidUpdate(prevProps) {
 
-    if(this.props.user !== prevProps.user){
-    this.setState({
-      user: {
-        username: this.props.user.username,
-        email: this.props.user.email,
-        streetAddress: this.props.user.street_address,
-        city: this.props.user.city,
-        state: this.props.user.state,
-        zipcode: this.props.user.zip,
-        firstName: this.props.user.name ? this.props.user.name.split(' ')[0] : '',
-        lastName: this.props.user.name ? this.props.user.name.split(' ')[1] : '',
-        phone_number: this.props.user.phone_number
+    if (this.props.user !== prevProps.user) {
+      this.setState({
+        user: {
+          username: this.props.user.username,
+          email: this.props.user.email,
+          streetAddress: this.props.user.street_address,
+          city: this.props.user.city,
+          state: this.props.user.state,
+          zipcode: this.props.user.zip,
+          firstName: this.props.user.name ? this.props.user.name.split(' ')[0] : '',
+          lastName: this.props.user.name ? this.props.user.name.split(' ')[1] : '',
+          phone_number: this.props.user.phone_number
+        }
+      })
+    }
+  }
+
+  verifyDigitOnly(value, length) {
+    let digits = value.replace(/\D/g, '');
+    if (digits.length === length) {
+      return true;
+    }
+    return false
+  }
+
+  isValidated() {
+
+    if (
+      this.state.fieldState.firstNameState === "success" &&
+      this.state.fieldState.lastNameState === "success" &&
+      this.state.fieldState.streetAddressState === "success" &&
+      this.state.fieldState.zipcodeState === "success" &&
+      this.state.fieldState.phone_numberState === "success" &&
+      this.state.fieldState.cityState === "success"
+    ) {
+      return true;
+    } else {
+      if (this.state.fieldState.firstNameState !== "success") {
+        this.setState({
+          fieldState: {
+            ...this.state.fieldState,
+            firstNameState: "error"
+          }
+        });
       }
-    })}
+      if (this.state.fieldState.lastNameState !== "success") {
+        this.setState({
+          fieldState: {
+            ...this.state.fieldState,
+            lastNameState: "error"
+          }
+        });
+      }
+      if (this.state.fieldState.streetAddressState !== "success") {
+        this.setState({
+          fieldState: {
+            ...this.state.fieldState,
+            streetAddressState: "error"
+          }
+        });
+      }
+      if (this.state.fieldState.cityState !== "success") {
+        this.setState({
+          fieldState: {
+            ...this.state.fieldState,
+            cityState: "error"
+          }
+        });
+      }
+      if (this.state.fieldState.zipcodeState !== "success") {
+        this.setState({
+          fieldState: {
+            ...this.state.fieldState,
+            zipcodeState: "error"
+          }
+        });
+      }
+      if (this.state.fieldState.phone_numberState !== "success") {
+        this.setState({
+          fieldState: {
+            ...this.state.fieldState,
+            phone_numberState: "error"
+          }
+        });
+      }
+    }
+    // console.log("isValidated is false")
+    return false;
   }
 
   handleChange = (event) => {
+
+    if (event.target.value.length >= 3 || event.target.value.length === 0) {
+      this.setState({
+        fieldState: {
+          ...this.state.fieldState,
+          [event.target.id + "State"]: "success"
+        }
+      })
+    }
+    else {
+      this.setState({
+        fieldState: {
+          ...this.state.fieldState,
+          [event.target.id + "State"]: "error"
+        }
+      })
+    }
+
     this.setState({
       user: {
         ...this.state.user,
@@ -123,18 +288,52 @@ class UserProfile extends React.Component {
     })
   }
 
+  handleNumbers(event, stateName, type, stateNameEqualTo) {
+    switch (type) {
+
+      case "digit-only":
+        if (this.verifyDigitOnly(event.target.value, stateNameEqualTo)) {
+          this.setState({
+            fieldState: {
+              ...this.state.fieldState,
+              [stateName + "State"]: "success"
+            }
+          });
+        } else {
+          this.setState({
+            fieldState: {
+              ...this.state.fieldState,
+              [stateName + "State"]: "error"
+            }
+          });
+        }
+      default:
+        break;
+    }
+
+    this.setState({
+      user: {
+        ...this.state.user,
+        [stateName]: event.target.value
+      }
+    });
+  }
+
   handleState = (event) => {
 
     const targetID = this.props.states ? this.props.states.find(state => state.state === event.target.value).id : ''
 
-    if(targetID){
-    this.setState({
-      user: {
-        ...this.state.user,
-        [event.target.name]: event.target.value,
-        state_id:targetID
-      }
-    })}
+    console.log('target Id is ', targetID)
+    if (targetID) {
+      this.setState({
+        user: {
+          ...this.state.user,
+          [event.target.name]: event.target.value,
+          state_id: targetID
+        }
+      })
+    }
+
   }
 
   handleToggle = () => {
@@ -145,8 +344,6 @@ class UserProfile extends React.Component {
 
   handleUpdate = (event) => {
     event.preventDefault()
-
-
 
     if (this.state.isUpdate) {
       console.log('update state : ', this.state.isUpdate)
@@ -162,15 +359,17 @@ class UserProfile extends React.Component {
 
       console.log('updated info is :', UserObj)
 
-      this.props.update_user_profile(this.props.user.id, UserObj)
-      .then(res => 
-        {console.log('updated user profile data ', res)
-        this.setState({
-          updated: true
-        })
-        })
-      .catch(error => { console.log('updated user profile error ', error)})
+      if (this.isValidated()) {
 
+        this.props.update_user_profile(this.props.user.id, UserObj)
+          .then(res => {
+            console.log('updated user profile data ', res)
+            this.setState({
+              updated: true
+            })
+          })
+          .catch(error => { console.log('updated user profile error ', error) })
+      }
       this.setState({
         isUpdate: false
       })
@@ -229,7 +428,7 @@ class UserProfile extends React.Component {
                 <h4 className={classes.cardIconTitle}>
                   Edit Profile - <small>Complete your profile</small>
                 </h4>
-                {this.state.updated && !this.state.isUpdate && this.props.user.shelter && <SnackBarInfo shelter={this.props.user.shelter}/>}
+                {!this.state.isUpdate && this.props.user.shelter && <SnackBarInfo shelter={this.props.user.shelter} />}
                 {this.state.isUpdate && <CustomSnackBar />}
               </CardHeader>
 
@@ -237,32 +436,38 @@ class UserProfile extends React.Component {
                 <GridContainer>
 
                   <GridItem xs={12} sm={12} md={5}>
-                    <CustomInput
-                      labelText="Username"
+                    <TextField
                       id="username"
-
-                      formControlProps={{
+                      label="Username"
+                      className={classes.textField}
+                      value={this.props.user.username}
+                      margin="normal"
+                      InputProps={{
+                        readOnly: true,
+                        disableUnderline: true,
                         fullWidth: true
                       }}
-                      inputProps={{
-                        disabled: true,
-                        value: this.props.user.username,
-                        onChange:this.handleChange
+                      InputLabelProps={{
+                        style: { color: 'rgba(0, 0, 0, 0.87)' },
                       }}
                     />
                   </GridItem>
 
                   <GridItem xs={12} sm={12} md={7}>
-                    <CustomInput
-                      labelText="Email address"
+                    <TextField
+                      fullWidth
                       id="email"
-                      formControlProps={{
-                        fullWidth: true
+                      label="Email address"
+                      className={classes.textField}
+                      disableUnderline
+                      value={this.props.user.email}
+                      margin="normal"
+                      InputProps={{
+                        readOnly: true,
+                        disableUnderline: true,
                       }}
-                      inputProps={{
-                        disabled: true,
-                        value: this.props.user.email,
-                        onChange: this.handleChange
+                      InputLabelProps={{
+                        style: { color: 'rgba(0, 0, 0, 0.87)' },
                       }}
                     />
                   </GridItem>
@@ -274,6 +479,9 @@ class UserProfile extends React.Component {
 
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
+                    
+                      success={this.state.isUpdate && this.state.fieldState.firstNameState === "success"}
+                      error={this.state.isUpdate && this.state.fieldState.firstNameState === "error"}
                       labelText="First Name"
                       id="firstName"
                       formControlProps={{
@@ -282,13 +490,15 @@ class UserProfile extends React.Component {
                       inputProps={{
                         disabled: this.state.isUpdate ? false : true,
                         value: this.state.user.firstName,
-                        onChange: this.handleChange
+                        onChange: event => this.handleChange(event, "firstName", "length", 3),
                       }}
                     />
                   </GridItem>
 
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
+                      success={this.state.isUpdate && this.state.fieldState.lastNameState === "success"}
+                      error={this.state.isUpdate && this.state.fieldState.lastNameState === "error"}
                       labelText="Last Name"
                       id="lastName"
                       formControlProps={{
@@ -297,7 +507,7 @@ class UserProfile extends React.Component {
                       inputProps={{
                         disabled: this.state.isUpdate ? false : true,
                         value: this.state.user.lastName,
-                        onChange: this.handleChange
+                        onChange: event => this.handleChange(event, "lastName", "length", 3),
                       }}
                     />
                   </GridItem>
@@ -306,6 +516,8 @@ class UserProfile extends React.Component {
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
+                      success={this.state.isUpdate && this.state.fieldState.streetAddressState === "success"}
+                      error={this.state.isUpdate && this.state.fieldState.streetAddressState === "error"}
                       labelText="Street Address"
                       id="streetAddress"
                       formControlProps={{
@@ -315,7 +527,7 @@ class UserProfile extends React.Component {
                         multiline: true,
                         disabled: this.state.isUpdate ? false : true,
                         value: this.state.user.streetAddress,
-                        onChange: this.handleChange
+                        onChange: event => this.handleChange(event, "streetAddress", "length", 3),
                       }}
                     />
 
@@ -325,6 +537,8 @@ class UserProfile extends React.Component {
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={3}>
                     <CustomInput
+                      success={this.state.isUpdate && this.state.fieldState.cityState === "success"}
+                      error={this.state.isUpdate && this.state.fieldState.cityState === "error"}
                       labelText="City"
                       id="city"
                       formControlProps={{
@@ -333,7 +547,7 @@ class UserProfile extends React.Component {
                       inputProps={{
                         disabled: this.state.isUpdate ? false : true,
                         value: this.state.user.city,
-                        onChange: this.handleChange
+                        onChange: event => this.handleChange(event, "city", "length", 3),
                       }}
                     />
                   </GridItem>
@@ -343,7 +557,7 @@ class UserProfile extends React.Component {
                     <FormControl style={customStyle.formControlStyle} className={classes.formControl} >
                       <InputLabel style={customStyle.colorStyle} htmlFor="state">State</InputLabel>
                       <Select style={customStyle.color1Style}
-                       name='state'
+                        name='state'
                         id='state'
                         renderValue={value => `${value}`}
                         disableUnderline
@@ -352,13 +566,13 @@ class UserProfile extends React.Component {
                           disabled: this.state.isUpdate ? false : true,
                           value: this.state.user.state,
                           onChange: this.handleState
-                         
+
                         }}
                       >
 
                         {this.props.states.map(state => {
                           return (
-                            <MenuItem 
+                            <MenuItem
                               key={state.id} value={state.state}>{state.state}</MenuItem>
                           )
                         })}
@@ -370,6 +584,8 @@ class UserProfile extends React.Component {
 
                   <GridItem xs={12} sm={12} md={3}>
                     <CustomInput
+                      success={this.state.isUpdate && this.state.fieldState.zipcodeState === "success"}
+                      error={this.state.isUpdate && this.state.fieldState.zipcodeState === "error"}
                       labelText="Zipcode"
                       id="zipcode"
                       formControlProps={{
@@ -378,7 +594,10 @@ class UserProfile extends React.Component {
                       inputProps={{
                         disabled: this.state.isUpdate ? false : true,
                         value: this.state.user.zipcode,
-                        onChange: this.handleChange
+                        onChange: event => this.handleNumbers(event, "zipcode", "digit-only", 5),
+                        onClick: event => moveZipCursor(event),
+                        onFocus: event => moveZipCursor(event),
+                        inputComponent: ZipMaskCustom,
 
                       }}
                     />
@@ -386,6 +605,8 @@ class UserProfile extends React.Component {
 
                   <GridItem xs={12} sm={12} md={3}>
                     <CustomInput
+                      success={this.state.isUpdate && this.state.fieldState.phone_numberState === "success"}
+                      error={this.state.isUpdate && this.state.fieldState.phone_numberState === "error"}
                       labelText="Phone Number"
                       id="phone_number"
                       formControlProps={{
@@ -394,7 +615,13 @@ class UserProfile extends React.Component {
                       inputProps={{
                         disabled: this.state.isUpdate ? false : true,
                         value: this.state.user.phone_number,
-                        onChange: this.handleChange
+                        onChange: event => this.handleNumbers(event, "phone_number", "digit-only", 10),
+                        onClick: event => movePhoneCursor(event),
+                        onFocus: event => movePhoneCursor(event),
+                        inputComponent: PhoneMaskCustom,
+                      }}
+                      labelProps={{
+                        style:{color:"black !important"}
                       }}
                     />
                   </GridItem>

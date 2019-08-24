@@ -61,17 +61,7 @@ function MySnackbarContent(props) {
           {message}
         </span>
       }
-      action={[
-        // <IconButton
-        //   key="close"
-        //   aria-label="Close"
-        //   color="inherit"
-        //   className={classes.close}
-        //   onClick={onClose}
-        // >
-        //   <CloseIcon className={classes.icon} />
-        // </IconButton>,
-      ]}
+      action={[]}
       {...other}
     />
   );
@@ -115,9 +105,6 @@ class CustomizedSnackbars extends React.Component {
 
     return (
       <div>
-        {/* <Button className={classes.margin} onClick={this.handleClick}>
-          Open success snackbar
-        </Button> */}
         <Snackbar
           anchorOrigin={{
             vertical: 'bottom',
@@ -127,32 +114,14 @@ class CustomizedSnackbars extends React.Component {
           autoHideDuration={6000}
           onClose={this.handleClose}
         >
-          {/* <MySnackbarContentWrapper
-            onClose={this.handleClose}
-            variant="success"
-            message="This is a success message!"
-          /> */}
+          
         </Snackbar>
-        {/* <MySnackbarContentWrapper
-          variant="error"
-          className={classes.margin}
-          message="This is an error message!"
-        />
-        <MySnackbarContentWrapper
-          variant="warning"
-          className={classes.margin}
-          message="This is a warning message!"
-        /> */}
         <MySnackbarContentWrapper
           variant="info"
           className={classes.margin}
           message="Username and Email Address can't be updated!"
         />
-        {/* <MySnackbarContentWrapper
-          variant="success"
-          className={classes.margin}
-          message="This is a success message!"
-        /> */}
+        
       </div>
     );
   }
