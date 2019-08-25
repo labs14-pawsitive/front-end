@@ -19,7 +19,7 @@ class CustomCarousel extends React.Component {
 
   componentDidMount() {
     return axios
-      .get(`http://localhost:8000/api/pictures/animal/34`)
+      .get(`http://localhost:8000/api/pictures/animal/${this.props.animalId}`)
       .then(response => {
         console.log(response)
         const { img_url, img_id, animal_id } = response
@@ -29,34 +29,38 @@ class CustomCarousel extends React.Component {
   }
 
   render() {
-
     const customStyles = {
-      carousel: {
-        width: "90%",
-        maxWidth: "1000px",
-        margin: "80px 0px 20px 20px",
+      imageContainer: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        overflow: "hidden",
+      },
+      image: {
+        flexShrink: 0,
+        minWidth: "100%",
+        minHeight: "100%",
+        objectFit: "cover",
+        height: "375px"
       }
     }
 
-    
-
     const { images } = this.state
     if (!images.length) return <div>Images are not fetched yet!</div>
-
     return (
-      <GridContainer > 
-        <GridItem xs={12} sm={12} md={6} style={customStyles.carousel}>
+        <div class="carousel-container">
           <Carousel autoPlay infiniteLoop>
             {
               Array.from(images).map(image => {
                 return (
-                  <img src={ image.img_url } />
+                  <div style={customStyles.imageContainer}>
+                    <img style={customStyles.image} src={ image.img_url } />
+                  </div>
                   )
               })
             }
          </Carousel>
-        </GridItem>
-      </GridContainer>
+        </div>
     )
   }
 }

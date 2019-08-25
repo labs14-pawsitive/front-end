@@ -1,5 +1,6 @@
 import { title, whiteColor, blackColor } from "assets/jss/material-dashboard-pro-react.jsx";
 
+
 const mainPageStyle = () => ({
   contentCenter: {
     position: "absolute",
@@ -37,21 +38,7 @@ const mainPageStyle = () => ({
     justifyContent: "center",
     width:"100%"
   },
-  wrapper: {
-    height: "auto",
-    minHeight: "100vh",
-    margin: "0 auto",
-    position: "relative",
-    top: "0",
-  },
-  header: {
-    backgroundSize: "cover",
-    backgroundPosition: "center center",
-    backgroundRepeat: "no-repeat",
-    minHeight: "65vh",
-    zIndex: "3",
-   },
-
+  
 
 });
 

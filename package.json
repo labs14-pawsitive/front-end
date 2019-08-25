@@ -32,6 +32,7 @@
     "react-jvectormap": "0.0.12",
     "react-number-format": "^4.2.0",
     "react-redux": "^7.0.3",
+    "react-responsive": "^7.0.0",
     "react-responsive-carousel": "^3.1.50",
     "react-router-dom": "5.0.1",
     "react-scripts": "3.0.1",

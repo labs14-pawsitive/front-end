@@ -1,14 +1,23 @@
 .carousel .thumb img {
-    width: 100% !important;
-    height: 100% !important;
+    /* width: 100% !important;
+    height: 100% !important; */
     max-height: 70px;
     min-height: 70px;
+    min-width: 100px;
     max-width: 100px;
+    border-radius: 5px
 }
 
 .carousel .slide img {
-    max-height: 400px;  
-    min-height: 400px;
-    min-width: 250px;
-    max-width: 400px
+    border-radius: 5px;
+}
+
+.carousel-container {
+    width: 375px;
+    height: 500px;
+    margin: auto;
+}
+
+.carousel-container .carousel .control-dots {
+    left: -15px;
 }

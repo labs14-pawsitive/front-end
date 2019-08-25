@@ -117,7 +117,5 @@ class StripeDonation extends React.Component {
         );
     }
 }
-
-
-
+ 
 export default withStyles(shelterPageStyle)(StripeDonation);
