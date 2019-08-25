@@ -39,7 +39,10 @@ import {
     DELETE_NOTES_FAILURE,
     GET_ANIMAL_PICTURES_START,
     GET_ANIMAL_PICTURES_SUCCESS,
-    GET_ANIMAL_PICTURES_FAILURE
+    GET_ANIMAL_PICTURES_FAILURE,
+    DELETE_ANIMAL_PICTURES_START,
+    DELETE_ANIMAL_PICTURES_SUCCESS,
+    DELETE_ANIMAL_PICTURES_FAILURE
     
 
 
@@ -93,6 +96,7 @@ const initialState = {
         animalFollowers: []
     },
     animalPictures:[],
+    picturesAfterDelete:[],
     updatingAnimalInfo: false,
     gettingDropdownOptions: false,
     gettingAnimalInfo: false,
@@ -281,7 +285,27 @@ export const animalReducer = (state = initialState, action) => {
         case GET_ANIMAL_PICTURES_FAILURE:
             return {
                 ...state,
-                gettingAnimalInfo: false,
+                gettingAnimalPictures: false,
+                error: action.payload
+            };
+            case DELETE_ANIMAL_PICTURES_START:
+            return {
+                ...state,
+                deletingAnimalPictures: true,
+                error: ''
+            };
+        case DELETE_ANIMAL_PICTURES_SUCCESS:
+            console.log(action.payload)
+            return {
+                ...state,
+                deletingAnimalPictures: false,
+                picturesAfterDelete:action.payload,
+                error: ''
+            };
+        case DELETE_ANIMAL_PICTURES_FAILURE:
+            return {
+                ...state,
+                deletingAnimalPictures: false,
                 error: action.payload
             };
         case EDIT_ANIMAL_INFO_START:

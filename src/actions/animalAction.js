@@ -144,12 +144,6 @@ export const getAllOptions = (shelterID) => dispatch => {
             dispatch({ type: GET_ANIMAL_SUCCESS, payload: res.data })
             console.log('action: update notes info', res.data)
           })
-          // .then(res => axios
-          //   .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalID}/admin`))
-          // .then(res => {
-          //   dispatch({ type: GET_NOTES_BY_ANIMAL_SUCCESS, payload: res.data })
-          //   console.log('action :get notes info', res.data)
-          // })
           .catch(err => {
             dispatch({ type: POST_NOTES_FAILURE, payload: err.response })
             console.log('action: get notes info error: ', err.response)
@@ -199,7 +193,7 @@ export const getAllOptions = (shelterID) => dispatch => {
               })
           }
 
-          export const GET_ANIMAL_PICTURES_START = 'GET_ANIMAL_PICTURES_START'
+        export const GET_ANIMAL_PICTURES_START = 'GET_ANIMAL_PICTURES_START'
         export const GET_ANIMAL_PICTURES_SUCCESS = 'GET_ANIMAL_PICTURES_SUCCESS'
         export const GET_ANIMAL_PICTURES_FAILURE = 'GET_ANIMAL_PICTURES_FAILURE'
         
@@ -216,6 +210,27 @@ export const getAllOptions = (shelterID) => dispatch => {
               .catch(err => {
                 dispatch({ type: GET_ANIMAL_PICTURES_FAILURE, payload: err.response })
                 console.log('action:  get animal pictures error from action: ', err.response)
+              })
+          }
+
+          export const DELETE_ANIMAL_PICTURES_START = 'DELETE_ANIMAL_PICTURES_START'
+        export const DELETE_ANIMAL_PICTURES_SUCCESS = 'DELETE_ANIMAL_PICTURES_SUCCESS'
+        export const DELETE_ANIMAL_PICTURES_FAILURE = 'DELETE_ANIMAL_PICTURES_FAILURE'
+        
+        export const deleteAnimalPictures = (imageID,animalID) => dispatch => {
+            
+            dispatch({ type: DELETE_ANIMAL_PICTURES_START })
+            return axios
+              .delete(`http://localhost:8000/api/pictures/image/${imageID}`)
+              .then(res => axios
+                .get(`http://localhost:8000/api/pictures/animal/${animalID}`))
+              .then(res => {
+                dispatch({ type: GET_ANIMAL_PICTURES_SUCCESS, payload: res.data })
+                console.log('action: delete animal pictures success from action', res.data)
+              })
+              .catch(err => {
+                dispatch({ type: DELETE_ANIMAL_PICTURES_FAILURE, payload: err.response })
+                console.log('action:  delete animal pictures error from action: ', err.response)
               })
           }
 

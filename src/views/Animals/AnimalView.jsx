@@ -15,7 +15,7 @@ import axios from 'axios';
 import moment from 'moment'
 import {axiosWithAuth} from 'axiosWithAuth';
 
-import { updateAnimal, getInfoByAnimalID, getAllOptions, addNotes, updateNotes, deleteNotes, getAnimalPictures }
+import { updateAnimal, getInfoByAnimalID, getAllOptions, addNotes, updateNotes, deleteNotes, getAnimalPictures, deleteAnimalPictures }
   from '../../actions/animalAction.js'
 import AnimalNotes from './AnimalViewComponents/AnimalNotes.jsx'
 import AnimalViewTop from './AnimalViewComponents/AnimalViewTop.jsx'
@@ -82,7 +82,7 @@ class AnimalView extends React.Component {
       animal_followers: [],
       animalPictures:[],
       // placeholderImages:Array(6).fill("url(" + placeholderImage + ")"),
-      placeholderImages:[Array(6).fill('empty')],
+      placeholderImages:Array(6).fill('empty'),
       breeds: [],
       size: [],
       coat_length: [],
@@ -126,7 +126,7 @@ class AnimalView extends React.Component {
         this.state.placeholderImages.map((value, i) => {
             console.log(`value at ${i} is ${value}`)
             if (this.props.animalPictures[i]) {
-                value = this.props.animalPictures[i].img_url
+                value = this.props.animalPictures[i]
                  newArray.push(value)
 
             }
@@ -180,11 +180,16 @@ class AnimalView extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // console.log('prev props: ', prevProps.animalNotes)
-    if (this.props.animalNotes !== prevProps.animalNotes) {
-      // console.log('component did update: if: ', this.props.animalNotes)
+    if (this.props.animalNotes !== prevProps.animalNotes ) {
       this.setState({
         animal_notes: this.props.animalNotes
+      })
+
+    }
+
+    if (this.props.animalPictures !== prevProps.animalPictures ) {
+      this.setState({
+        animalPictures: this.props.animalPictures
       })
 
     }
@@ -219,13 +224,7 @@ class AnimalView extends React.Component {
       animal_id: this.state.animal.id
     }
 
-
-    // console.log('update form editinfo : ', updateInfo)
-
-    // console.log('update form editinfo: animal: ', this.state.animal)
-    // console.log('update form editinfo: animalInfo: ', this.state.animal_meta)
-
-    this.props.updateAnimal(updateInfo,
+this.props.updateAnimal(updateInfo,
       this.state.animal.id, this.state.animal_meta.id)
       .then(res => console.log('update animal animal view :success ', res))
       .catch(error => console.log('update error animal view', error))
@@ -238,7 +237,6 @@ class AnimalView extends React.Component {
 
 
   handleAdoption = (event) => {
-    // console.log('value from drop down is ', event.target.value)
 
     let targetID = ''
     switch (event.target.name) {
@@ -256,7 +254,6 @@ class AnimalView extends React.Component {
         break;
       case 'animal_status_id':
         targetID = this.state.animal_status ? this.state.animal_status.find(eachValue => eachValue.id === event.target.value).animal_status : ''
-        // console.log('inside case: animal status ', targetID)
         this.setState({
           animal: {
             ...this.state.animal,
@@ -270,7 +267,6 @@ class AnimalView extends React.Component {
 
         let dynamicDropdown = this.state.breeds ? this.state.breeds.filter(eachBreed => eachBreed.species_id === event.target.value) : ''
 
-        // console.log('dynamic breed list based on species selection', dynamicDropdown)
         this.setState({
           animal: {
             ...this.state.animal,
@@ -318,7 +314,6 @@ class AnimalView extends React.Component {
         break;
       case 'shelter_location_id':
         targetID = this.state.locations ? this.state.locations.find(eachValue => eachValue.id === event.target.value).nickname : ''
-        // console.log('inside case: shelter location nickname ', targetID)
         this.setState({
           animal: {
             ...this.state.animal,
@@ -339,9 +334,6 @@ class AnimalView extends React.Component {
         })
     }
 
-    // console.log(`target id for ${event.target.name} is ${targetID}`)
-    // console.log('dropdown id selection ', event.target.value)
-    // console.log(`target value for ${event.target.name} is ${event.target.value}`)
   }
 
   handleToggle = (event) => {
@@ -349,17 +341,9 @@ class AnimalView extends React.Component {
     this.setState({
       isEditing: !this.state.isEditing,
       open:!this.state.open
-      // animal:this.props.animal,
-      // animal_meta:this.props.animal_meta
+     
     })
 
-    // console.log(this.state.animal.name)
-    // if(this.state.isEditing){
-    //   this.setState({
-    //   animal:this.props.animal,
-    //   animal_meta:this.props.animal_meta
-    // })
-    // }
   }
 
   handleCancel = async (event) => {
@@ -381,11 +365,9 @@ class AnimalView extends React.Component {
 
   verifyLength = (value) => {
     if (value.length >= this.maxLength) {
-      // console.log(`verify length fn: ${value} is valid length`)
       return true
     }
     else {
-      // console.log(`verify length fn: ${value} is not valid length`)
       return false
     }
   }
@@ -399,7 +381,6 @@ class AnimalView extends React.Component {
       this.state.textState.nameState === "success" &&
       this.state.breedState === "success"
     ) {
-      // console.log("isValidated fn : is true")
       return true;
     } else {
       if (this.state.textState.descriptionState !== "success") {
@@ -440,7 +421,6 @@ class AnimalView extends React.Component {
         });
       }
     }
-    // console.log("isValidated is false")
     return false;
   }
 
@@ -464,7 +444,6 @@ class AnimalView extends React.Component {
         }
       })
     }
-    // console.log('handleTextField fn: after if/else: nameState ', this.state.textState.nameState)
     this.setState({
       animal: {
         ...this.state.animal,
@@ -489,20 +468,13 @@ class AnimalView extends React.Component {
       })
     }
     else {
-      // console.log(`${event.target.name} not valid length`)
       this.setState({
         textState: {
           ...this.state.textState,
           [stateName]: "error"
-          // [event.target.name + "State"]: "error"
         }
       })
     }
-
-    // console.log('handleMetaTextField fn: after if/else: descriptionState ', this.state.textState.descriptionState)
-    // console.log('handleMetaTextField fn: after if/else: colorState ', this.state.textState.colorState)
-    // console.log('handleMetaTextField fn: after if/else: healthState ', this.state.textState.healthState)
-
 
     this.setState({
 
@@ -516,26 +488,26 @@ class AnimalView extends React.Component {
   handleUpdate = (event) => {
     event.preventDefault()
     if (this.state.isEditing) {
-      // console.log('descriptionState ', this.state.textState.descriptionState)
-      // console.log('colorState ', this.state.textState.colorState)
-      // console.log('healthState ', this.state.textState.healthState)
-      // console.log('nameState ', this.state.textState.nameState)
-
       if (this.isValidated() && this.state.animal_meta.breed !== 'select a breed') {
 
         this.updateForm()
       }
       else {
-        // console.log('please enter the required length for the fields')
-        // alert('your fields are not meeting the valid length')
+       
       }
     }
 
     else this.handleToggle(event)
   }
 
-  callback = (response) => {
-    // console.log(response)
+  deletePictures = (imageId,animalId) => {
+    this.props.deleteAnimalPictures(imageId,animalId)
+    .then(res => console.log('delete pic fn from animal view component ', res))
+    .catch(error => console.log(error))
+  }
+
+  callback = async (response) => {
+    console.log('callback img_id ',response)
     this.state.animal.img_url = response[0].image.image_url
     this.state.animal.img_id = response[0].image.image_id
 
@@ -543,7 +515,9 @@ class AnimalView extends React.Component {
       profile_img_id: response[0].image.image_id,
     }
 
-    this.props.updateAnimal(updateInfo,
+    console.log('call updated info ', updateInfo)
+
+    await this.props.updateAnimal(updateInfo,
       this.state.animal.id, this.state.animal_meta.id)
       .then(res => console.log('update animal animal view :success ', res))
       .catch(error => console.log('update error animal view', error))
@@ -591,7 +565,8 @@ class AnimalView extends React.Component {
                   open={this.state.open}
                   handleClose={this.handleClose}
                   animalPictures ={this.state.animalPictures}
-                  placeholderImages = {this.state.placeholderImages} />
+                  placeholderImages = {this.state.placeholderImages} 
+                  deletePictures = {this.deletePictures} />
                 <GridItem xs={12} sm={12} md={12}>
                   <div style={customStyle.animalButtonStyle}>
 
@@ -669,7 +644,8 @@ const mapStateToProps = (state) => {
     animalMeta: state.animalReducer.animalInfo.animalMeta,
     animalNotes: state.animalReducer.animalInfo.animalNotes,
     animalFollowers: state.animalReducer.animalInfo.animalFollowers,
-    animalPictures:state.animalReducer.animalPictures
+    animalPictures:state.animalReducer.animalPictures,
+    picturesAfterDelete:state.animalReducer.picturesAfterDelete
   }
 }
 
@@ -682,8 +658,8 @@ export default connect(
     addNotes,
     updateNotes,
     deleteNotes,
-    getAnimalPictures
+    getAnimalPictures,
+    deleteAnimalPictures
   }
 )(withStyles(regularFormsStyle)(AnimalView))
 
-        //export default withStyles(extendedFormsStyle)(AnimalView);
