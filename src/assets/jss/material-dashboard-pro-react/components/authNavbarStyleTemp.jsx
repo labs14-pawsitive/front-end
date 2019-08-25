@@ -196,7 +196,7 @@ const pagesHeaderStyleTemp = theme => ({
       top: "0"
     },
     "&:after": {
-      background: whiteColor,
+      background: blackColor,
       opacity: ".8"
     }
   },

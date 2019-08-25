@@ -63,11 +63,11 @@ const pagesHeaderStyle = theme => ({
     fontSize: "18px",
     borderRadius: "3px",
     textTransform: "none",
-    color: blackColor,
+    color: whiteColor,
     letterSpacing: "unset",
     "&:hover,&:focus": {
       background: "transparent",
-      color: blackColor
+      color: whiteColor
     }
   },
   appResponsive: {
@@ -75,27 +75,27 @@ const pagesHeaderStyle = theme => ({
   },
   primary: {
     backgroundColor: primaryColor[0],
-    color: blackColor,
+    color: whiteColor,
     ...defaultBoxShadow
   },
   info: {
     backgroundColor: infoColor[0],
-    color: blackColor,
+    color: whiteColor,
     ...defaultBoxShadow
   },
   success: {
     backgroundColor: successColor[0],
-    color: blackColor,
+    color: whiteColor,
     ...defaultBoxShadow
   },
   warning: {
     backgroundColor: warningColor[0],
-    color: blackColor,
+    color: whiteColor,
     ...defaultBoxShadow
   },
   danger: {
     backgroundColor: dangerColor[0],
-    color: blackColor,
+    color: whiteColor,
     ...defaultBoxShadow
   },
   list: {
@@ -105,7 +105,7 @@ const pagesHeaderStyle = theme => ({
     marginRight: "-15px",
     paddingLeft: "0",
     listStyle: "none",
-    color: blackColor,
+    color: whiteColor,
     paddingTop: "0",
     paddingBottom: "0"
   },
@@ -123,7 +123,7 @@ const pagesHeaderStyle = theme => ({
     }
   },
   navLink: {
-    color: blackColor,
+    color: whiteColor,
     margin: "0 5px",
     paddingTop: "15px",
     paddingBottom: "15px",
@@ -137,7 +137,7 @@ const pagesHeaderStyle = theme => ({
     padding: "10px 15px",
     textDecoration: "none",
     "&:hover,&:focus": {
-      color: blackColor,
+      color: whiteColor,
       background: "rgba(" + hexToRgb(grayColor[17]) + ", 0.2)"
     }
   },
@@ -149,7 +149,7 @@ const pagesHeaderStyle = theme => ({
     width: "20px",
     height: "20px",
     verticalAlign: "middle",
-    color: "inherit",
+    color: whiteColor,
     display: "inline-block"
   },
   listItemText: {

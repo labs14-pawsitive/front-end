@@ -50,7 +50,6 @@ import authNavbarStyle from "assets/jss/material-dashboard-pro-react/components/
 //import custom style 
 import pawsStyle from "assets/custom/pawsnfind.css"
 
-//const auth = new Auth();
 
 class MainNavBar extends React.Component {
   constructor(props) {
@@ -78,17 +77,29 @@ class MainNavBar extends React.Component {
     const appBarClasses = cx({
       [" " + classes[color]]: color
     });
+    const shelter_id = localStorage.getItem("shelter_id")
     var list = (
       <List className={classes.list}>
         <ListItem className={classes.listItem}>
-          <NavLink to={"/shelterManagers"} className={classes.navLink}>
-            <Dashboard className={classes.listItemIcon} />
-            <ListItemText
-              primary={"Shelter Managers"}
-              disableTypography={true}
-              className={classes.listItemText}
-            />
-          </NavLink>
+          {localStorage.getItem("token") && shelter_id != "null" && typeof(shelter_id) !== 'undefined' ? 
+            <NavLink to={'/admin/dashboard'} className={classes.navLink}>
+              <Dashboard className={classes.listItemIcon} />
+              <ListItemText
+                primary={"Shelter Dashboard"}
+                disableTypography={true}
+                className={classes.listItemText}
+              />    
+            </NavLink>
+            :
+             <NavLink to={"/shelterManagers"} className={classes.navLink}>
+              <Dashboard className={classes.listItemIcon} />
+              <ListItemText
+                primary={"Shelter Managers"}
+                disableTypography={true}
+                className={classes.listItemText}
+              />
+            </NavLink>
+        } 
         </ListItem>
         
        
@@ -98,7 +109,10 @@ class MainNavBar extends React.Component {
       </List>
     );
     const logoStyle = {
-        fontFamily : "Baloo-Regular",
+        fontFamily: "Coiny, cursive",
+        color : "#FCFCFC",
+        fontSize:"2rem",
+
       }
 
     return (
@@ -107,18 +121,15 @@ class MainNavBar extends React.Component {
         <Toolbar className={classes.container}>
           <Hidden smDown>
             <div className={classes.flex}>
-              <NavLink to="/">
-              <Button className={classes.title} color="transparent">
-                <h3 style={logoStyle}>Pawsnfind</h3>
-              </Button></NavLink>
+              <NavLink to="/"><h3 style={logoStyle}>Pawsnfind</h3>
+     
+              </NavLink>
             </div>
           </Hidden>
           <Hidden mdUp>
             <div className={classes.flex}>
-              <NavLink to="/">
-              <Button className={classes.title} color="transparent">
-                <h4 style={logoStyle}>Pawsnfind</h4>
-              </Button>
+              <NavLink to="/"> <h4 style={logoStyle}>Pawsnfind</h4>
+      
               </NavLink>
             </div>
           </Hidden>

@@ -1,3 +1,4 @@
+
 //initialState set for testing
 import {
     GET_USER_START,
@@ -33,4 +34,5 @@ export const userReducer = (state = initialState, action) => {
         default:
             return state
     }
+ 
 }

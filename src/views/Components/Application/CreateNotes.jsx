@@ -26,6 +26,7 @@ class CreateNotes extends React.Component {
             notes: [],
             inputField: '',
             inputFieldState: '',
+            shelter: {},
         };
     };
 
@@ -94,6 +95,7 @@ class CreateNotes extends React.Component {
         const applicationId = this.props.application_id
 
         this.props.getNotes(applicationId)
+    
     };
 
     addNotes = e => {
@@ -129,10 +131,7 @@ class CreateNotes extends React.Component {
     };
 
     render() {
-
-        console.log('PROPS APPLICATION', this.props.application)
-        console.log('SHELTER USER ID', this.props.application.shelter_user_id)
-
+        
         const { classes } = this.props;
 
         const customStyle = {
@@ -157,6 +156,7 @@ class CreateNotes extends React.Component {
         };
 
         return (
+            
             <>
        
                 <Typography style={customStyle.headerStyle} >
@@ -214,7 +214,7 @@ class CreateNotes extends React.Component {
                             {this.props.notes && this.props.notes.map(note => (
                                 <MapNotes
                                     note={note}
-                                    email={this.props.userEmail}
+                                    username={this.props.username}
                                     application={this.props.application}
                                     deleteNotes={this.deleteNotes}
                                     updateNotes={this.updateNotes}
@@ -232,8 +232,7 @@ class CreateNotes extends React.Component {
 };
 
 const mapStateToProps = state => {
-
-    console.log(state)
+    
     return {
         notes: state.applicationReducer.notes
     };
