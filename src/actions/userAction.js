@@ -8,7 +8,7 @@ export const GET_USER_START = 'GET_USER_START'
         
         dispatch({ type: GET_USER_START })
         return axios
-          .get(`http://localhost:8000/api/users/${userID}`)
+          .get(`${process.env.REACT_APP_BACKEND_URL}/api/users/${userID}`)
           
           .then(res => {
             dispatch({ type: GET_USER_SUCCESS, payload: res.data })

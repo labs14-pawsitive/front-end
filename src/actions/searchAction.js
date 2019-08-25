@@ -24,7 +24,7 @@ export const updateDisplayedAnimals = (options={}) => dispatch => {
     }
  
     return axios
-    .post('http://localhost:8000/api/search/advancedSearch', searchObj)
+    .post(`${process.env.REACT_APP_BACKEND_URL}/api/search/advancedSearch`, searchObj)
     .then(res => {
         dispatch({ type: UPDATE_DISPLAYED_ANIMALS_SUCCESS, payload: {animals: res.data} })
     })

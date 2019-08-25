@@ -113,7 +113,7 @@ class AddAnimalForm extends React.Component {
   verifyShelter = async(shelter_id) => {
     //verifying shelter before proceeding
     axiosWithAuth()
-      .get(`http://localhost:8000/api/auth/shelter/${shelter_id}`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/shelter/${shelter_id}`)
       .then( result => { 
         this.setState({
           shelterVerified : true

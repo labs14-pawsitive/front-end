@@ -9,7 +9,7 @@ export const initialSearch  = initialSearchForm => dispatch => {
     // console.log(searchObj)
     return axios
         // .post(`${process.env.REACT_APP_BACKEND_URL}/api/animals`, searchObj)
-        .post('http://localhost:8000/api/search/initialSearch', initialSearchForm)
+        .post(`${process.env.REACT_APP_BACKEND_URL}/api/search/initialSearch`, initialSearchForm)
         .then(res => {
             console.log('SEARCH_SPECIES_SUCCESS ', res.data)
             

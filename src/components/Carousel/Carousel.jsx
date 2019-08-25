@@ -19,7 +19,7 @@ class CustomCarousel extends React.Component {
 
   componentDidMount() {
     return axios
-      .get(`http://localhost:8000/api/pictures/animal/${this.props.animalId}`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/pictures/animal/${this.props.animalId}`)
       .then(response => {
         console.log(response)
         const { img_url, img_id, animal_id } = response
