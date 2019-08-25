@@ -14,7 +14,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import { title, whiteColor } from "assets/jss/material-dashboard-pro-react.jsx";
+import { title, whiteColor, blackColor } from "assets/jss/material-dashboard-pro-react.jsx";
 
 const errorPageStyles = () => ({
   contentCenter: {

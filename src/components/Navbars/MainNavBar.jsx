@@ -50,7 +50,6 @@ import authNavbarStyle from "assets/jss/material-dashboard-pro-react/components/
 //import custom style 
 import pawsStyle from "assets/custom/pawsnfind.css"
 
-//const auth = new Auth();
 
 class MainNavBar extends React.Component {
   constructor(props) {
@@ -99,6 +98,7 @@ class MainNavBar extends React.Component {
     );
     const logoStyle = {
         fontFamily : "Baloo-Regular",
+        color : "#020207"
       }
 
     return (
@@ -107,18 +107,15 @@ class MainNavBar extends React.Component {
         <Toolbar className={classes.container}>
           <Hidden smDown>
             <div className={classes.flex}>
-              <NavLink to="/">
-              <Button className={classes.title} color="transparent">
-                <h3 style={logoStyle}>Pawsnfind</h3>
-              </Button></NavLink>
+              <NavLink to="/"><h3 style={logoStyle}>Pawsnfind</h3>
+     
+              </NavLink>
             </div>
           </Hidden>
           <Hidden mdUp>
             <div className={classes.flex}>
-              <NavLink to="/">
-              <Button className={classes.title} color="transparent">
-                <h4 style={logoStyle}>Pawsnfind</h4>
-              </Button>
+              <NavLink to="/"> <h4 style={logoStyle}>Pawsnfind</h4>
+      
               </NavLink>
             </div>
           </Hidden>

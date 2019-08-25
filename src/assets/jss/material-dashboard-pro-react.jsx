@@ -162,8 +162,8 @@ const grayColor = [
   "#c8c8c8",
   "#505050"
 ];
-const blackColor = "#000";
-const whiteColor = "#FFF";
+const blackColor = "#020207";
+const whiteColor = "#FCFCFC";
 const twitterColor = "#55acee";
 const facebookColor = "#3b5998";
 const googleColor = "#dd4b39";

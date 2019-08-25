@@ -96,7 +96,9 @@ class CheckoutForm extends Component {
         return (
             <div>
                <DialogTitle id="form-dialog-title">
-                        Donate to My Shelter
+ 
+                        Donate to my Shelter!
+ 
                 </DialogTitle>
                 <DialogContentText>
                 </DialogContentText>

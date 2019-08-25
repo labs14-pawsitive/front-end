@@ -50,7 +50,7 @@ class AuthView extends React.Component {
         background:"#ffffff20",
         }, 
         linkStyle: {
-          color: "#020207"
+          color: "#FCFCFC"
         } 
       }
         return(
