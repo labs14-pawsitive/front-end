@@ -5,6 +5,7 @@ import { shelterReducer } from './shelterReducer.js';
 import { applicationReducer } from './applicationReducer.js';
 import { searchReducer } from './searchReducer.js';
 import { animalReducer } from './animalReducer.js'
+import { mainPageReducer } from './mainPageReducer.js'
  
 
 
@@ -13,5 +14,6 @@ export default combineReducers({
     shelterReducer,
     applicationReducer,
     animalReducer,
-    searchReducer
+    searchReducer,
+    mainPageReducer
 });

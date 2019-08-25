@@ -64,20 +64,33 @@ function Footer({ ...props }) {
               </div>
               </NavLink>
             </ListItem>
-
+{/* 
           {window.location.pathname.indexOf("/admin/") !== -1 
           ? 
           null
           : 
-          <ListItem className={classes.inlineBlock}>
+            localStorage.getItem("token") && localStorage.getItem("shelter_id") != "null" && typeof(localStorage.getItem("shelter_id")) !== 'undefined' 
+            ?
+            <ListItem className={classes.inlineBlock}>
+              <NavLink to="/admin/dashboard">
+                <div className={block}>
+                Shelter Dashboard
+                </div>
+              </NavLink>
+            </ListItem>
+            :
+            <ListItem className={classes.inlineBlock}>
               <NavLink to="/shelter-signup">
                 <div className={block}>
-              Register Your Shelter
-            </div>
-            </NavLink>
-          </ListItem>
-         }
+                Register Your Shelter
+                </div>
+              </NavLink>
+            </ListItem>
 
+
+          
+         }
+*/}
              
             <ListItem className={classes.inlineBlock}>
               <NavLink to="/team">
@@ -85,15 +98,12 @@ function Footer({ ...props }) {
                 Team
               </div>
               </NavLink>
-            </ListItem>
-            
+            </ListItem>           
             <ListItem className={classes.inlineBlock}>
               <a href="#contact" className={block}>
                Contact Us
               </a>
             </ListItem>
-          
-          
           </List> 
         </div>
        

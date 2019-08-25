@@ -20,10 +20,13 @@ class AnimalCard extends React.Component {
     }
    
     hoverEffect = async () => {
+ 
+ 
             await this.setState({
                 hover: true
             })
-    }
+     }
+ 
 
     hoverOutEffect = async () => {
         await this.setState({
@@ -33,9 +36,11 @@ class AnimalCard extends React.Component {
 
     render() {
         const { classes } = this.props;
+ 
       
        return(
-            <GridItem xs={12} sm={6} md={3} lg={2}>
+ 
+            <GridItem xs={6} sm={4} md={3} lg={2}>
                 <Link to={`/animal/${this.props.animal.id}`}>
                     <div className={classes.maincard} onMouseOver={this.hoverEffect} onMouseOut={this.hoverOutEffect} style={{backgroundImage :"url(" + this.props.animal.img_url + ")", backgroundSize: "cover", backgroundPosition: "center center"}}>
                         <div className={this.state.hover ? classes.cardOverlayHover : classes.cardOverlay}>
@@ -48,14 +53,20 @@ class AnimalCard extends React.Component {
                     </div>
                 </Link>
             </GridItem>
+ 
     
         ) 
     }
     
+ 
 }
 
 AnimalCard.propTypes = {
     classes: PropTypes.object.isRequired
   };
 
+ 
+ 
 export default withStyles(animalCardStyle)(AnimalCard);
+ 
+ 

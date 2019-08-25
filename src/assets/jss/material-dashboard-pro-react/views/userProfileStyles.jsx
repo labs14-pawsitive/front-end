@@ -39,7 +39,7 @@ const userProfileStyles = {
     color: grayColor[0]
   },
   updateProfileButton: {
-    float: "right"
+    float: "right",
   }
 };
 export default userProfileStyles;

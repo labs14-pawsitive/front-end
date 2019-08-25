@@ -1,18 +1,12 @@
 /*!
-
 =========================================================
 * Material Dashboard PRO React - v1.7.0
 =========================================================
-
 * Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
 * Copyright 2019 Creative Tim (https://www.creative-tim.com)
-
 * Coded by Creative Tim
-
 =========================================================
-
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
 */
 import React from "react";
 // used for making the prop types of this component
@@ -20,7 +14,6 @@ import PropTypes from "prop-types";
 
 // core components
 import Button from "components/CustomButtons/Button.jsx";
-
 import defaultImage from "assets/img/image_placeholder.jpg";
 import defaultAvatar from "assets/img/placeholder.jpg";
 
@@ -35,6 +28,8 @@ class ImageUpload extends React.Component {
   fileInput = React.createRef();
   handleImageChange = e => {
     e.preventDefault();
+    if (e.target.files.length === 0)
+      return;
     let reader = new FileReader();
     let file = e.target.files[0];
     reader.onloadend = () => {
@@ -44,12 +39,11 @@ class ImageUpload extends React.Component {
       });
     };
     reader.readAsDataURL(file);
+    this.props.callback(file);
   };
   handleSubmit = e => {
     e.preventDefault();
-    // this.state.file is the file/image uploaded
-    // in this function you can save the image (this.state.file) on form submit
-    // you have to call it yourself
+ 
   };
   handleClick = () => {
     this.fileInput.current.click();
@@ -103,12 +97,10 @@ class ImageUpload extends React.Component {
     );
   }
 }
-
 ImageUpload.propTypes = {
   avatar: PropTypes.bool,
   addButtonProps: PropTypes.object,
   changeButtonProps: PropTypes.object,
   removeButtonProps: PropTypes.object
 };
-
 export default ImageUpload;
