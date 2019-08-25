@@ -1,18 +1,12 @@
 /*!
-
 =========================================================
 * Material Dashboard PRO React - v1.7.0
 =========================================================
-
 * Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
 * Copyright 2019 Creative Tim (https://www.creative-tim.com)
-
 * Coded by Creative Tim
-
 =========================================================
-
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
 */
 import React from "react";
 import PropTypes from "prop-types";
@@ -64,7 +58,7 @@ class AddAnimalForm extends React.Component {
         coat_length_id: null,
         age_id: null,
         shelter_location_id: null,
-        
+        profile_img_id: null,
         is_male: false,
         is_house_trained: false,
         is_neutered_spayed: false,
@@ -74,8 +68,7 @@ class AddAnimalForm extends React.Component {
         is_vaccinated: false,
         is_mixed: false,
         shelter_id: null,
-        profile_img_id: null,
-        images: [],
+        images: []
       },
       validation: {
         is_male: true,
@@ -418,20 +411,24 @@ class AddAnimalForm extends React.Component {
     return (
       
       <GridContainer>
-        <GridItem 
-          xs={12} sm={12} md={12}
-          style={styles.photo}
-        >
-          <legend>Add Animal Profile Image</legend>
-          <ImageUpload 
-            height="250px" 
-            width="250px" 
-            borderRadius="5px" 
-            imageLimit={6} 
-            editable={true} 
-            callback={this.handleImgUploadResponse} 
-            url={`${process.env.REACT_APP_BACKEND_URL}/api/pictures`}
-          />
+        <GridItem xs={12} sm={12} md={12} lg={4}>
+          <GridItem  xs={12} sm={12} md={12} style={styles.photo}>
+            <legend>Add Animal Profile Image</legend>
+            <ImageUpload
+              // optionalImage={this.state.animal.images.length ? this.state.animal.images[0].image_url : "default"} 
+              height="300px" 
+              width="300px" 
+              borderRadius="5px" 
+              imageLimit={6} 
+              editable={true} 
+              callback={this.handleImgUploadResponse} 
+              url={`${process.env.REACT_APP_BACKEND_URL}/api/pictures`}
+            />
+          </GridItem>
+        </GridItem>
+
+        <GridItem xs={12} sm={12} md={12} lg={8} style={styles.uploadedImages}>
+            <AnimalUploadedPhotos images={this.state.uploadedImages} removeImage={this.removeImage}/>
         </GridItem>
         <GridItem xs={12} sm={12} md={12}>
           <Card>

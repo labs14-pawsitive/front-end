@@ -27,7 +27,7 @@ import ApplicationTable from "views/Applications/ApplicationTable";
 import ShelterProfile from "views/ShelterProfile/ShelterProfile";
 import StripeInfo from "views/ShelterProfile/StripeInfo";
 import SubscriptionPlan from "views/ShelterProfile/SubscriptionPlan";
-import DonationTable from "views/Donations/DonationTable.jsx";
+import DonationTable from "views/Donations/Donations.jsx";
 import FollowerTable from "views/Followers/FollowerTable.jsx";
 
 

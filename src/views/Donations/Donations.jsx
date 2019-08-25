@@ -1,18 +1,12 @@
 /*!
-
 =========================================================
 * Material Dashboard PRO React - v1.7.0
 =========================================================
-
 * Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
 * Copyright 2019 Creative Tim (https://www.creative-tim.com)
-
 * Coded by Creative Tim
-
 =========================================================
-
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
 */
 import React from "react";
 import PropTypes from "prop-types";
@@ -44,10 +38,7 @@ import CardBody from "components/Card/CardBody.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
- 
-import Danger from "components/Typography/Danger.jsx";
-import { dataTable } from "variables/general.jsx";
- 
+
 import { cardTitle } from "assets/jss/material-dashboard-pro-react.jsx";
 
 
@@ -67,11 +58,14 @@ const styles = {
   },
 };
 
-class DonationTable extends React.Component {
+class Donations extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      followers: [],
+      donations: [],
+      totalDonations : "",
+      recentDonations : "",
+      topDonors : [], 
       shelterVerified: ""
 
     };
@@ -97,31 +91,41 @@ class DonationTable extends React.Component {
 
   componentDidMount() {
     axios
-    //.get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/shelter/${localStorage.getItem("shelter_id")}`)
-    .get(`${process.env.REACT_APP_BACKEND_URL}/api/shelters/${localStorage.getItem('shelter_id')}/follows`)
-    .then(followers => {
-      console.log(followers)
+    .get(`${process.env.REACT_APP_BACKEND_URL}/api/donations/dashboardData/${localStorage.getItem('shelter_id')}`)
+    .then(results => {
+      console.log(results)
       this.setState({
-        followers : followers.data.map((follower, key) => {
+        donations : results.data.donations.map((donation, key) => {
         return {
           id: key,
-          userID: follower.user_id,
-          username: follower.username,
-          email: follower.email,
-          location: follower.zip,
+          donationId: donation.id,
+          username: donation.username,
+          email: donation.email,
+          amount: parseInt(donation.amount),
+          date: `${donation.month}/${donation.day}/${donation.year}`,
           icon: <Favorite style={{color: '#e0286a'}}/>
         };
+      }),
+      totalDonations : results.data.totalDonations[0].total,
+      recentDonations : results.data.recentDonations[0].total,
+      topDonors : results.data.topDonations
       })
-      })
-      console.log("state" , this.state.followers)
+      console.log("state" , this.state)
     })
     .catch(error => {
       console.log(error)
     })
   }
 
-  render() {
+  getTopDonationRows = () => {
+    let result = []
+     this.state.topDonors.map((donor, key) => {
+       result.push([`${key+1}`,  `${donor.username}`, `${donor.total}`, `${donor.number_of_donations}`])
+    })
+    return result;
+  }
 
+  render() {
     const { classes } = this.props;
     const styles = {
       cardTitle,
@@ -190,6 +194,8 @@ class DonationTable extends React.Component {
       textAlign: "right"
     }
 
+    let topDonationRows = this.getTopDonationRows();
+
     if(this.state.shelterVerified !== true) return <div>Verifying Shelter</div>
 
     return (
@@ -204,7 +210,7 @@ class DonationTable extends React.Component {
                 </CardIcon>
                 <p className={classes.cardCategory} style={card_category}>Recent Donations</p>
                 <h3 className={classes.cardTitle} style={card_title}>
-                  <small>$</small>{this.state.followers.length} 
+                  <small>$</small>{this.state.recentDonations} 
                 </h3>
               </CardHeader>
               <CardFooter stats>
@@ -223,7 +229,7 @@ class DonationTable extends React.Component {
                 </CardIcon>
                 <p className={classes.cardCategory} style={card_category}>Total Donations</p>
                 <h3 className={classes.cardTitle} style={card_title}>
-                  <small>$</small>{this.state.followers.length} 
+                  <small>$</small>{this.state.totalDonations} 
                 </h3>
               </CardHeader>
               <CardFooter stats>
@@ -234,7 +240,29 @@ class DonationTable extends React.Component {
               </CardFooter>
             </Card>
           </GridItem>
-
+          </GridContainer>
+          </GridItem>
+         
+          <GridItem xs={12} sm={12} md={8}>
+            <Card>
+              <CardHeader color="rose" text>
+                <CardText color="rose">
+                  <h4 className={classes.cardTitleWhite}>Top Donors</h4>
+                  <h4 className={classes.cardCategoryWhite} style={styles.cardCategoryWhite}>
+                    Top Donors Over Time
+                  </h4>
+                </CardText>
+              </CardHeader>
+              <CardBody>
+                <Table
+                  hover
+                  tableHeaderColor="warning"
+                  tableHead={["Rank", "Username", "Total Donation", "# of Donations"]}
+                  tableData={topDonationRows}
+                />
+              </CardBody>
+            </Card>
+          </GridItem>
         <GridItem xs={12}>
           <Card>
             <CardHeader color="primary" icon>
@@ -245,12 +273,12 @@ class DonationTable extends React.Component {
             </CardHeader>
             <CardBody>
               <ReactTable
-                data={this.state.followers}
+                data={this.state.donations}
                 filterable
                 columns={[
                   {
-                    Header: "User ID",
-                    accessor: "userID",
+                    Header: "Donation ID",
+                    accessor: "donationId",
                     
                   },
                   {
@@ -262,15 +290,16 @@ class DonationTable extends React.Component {
                     accessor: "email"
                   },
                   {
-                    Header: "Location",
-                    accessor: "zip"
+                    Header: "Donation Amount",
+                    accessor: "amount"
+                  },
+                  {
+                    Header: "Date",
+                    accessor: "date"
                   },
                   {
                     Header: "",
-                    accessor: "icon",
-                    style: {textAlign: "center"},
-                    sortable: false,
-                    filterable: false
+                    accessor: "icon"
                   }
                 ]}
                 defaultPageSize={10}
@@ -281,7 +310,6 @@ class DonationTable extends React.Component {
             </CardBody>
           </Card>
         </GridItem>
-
       </GridContainer>
     );
   }
@@ -297,7 +325,7 @@ const mapStateToProps = (state) => {
   
 }
 
-DonationTable.propTypes = {
+Donations.propTypes = {
   classes: PropTypes.object
 };
 
@@ -307,4 +335,4 @@ DonationTable.propTypes = {
 export default connect(
   mapStateToProps,
   {}
-)(withStyles(styles)(DonationTable))
+)(withStyles(styles)(Donations))

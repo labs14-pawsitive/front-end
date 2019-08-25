@@ -954,7 +954,7 @@ class ApplicationView extends React.Component {
             application={this.state.application} 
             application_id={this.props.match.params.id} 
             username={this.state.user.username} 
-            helterUserId={this.state.user.shelter_user_id}
+            shelterUserId={this.state.user.shelter_user_id}
             />
 
           </GridItem>

@@ -1,16 +1,15 @@
- 
 import axios from 'axios';
 
 export const ADD_ANIMAL_START = 'ADD_ANIMAL_START';
 export const ADD_ANIMAL_SUCCESS = 'ADD_ANIMAL_SUCCESS';
-export const ADD_ANIMAL_ERROR = 'ADD_ANIMAL_ERROR';
+export const ADD_ANIMAL_ERROR = 'ADD_ANIMAL_ERROR'
 
 export const addAnimal  = animal => dispatch => {
     dispatch ({type: ADD_ANIMAL_START});
     console.log(animal)
     return axios
         .post(`${process.env.REACT_APP_BACKEND_URL}/api/animals`, animal)
-        .then(res =>
+        .then(res => {
             dispatch ({type: ADD_ANIMAL_SUCCESS, payload: res.data})
             return res.data
         })
@@ -93,8 +92,8 @@ export const getAllOptions = (shelterID) => dispatch => {
     
     dispatch({ type: GET_DROPDOWN_START })
     return axios
-      // .get(`${process.env.REACT_APP_BACKEND_URL}/api/internal/paws/options/${shelterID}`)
       .get(`${process.env.REACT_APP_BACKEND_URL}/api/internal/paws/options/${shelterID}`)
+      
       .then(res => {
         dispatch({ type: GET_DROPDOWN_SUCCESS, payload: res.data })
         console.log('action: get all animal options info', res.data)
@@ -125,27 +124,6 @@ export const getAllOptions = (shelterID) => dispatch => {
           console.log('action: get animal info error: ', err.response)
         })
     }  
-
-
-    export const FETCH_ANIMALS_BY_SHELTER_START = 'FETCH_ANIMALS_BY_SHELTER_START'
-    export const FETCH_ANIMALS_BY_SHELTER_SUCCESS = 'FETCH_ANIMALS_BY_SHELTER_SUCCESS'
-    export const FETCH_ANIMALS_BY_SHELTER_FAILURE = 'FETCH_ANIMALS_BY_SHELTER_FAILURE'
-    
-    export const getPublicAnimalInfoByCount = (count) => dispatch => {
-        
-        dispatch({ type: FETCH_ANIMALS_BY_SHELTER_START })
-        return axios
-          .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/public/count/${count}`)
-          //.get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalID}`)
-          .then(res => {
-            dispatch({ type: FETCH_ANIMALS_BY_SHELTER_SUCCESS, payload: res.data })
-            console.log('action: FETCH_ANIMALS_BY_SHELTER_SUCCESS', res.data)
-          })
-          .catch(err => {
-            dispatch({ type: FETCH_ANIMALS_BY_SHELTER_FAILURE, payload: err.response })
-            console.log('action: FETCH_ANIMALS_BY_SHELTER_FAILURE error: ', err.response)
-          })
-      } 
 
     export const POST_NOTES_START = 'POST_NOTES_START'
     export const POST_NOTES_SUCCESS = 'POST_NOTES_SUCCESS'
@@ -178,6 +156,26 @@ export const getAllOptions = (shelterID) => dispatch => {
           })
       }
 
+      export const FETCH_ANIMALS_BY_SHELTER_START = 'FETCH_ANIMALS_BY_SHELTER_START'
+      export const FETCH_ANIMALS_BY_SHELTER_SUCCESS = 'FETCH_ANIMALS_BY_SHELTER_SUCCESS'
+      export const FETCH_ANIMALS_BY_SHELTER_FAILURE = 'FETCH_ANIMALS_BY_SHELTER_FAILURE'
+      
+      export const getPublicAnimalInfoByCount = (count) => dispatch => {
+          
+          dispatch({ type: FETCH_ANIMALS_BY_SHELTER_START })
+          return axios
+            .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/public/count/${count}`)
+            //.get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalID}`)
+            .then(res => {
+              dispatch({ type: FETCH_ANIMALS_BY_SHELTER_SUCCESS, payload: res.data })
+              console.log('action: FETCH_ANIMALS_BY_SHELTER_SUCCESS', res.data)
+            })
+            .catch(err => {
+              dispatch({ type: FETCH_ANIMALS_BY_SHELTER_FAILURE, payload: err.response })
+              console.log('action: FETCH_ANIMALS_BY_SHELTER_FAILURE error: ', err.response)
+            })
+        } 
+        
       export const UPDATE_NOTES_START = 'UPDATE_NOTES_START'
       export const UPDATE_NOTES_SUCCESS = 'UPDATE_NOTES_SUCCESS'
       export const UPDATE_NOTES_FAILURE = 'UPDATE_NOTES_FAILURE'
@@ -220,4 +218,3 @@ export const getAllOptions = (shelterID) => dispatch => {
                 console.log('action: delete notes error: ', err.response)
               })
           }
-
