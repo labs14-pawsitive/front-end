@@ -64,6 +64,7 @@ import CardIcon from "components/Card/CardIcon.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
 
+
 import extendedTablesStyle from "assets/jss/material-dashboard-pro-react/views/extendedTablesStyle.jsx";
 
 import {getFullMonths, getDataSeries } from "views/Dashboard/DashboardHelper.jsx";

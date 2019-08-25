@@ -1,7 +1,9 @@
 import { title, whiteColor, blackColor } from "assets/jss/material-dashboard-pro-react.jsx";
+import buttonStyle from "assets/jss/material-dashboard-pro-react/components/buttonStyle.jsx";
 
 
 const mainPageStyle = () => ({
+  
   contentCenter: {
     position: "absolute",
     top: "50%",
@@ -36,10 +38,10 @@ const mainPageStyle = () => ({
     display:"flex",
     alignItems: "center",
     justifyContent: "center",
+ 
     width:"100%"
   },
-  
-
+ 
 });
 
 export default mainPageStyle;

@@ -60,11 +60,9 @@ class MainLayout extends React.Component {
     const { classes, ...rest } = this.props;
     return (
       <div>
-        {window.location.pathname.indexOf('/error') !== -1 ? 
-        <TempNavBar brandText="Pawsnfind" {...rest} />   
-        :
+       
         <MainNavBar brandText="Pawsnfind" {...rest} />  
-        }
+
         <div className={classes.wrapper} ref={this.wrapper}>
           <div
             className={window.location.pathname.indexOf("/error") !== -1 ? classes.fullPageError : null}

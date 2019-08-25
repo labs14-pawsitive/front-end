@@ -77,17 +77,29 @@ class MainNavBar extends React.Component {
     const appBarClasses = cx({
       [" " + classes[color]]: color
     });
+    const shelter_id = localStorage.getItem("shelter_id")
     var list = (
       <List className={classes.list}>
         <ListItem className={classes.listItem}>
-          <NavLink to={"/shelterManagers"} className={classes.navLink}>
-            <Dashboard className={classes.listItemIcon} />
-            <ListItemText
-              primary={"Shelter Managers"}
-              disableTypography={true}
-              className={classes.listItemText}
-            />
-          </NavLink>
+          {localStorage.getItem("token") && shelter_id != "null" && typeof(shelter_id) !== 'undefined' ? 
+            <NavLink to={'/admin/dashboard'} className={classes.navLink}>
+              <Dashboard className={classes.listItemIcon} />
+              <ListItemText
+                primary={"Shelter Dashboard"}
+                disableTypography={true}
+                className={classes.listItemText}
+              />    
+            </NavLink>
+            :
+             <NavLink to={"/shelterManagers"} className={classes.navLink}>
+              <Dashboard className={classes.listItemIcon} />
+              <ListItemText
+                primary={"Shelter Managers"}
+                disableTypography={true}
+                className={classes.listItemText}
+              />
+            </NavLink>
+        } 
         </ListItem>
         
        
@@ -97,8 +109,10 @@ class MainNavBar extends React.Component {
       </List>
     );
     const logoStyle = {
-        fontFamily : "Baloo-Regular",
-        color : "#020207"
+        fontFamily: "Coiny, cursive",
+        color : "#FCFCFC",
+        fontSize:"2rem",
+
       }
 
     return (

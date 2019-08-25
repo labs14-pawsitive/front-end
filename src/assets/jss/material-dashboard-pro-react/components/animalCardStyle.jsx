@@ -1,3 +1,4 @@
+
 const animalCardStyle = () => ({
     maincard: {
       width:"100%",
