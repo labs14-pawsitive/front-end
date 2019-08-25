@@ -22,7 +22,7 @@
     "perfect-scrollbar": "1.4.0",
     "react": "16.8.6",
     "react-big-calendar": "0.21.0",
-    "react-bootstrap-sweetalert": "4.4.1",
+    "react-bootstrap-sweetalert": "^4.4.1",
     "react-chartist": "0.13.3",
     "react-datetime": "2.16.3",
     "react-dom": "16.8.6",
@@ -30,9 +30,13 @@
     "react-input-mask": "^2.0.4",
     "react-jss": "^8.6.1",
     "react-jvectormap": "0.0.12",
+    "react-number-format": "^4.2.0",
     "react-redux": "^7.0.3",
+    "react-responsive": "^7.0.0",
+    "react-responsive-carousel": "^3.1.50",
     "react-router-dom": "5.0.1",
     "react-scripts": "3.0.1",
+    "react-stripe-elements": "^4.0.1",
     "react-swipeable-views": "0.13.3",
     "react-table": "6.10.0",
     "react-tagsinput": "3.19.0",
@@ -40,7 +44,8 @@
     "reactstrap": "^8.0.0",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "stripe": "^7.8.0"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -44,7 +44,10 @@ import CardBody from "components/Card/CardBody.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
-
+ 
+import Danger from "components/Typography/Danger.jsx";
+import { dataTable } from "variables/general.jsx";
+ 
 import { cardTitle } from "assets/jss/material-dashboard-pro-react.jsx";
 
 
@@ -118,6 +121,7 @@ class DonationTable extends React.Component {
   }
 
   render() {
+
     const { classes } = this.props;
     const styles = {
       cardTitle,
@@ -230,34 +234,7 @@ class DonationTable extends React.Component {
               </CardFooter>
             </Card>
           </GridItem>
-          </GridContainer>
-          </GridItem>
-         
-          <GridItem xs={12} sm={12} md={8}>
-            <Card>
-              <CardHeader color="rose" text>
-                <CardText color="rose">
-                  <h4 className={classes.cardTitleWhite}>Top Donors</h4>
-                  <h4 className={classes.cardCategoryWhite} style={styles.cardCategoryWhite}>
-                    Top Donors Over Time
-                  </h4>
-                </CardText>
-              </CardHeader>
-              <CardBody>
-                <Table
-                  hover
-                  tableHeaderColor="warning"
-                  tableHead={["Rank", "Username", "Total Donation", "# of Donations"]}
-                  tableData={[
-                    ["1", "Dakota Rice", "$36,738", "3"],
-                    ["2", "Minerva Hooper", "$23,789", "5"],
-                    ["3", "Sage Rodriguez", "$56,142", "2"],
-                    ["4", "Philip Chaney", "$38,735", "8"]
-                  ]}
-                />
-              </CardBody>
-            </Card>
-          </GridItem>
+
         <GridItem xs={12}>
           <Card>
             <CardHeader color="primary" icon>
@@ -304,6 +281,7 @@ class DonationTable extends React.Component {
             </CardBody>
           </Card>
         </GridItem>
+
       </GridContainer>
     );
   }

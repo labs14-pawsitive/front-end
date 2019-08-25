@@ -1,10 +1,8 @@
-//initialState set for testing
-
-
 const initialState = {
-
+    user: {}
 }
 
 export const userReducer = (state = initialState, action) => {
+
     return state;
 }
