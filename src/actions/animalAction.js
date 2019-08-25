@@ -199,3 +199,23 @@ export const getAllOptions = (shelterID) => dispatch => {
               })
           }
 
+          export const GET_ANIMAL_PICTURES_START = 'GET_ANIMAL_PICTURES_START'
+        export const GET_ANIMAL_PICTURES_SUCCESS = 'GET_ANIMAL_PICTURES_SUCCESS'
+        export const GET_ANIMAL_PICTURES_FAILURE = 'GET_ANIMAL_PICTURES_FAILURE'
+        
+        export const getAnimalPictures = (animalID) => dispatch => {
+            
+            dispatch({ type: GET_ANIMAL_PICTURES_START })
+            return axios
+              .get(`http://localhost:8000/api/pictures/animal/${animalID}`)
+              
+              .then(res => {
+                dispatch({ type: GET_ANIMAL_PICTURES_SUCCESS, payload: res.data })
+                console.log('action: get animal pictures success from action', res.data)
+              })
+              .catch(err => {
+                dispatch({ type: GET_ANIMAL_PICTURES_FAILURE, payload: err.response })
+                console.log('action:  get animal pictures error from action: ', err.response)
+              })
+          }
+

@@ -15,7 +15,7 @@ import axios from 'axios';
 import moment from 'moment'
 import {axiosWithAuth} from 'axiosWithAuth';
 
-import { updateAnimal, getInfoByAnimalID, getAllOptions, addNotes, updateNotes, deleteNotes }
+import { updateAnimal, getInfoByAnimalID, getAllOptions, addNotes, updateNotes, deleteNotes, getAnimalPictures }
   from '../../actions/animalAction.js'
 import AnimalNotes from './AnimalViewComponents/AnimalNotes.jsx'
 import AnimalViewTop from './AnimalViewComponents/AnimalViewTop.jsx'
@@ -50,6 +50,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import Input from '@material-ui/core/Input';
 import ImageUpload from '../../components/ImageUpload/ImageUpload'
+import placeholderImage from '../../assets/img/image_placeholder.jpg'
 
 // @material-ui/icons
 import Today from "@material-ui/icons/Today";
@@ -79,6 +80,9 @@ class AnimalView extends React.Component {
       animal_meta: {},
       animal_notes: [],
       animal_followers: [],
+      animalPictures:[],
+      // placeholderImages:Array(6).fill("url(" + placeholderImage + ")"),
+      placeholderImages:[Array(6).fill('empty')],
       breeds: [],
       size: [],
       coat_length: [],
@@ -97,7 +101,8 @@ class AnimalView extends React.Component {
         nameState: 'success'
       },
       breedState: 'success',
-      shelterVerified: ""
+      shelterVerified: "",
+      open:false
     }
 
     this.maxLength = 3;
@@ -111,8 +116,24 @@ class AnimalView extends React.Component {
   componentDidMount() {
 
     Promise.all([this.props.getInfoByAnimalID(this.props.match.params.id),
+      this.props.getAnimalPictures(this.props.match.params.id),
     this.props.getAllOptions(localStorage.getItem('shelter_id'))])
       .then(([animalInfo, animalOptions]) => {
+
+//updating the pictures array
+        let newArray = []
+
+        this.state.placeholderImages.map((value, i) => {
+            console.log(`value at ${i} is ${value}`)
+            if (this.props.animalPictures[i]) {
+                value = this.props.animalPictures[i].img_url
+                 newArray.push(value)
+
+            }
+            else {
+               newArray.push(value)
+            }
+        })
 
         //verifying shelter
         this.verifyShelter(this.props.animal.shelter_id)
@@ -131,12 +152,15 @@ class AnimalView extends React.Component {
           coat_length: this.props.coat_length,
           animal_status: this.props.animal_status,
           locations: this.props.locations,
+          animalPictures:this.props.animalPictures,
+          placeholderImages:newArray
         })
       })
       .catch(error => {
         console.log('animal info error', error)
       })
   }
+
 
   verifyShelter = async (shelter_id) => {
     //verifying shelter before proceeding
@@ -324,6 +348,7 @@ class AnimalView extends React.Component {
     event.preventDefault()
     this.setState({
       isEditing: !this.state.isEditing,
+      open:!this.state.open
       // animal:this.props.animal,
       // animal_meta:this.props.animal_meta
     })
@@ -345,6 +370,13 @@ class AnimalView extends React.Component {
       animal_meta:this.props.animalMeta
     })
     console.log('handle cancel :', this.state.animal.name)
+  }
+
+  handleClose = (event) => {
+    event.preventDefault()
+    this.setState({
+      open:false
+    })
   }
 
   verifyLength = (value) => {
@@ -518,6 +550,9 @@ class AnimalView extends React.Component {
   }
 
   render() {
+
+    console.log('animal view component updated pictures ', this.state.placeholderImages)
+
     const { classes } = this.props;
 
     const customStyle = {
@@ -552,7 +587,11 @@ class AnimalView extends React.Component {
                   handleAdoption={this.handleAdoption}
                   paramsId={this.props.match.params.id} 
                   handleToggle={this.handleToggle}
-                  maxLength={this.maxLength}/>
+                  maxLength={this.maxLength}
+                  open={this.state.open}
+                  handleClose={this.handleClose}
+                  animalPictures ={this.state.animalPictures}
+                  placeholderImages = {this.state.placeholderImages} />
                 <GridItem xs={12} sm={12} md={12}>
                   <div style={customStyle.animalButtonStyle}>
 
@@ -630,6 +669,7 @@ const mapStateToProps = (state) => {
     animalMeta: state.animalReducer.animalInfo.animalMeta,
     animalNotes: state.animalReducer.animalInfo.animalNotes,
     animalFollowers: state.animalReducer.animalInfo.animalFollowers,
+    animalPictures:state.animalReducer.animalPictures
   }
 }
 
@@ -641,7 +681,8 @@ export default connect(
     getInfoByAnimalID,
     addNotes,
     updateNotes,
-    deleteNotes
+    deleteNotes,
+    getAnimalPictures
   }
 )(withStyles(regularFormsStyle)(AnimalView))
 
