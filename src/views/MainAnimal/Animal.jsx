@@ -76,6 +76,7 @@ class AnimalPage extends React.Component {
       animal: {},
       shelter: {},
       alert: null,
+      isAdult: '',
     }
   };
 
@@ -99,6 +100,25 @@ class AnimalPage extends React.Component {
       .catch(error => {
         console.log(error)
       })
+
+      this.isAdult();
+  };
+
+
+
+  isAdult = () => {
+
+    if ( this.state.animal.age === `Adult` ) {
+      this.setState({
+        isAdult: true,
+      })
+    } 
+    else {
+      this.setState({
+        isAdult: false,
+      })
+    }
+
   };
 
   setAlert = (str) => {
@@ -297,6 +317,7 @@ class AnimalPage extends React.Component {
         padding: "12px 30px",
         fontWeight: "bold",
         fontSize: "20px",
+        fontStretch: "extra-expanded",
         color: "black",
         textAlign: "center",
         position: "relative",
@@ -353,19 +374,18 @@ class AnimalPage extends React.Component {
               </GridItem>
 
             <GridItem xs={12} sm={12} md={6} lg={6} xl={6} style={{ marginBottom: "50px" }}>
-
                 <GridItem>
-                  <GridItem>
-                    <InputLabel
-                      style={customStyle.adoptionStatusStyle}
-                    >
-                      {this.state.animal.animal_status}
-                    </InputLabel>
-                  </GridItem>
+                    <GridItem>
+                        <InputLabel
+                          style={customStyle.adoptionStatusStyle}
+                        >
+                          {this.state.animal.animal_status}
+                        </InputLabel>
+                    </GridItem>
                 </GridItem>
 
                 <GridItem style={{ marginTop: "40px" }} >
-                      <GridItem>
+                    <GridItem>
                         <div>
                             <p style={{ color: "white", fontSize: "30px", fontWeight: "400", letterSpacing: "6px", paddingBottom: "20px", }} >
                                 Hello, my name is,
@@ -375,25 +395,25 @@ class AnimalPage extends React.Component {
                                 {this.state.animal.name}
                            </p>
                         </div>
-                      </GridItem>
+                    </GridItem>
                 </GridItem>
 
-                <GridItem style={{ marginTop: "40px" }} >
-                    <GridItem>
-                          <div style={{ color: "white", fontSize: "24px", fontWeight: "400", letterSpacing: "6px", lineHeight: "30px", maxWidth: "480px", }} >
-                          I'm an <span style={{ textTransform: "lowercase" }}>{this.state.animal.age}</span> {this.state.animal.is_male ? "boy" : "girl"} who is on the <span style={{ textTransform: "lowercase" }}> {this.state.animal.size} </span> side. I am a {this.state.animal.breed} who has <span style={{ textTransform: "lowercase" }}>{this.state.animal.coat_length}</span> length hair.  I am {this.state.animal.is_neutered_spayed ? "neutered" : "not neutered"}, {this.state.animal.is_vaccinated ? "up to date on all shots" : "and in need of shots from the vet"}.  I am {this.state.animal.is_house_trained ? "house trained" : "in need of training"} and {this.state.animal.is_good_with_dogs ? "good with other dogs" : "not friendly with other dogs"}.
-                          </div>
-                    </GridItem>
-              </GridItem>
+                <GridItem style={{ marginTop: "40px" }} >        
+                          <GridItem>
+                          <div style={{ color: "white", fontSize: "24px", fontWeight: "400", letterSpacing: "6px", lineHeight: "30px", maxWidth: "460px", }} >
+                          I'm { this.state.isAdult ? "an" : "a" } <span style={{ textTransform: "lowercase" }}>{this.state.animal.age}</span> {this.state.animal.is_male ? "boy" : "girl"} who is on the <span style={{ textTransform: "lowercase" }}> {this.state.animal.size} </span> side. I am a {this.state.animal.breed} who has <span style={{ textTransform: "lowercase" }}>{this.state.animal.coat_length}</span> length hair.  I am {this.state.animal.is_neutered_spayed ? "neutered" : "not neutered"}, {this.state.animal.is_neutered_spayed ? "" : "but"} {this.state.animal.is_vaccinated ? "up to date on all shots" : "and in need of shots from the vet"}.  I am {this.state.animal.is_house_trained ? "house trained" : "in need of training"} and {this.state.animal.is_good_with_dogs ? "good with other dogs" : "not friendly with other dogs"}.
+                          </div>       
+                          </GridItem>              
+               </GridItem>
 
               
               <Hidden smDown>
-                  <GridItem md={12} lg={12} xl={12} style={{ marginTop: "30px" }}></GridItem>
+                  <GridItem md={10} lg={12} xl={12} style={{ marginTop: "30px" }}></GridItem>
               </Hidden>
 
                 
-              <GridItem style={{ display: "flex", justifyContent: "center", alignItems: "center" }} xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <GridContainer style={{ display: "flex", justifyContent: "center", alignItems: "center" }} xs={12} sm={12} md={12} lg={12} xl={12}>
+              <GridItem style={{ display: "flex", justifyContent: "center", alignItems: "center" }} xs={12} sm={12} md={12}>
+                    <GridContainer style={{ display: "flex", alignItems: "center" }} xs={12} sm={12} md={12}>
                           {this.state.alert}
 
                           {/* FOLLOW ME BUTTON */}
@@ -418,7 +438,7 @@ class AnimalPage extends React.Component {
                           </GridItem>
 
                           {/* ADOPT ME BUTTON */}
-                          <GridItem xs={12} sm={3} md={3} style={{ margin: "0px 50px" }}>
+                          <GridItem xs={12} sm={3} md={3} style={{ margin: "0px 40px" }}>
                             <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                               {localStorage.getItem("user_id") && localStorage.getItem('token') ?
 
@@ -446,9 +466,9 @@ class AnimalPage extends React.Component {
             <GridItem md={12} lg={12} xl={12} style={{ marginBottom: "0px" }}></GridItem>
           </Hidden>
 
-
+          {/* SHELTER INFO CARD */}
           <GridContainer className={classes.shelterCard}>
-                <GridItem xs={12} sm={6} md={6} style={{ display: "flex", justifyContent: "center" }}>
+                <GridItem xs={12} sm={5} md={5} style={{ display: "flex", justifyContent: "center" }}>
                   <GridItem xs={10} sm={10} md={10} lg={10} xl={10} style={customStyle.addressItemStyle}>
                     <img className={classes.iconStyle} src={addressIcon}></img>
 
@@ -456,6 +476,7 @@ class AnimalPage extends React.Component {
                       <TextField
                         multiline
                         fullWidth="true"
+                        style={{ minWidth: "180px" }}
                         value={`${this.state.animal.street_address},`}
                         InputProps={{
                           disableUnderline: true,
@@ -464,6 +485,7 @@ class AnimalPage extends React.Component {
                       <TextField
                         multiline
                         fullWidth="true"
+                        style={{ minWidth: "180px" }}
                         value={`${this.state.animal.city}, ` + `${this.state.animal.state}, ` + `${this.state.animal.zipcode}`}
                         InputProps={{
                           disableUnderline: true,
@@ -473,7 +495,7 @@ class AnimalPage extends React.Component {
                   </GridItem>
                 </GridItem>
 
-                <GridItem xs={12} sm={6} md={6} style={{ display: "flex", justifyContent: "center", }}>
+                <GridItem xs={12} sm={5} md={5} style={{ display: "flex", justifyContent: "center", }}>
                   <GridItem xs={10} sm={10} md={10} lg={10} xl={10} style={customStyle.emailItemStyle}>
                     <img className={classes.iconStyle} src={emailIcon}></img>
 
@@ -481,6 +503,7 @@ class AnimalPage extends React.Component {
                       <TextField
                         multiline
                         fullWidth="true"
+                        style={{ minWidth: "180px" }}
                         value={this.state.animal.email}
                         InputProps={{
                           disableUnderline: true,
@@ -491,7 +514,7 @@ class AnimalPage extends React.Component {
                   </GridItem>
                 </GridItem>
 
-                <GridItem xs={12} sm={6} md={6} style={{ display: "flex", justifyContent: "center", }}>
+                <GridItem xs={12} sm={5} md={5} style={{ display: "flex", justifyContent: "center", }}>
                   <GridItem xs={10} sm={10} md={10} lg={10} xl={10} style={customStyle.phoneItemStyle}>
                     <img className={classes.iconStyle} src={phoneIcon}></img>
 
@@ -499,6 +522,7 @@ class AnimalPage extends React.Component {
                       <TextField
                         multiline
                         fullWidth="true"
+                        style={{ minWidth: "180px" }}
                         value={this.state.animal.phone}
                         InputProps={{
                           disableUnderline: true,
@@ -508,7 +532,7 @@ class AnimalPage extends React.Component {
                   </GridItem>
                 </GridItem>
 
-                <GridItem xs={12} sm={6} md={6} style={{ display: "flex", justifyContent: "center", }}>
+                <GridItem xs={12} sm={5} md={5} style={{ display: "flex", justifyContent: "center", }}>
                   <GridItem xs={10} sm={10} md={10} lg={10} xl={10} style={customStyle.rescueItemStyle}>
                     <img className={classes.iconStyle} src={rescueIcon}></img>
 
@@ -516,6 +540,7 @@ class AnimalPage extends React.Component {
                       <TextField
                         multiline
                         fullWidth="true"
+                        style={{ minWidth: "180px" }}
                         value={this.state.animal.shelter}
                         InputProps={{
                           disableUnderline: true,

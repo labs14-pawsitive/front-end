@@ -47,7 +47,6 @@ const pagesStyle = theme => ({
     "&:before": {
       backgroundColor: "rgba(" + hexToRgb(blackColor) + ", 0.65)"
       // backgroundColor: 'white'
-      
     },
     "&:before,&:after": {
       display: "block",
