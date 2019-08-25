@@ -64,17 +64,10 @@ import Auth from "components/Auth/Auth.js"
 import SweetAlert from "react-bootstrap-sweetalert";
 import Application from "components/Application/Application.jsx"
 
-// stripe donation
-import StripeDonation from "components/Stripe/StripeDonation.jsx";
-
-const auth = new Auth()
-
-class AnimalPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       animal: {},
-      shelter: {},
       alert: null,
     }
   };

@@ -73,7 +73,7 @@ export const updateAnimal = (updateinfo,animalId,animalMetaId) => dispatch => {
   return axios
     .put(`http://localhost:8000/api/animals/${animalId}/meta/${animalMetaId}`, updateinfo)
     .then(res => axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalId}`))
+      .get(`http://localhost:8000/api/animals/${animalId}`))
     .then(res => {
       dispatch({ type: EDIT_ANIMAL_INFO_SUCCESS, payload: res.data })
       console.log('action updated animal ', res.data)
@@ -116,6 +116,7 @@ export const getAllOptions = (shelterID) => dispatch => {
         .get(`http://localhost:8000/api/animals/${animalID}`)
         //.get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalID}`)
         .then(res => {
+          console.log(res)
           dispatch({ type: GET_ANIMAL_SUCCESS, payload: res.data })
           console.log('action: get all animal info', res.data)
         })

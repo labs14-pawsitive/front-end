@@ -505,7 +505,7 @@ class AnimalView extends React.Component {
   }
 
   callback = (response) => {
-    // console.log(response)
+    console.log(response)
     this.state.animal.img_url = response[0].image.image_url
     this.state.animal.img_id = response[0].image.image_id
 
