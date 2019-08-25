@@ -20,7 +20,8 @@ import {
   containerFluid,
   primaryColor,
   whiteColor,
-  grayColor
+  grayColor,
+  blackColor
 } from "assets/jss/material-dashboard-pro-react.jsx";
 
 const footerStyle = {
@@ -34,6 +35,13 @@ const footerStyle = {
     fontSize: "14px",
     float: "right!important",
     padding: "15px"
+  },
+  rightLink: {
+    margin: "0",
+    fontSize: "14px",
+    float: "right!important",
+    padding: "15px",
+    color:"white",
   },
   footer: {
     bottom: "0",
@@ -71,6 +79,11 @@ const footerStyle = {
     "&,&:hover,&:focus": {
       color: whiteColor
     }
-  }
+  },
+  blackColor: {
+    "&,&:hover,&:focus": {
+      color: blackColor
+    }
+  },
 };
 export default footerStyle;

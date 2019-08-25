@@ -1,5 +1,6 @@
 import { title, whiteColor } from "assets/jss/material-dashboard-pro-react.jsx";
 
+
 const mainPageStyle = () => ({
   contentCenter: {
     position: "absolute",
@@ -29,7 +30,16 @@ const mainPageStyle = () => ({
     fontSize: "1.125rem",
     marginTop: "0",
     marginBottom: "8px"
-  }
+  },
+  bodyStyle: {
+    zIndex: 3,
+    display:"flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width:"100%"
+  },
+  
+
 });
 
 export default mainPageStyle;

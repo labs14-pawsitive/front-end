@@ -14,35 +14,10 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-// import Buttons from "views/Components/Buttons.jsx";
-// import Calendar from "views/Calendar/Calendar.jsx";
-// import Charts from "views/Charts/Charts.jsx";
-import Dashboard from "views/Dashboard/Dashboard.jsx";
+
+import Dashboard from "views/Dashboard/Dashboard2.jsx";
 // import ErrorPage from "views/Pages/ErrorPage.jsx";
-import ExtendedForms from "views/Forms/ExtendedForms.jsx";
-// import ExtendedTables from "views/Tables/ExtendedTables.jsx";
-// import FullScreenMap from "views/Maps/FullScreenMap.jsx";
-// import GoogleMaps from "views/Maps/GoogleMaps.jsx";
-// import GridSystem from "views/Components/GridSystem.jsx";
-// import Icons from "views/Components/Icons.jsx";
-// import LockScreenPage from "views/Pages/LockScreenPage.jsx";
-// import LoginPage from "views/Pages/LoginPage.jsx";
-// import Notifications from "views/Components/Notifications.jsx";
-// import Panels from "views/Components/Panels.jsx";
-// import PricingPage from "views/Pages/PricingPage.jsx";
-// import RTLSupport from "views/Pages/RTLSupport.jsx";
-import ReactTables from "views/Tables/ReactTables.jsx";
-// import RegisterPage from "views/Pages/RegisterPage.jsx";
-// import RegularForms from "views/Forms/RegularForms.jsx";
-// import RegularTables from "views/Tables/RegularTables.jsx";
-// import SweetAlert from "views/Components/SweetAlert.jsx";
-// import TimelinePage from "views/Pages/Timeline.jsx";
-// import Typography from "views/Components/Typography.jsx";
-// import UserProfile from "views/Pages/UserProfile.jsx";
-// import ValidationForms from "views/Forms/ValidationForms.jsx";
-// import VectorMap from "views/Maps/VectorMap.jsx";
-// import Widgets from "views/Widgets/Widgets.jsx";
-// import Wizard from "views/Forms/Wizard.jsx";
+
 import AnimalView from "views/Animals/AnimalView";
 import AnimalTable from "views/Animals/AnimalTable";
 import AddAnimalForm from "views/Animals/AddAnimalForm";
@@ -50,18 +25,17 @@ import EditAnimalForm from "views/Animals/EditAnimalForm";
 import ApplicationView from "views/Applications/ApplicationView.jsx"
 import ApplicationTable from "views/Applications/ApplicationTable";
 import ShelterProfile from "views/ShelterProfile/ShelterProfile";
+import StripeInfo from "views/ShelterProfile/StripeInfo";
+import SubscriptionPlan from "views/ShelterProfile/SubscriptionPlan";
+import DonationTable from "views/Donations/DonationTable.jsx";
+import FollowerTable from "views/Followers/FollowerTable.jsx";
 
 
 // @material-ui/icons
-// import Apps from "@material-ui/icons/Apps";
+
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import LibraryBooks from "@material-ui/icons/LibraryBooks";
-// import DateRange from "@material-ui/icons/DateRange";
-// import GridOn from "@material-ui/icons/GridOn";
-// import Image from "@material-ui/icons/Image";
-// import Place from "@material-ui/icons/Place";
-// import Timeline from "@material-ui/icons/Timeline";
-// import WidgetsIcon from "@material-ui/icons/Widgets";
+
 
 
 var dashRoutes = [
@@ -72,12 +46,32 @@ var dashRoutes = [
     component: Dashboard,
     layout: "/admin"
   }, 
+  
   {
-    path: "/shelterProfile",
-    name: "Shelter Profile",
+    collapse: true,
+    name: "Shelter Info",
     icon: "store_mall_directory",
-    component: ShelterProfile,
-    layout: "/admin"
+    state: "shelterCollapse",
+    views: [
+        {
+          path: "/shelterProfile",
+          name: "Shelter Profile",
+          component: ShelterProfile,
+          layout: "/admin"
+      },
+      {
+        path: "/stripeInfo",
+        name: "Stripe Info",
+        component: StripeInfo,
+        layout: "/admin"
+    },
+    {
+      path: "/subscriptionPlan",
+      name: "Subscription Plan",
+      component: SubscriptionPlan,
+      layout: "/admin"
+    }
+    ]
   },
   {
       collapse: true,
@@ -88,7 +82,6 @@ var dashRoutes = [
           {
               path:"/allAnimals",
               name: "All Animals",
-              
               component: AnimalTable,
               layout: "/admin"
           },
@@ -105,6 +98,7 @@ var dashRoutes = [
               layout: "/admin",
               invisible: true
           },
+          /*
           {
                 path:"/editAnimal/:id",
                 name: "Edit Animal",
@@ -112,7 +106,7 @@ var dashRoutes = [
                 layout: "/admin",
                 invisible: true
         },
-
+        */
       ]
   },
   {
@@ -142,20 +136,20 @@ var dashRoutes = [
         }
     ]
 },
-/*
+
 {
     path: "/donations",
     name: "Donations",
     icon: "money",
-    component: ReactTables,
+    component: DonationTable,
     layout: "/admin"
   },
   {
     path: "/followers",
     name: "Shelter Followers",
     icon: "face",
-    component: ReactTables,
+    component: FollowerTable,
     layout: "/admin"
-  },  */
+  },  
 ];
 export default dashRoutes;

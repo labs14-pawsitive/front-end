@@ -16,6 +16,7 @@
 */
 import React from "react";
 import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -49,4 +50,4 @@ ErrorPage.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(errorPageStyles)(ErrorPage);
+export default withRouter(withStyles(errorPageStyles)(ErrorPage));
