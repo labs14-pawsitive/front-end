@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import NotesComponent from './NotesComponent.jsx'
 
 import { addNotes } from '../../../actions/animalAction.js'
+import {getUser} from '../../../actions/userAction.js'
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -29,11 +30,24 @@ class AnimalNotes extends React.Component {
             addNoteState: "",
             urlClicked : false,
             animal_id: this.props.animal.id,
-            shelter_id: this.props.animal.shelter_id
+            username: ""
         }
 
         this.maxLength = 3;
     }
+
+    // componentDidMount(){
+    //     this.props.getUser(this.props.animal.shelter_id)
+    //     .then(res => {
+    //         console.log('animal notes component ', res)
+    //         this.setState({
+    //             username:this.props.userInfo.username
+    //         })
+    //     })
+    //     .catch(error =>{
+    //         console.log('animal notes error', error)
+    //     })
+    // }
 
     handleUrlClick = e => {
         this.setState({
@@ -96,7 +110,7 @@ class AnimalNotes extends React.Component {
         notes = {
             notes: this.state.note,
             animal_id: this.props.animal.id,
-            shelter_user_id: this.props.shelterWorkerID
+            shelter_user_id: this.props.userInfo.id
         }
 
         console.log('post notes info: ', notes)
@@ -220,13 +234,14 @@ const mapStateToProps = (state) => {
     return {
         animal: state.animalReducer.animalInfo.animal,
         animalNotes: state.animalReducer.animalInfo.animalNotes,
-        shelterWorkerID: state.userReducer.shelterWorkerID,
+        userInfo: state.userReducer.userInfo,
     }
 }
 
 export default connect(
     mapStateToProps,
     {
-        addNotes
+        addNotes,
+        getUser
     }
 )(withStyles(regularFormsStyle)(AnimalNotes)) 

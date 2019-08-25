@@ -34,7 +34,7 @@ const pagesStyle = theme => ({
     justifyContent: "center",
     backgroundSize: "cover",
     backgroundPosition: "center center",
-    height: "100vh",
+    height: "auto",
     [theme.breakpoints.down("sm")]: {
       minHeight: "fit-content!important"
     },

@@ -21,10 +21,12 @@ class AnimalCard extends React.Component {
    
     hoverEffect = async () => {
  
+ 
             await this.setState({
                 hover: true
             })
      }
+ 
 
     hoverOutEffect = async () => {
         await this.setState({
@@ -35,6 +37,7 @@ class AnimalCard extends React.Component {
     render() {
         const { classes } = this.props;
  
+      
        return(
  
             <GridItem xs={6} sm={4} md={3} lg={2}>
@@ -54,6 +57,7 @@ class AnimalCard extends React.Component {
     
         ) 
     }
+    
  
 }
 
@@ -62,5 +66,7 @@ AnimalCard.propTypes = {
   };
 
  
+ 
 export default withStyles(animalCardStyle)(AnimalCard);
+ 
  
