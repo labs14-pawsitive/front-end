@@ -27,6 +27,7 @@ import GridContainer from "components/Grid/GridContainer.jsx";
 import placeholderImage from 'assets/img/image_placeholder.jpg'
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
 import { Grid, Hidden } from '@material-ui/core';
@@ -189,7 +190,7 @@ class AnimalViewTop extends React.Component {
 
             <GridItem xs={12} sm={12} md={12} style={customStyle.gridItemStyle}>
                 <GridItem xs={12} sm={12} md={5}>
-                    <GridList className={classes.gridList} >
+                    <GridList className={classes.gridList} style={{ marginBottom: "10px" }}>
                         <GridListTile key={this.props.animal.img_url} style={customStyle.imgCardStyle} >
 
                             <ImageUploadEdit height="100%" width="100%"
@@ -221,10 +222,14 @@ class AnimalViewTop extends React.Component {
                                 >
 
 
-                                    <DialogTitle id="alert-dialog-title" >{"Edit Pictures"}</DialogTitle>
+                                    <DialogTitle id="alert-dialog-title" >{"Edit Pictures"}
+                                    <IconButton style={{ float: "right" }} onClick={this.props.handleClose}>
+                                        <CloseIcon />
+                                    </IconButton>
+                                    </DialogTitle>
                                     <GridContainer md={12}>
                                         {this.props.placeholderImages.map(eachImage => (
-                                            <GridItem md={4} key={eachImage.img_id}>
+                                            <GridItem xs={2} sm={2} md={4} key={eachImage.img_id}>
                                                 <DialogContent style={{
                                                     height: "200px",
                                                     padding: 0,
@@ -240,21 +245,21 @@ class AnimalViewTop extends React.Component {
                                                                 editable={this.props.isEditing} callback={this.props.callback}
                                                                 url={`${process.env.REACT_APP_BACKEND_URL}/api/pictures`} />
 
-                                                    {/* color: "#cd5c5c", */}
-                                                    <IconButton style={{ float: "right", color: "#cd5c5c", marginTop: "-204px",  }} onClick={(event) => this.deletePicture(event, eachImage.img_id)}>
+                                                            {/* color: "#cd5c5c", */}
+                                                            <IconButton style={{ float: "right", color: "rgba(170, 39, 176, 0.83)", marginTop: "-204px", }} onClick={(event) => this.deletePicture(event, eachImage.img_id)}>
                                                                 <DeleteIcon />
                                                             </IconButton>
                                                         </div>
                                                         :
                                                         <div>
-                                                        <ImageUploadEdit height="150px" width="150px"
-                                                            borderRadius="5px" imageLimit={1}
-                                                            editable={this.props.isEditing} callback={this.props.callback}
-                                                            url={`${process.env.REACT_APP_BACKEND_URL}/api/pictures`} />
-                                                            <IconButton style={{ float: "right", color: "#cd5c5c", marginTop: "-204px",  }} onClick={(event) => this.deletePicture(event, eachImage.img_id)}>
+                                                            <ImageUploadEdit height="150px" width="150px"
+                                                                borderRadius="5px" imageLimit={1}
+                                                                editable={this.props.isEditing} callback={this.props.callback}
+                                                                url={`${process.env.REACT_APP_BACKEND_URL}/api/pictures`} />
+                                                            <IconButton style={{ float: "right", color: "#cd5c5c", marginTop: "-204px", }} onClick={(event) => this.deletePicture(event, eachImage.img_id)}>
                                                                 <DeleteIcon />
                                                             </IconButton>
-                                                            </div>}
+                                                        </div>}
 
                                                 </DialogContent>
                                             </GridItem>
@@ -263,19 +268,30 @@ class AnimalViewTop extends React.Component {
                                     </GridContainer>
 
 
-                                    <Button onClick={this.props.handleClose} color="primary" autoFocus>
+                                    {/* <Button onClick={this.props.handleClose} color="primary" autoFocus>
                                         Close
-                                    </Button>
+                                    </Button> */}
+                                    
 
                                 </Dialog>
                             }
 
 
                         </GridListTile>
+
                     </GridList>
-                    <Button size="small" color="primary" className={classes.button} onClick={this.props.handleViewingPics}>
-                        {this.props.isEditing ? "EDIT PHOTOS" : "VIEW MORE PHOTOS"}
-                    </Button>
+
+                    <div style={{
+                        display: "flex",
+                        width: "200px",
+                        justifyContent: "center"
+                    }}>
+                        <Button size="small" variant="contained" style={{ backgroundColor: "#A364A5", color: "white" }}
+                            className={classes.button} onClick={this.props.handleViewingPics}>
+                            {this.props.isEditing ? "EDIT PHOTOS" : "VIEW MORE PHOTOS"}
+                        </Button>
+
+                    </div>
 
                     {!this.props.isEditing &&
                         <Dialog style={{
@@ -287,8 +303,12 @@ class AnimalViewTop extends React.Component {
                             aria-labelledby="responsive-dialog-title"
                         >
 
-
-                            <DialogTitle id="alert-dialog-title" >{"View Pictures"}</DialogTitle>
+                            
+                            <DialogTitle id="alert-dialog-title" >{"View Pictures"}
+                            <IconButton style={{ float: "right"}} onClick={this.props.handleClose}>
+                                <CloseIcon />
+                            </IconButton>
+                            </DialogTitle>
                             <GridContainer md={12}>
                                 {this.props.animalPictures.map(eachImage => (
                                     <GridItem md={4} key={eachImage.img_id}>
@@ -314,12 +334,16 @@ class AnimalViewTop extends React.Component {
                             </GridContainer>
 
 
-                            <Button onClick={this.props.handleClose} color="primary" autoFocus>
+                            {/* <Button onClick={this.props.handleClose} color="primary" autoFocus>
                                 Close
-                                    </Button>
+                                    </Button> */}
+
+
+
 
                         </Dialog>
                     }
+
                 </GridItem>
 
                 <GridItem xs={12} sm={12} md={7}>
@@ -381,7 +405,7 @@ class AnimalViewTop extends React.Component {
                     </div>
 
                 </GridItem>
-            </GridItem>
+            </GridItem >
         )
     }
 }
