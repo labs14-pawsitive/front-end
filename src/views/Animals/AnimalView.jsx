@@ -17,8 +17,7 @@ import {axiosWithAuth} from 'axiosWithAuth';
 
 import { updateAnimal, getInfoByAnimalID, getAllOptions, addNotes, updateNotes, deleteNotes }
   from '../../actions/animalAction.js'
-  import {getUser} from '../../actions/userAction.js'
-import AnimalNotes from './AnimalViewComponents/AnimalNotes.jsx'
+ import AnimalNotes from './AnimalViewComponents/AnimalNotes.jsx'
 import AnimalViewTop from './AnimalViewComponents/AnimalViewTop.jsx'
 import AnimalViewDetails from './AnimalViewComponents/AnimalViewDetails.jsx'
 
@@ -112,9 +111,8 @@ class AnimalView extends React.Component {
   componentDidMount() {
 
     Promise.all([this.props.getInfoByAnimalID(this.props.match.params.id),
-    this.props.getAllOptions(localStorage.getItem('shelter_id'))],
-    this.props.getUser(localStorage.getItem('shelter_id')))
-      .then(([animalInfo, animalOptions,userInfo]) => {
+    this.props.getAllOptions(localStorage.getItem('shelter_id'))])
+      .then(([animalInfo, animalOptions]) => {
 
         //verifying shelter
         this.verifyShelter(this.props.animal.shelter_id)
@@ -644,7 +642,7 @@ export default connect(
     addNotes,
     updateNotes,
     deleteNotes,
-    getUser
+ 
   }
 )(withStyles(regularFormsStyle)(AnimalView))
 
