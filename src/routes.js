@@ -60,12 +60,6 @@ var dashRoutes = [
         name: "Stripe Info",
         component: StripeInfo,
         layout: "/admin"
-    },
-    {
-      path: "/subscriptionPlan",
-      name: "Subscription Plan",
-      component: SubscriptionPlan,
-      layout: "/admin"
     }
     ]
   },

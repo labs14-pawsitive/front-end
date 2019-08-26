@@ -102,7 +102,7 @@ class FollowerTable extends React.Component {
           username: follower.username,
           email: follower.email,
           location: follower.zip,
-          icon: <Favorite style={{color: '#e0286a'}}/>
+          //icon: <Favorite style={{color: '#e0286a'}}/>
         };
       })
       })
@@ -185,13 +185,6 @@ class FollowerTable extends React.Component {
                   {
                     Header: "Location",
                     accessor: "zip"
-                  },
-                  {
-                    Header: "",
-                    accessor: "icon",
-                    style: {textAlign: "center"},
-                    sortable: false,
-                    filterable: false
                   }
                 ]}
                 defaultPageSize={10}
@@ -209,10 +202,7 @@ class FollowerTable extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    userID : state.userReducer.userID,
-    shelterID : state.shelterReducer.shelterID,
-    shelterWorkerID : state.userReducer.shelterWorkerID,
-    roleID : state.userReducer.roleID
+    user : state.userReducer.user
   }
   
 }

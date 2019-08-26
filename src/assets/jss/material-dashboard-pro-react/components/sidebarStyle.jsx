@@ -101,7 +101,8 @@ const sidebarStyle = theme => ({
   blueBackground: {
     color: whiteColor,
     "&:after": {
-      background: infoColor[0],
+      //background: infoColor[0],
+      background: "#3b6780",
       opacity: ".93"
     }
   },
@@ -112,6 +113,7 @@ const sidebarStyle = theme => ({
       opacity: ".93"
     }
   },
+
   whiteAfter: {
     "&:after": {
       backgroundColor: "hsla(0,0%,71%,.3) !important"

@@ -17,10 +17,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Link } from 'react-router-dom';
+
+
 // react component for creating dynamic tables
 import ReactTable from "react-table";
-import { NavLink, Link } from "react-router-dom";
+
 import axios from 'axios';
+import {axiosWithAuth} from 'axiosWithAuth';
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Icon from "@material-ui/core/Icon";
@@ -29,28 +34,23 @@ import Icon from "@material-ui/core/Icon";
 import Update from "@material-ui/icons/Update";
 
 import Assignment from "@material-ui/icons/Assignment";
-import Dvr from "@material-ui/icons/Dvr";
-import Search from "@material-ui/icons/Search";
 import Favorite from "@material-ui/icons/Favorite";
-import Close from "@material-ui/icons/Close";
-import Warning from "@material-ui/icons/Warning";
+import Search from "@material-ui/icons/Search";
+
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
-import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
-import Danger from "components/Typography/Danger.jsx";
+import Button from "components/CustomButtons/Button.jsx";
 
-
-
-import { dataTable } from "variables/general.jsx";
 
 import { cardTitle } from "assets/jss/material-dashboard-pro-react.jsx";
+
 
 const styles = {
   cardIconTitle: {
@@ -68,153 +68,62 @@ const styles = {
   },
 };
 
-class ShelterFollows extends React.Component {
+class UsersShelterFollows extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      animals: [],
-      data: dataTable.dataRows.map((prop, key) => {
-        return {
-          id: key,
-         
-          profilePic: prop[0],
-          name: prop[1],
-          status: prop[2],
-          location: prop[3],
-          actions: (
-            <div className="actions-right">
-              {/* use this button to add a like kind of action */}
-              <NavLink to={`/admin/animal/${key}`}>
-                <Button
-                  justIcon
-                  round
-                  simple
-                  /*onClick={() => {
-                    let obj = this.state.data.find(o => o.id === key);
-                    alert(
-                      "You've clicked LIKE button on \n{ \nName: " +
-                        obj.name +
-                        ", \nposition: " +
-                        obj.position +
-                        ", \noffice: " +
-                        obj.office +
-                        ", \nage: " +
-                        obj.age +
-                        "\n}."
-                    );
-                  }}*/
-                  color="info"
-                  className="view"
-                >
-                  <Search />
-                </Button>
-              </NavLink>{" "}
-              {/* use this button to add a edit kind of action */}
-              <NavLink to={`/admin/editAnimal/${key}`}>
-                <Button
-                  justIcon
-                  round
-                  simple
-                  /*onClick={() => {
-                    let obj = this.state.data.find(o => o.id === key);
-                    alert(
-                      "You've clicked EDIT button on \n{ \nName: " +
-                        obj.name +
-                        ", \nposition: " +
-                        obj.position +
-                        ", \noffice: " +
-                        obj.office +
-                        ", \nage: " +
-                        obj.age +
-                        "\n}."
-                    );
-                  }}*/
-                  color="warning"
-                  className="edit"
-                >
-                  <Dvr />
-                </Button>
-              </NavLink>{" "}
-             {/* use this button to remove the data row */}
-             {/* <Button
-                justIcon
-                round
-                simple
-                onClick={() => {
-                  var data = this.state.data;
-                  data.find((o, i) => {
-                    if (o.id === key) {
-                      // here you should add some custom code so you can delete the data
-                      // from this component and from your server as well
-                      data.splice(i, 1);
-                      return true;
-                    }
-                    return false;
-                  });
-                  this.setState({ data: data });
-                }}
-                color="danger"
-                className="remove"
-              >
-                <Close />
-              </Button>*/}{" "}
-            </div>
-          )
-        };
-      })
+      shelters: [],
+      userVerified: ""
+
     };
   }
 
+  
+  componentWillMount() {
+    //verifying user before proceeding
+    axiosWithAuth()
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/shelter/${localStorage.getItem('user_id')}`)
+      .then( result => {
+        this.setState({
+          userVerified : true
+        })
+        console.log(result)
+      })
+      .catch( error => {
+        console.log(error)
+        this.props.history.push('/')
+      })
+  }
+
+
   componentDidMount() {
     axios
-    //.get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/shelter/${localStorage.getItem("shelter_id")}`)
-    .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/shelter/${localStorage.getItem('shelter_id')}`)
-    .then(animals => {
-      const picStyle = { width: '100%' }
-      console.log(animals)
+    .get(`${process.env.REACT_APP_BACKEND_URL}/api/users/${localStorage.getItem('user_id')}/follows/shelters`)
+    .then(results => {
+      console.log(results)
       this.setState({
-        animals : animals.data.map((animal, key) => {
+        shelters : results.data.map((shelter, key) => {
         return {
           id: key,
-          animalID: animal.id,
-          profilePic: <img src={animal.img_url} style={picStyle}/>,
-          name: animal.name,
-          species: animal.species,
-          status: animal.animal_status,
-          location: animal.nickname,
+          shelterId: shelter.id,
+          shelter: shelter.shelter,
+          email: shelter.email,
+          location: `${shelter.city} ${shelter.state}, ${shelter.zipcode}`,
+          phone: shelter.phone,
           actions: (
-            <div className="actions-right">
-              {/* view animal */}
-              <NavLink to={`/admin/animal/${animal.id}`}>
-                <Button
-                  justIcon
-                  round
-                  simple
-                  color="info"
-                  className="like"
-                >
+            <div className="actions-left">
+              {/* view shelter */}
+              <Link to={`/shelter/${shelter.id}`}>
+                <Button color="success">
                   <Search />
                 </Button>
-              </NavLink>{" "}
-              {/* edit animal */}
-              <NavLink to={`/admin/editAnimal/${animal.id}`}>
-                <Button
-                  justIcon
-                  round
-                  simple
-                  color="warning"
-                  className="edit"
-                >
-                  <Dvr />
-                </Button>
-              </NavLink>{" "}
-           
+              </Link>
             </div>
           )
         };
       })
       })
-      console.log("state" , this.state.animals)
+      console.log("state" , this.state.shelters)
     })
     .catch(error => {
       console.log(error)
@@ -223,6 +132,7 @@ class ShelterFollows extends React.Component {
 
   render() {
     const { classes } = this.props;
+
     const card_category = {
       color: "#999",
       margin: "0",
@@ -241,6 +151,8 @@ class ShelterFollows extends React.Component {
       textAlign: "right"
     }
 
+    if(this.state.userVerified !== true) return <div>Verifying User</div>
+
     return (
       <GridContainer>
          <GridItem xs={12} sm={6} md={6} lg={3}>
@@ -249,9 +161,9 @@ class ShelterFollows extends React.Component {
                 <CardIcon color="warning">
                   <Icon>pets</Icon>
                 </CardIcon>
-                <p className={classes.cardCategory} style={card_category}>Current Animals</p>
+                <p className={classes.cardCategory} style={card_category}>I'm Following</p>
                 <h3 className={classes.cardTitle} style={card_title}>
-                  {this.state.animals.length} <small>Animals</small>
+                  {this.state.shelters.length} <small>{this.state.shelters.length > 1 ? "Shelters" : "Shelter"}</small>
                 </h3>
               </CardHeader>
               <CardFooter stats>
@@ -263,48 +175,37 @@ class ShelterFollows extends React.Component {
             </Card>
           </GridItem>
         <GridItem xs={12}>
-          {/*{this.state.animals.map(animal => <p>{animal.name}</p>)}*/}
           <Card>
             <CardHeader color="primary" icon>
               <CardIcon color="primary">
                 <Assignment />
               </CardIcon>
-              <h4 className={classes.cardIconTitle}>Animals</h4>
+              <h4 className={classes.cardIconTitle}>Shelters</h4>
             </CardHeader>
             <CardBody>
               <ReactTable
-                data={this.state.animals}
+                data={this.state.shelters}
                 filterable
                 columns={[
-                  
                   {
-                    Header: "Profile Pic",
-                    accessor: "profilePic",
-                    sortable: false,
-                    filterable: false
-                  },
-                  {
-                    Header: "Animal ID",
-                    accessor: "animalID"
-                  },
-                  {
-                    Header: "Name",
-                    accessor: "name"
-                  },
-                  {
-                    Header: "Species",
-                    accessor: "species"
-                  },
-                  {
-                    Header: "Status",
-                    accessor: "status"
+                    Header: "Shelter",
+                    accessor: "shelter",
+                    
                   },
                   {
                     Header: "Location",
                     accessor: "location"
                   },
                   {
-                    Header: "Actions",
+                    Header: "Email",
+                    accessor: "email"
+                  },
+                  {
+                    Header: "Phone",
+                    accessor: "phone"
+                  },
+                  {
+                    Header: "View Shelter",
                     accessor: "actions",
                     sortable: false,
                     filterable: false
@@ -325,12 +226,12 @@ class ShelterFollows extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    user : state.userReducer.user,
+    user : state.userReducer.user
   }
   
 }
 
-ShelterFollows.propTypes = {
+UsersShelterFollows.propTypes = {
   classes: PropTypes.object
 };
 
@@ -340,5 +241,5 @@ ShelterFollows.propTypes = {
 export default connect(
   mapStateToProps,
   {}
-)(withStyles(styles)(ShelterFollows))
+)(withStyles(styles)(UsersShelterFollows))
 
