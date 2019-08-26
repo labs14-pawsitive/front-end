@@ -78,8 +78,10 @@ class AnimalViewTop extends React.Component {
         const customStyle = {
             imgCardStyle: {
                 paddingTop: "2px",
-                width: "210px",
-                height: "200px"
+                // width: "210px",
+                // height: "200px"
+                width: "100%",
+                height: "auto"
             },
             imgTitle: {
                 background:
@@ -189,7 +191,8 @@ class AnimalViewTop extends React.Component {
         return (
 
             <GridItem xs={12} sm={12} md={12} style={customStyle.gridItemStyle}>
-                <GridItem xs={12} sm={12} md={5}>
+                {/* <GridItem xs={12} sm={12} md={5}> */}
+                <GridItem xs={12} sm={6} md={5}>
                     <GridList className={classes.gridList} style={{ marginBottom: "10px" }}>
                         <GridListTile key={this.props.animal.img_url} style={customStyle.imgCardStyle} >
 
