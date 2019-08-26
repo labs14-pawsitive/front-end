@@ -63,7 +63,7 @@ class CheckoutForm extends Component {
                     token: token.id,
                     data: { 
                         amount: (this.state.amount * 100), 
-                        shelter_id: results["shelter_id"],
+                        shelter_id: result["shelter_id"],
                         user_id: localStorage.getItem('user_id'),
                      } 
                 })
