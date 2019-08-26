@@ -8,7 +8,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import GridItem from "components/Grid/GridItem.jsx";
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
-import ImageUpload from '../../../components/ImageUpload/ImageUpload'
+import ImageUploadEdit from '../../../components/ImageUpload/ImageUploadEdit'
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import TextField from '@material-ui/core/TextField';
 import FormControl from "@material-ui/core/FormControl";
@@ -29,7 +29,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 
 import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
-import { Grid } from '@material-ui/core';
+import { Grid, Hidden } from '@material-ui/core';
 
 class AnimalViewTop extends React.Component {
 
@@ -192,7 +192,7 @@ class AnimalViewTop extends React.Component {
                     <GridList className={classes.gridList} >
                         <GridListTile key={this.props.animal.img_url} style={customStyle.imgCardStyle} >
 
-                            <ImageUpload height="100%" width="100%"
+                            <ImageUploadEdit height="100%" width="100%"
                                 defaultImage={this.props.animal.img_url}
                                 borderRadius="5px" imageLimit={1}
                                 customStyle={imageStyle}
@@ -208,7 +208,7 @@ class AnimalViewTop extends React.Component {
                                 }}
                             />
 
-                            
+
 
                             {this.props.isEditing &&
                                 <Dialog style={{
@@ -226,31 +226,35 @@ class AnimalViewTop extends React.Component {
                                         {this.props.placeholderImages.map(eachImage => (
                                             <GridItem md={4} key={eachImage.img_id}>
                                                 <DialogContent style={{
-                                                    height: "300px",
+                                                    height: "200px",
                                                     padding: 0,
                                                     position: "relative",
                                                     width: "169px",
                                                     margin: "0 9px 9px 9px"
                                                 }}>
-
                                                     {eachImage !== '' ?
                                                         <div>
-                                                            <ImageUpload height="100%" width="100%"
+                                                            <ImageUploadEdit height="150px" width="150px"
                                                                 defaultImage={eachImage.img_url}
                                                                 borderRadius="5px" imageLimit={1}
-                                                                customStyle={imageModalStyle}
                                                                 editable={this.props.isEditing} callback={this.props.callback}
                                                                 url={`${process.env.REACT_APP_BACKEND_URL}/api/pictures`} />
 
-                                                            <IconButton style={{ float: "right", color: "#cd5c5c" }} onClick={(event) => this.deletePicture(event, eachImage.img_id)}>
+                                                    {/* color: "#cd5c5c", */}
+                                                    <IconButton style={{ float: "right", color: "#cd5c5c", marginTop: "-204px",  }} onClick={(event) => this.deletePicture(event, eachImage.img_id)}>
                                                                 <DeleteIcon />
                                                             </IconButton>
                                                         </div>
                                                         :
-                                                        <ImageUpload height="300px" width="169px"
-                                                            borderRadius="5px" imageLimit={1}                                                            
+                                                        <div>
+                                                        <ImageUploadEdit height="150px" width="150px"
+                                                            borderRadius="5px" imageLimit={1}
                                                             editable={this.props.isEditing} callback={this.props.callback}
-                                                            url={`${process.env.REACT_APP_BACKEND_URL}/api/pictures`} />}
+                                                            url={`${process.env.REACT_APP_BACKEND_URL}/api/pictures`} />
+                                                            <IconButton style={{ float: "right", color: "#cd5c5c", marginTop: "-204px",  }} onClick={(event) => this.deletePicture(event, eachImage.img_id)}>
+                                                                <DeleteIcon />
+                                                            </IconButton>
+                                                            </div>}
 
                                                 </DialogContent>
                                             </GridItem>
@@ -270,53 +274,52 @@ class AnimalViewTop extends React.Component {
                         </GridListTile>
                     </GridList>
                     <Button size="small" color="primary" className={classes.button} onClick={this.props.handleViewingPics}>
-                                {!this.props.isViewingPhotos && !this.props.isEditing && "VIEW MORE PHOTOS"}
-                                {/* VIEW MORE PHOTOS */}
-                            </Button>
+                        {this.props.isEditing ? "EDIT PHOTOS" : "VIEW MORE PHOTOS"}
+                    </Button>
 
-                            {this.props.isViewingPhotos && 
-                                <Dialog style={{
-                                    overflowY: "hidden"
-                                }}
-                                    fullScreen={fullScreen}
-                                    open={this.props.open}
-                                    onClose={this.props.handleClose}
-                                    aria-labelledby="responsive-dialog-title"
-                                >
-
-
-                                    <DialogTitle id="alert-dialog-title" >{"View Pictures"}</DialogTitle>
-                                    <GridContainer md={12}>
-                                        {this.props.animalPictures.map(eachImage => (
-                                            <GridItem md={4} key={eachImage.img_id}>
-                                                <DialogContent style={{
-                                                    height: "300px",
-                                                    padding: 0,
-                                                    position: "relative",
-                                                    width: "169px",
-                                                    margin: "0 9px 9px 9px"
-                                                }}>
-
-                                                    <ImageUpload height="100%" width="100%"
-                                                        defaultImage={eachImage.img_url}
-                                                        borderRadius="5px" imageLimit={1}
-                                                        customStyle={imageModalStyle}
-                                                        editable={this.props.isEditing} callback={this.props.callback}
-                                                        url={`${process.env.REACT_APP_BACKEND_URL}/api/pictures`} />
-
-                                                </DialogContent>
-                                            </GridItem>
-                                        ))}
-
-                                    </GridContainer>
+                    {!this.props.isEditing &&
+                        <Dialog style={{
+                            overflowY: "hidden"
+                        }}
+                            fullScreen={fullScreen}
+                            open={this.props.open}
+                            onClose={this.props.handleClose}
+                            aria-labelledby="responsive-dialog-title"
+                        >
 
 
-                                    <Button onClick={this.props.handleClose} color="primary" autoFocus>
-                                        Close
+                            <DialogTitle id="alert-dialog-title" >{"View Pictures"}</DialogTitle>
+                            <GridContainer md={12}>
+                                {this.props.animalPictures.map(eachImage => (
+                                    <GridItem md={4} key={eachImage.img_id}>
+                                        <DialogContent style={{
+                                            height: "200px",
+                                            padding: 0,
+                                            position: "relative",
+                                            width: "169px",
+                                            margin: "0 9px 9px 9px"
+                                        }}>
+
+                                            <ImageUploadEdit height="100%" width="100%"
+                                                defaultImage={eachImage.img_url}
+                                                borderRadius="5px" imageLimit={1}
+                                                customStyle={imageModalStyle}
+                                                editable={this.props.isEditing} callback={this.props.callback}
+                                                url={`${process.env.REACT_APP_BACKEND_URL}/api/pictures`} />
+
+                                        </DialogContent>
+                                    </GridItem>
+                                ))}
+
+                            </GridContainer>
+
+
+                            <Button onClick={this.props.handleClose} color="primary" autoFocus>
+                                Close
                                     </Button>
 
-                                </Dialog>
-                            }
+                        </Dialog>
+                    }
                 </GridItem>
 
                 <GridItem xs={12} sm={12} md={7}>

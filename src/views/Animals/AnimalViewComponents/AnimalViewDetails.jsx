@@ -8,7 +8,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import GridItem from "components/Grid/GridItem.jsx";
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
-import ImageUpload from '../../../components/ImageUpload/ImageUpload'
+import ImageUpload from '../../../components/ImageUpload/ImageUploadEdit'
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import TextField from '@material-ui/core/TextField';
 import FormControl from "@material-ui/core/FormControl";

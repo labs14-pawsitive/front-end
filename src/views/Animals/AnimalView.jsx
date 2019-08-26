@@ -13,7 +13,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import axios from 'axios';
 import moment from 'moment'
-import {axiosWithAuth} from 'axiosWithAuth';
+import { axiosWithAuth } from 'axiosWithAuth';
 
 import { updateAnimal, getInfoByAnimalID, getAllOptions, addNotes, updateNotes, deleteNotes, getAnimalPictures, deleteAnimalPictures }
   from '../../actions/animalAction.js'
@@ -49,7 +49,7 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import Input from '@material-ui/core/Input';
-import ImageUpload from '../../components/ImageUpload/ImageUpload'
+import ImageUploadEdit from '../../components/ImageUpload/ImageUploadEdit'
 import placeholderImage from '../../assets/img/image_placeholder.jpg'
 
 // @material-ui/icons
@@ -71,6 +71,7 @@ import CardBody from "components/Card/CardBody.jsx";
 import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
 import { borderBottom } from "@material-ui/system";
 import AnimalViewHealth from "./AnimalViewComponents/AnimalViewHealth.jsx";
+import { isConstructorDeclaration } from "typescript";
 
 class AnimalView extends React.Component {
   constructor(props) {
@@ -80,9 +81,9 @@ class AnimalView extends React.Component {
       animal_meta: {},
       animal_notes: [],
       animal_followers: [],
-      animalPictures:[],
+      animalPictures: [],
       // placeholderImages:Array(6).fill("url(" + placeholderImage + ")"),
-      placeholderImages:Array(6).fill(''),
+      placeholderImages: Array(6).fill(''),
       breeds: [],
       size: [],
       coat_length: [],
@@ -93,7 +94,8 @@ class AnimalView extends React.Component {
       dynamicBreedDropdown: [],
       isEditing: false,
       isPosting: false,
-      isViewingPhotos:false,
+      isViewingPhotos: false,
+      isEditingPhotos: false,
       note: '',
       textState: {
         descriptionState: 'success',
@@ -103,7 +105,7 @@ class AnimalView extends React.Component {
       },
       breedState: 'success',
       shelterVerified: "",
-      open:false
+      open: false
     }
 
     this.maxLength = 3;
@@ -117,28 +119,28 @@ class AnimalView extends React.Component {
   componentDidMount() {
 
     Promise.all([this.props.getInfoByAnimalID(this.props.match.params.id),
-      this.props.getAnimalPictures(this.props.match.params.id),
+    this.props.getAnimalPictures(this.props.match.params.id),
     this.props.getAllOptions(localStorage.getItem('shelter_id'))])
       .then(([animalInfo, animalOptions]) => {
 
-//updating the pictures array
+        //updating the pictures array
         let newArray = []
 
         this.state.placeholderImages.map((value, i) => {
-            console.log(`value at ${i} is ${value}`)
-            if (this.props.animalPictures[i]) {
-                value = this.props.animalPictures[i]
-                 newArray.push(value)
+          console.log(`value at ${i} is ${value}`)
+          if (this.props.animalPictures[i]) {
+            value = this.props.animalPictures[i]
+            newArray.push(value)
 
-            }
-            else {
-               newArray.push(value)
-            }
+          }
+          else {
+            newArray.push(value)
+          }
         })
 
         //verifying shelter
         this.verifyShelter(this.props.animal.shelter_id)
-        
+
         // call setState here
 
         this.setState({
@@ -153,8 +155,8 @@ class AnimalView extends React.Component {
           coat_length: this.props.coat_length,
           animal_status: this.props.animal_status,
           locations: this.props.locations,
-          animalPictures:this.props.animalPictures,
-          placeholderImages:newArray
+          animalPictures: this.props.animalPictures,
+          placeholderImages: newArray
         })
       })
       .catch(error => {
@@ -167,14 +169,14 @@ class AnimalView extends React.Component {
     //verifying shelter before proceeding
     await axiosWithAuth()
       .get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/shelter/${shelter_id}`)
-      .then( result => {
+      .then(result => {
         this.setState({
-          shelterVerified : true
+          shelterVerified: true
         })
       })
-      .catch( error => {
+      .catch(error => {
         this.setState({
-          shelterVerified : false
+          shelterVerified: false
         })
         this.props.history.push('/admin/allAnimals')
       })
@@ -182,14 +184,14 @@ class AnimalView extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
 
-    if (this.props.animalNotes !== prevProps.animalNotes ) {
+    if (this.props.animalNotes !== prevProps.animalNotes) {
       this.setState({
         animal_notes: this.props.animalNotes
       })
 
     }
 
-    if (this.state.placeholderImages !== prevState.placeholderImages ) {
+    if (this.state.placeholderImages !== prevState.placeholderImages) {
       console.log('placeholder images: component did update in animal view  is invoked')
       this.setState({
         placeholderImages: this.state.placeholderImages
@@ -227,7 +229,7 @@ class AnimalView extends React.Component {
       animal_id: this.state.animal.id
     }
 
-this.props.updateAnimal(updateInfo,
+    this.props.updateAnimal(updateInfo,
       this.state.animal.id, this.state.animal_meta.id)
       .then(res => console.log('update animal animal view :success ', res))
       .catch(error => console.log('update error animal view', error))
@@ -343,8 +345,9 @@ this.props.updateAnimal(updateInfo,
     event.preventDefault()
     this.setState({
       isEditing: !this.state.isEditing,
-      open:!this.state.open
-     
+      isEditingPhotos: !this.state.isEditingPhotos
+      // open:!this.state.open
+
     })
 
   }
@@ -352,9 +355,9 @@ this.props.updateAnimal(updateInfo,
   handleCancel = async (event) => {
     event.preventDefault()
     await this.setState({
-      isEditing:false,
-       animal:this.props.animal,
-      animal_meta:this.props.animalMeta
+      isEditing: false,
+      animal: this.props.animal,
+      animal_meta: this.props.animalMeta
     })
     console.log('handle cancel :', this.state.animal.name)
   }
@@ -362,8 +365,9 @@ this.props.updateAnimal(updateInfo,
   handleClose = (event) => {
     event.preventDefault()
     this.setState({
-      open:false,
-      isViewingPhotos:false
+      open: false,
+      isViewingPhotos: false,
+      isEditingPhotos: false
     })
   }
 
@@ -497,7 +501,7 @@ this.props.updateAnimal(updateInfo,
         this.updateForm()
       }
       else {
-       
+
       }
     }
 
@@ -506,53 +510,51 @@ this.props.updateAnimal(updateInfo,
 
   handleViewPics = (event) => {
     event.preventDefault()
-
-        this.setState({
-            isViewingPhotos: !this.state.isViewingPhotos,
-            open:!this.state.open
-        })
-  }
-
-  deletePictures = (imageId,animalId) => {
-
-    const arrayAfterDelete = this.state.placeholderImages.map(image => image.img_id===imageId ? '': image)
+    console.log('this.props.isEditingPhotos is ', this.state.isEditingPhotos)
+    console.log('this.props.isViewingPhotos is ', this.state.isViewingPhotos)
 
     this.setState({
-      placeholderImages:arrayAfterDelete
+      isEditingPhotos: !this.state.isEditingPhotos,
+      isViewingPhotos: !this.props.isViewingPhotos,
+      open: !this.state.open
     })
 
-    this.props.deleteAnimalPictures(imageId,animalId)
-    .then(res => console.log('delete pic fn from animal view component ', res))
-    .catch(error => console.log(error))
+  }
+
+  deletePictures = (imageId, animalId) => {
+
+    const arrayAfterDelete = this.state.placeholderImages.map(image => image.img_id === imageId ? '' : image)
+
+    this.setState({
+      placeholderImages: arrayAfterDelete
+    })
+
+    this.props.deleteAnimalPictures(imageId, animalId)
+      .then(res => console.log('delete pic fn from animal view component ', res))
+      .catch(error => console.log(error))
   }
 
   callback = async (response) => {
-    console.log('callback img_id ',response)
+    console.log('callback img_id ', response)
     this.state.animal.img_url = response[0].image.image_url
     this.state.animal.img_id = response[0].image.image_id
 
     let updateInfo = {
       img_id: response[0].image.image_id,
-      img_url:response[0].image.image_url,
-      animal_id:this.state.animal.id
+      img_url: response[0].image.image_url,
+      animal_id: this.state.animal.id
     }
 
     console.log('call updated info ', updateInfo)
 
     await axios
-      .post(`${process.env.REACT_APP_BACKEND_URL}/api/animals/pictures`,updateInfo )
-      .then( result => {
-        console.log('upload image success animal view',result )
+      .post(`${process.env.REACT_APP_BACKEND_URL}/api/animals/pictures`, updateInfo)
+      .then(result => {
+        console.log('upload image success animal view', result)
       })
-      .catch( error => {
+      .catch(error => {
         console.log('upload image error animal view', error)
       })
-
-    // await this.props.updateAnimal(updateInfo,
-    //   this.state.animal.id, this.state.animal_meta.id)
-    //   .then(res => console.log('update animal animal view :success ', res))
-    //   .catch(error => console.log('update error animal view', error))
-
 
   }
 
@@ -575,8 +577,8 @@ this.props.updateAnimal(updateInfo,
     }
 
 
-    if(this.state.shelterVerified !== true) return <div>Verifying animal</div>
-    
+    if (this.state.shelterVerified !== true) return <div>Verifying animal</div>
+
     return (
       <div>
         <GridContainer>
@@ -592,15 +594,15 @@ this.props.updateAnimal(updateInfo,
                   handleMetaTextField={this.handleMetaTextField}
                   handleTextField={this.handleTextField}
                   handleAdoption={this.handleAdoption}
-                  paramsId={this.props.match.params.id} 
+                  paramsId={this.props.match.params.id}
                   handleToggle={this.handleToggle}
                   maxLength={this.maxLength}
                   open={this.state.open}
                   handleClose={this.handleClose}
-                  placeholderImages = {this.state.placeholderImages} 
-                  deletePictures = {this.deletePictures} 
-                  handleViewingPics = {this.handleViewPics}
-                  isViewingPhotos = {this.state.isViewingPhotos}/>
+                  placeholderImages={this.state.placeholderImages}
+                  deletePictures={this.deletePictures}
+                  handleViewingPics={this.handleViewPics}
+                  isViewingPhotos={this.state.isViewingPhotos} />
                 <GridItem xs={12} sm={12} md={12}>
                   <div style={customStyle.animalButtonStyle}>
 
@@ -626,9 +628,9 @@ this.props.updateAnimal(updateInfo,
                   textState={this.state.textState}
                   breedState={this.state.breedState}
                   speciesProps={this.state.species}
-                  breedsProps={this.state.breeds} 
+                  breedsProps={this.state.breeds}
                   maxLength={this.maxLength}
-                  />
+                />
 
                 <AnimalViewHealth
                   textState={this.state.textState}
@@ -642,8 +644,8 @@ this.props.updateAnimal(updateInfo,
               </GridContainer>
             </Card>
           </GridItem>
-          
-          <AnimalNotes animal_id={this.state.animal.id} shelter_id={this.state.animal.shelter_id}/>
+
+          <AnimalNotes animal_id={this.state.animal.id} shelter_id={this.state.animal.shelter_id} />
         </GridContainer>
       </div >
     );
@@ -678,8 +680,8 @@ const mapStateToProps = (state) => {
     animalMeta: state.animalReducer.animalInfo.animalMeta,
     animalNotes: state.animalReducer.animalInfo.animalNotes,
     animalFollowers: state.animalReducer.animalInfo.animalFollowers,
-    animalPictures:state.animalReducer.animalPictures,
-    picturesAfterDelete:state.animalReducer.picturesAfterDelete
+    animalPictures: state.animalReducer.animalPictures,
+    picturesAfterDelete: state.animalReducer.picturesAfterDelete
   }
 }
 

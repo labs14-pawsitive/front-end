@@ -18,7 +18,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {addAnimal, fetchOptions} from '../../actions/animalAction';
-import ImageUpload from '../../components/ImageUpload/ImageUpload'
+import ImageUpload from '../../components/ImageUpload/ImageUploadEdit'
 import { axiosWithAuth } from 'axiosWithAuth';
 
 
