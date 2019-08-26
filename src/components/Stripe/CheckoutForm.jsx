@@ -80,9 +80,9 @@ class CheckoutForm extends Component {
                 })
             }
         })
-        .catch(err){
+        .catch(err => {
             console.log(err);
-        }
+        })
         
 
     }
