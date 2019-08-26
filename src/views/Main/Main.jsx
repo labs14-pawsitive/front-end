@@ -149,7 +149,6 @@ class MainPage extends React.Component {
         this.setState({ speciesState: "error" });
       }
 
- 
     }
     return false;
   }
@@ -268,7 +267,6 @@ class MainPage extends React.Component {
         width: "60%"
       },
       buttonStyle: {
- 
         marginTop: "15px",
         marginBottom: "15px",
         width: "100%",
@@ -390,12 +388,11 @@ class MainPage extends React.Component {
 
       },
     }
- 
+
 
 
     return (
 
- 
       <GridContainer className={classes.bodyStyle}>
         <GridItem xs={12} sm={12} md={12} xl={12}
         style={{ 
@@ -561,13 +558,9 @@ class MainPage extends React.Component {
           </GridContainer>
       </GridContainer >
 
- 
 
-            <Button style={customStyle.buttonStyle} onClick = {() => this.setAlert("continue with application process")}>Adopt Me</Button>
-            </GridItem>
-            } 
-            <GridItem xs={10} sm={4}>
- 
+
+
     );
   }
 }
