@@ -82,7 +82,7 @@ class UsersShelterFollows extends React.Component {
   componentWillMount() {
     //verifying user before proceeding
     axiosWithAuth()
-      .get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/shelter/${localStorage.getItem('user_id')}`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/user/${localStorage.getItem('user_id')}`)
       .then( result => {
         this.setState({
           userVerified : true
