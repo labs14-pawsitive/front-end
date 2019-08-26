@@ -124,6 +124,10 @@ hungButtonStyle2: {
      backgroundColor: "green",
    }
 },
+addressStyle: {
+    minWidth: "140px",
+    marginBottom: "-10px",
+},
 ...buttonStyle,
   
 
