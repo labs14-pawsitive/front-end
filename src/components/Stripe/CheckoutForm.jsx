@@ -54,10 +54,7 @@ class CheckoutForm extends Component {
             name: this.state.name,
         })
 
-        axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${this.props.match.params.id}`)
-        .then(result => {
-
-            if (result){
+      
                 axios
                 .post(`${process.env.REACT_APP_BACKEND_URL}/api/stripe/donate`, {
                     token: token.id,
@@ -78,11 +75,8 @@ class CheckoutForm extends Component {
                 .catch(err => {
                     console.log('Donate Error:', err)
                 })
-            }
-        })
-        .catch(err => {
-            console.log(err);
-        })
+            
+     
         
 
     }
