@@ -24,7 +24,7 @@ import Auth from "components/Auth/Auth.js"
 import withStyles from "@material-ui/core/styles/withStyles";
 
 // core components
-import TempNavBar from "components/Navbars/TempNavBar.jsx";
+import MainNavBar from "components/Navbars/MainNavBar.jsx";
 import Footer from "components/Footer/Footer.jsx";
 
 import ShelterOnboardingWizard from "views/ShelterOnboarding/Wizard.jsx";
@@ -60,7 +60,7 @@ class ShelterOnboarding extends React.Component {
     const { classes, ...rest } = this.props;
     return (
       <div>
-        <TempNavBar brandText="Pawsnfind" {...rest} />
+        <MainNavBar brandText="Pawsnfind" {...rest} />  
         <div className={classes.wrapper} ref={this.wrapper}>
           
           <div

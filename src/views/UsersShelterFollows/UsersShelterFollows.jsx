@@ -17,8 +17,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Link } from 'react-router-dom';
+
+
 // react component for creating dynamic tables
 import ReactTable from "react-table";
+
 import axios from 'axios';
 import {axiosWithAuth} from 'axiosWithAuth';
 
@@ -31,6 +35,8 @@ import Update from "@material-ui/icons/Update";
 
 import Assignment from "@material-ui/icons/Assignment";
 import Favorite from "@material-ui/icons/Favorite";
+import Search from "@material-ui/icons/Search";
+
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -40,6 +46,8 @@ import CardBody from "components/Card/CardBody.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
+import Button from "components/CustomButtons/Button.jsx";
+
 
 import { cardTitle } from "assets/jss/material-dashboard-pro-react.jsx";
 
@@ -60,24 +68,24 @@ const styles = {
   },
 };
 
-class FollowerTable extends React.Component {
+class UsersShelterFollows extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      followers: [],
-      shelterVerified: ""
+      shelters: [],
+      userVerified: ""
 
     };
   }
 
   
   componentWillMount() {
-    //verifying shelter before proceeding
+    //verifying user before proceeding
     axiosWithAuth()
-      .get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/shelter/${localStorage.getItem('user_id')}`)
       .then( result => {
         this.setState({
-          shelterVerified : true
+          userVerified : true
         })
         console.log(result)
       })
@@ -90,23 +98,32 @@ class FollowerTable extends React.Component {
 
   componentDidMount() {
     axios
-    //.get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/shelter/${localStorage.getItem("shelter_id")}`)
-    .get(`${process.env.REACT_APP_BACKEND_URL}/api/shelters/${localStorage.getItem('shelter_id')}/follows`)
-    .then(followers => {
-      console.log(followers)
+    .get(`${process.env.REACT_APP_BACKEND_URL}/api/users/${localStorage.getItem('user_id')}/follows/shelters`)
+    .then(results => {
+      console.log(results)
       this.setState({
-        followers : followers.data.map((follower, key) => {
+        shelters : results.data.map((shelter, key) => {
         return {
           id: key,
-          userID: follower.user_id,
-          username: follower.username,
-          email: follower.email,
-          location: follower.zip,
-          //icon: <Favorite style={{color: '#e0286a'}}/>
+          shelterId: shelter.id,
+          shelter: shelter.shelter,
+          email: shelter.email,
+          location: `${shelter.city} ${shelter.state}, ${shelter.zipcode}`,
+          phone: shelter.phone,
+          actions: (
+            <div className="actions-left">
+              {/* view shelter */}
+              <Link to={`/shelter/${shelter.id}`}>
+                <Button color="success">
+                  <Search />
+                </Button>
+              </Link>
+            </div>
+          )
         };
       })
       })
-      console.log("state" , this.state.followers)
+      console.log("state" , this.state.shelters)
     })
     .catch(error => {
       console.log(error)
@@ -115,6 +132,7 @@ class FollowerTable extends React.Component {
 
   render() {
     const { classes } = this.props;
+
     const card_category = {
       color: "#999",
       margin: "0",
@@ -133,7 +151,7 @@ class FollowerTable extends React.Component {
       textAlign: "right"
     }
 
-    if(this.state.shelterVerified !== true) return <div>Verifying Shelter</div>
+    if(this.state.userVerified !== true) return <div>Verifying User</div>
 
     return (
       <GridContainer>
@@ -143,9 +161,9 @@ class FollowerTable extends React.Component {
                 <CardIcon color="warning">
                   <Icon>pets</Icon>
                 </CardIcon>
-                <p className={classes.cardCategory} style={card_category}>All Followers</p>
+                <p className={classes.cardCategory} style={card_category}>I'm Following</p>
                 <h3 className={classes.cardTitle} style={card_title}>
-                  {this.state.followers.length} <small>Followers</small>
+                  {this.state.shelters.length} <small>{this.state.shelters.length > 1 ? "Shelters" : "Shelter"}</small>
                 </h3>
               </CardHeader>
               <CardFooter stats>
@@ -162,29 +180,35 @@ class FollowerTable extends React.Component {
               <CardIcon color="primary">
                 <Assignment />
               </CardIcon>
-              <h4 className={classes.cardIconTitle}>Followers</h4>
+              <h4 className={classes.cardIconTitle}>Shelters</h4>
             </CardHeader>
             <CardBody>
               <ReactTable
-                data={this.state.followers}
+                data={this.state.shelters}
                 filterable
                 columns={[
                   {
-                    Header: "User ID",
-                    accessor: "userID",
+                    Header: "Shelter",
+                    accessor: "shelter",
                     
                   },
                   {
-                    Header: "Username",
-                    accessor: "username"
+                    Header: "Location",
+                    accessor: "location"
                   },
                   {
                     Header: "Email",
                     accessor: "email"
                   },
                   {
-                    Header: "Location",
-                    accessor: "zip"
+                    Header: "Phone",
+                    accessor: "phone"
+                  },
+                  {
+                    Header: "View Shelter",
+                    accessor: "actions",
+                    sortable: false,
+                    filterable: false
                   }
                 ]}
                 defaultPageSize={10}
@@ -207,7 +231,7 @@ const mapStateToProps = (state) => {
   
 }
 
-FollowerTable.propTypes = {
+UsersShelterFollows.propTypes = {
   classes: PropTypes.object
 };
 
@@ -217,5 +241,5 @@ FollowerTable.propTypes = {
 export default connect(
   mapStateToProps,
   {}
-)(withStyles(styles)(FollowerTable))
+)(withStyles(styles)(UsersShelterFollows))
 

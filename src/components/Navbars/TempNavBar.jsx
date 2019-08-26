@@ -98,7 +98,9 @@ class TempNavBar extends React.Component {
       </List>
     );
     const logoStyle = {
-        fontFamily : "Baloo-Regular",
+        fontFamily: "Coiny, cursive",
+        color : "#FCFCFC",
+        fontSize:"2rem",
       }
 
     return (

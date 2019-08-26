@@ -48,7 +48,8 @@ function Footer({ ...props }) {
   const customStyle={
     link: {
       color:"white"
-    }
+    },
+    
   }
   return (
     <footer className={classes.footer}>
@@ -102,7 +103,7 @@ function Footer({ ...props }) {
           <a
             href="/"
             className={anchor}
-
+            style={{color:"white"}}
             target={window.location.pathname.indexOf("/admin/") !== -1 ? "_blank" : ""}
           > Pawsnfind
           </a>

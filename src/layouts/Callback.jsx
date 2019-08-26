@@ -76,24 +76,6 @@ class Callback extends React.Component {
             clearInterval(this.interval);
           }
     }
-    
-
-     /* if(newUser == "true") {
-        this.props.history.push('/callback/onboarding')
-      }  
-      else 
-      if (localStorage.getItem('animalId') && localStorage.getItem('shelterId')) { 
-        this.props.history.push(`/application/${shelterId}/${animalId}`)
-      }
-      else 
-      if (shelter_id != "null" && typeof(shelter_id) !== 'undefined') {
-        this.props.history.push('/admin/dashboard')
-      } 
-     
-      else {
-        this.props.history.push('/')
-      }
-      clearInterval(this.interval);*/
   }
 
   componentDidMount() {

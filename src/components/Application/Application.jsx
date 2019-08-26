@@ -76,6 +76,7 @@ class Application extends React.Component {
 
     return (
         <> 
+
  
             {/* <GridItem xs={10} sm={4}> */}
             <Button style={customStyle.buttonStyle} onClick={this.handleClickOpen('paper')}>
@@ -83,6 +84,7 @@ class Application extends React.Component {
             </Button>
             {/* </GridItem> */}
  
+
             {this.state.open === true ? 
                 <GridContainer>
                     <GridItem xs={12} sm={11} md={10}>

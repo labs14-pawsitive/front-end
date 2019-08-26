@@ -46,11 +46,6 @@ export default class Auth {
     setSession = async authResult => {
         let expiresAt = authResult.expiresIn * 1000 + new Date().getTime();
 
-        // why do we have to set item in localstorage???
-        //localStorage.setItem('access_token', authResult.accessToken)
-        //localStorage.setItem('id_token', authResult.idToken)
-        //localStorage.setItem('expires_at', expiresAt)
-
         const decoded = jwtDecode(authResult.idToken)
         const user = {
             email : decoded.email,

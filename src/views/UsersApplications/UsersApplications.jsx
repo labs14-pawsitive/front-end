@@ -1,24 +1,19 @@
 /*!
-
 =========================================================
 * Material Dashboard PRO React - v1.7.0
 =========================================================
-
 * Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
 * Copyright 2019 Creative Tim (https://www.creative-tim.com)
-
 * Coded by Creative Tim
-
 =========================================================
-
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
 */
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 // react component for creating dynamic tables
 import ReactTable from "react-table";
+import { NavLink } from "react-router-dom";
 import axios from 'axios';
 import {axiosWithAuth} from 'axiosWithAuth';
 
@@ -30,19 +25,25 @@ import Icon from "@material-ui/core/Icon";
 import Update from "@material-ui/icons/Update";
 
 import Assignment from "@material-ui/icons/Assignment";
+// import Dvr from "@material-ui/icons/Dvr";
+import Search from "@material-ui/icons/Search";
 import Favorite from "@material-ui/icons/Favorite";
+// import Close from "@material-ui/icons/Close";
+// import Warning from "@material-ui/icons/Warning";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
+import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
+// import Danger from "components/Typography/Danger.jsx";
+// import { dataTable } from "variables/general.jsx";
 
 import { cardTitle } from "assets/jss/material-dashboard-pro-react.jsx";
-
 
 const styles = {
   cardIconTitle: {
@@ -60,24 +61,24 @@ const styles = {
   },
 };
 
-class FollowerTable extends React.Component {
+class UserApplications extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      followers: [],
-      shelterVerified: ""
+      applications: [],
+      userVerified: ""
 
     };
   }
 
-  
+ 
   componentWillMount() {
-    //verifying shelter before proceeding
+    //verifying user before proceeding
     axiosWithAuth()
-      .get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/user/${localStorage.getItem('user_id')}`)
       .then( result => {
         this.setState({
-          shelterVerified : true
+          userVerified : true
         })
         console.log(result)
       })
@@ -88,25 +89,39 @@ class FollowerTable extends React.Component {
   }
 
 
-  componentDidMount() {
+   componentDidMount() {
     axios
-    //.get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/shelter/${localStorage.getItem("shelter_id")}`)
-    .get(`${process.env.REACT_APP_BACKEND_URL}/api/shelters/${localStorage.getItem('shelter_id')}/follows`)
-    .then(followers => {
-      console.log(followers)
-      this.setState({
-        followers : followers.data.map((follower, key) => {
+    .get(`${process.env.REACT_APP_BACKEND_URL}/api/applications/user/${localStorage.getItem('user_id')}`)
+
+    .then(applications => {
+        console.log(applications)
+        const picStyle = { width: '100%' }
+        this.setState({
+        applications : applications.data.map((application, key) => {
         return {
           id: key,
-          userID: follower.user_id,
-          username: follower.username,
-          email: follower.email,
-          location: follower.zip,
-          //icon: <Favorite style={{color: '#e0286a'}}/>
+          profilePic: <img src={application.img_url} style={picStyle}/>,
+          applicationID: application.id,
+          name: application.animal_name,
+          shelter: application.shelter,
+          status: application.application_status,
+          date: `${application.month}/${application.day}/${application.year}`,
+         // icon: <Favorite style={{color: '#e0286a'}}/>
+
+          
+          actions: (
+            <div className="actions-left">
+              <NavLink to={`/animal/${application.animal_id}`}>
+              <Button color="success">
+                  <Search />
+                  </Button>
+              </NavLink>{" "}
+            </div>
+          )
         };
       })
       })
-      console.log("state" , this.state.followers)
+      console.log("state" , this.state.applications)
     })
     .catch(error => {
       console.log(error)
@@ -133,19 +148,20 @@ class FollowerTable extends React.Component {
       textAlign: "right"
     }
 
-    if(this.state.shelterVerified !== true) return <div>Verifying Shelter</div>
+    if(this.state.userVerified !== true) return <div>Verifying applications</div>
 
     return (
-      <GridContainer>
-         <GridItem xs={12} sm={6} md={6} lg={3}>
+
+      <GridContainer>     
+         <GridItem xs={12} sm={6} md={6} lg={4}>
             <Card>
               <CardHeader color="warning" stats icon>
                 <CardIcon color="warning">
                   <Icon>pets</Icon>
                 </CardIcon>
-                <p className={classes.cardCategory} style={card_category}>All Followers</p>
+                <p className={classes.cardCategory} style={card_category}>Total Applications</p>
                 <h3 className={classes.cardTitle} style={card_title}>
-                  {this.state.followers.length} <small>Followers</small>
+                  {this.state.applications.length} <small>Application{this.state.applications.length > 1 ? "s" : "" }</small>
                 </h3>
               </CardHeader>
               <CardFooter stats>
@@ -162,29 +178,46 @@ class FollowerTable extends React.Component {
               <CardIcon color="primary">
                 <Assignment />
               </CardIcon>
-              <h4 className={classes.cardIconTitle}>Followers</h4>
+              <h4 className={classes.cardIconTitle}>Applications</h4>
             </CardHeader>
+
+      
+
             <CardBody>
               <ReactTable
-                data={this.state.followers}
+                data={this.state.applications}
                 filterable
                 columns={[
                   {
-                    Header: "User ID",
-                    accessor: "userID",
-                    
+                    Header: "Profile Picture",
+                    accessor: "profilePic"
                   },
                   {
-                    Header: "Username",
-                    accessor: "username"
+                    Header: "Application ID",
+                    accessor: "applicationID",
                   },
                   {
-                    Header: "Email",
-                    accessor: "email"
+                    Header: "Animal Name",
+                    accessor: "name"
                   },
                   {
-                    Header: "Location",
-                    accessor: "zip"
+                    Header: "Status",
+                    accessor: "status"
+                  },
+                  {
+                    Header: "Shelter",
+                    accessor: "shelter"
+                  },
+                  {
+                    Header: "Date",
+                    accessor: "date"
+                  },
+                  
+                  {
+                    Header: "View Animal",
+                    accessor: "actions",
+                    sortable: false,
+                    filterable: false
                   }
                 ]}
                 defaultPageSize={10}
@@ -207,7 +240,7 @@ const mapStateToProps = (state) => {
   
 }
 
-FollowerTable.propTypes = {
+UserApplications.propTypes = {
   classes: PropTypes.object
 };
 
@@ -217,5 +250,5 @@ FollowerTable.propTypes = {
 export default connect(
   mapStateToProps,
   {}
-)(withStyles(styles)(FollowerTable))
+)(withStyles(styles)(UserApplications))
 

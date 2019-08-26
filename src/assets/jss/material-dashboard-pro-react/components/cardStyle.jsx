@@ -147,6 +147,14 @@ const cardStyle = {
     },
     color: whiteColor
   },
+  customBlue: {
+    background:
+      "linear-gradient(60deg, #3b6780 , #588caa)",
+    "& h1 small": {
+      color: "rgba(" + hexToRgb(whiteColor) + ", 0.8)"
+    },
+    color: whiteColor
+  },
   info: {
     background:
       "linear-gradient(60deg," + infoColor[1] + "," + infoColor[4] + ")",

@@ -1,20 +1,4 @@
 /*!
- 
-
-=========================================================
-* Material Dashboard PRO React - v1.7.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-=======
 =========================================================
 * Material Dashboard PRO React - v1.7.0
 =========================================================
@@ -23,13 +7,13 @@
 * Coded by Creative Tim
 =========================================================
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
- 
 */
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 // react component for creating dynamic tables
 import ReactTable from "react-table";
+import { NavLink } from "react-router-dom";
 import axios from 'axios';
 import {axiosWithAuth} from 'axiosWithAuth';
 
@@ -41,22 +25,29 @@ import Icon from "@material-ui/core/Icon";
 import Update from "@material-ui/icons/Update";
 
 import Assignment from "@material-ui/icons/Assignment";
+// import Dvr from "@material-ui/icons/Dvr";
+import Search from "@material-ui/icons/Search";
 import Favorite from "@material-ui/icons/Favorite";
+// import Close from "@material-ui/icons/Close";
+// import Warning from "@material-ui/icons/Warning";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
-import Table from "components/Table/Table.jsx";
-
+import Button from "components/CustomButtons/Button.jsx";
 import Card from "components/Card/Card.jsx";
-import CardText from "components/Card/CardText.jsx";
-
 import CardBody from "components/Card/CardBody.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
+import CardText from "components/Card/CardText.jsx";
+import Table from "components/Table/Table.jsx";
+
+// import Danger from "components/Typography/Danger.jsx";
 
 import { cardTitle } from "assets/jss/material-dashboard-pro-react.jsx";
+
+
 
 
 const styles = {
@@ -75,27 +66,27 @@ const styles = {
   },
 };
 
-class Donations extends React.Component {
+class UserDonations extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       donations: [],
-      totalDonations : "",
-      recentDonations : "",
-      topDonors : [], 
-      shelterVerified: ""
- 
+      top_donations: [],
+      count: '',
+      total: '',
+      userVerified: ""
+
     };
   }
 
-  
+ 
   componentWillMount() {
-    //verifying shelter before proceeding
+    //verifying user before proceeding
     axiosWithAuth()
-      .get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/user/${localStorage.getItem('user_id')}`)
       .then( result => {
         this.setState({
-          shelterVerified : true
+          userVerified : true
         })
         console.log(result)
       })
@@ -106,28 +97,27 @@ class Donations extends React.Component {
   }
 
 
-  componentDidMount() {
+   componentDidMount() {
     axios
-    .get(`${process.env.REACT_APP_BACKEND_URL}/api/donations/dashboardData/${localStorage.getItem('shelter_id')}`)
+    .get(`${process.env.REACT_APP_BACKEND_URL}/api/donations/user/${localStorage.getItem('user_id')}`)
+
     .then(results => {
-      console.log(results)
-      this.setState({
+        console.log(results)
+        this.setState({
         donations : results.data.donations.map((donation, key) => {
         return {
           id: key,
-          donationId: donation.id,
-          username: donation.username,
-          email: donation.email,
+          donationID: donation.id,
           amount: parseInt(donation.amount),
+          shelter: donation.shelter,
           date: `${donation.month}/${donation.day}/${donation.year}`,
- 
-         // icon: <Favorite style={{color: '#e0286a'}}/>
- 
+          //icon: <Favorite style={{color: '#e0286a'}}/>
+          //empty: []
         };
       }),
-      totalDonations : results.data.totalDonations[0].total,
-      recentDonations : results.data.recentDonations[0].total,
-      topDonors : results.data.topDonations
+        count: results.data.total_donations[0].count,
+        total: results.data.total_donations[0].total,
+        top_donations : results.data.top_donations
       })
       console.log("state" , this.state)
     })
@@ -136,10 +126,11 @@ class Donations extends React.Component {
     })
   }
 
+
   getTopDonationRows = () => {
     let result = []
-     this.state.topDonors.map((donor, key) => {
-       result.push([`${key+1}`,  `${donor.username}`, `${donor.total}`, `${donor.number_of_donations}`])
+     this.state.top_donations.map((donation, key) => {
+       result.push([`${key+1}`,  `${donation.shelter}`, `${donation.total}`, `${donation.number_of_donations}`])
     })
     return result;
   }
@@ -181,20 +172,8 @@ class Donations extends React.Component {
       },
       marginTop30: {
         marginTop: "30px"
-      },
-      testimonialIcon: {
-        marginTop: "30px",
-        "& svg": {
-          width: "40px",
-          height: "40px"
-        }
-      },
-      cardTestimonialDescription: {
-        fontStyle: "italic",
-        color: "#999999"
       }
     };
-    
     const card_category = {
       color: "#999",
       margin: "0",
@@ -215,62 +194,64 @@ class Donations extends React.Component {
 
     let topDonationRows = this.getTopDonationRows();
 
-    if(this.state.shelterVerified !== true) return <div>Verifying Shelter</div>
+
+    if(this.state.userVerified !== true) return <div>Verifying donations</div>
 
     return (
-      <GridContainer>
- 
+
+      <GridContainer>     
         <GridItem xs={12} sm={12} md={5} lg={4}>
-          <GridContainer>
-            <GridItem xs={12} sm={6} md={12} lg={12}>
-              <Card>
-                <CardHeader color="success" stats icon>
-                  <CardIcon color="success">
-                    <Icon>pets</Icon>
-                  </CardIcon>
-                  <p className={classes.cardCategory} style={card_category}>Recent Donations</p>
-                  <h3 className={classes.cardTitle} style={card_title}>
-                    <small>$</small>{this.state.recentDonations} 
-                  </h3>
-                </CardHeader>
-                <CardFooter stats>
-                  <div className={classes.stats} style={card_category}>
-                  <Update />
-                    Just Updated
-                  </div>
-                </CardFooter>
-              </Card>
-            </GridItem> 
-            <GridItem xs={12} sm={6} md={12} lg={12}>
-              <Card>
-                <CardHeader color="warning" stats icon>
-                  <CardIcon color="warning">
-                    <Icon>pets</Icon>
-                  </CardIcon>
-                  <p className={classes.cardCategory} style={card_category}>Total Donations</p>
-                  <h3 className={classes.cardTitle} style={card_title}>
-                    <small>$</small>{this.state.totalDonations} 
-                  </h3>
-                </CardHeader>
-                <CardFooter stats>
-                  <div className={classes.stats} style={card_category}>
-                  <Update />
-                    Just Updated
-                  </div>
-                </CardFooter>
-              </Card>
-            </GridItem>
-          </GridContainer>
+            <GridContainer>
+                <GridItem xs={12} sm={6} md={12} lg={12}>
+                    <Card>
+                    <CardHeader color="warning" stats icon>
+                        <CardIcon color="warning">
+                        <Icon>pets</Icon>
+                        </CardIcon>
+                        <p className={classes.cardCategory} style={card_category}>I've Made a Total of</p>
+                        <h3 className={classes.cardTitle} style={card_title}>
+                        {this.state.count} <small>Donation{this.state.donations.length > 1 ? "s" : "" }</small>
+                        </h3>
+                    </CardHeader>
+                    <CardFooter stats>
+                        <div className={classes.stats} style={card_category}>
+                        <Update />
+                        Just Updated
+                        </div>
+                    </CardFooter>
+                    </Card>
+                </GridItem>
+
+                <GridItem xs={12} sm={6} md={12} lg={12}>
+                    <Card>
+                    <CardHeader color="warning" stats icon>
+                        <CardIcon color="warning">
+                        <Icon>money</Icon>
+                        </CardIcon>
+                        <p className={classes.cardCategory} style={card_category}>I've Donated a Total Amount of</p>
+                        <h3 className={classes.cardTitle} style={card_title}>
+                        ${this.state.total}
+                        </h3>
+                    </CardHeader>
+                    <CardFooter stats>
+                        <div className={classes.stats} style={card_category}>
+                        <Update />
+                        Just Updated
+                        </div>
+                    </CardFooter>
+                    </Card>
+                </GridItem>
+            </GridContainer>
         </GridItem>
-         
+
+
         <GridItem xs={12} sm={12} md={7} lg={8}>
- 
             <Card>
               <CardHeader color="rose" text>
                 <CardText color="rose">
-                  <h4 className={classes.cardTitleWhite}>Top Donors</h4>
+                  <h4 className={classes.cardTitleWhite}>My Top 4 Shelters</h4>
                   <h4 className={classes.cardCategoryWhite} style={styles.cardCategoryWhite}>
-                    Top Donors Over Time
+                    My Top 4 Shelter Donations Over Time
                   </h4>
                 </CardText>
               </CardHeader>
@@ -278,12 +259,14 @@ class Donations extends React.Component {
                 <Table
                   hover
                   tableHeaderColor="warning"
-                  tableHead={["Rank", "Username", "Total Donation", "# of Donations"]}
+                  tableHead={["Rank", "Shelter", "Total Donation", "# of Donations"]}
                   tableData={topDonationRows}
                 />
               </CardBody>
             </Card>
           </GridItem>
+
+
         <GridItem xs={12}>
           <Card>
             <CardHeader color="primary" icon>
@@ -292,33 +275,33 @@ class Donations extends React.Component {
               </CardIcon>
               <h4 className={classes.cardIconTitle}>Donations</h4>
             </CardHeader>
+
+      
+
             <CardBody>
               <ReactTable
                 data={this.state.donations}
                 filterable
                 columns={[
+                 
                   {
                     Header: "Donation ID",
-                    accessor: "donationId",
-                    
-                  },
-                  {
-                    Header: "Username",
-                    accessor: "username"
-                  },
-                  {
-                    Header: "Email",
-                    accessor: "email"
+                    accessor: "donationID",
                   },
                   {
                     Header: "Donation Amount",
                     accessor: "amount"
                   },
+                  
+                  {
+                    Header: "Shelter",
+                    accessor: "shelter"
+                  },
                   {
                     Header: "Date",
                     accessor: "date"
- 
                   }
+                  
                 ]}
                 defaultPageSize={10}
                 showPaginationTop
@@ -335,13 +318,12 @@ class Donations extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
- 
     user : state.userReducer.user
   }
- 
+  
 }
 
-Donations.propTypes = {
+UserDonations.propTypes = {
   classes: PropTypes.object
 };
 
@@ -351,6 +333,5 @@ Donations.propTypes = {
 export default connect(
   mapStateToProps,
   {}
- 
-)(withStyles(styles)(Donations))
- 
+)(withStyles(styles)(UserDonations))
+
