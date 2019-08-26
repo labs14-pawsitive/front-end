@@ -54,27 +54,37 @@ class CheckoutForm extends Component {
             name: this.state.name,
         })
 
+        axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${this.props.match.params.id}`)
+        .then(result => {
 
-        axios
-            .post(`${process.env.REACT_APP_BACKEND_URL}/api/stripe/donate`, {
-                token: token.id,
-                data: { 
-                    amount: (this.state.amount * 100), 
-                    shelter_id: this.props.shelterID,
-                    user_id: localStorage.getItem('user_id'),
-                 } 
-            })
-            .then(res =>{ 
-                console.log(res)
-                this.setState({
-                    amount: "",
-                    name: "",
-                    complete: true
+            if (result){
+                axios
+                .post(`${process.env.REACT_APP_BACKEND_URL}/api/stripe/donate`, {
+                    token: token.id,
+                    data: { 
+                        amount: (this.state.amount * 100), 
+                        shelter_id: results["shelter_id"],
+                        user_id: localStorage.getItem('user_id'),
+                     } 
                 })
-            })
-            .catch(err => {
-                console.log('Donate Error:', err)
-            })
+                .then(res =>{ 
+                    console.log(res)
+                    this.setState({
+                        amount: "",
+                        name: "",
+                        complete: true
+                    })
+                })
+                .catch(err => {
+                    console.log('Donate Error:', err)
+                })
+            }
+        })
+        .catch(err){
+            console.log(err);
+        }
+        
+
     }
 
     changeHandler = e => {
