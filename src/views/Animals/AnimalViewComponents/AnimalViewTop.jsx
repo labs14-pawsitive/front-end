@@ -39,51 +39,45 @@ class AnimalViewTop extends React.Component {
             // placeholderImages: Array(6).fill("url(" + placeholderImage + ")"),
             updatedImages: [],
             animalPictures: [],
-            deletePicture:[]
+            deletePicture: [],
+            isViewingPhotos: false
         }
     }
 
     componentDidMount = () => {
         this.setState({
-            updatedImages:this.props.placeholderImages
+            updatedImages: this.props.placeholderImages
         })
     }
 
-    // componentDidUpdate(prevProps, prevState) {
-    //     if (this.state.updatedImages !== prevState.updatedImages ) {
-    //       this.setState({
-    //         updatedImages:this.state.updatedImages
-    //       })
-    
-    //     }
-    // }
+    componentDidUpdate(prevProps, prevState) {
+        console.log('component did update in animal view top is invoked')
+        if (this.props.placeholderImages !== prevProps.placeholderImages) {
+            this.setState({
+                updatedImages: this.state.updatedImages
+            })
 
-    deletePicture = (event,imgID) => {
+        }
+    }
+
+    deletePicture = (event, imgID) => {
 
         event.preventDefault()
 
-        // const updateAfterDelete = this.state.updatedImages.map(image => {
-        //         if(image.img_id === imgID)
-        //         {
-        //             image = "empty"
-        //         }
-        // })
+        console.log('updated pics after deletion in the animal top component state', this.state.updatedImages.filter(image => image.img_id !== imgID))
 
-        // console.log('update after delete filter array ', updateAfterDelete)
-
-        // this.setState({
-        //     updatedImages:updateAfterDelete
-        // })
-
-        console.log('updated pics after deletion in the animal top component state',this.state.updatedImages.filter(image => image.img_id !== imgID))
-
-        this.props.deletePictures(imgID,this.props.animal.id)
+        this.props.deletePictures(imgID, this.props.animal.id)
     }
 
-    render() {
-        // console.log('pictures urls ', this.props.animalPictures)
-        // console.log('updatedImages urls ', this.state.updatedImages)
+    // handleViewingPics = (event) => {
+    //     event.preventDefault()
 
+    //     this.setState({
+    //         isViewingPhotos: !this.state.isViewingPhotos
+    //     })
+    // }
+
+    render() {
         console.log('placeholder images in animal top component ', this.props.placeholderImages)
         const { classes, fullScreen } = this.props;
 
@@ -221,6 +215,8 @@ class AnimalViewTop extends React.Component {
                                 }}
                             />
 
+                            
+
                             {this.props.isEditing &&
                                 <Dialog style={{
                                     overflowY: "hidden"
@@ -235,7 +231,7 @@ class AnimalViewTop extends React.Component {
                                     <DialogTitle id="alert-dialog-title" >{"Edit Pictures"}</DialogTitle>
                                     <GridContainer md={12}>
                                         {this.props.placeholderImages.map(eachImage => (
-                                            <GridItem md={4}>
+                                            <GridItem md={4} key={eachImage.img_id}>
                                                 <DialogContent style={{
                                                     height: "300px",
                                                     padding: 0,
@@ -244,23 +240,22 @@ class AnimalViewTop extends React.Component {
                                                     margin: "0 9px 9px 9px"
                                                 }}>
 
-                                                    {eachImage !== 'empty' ? 
-                                                    <div>
-                                                    <ImageUpload height="100%" width="100%"
-                                                        defaultImage={eachImage.img_url}
-                                                        borderRadius="5px" imageLimit={1}
-                                                        customStyle={imageModalStyle}
-                                                        editable={this.props.isEditing} callback={this.props.callback}
-                                                        url={`${process.env.REACT_APP_BACKEND_URL}/api/pictures`} />
+                                                    {eachImage !== '' ?
+                                                        <div>
+                                                            <ImageUpload height="100%" width="100%"
+                                                                defaultImage={eachImage.img_url}
+                                                                borderRadius="5px" imageLimit={1}
+                                                                customStyle={imageModalStyle}
+                                                                editable={this.props.isEditing} callback={this.props.callback}
+                                                                url={`${process.env.REACT_APP_BACKEND_URL}/api/pictures`} />
 
-                                                        <IconButton style={{float:"right"}} onClick={(event) => this.deletePicture(event,eachImage.img_id)}>
-                                                            <DeleteIcon />
-                                                        </IconButton>
+                                                            <IconButton style={{ float: "right", color: "#cd5c5c" }} onClick={(event) => this.deletePicture(event, eachImage.img_id)}>
+                                                                <DeleteIcon />
+                                                            </IconButton>
                                                         </div>
-                                                :
+                                                        :
                                                         <ImageUpload height="300px" width="169px"
-                                                            borderRadius="5px" imageLimit={1}
-                                                            // customStyle={imageModalStyle}
+                                                            borderRadius="5px" imageLimit={1}                                                            
                                                             editable={this.props.isEditing} callback={this.props.callback}
                                                             url={`${process.env.REACT_APP_BACKEND_URL}/api/pictures`} />}
 
@@ -271,7 +266,7 @@ class AnimalViewTop extends React.Component {
                                     </GridContainer>
 
 
-                                    <Button onClick={this.handleClose} color="primary" autoFocus>
+                                    <Button onClick={this.props.handleClose} color="primary" autoFocus>
                                         Close
                                     </Button>
 
@@ -281,6 +276,54 @@ class AnimalViewTop extends React.Component {
 
                         </GridListTile>
                     </GridList>
+                    <Button size="small" color="primary" className={classes.button} onClick={this.props.handleViewingPics}>
+                                {/* {this.props.isViewingPhotos ? "CLOSE" : "VIEW MORE PHOTOS"} */}
+                                VIEW MORE PHOTOS
+                            </Button>
+
+                            {this.props.isViewingPhotos &&
+                                <Dialog style={{
+                                    overflowY: "hidden"
+                                }}
+                                    fullScreen={fullScreen}
+                                    open={this.props.open}
+                                    onClose={this.props.handleClose}
+                                    aria-labelledby="responsive-dialog-title"
+                                >
+
+
+                                    <DialogTitle id="alert-dialog-title" >{"View Pictures"}</DialogTitle>
+                                    <GridContainer md={12}>
+                                        {this.props.animalPictures.map(eachImage => (
+                                            <GridItem md={4} key={eachImage.img_id}>
+                                                <DialogContent style={{
+                                                    height: "300px",
+                                                    padding: 0,
+                                                    position: "relative",
+                                                    width: "169px",
+                                                    margin: "0 9px 9px 9px"
+                                                }}>
+
+                                                    <ImageUpload height="100%" width="100%"
+                                                        defaultImage={eachImage.img_url}
+                                                        borderRadius="5px" imageLimit={1}
+                                                        customStyle={imageModalStyle}
+                                                        editable={this.props.isEditing} callback={this.props.callback}
+                                                        url={`${process.env.REACT_APP_BACKEND_URL}/api/pictures`} />
+
+                                                </DialogContent>
+                                            </GridItem>
+                                        ))}
+
+                                    </GridContainer>
+
+
+                                    <Button onClick={this.props.handleClose} color="primary" autoFocus>
+                                        Close
+                                    </Button>
+
+                                </Dialog>
+                            }
                 </GridItem>
 
                 <GridItem xs={12} sm={12} md={7}>
@@ -354,7 +397,7 @@ AnimalViewTop.propTypes = {
 const mapStateToProps = (state) => {
     return {
         locations: state.animalReducer.dropdownAnimalOptions.locations,
-        // animalPictures:state.animalReducer.animalPictures
+        animalPictures: state.animalReducer.animalPictures
     }
 }
 

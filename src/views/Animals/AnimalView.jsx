@@ -82,7 +82,7 @@ class AnimalView extends React.Component {
       animal_followers: [],
       animalPictures:[],
       // placeholderImages:Array(6).fill("url(" + placeholderImage + ")"),
-      placeholderImages:Array(6).fill('empty'),
+      placeholderImages:Array(6).fill(''),
       breeds: [],
       size: [],
       coat_length: [],
@@ -93,6 +93,7 @@ class AnimalView extends React.Component {
       dynamicBreedDropdown: [],
       isEditing: false,
       isPosting: false,
+      isViewingPhotos:false,
       note: '',
       textState: {
         descriptionState: 'success',
@@ -180,6 +181,7 @@ class AnimalView extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+
     if (this.props.animalNotes !== prevProps.animalNotes ) {
       this.setState({
         animal_notes: this.props.animalNotes
@@ -187,9 +189,10 @@ class AnimalView extends React.Component {
 
     }
 
-    if (this.props.animalPictures !== prevProps.animalPictures ) {
+    if (this.state.placeholderImages !== prevState.placeholderImages ) {
+      console.log('placeholder images: component did update in animal view  is invoked')
       this.setState({
-        animalPictures: this.props.animalPictures
+        placeholderImages: this.state.placeholderImages
       })
 
     }
@@ -359,7 +362,8 @@ this.props.updateAnimal(updateInfo,
   handleClose = (event) => {
     event.preventDefault()
     this.setState({
-      open:false
+      open:false,
+      isViewingPhotos:false
     })
   }
 
@@ -500,7 +504,23 @@ this.props.updateAnimal(updateInfo,
     else this.handleToggle(event)
   }
 
+  handleViewPics = (event) => {
+    event.preventDefault()
+
+        this.setState({
+            isViewingPhotos: !this.state.isViewingPhotos,
+            open:!this.state.open
+        })
+  }
+
   deletePictures = (imageId,animalId) => {
+
+    const arrayAfterDelete = this.state.placeholderImages.map(image => image.img_id===imageId ? '': image)
+
+    this.setState({
+      placeholderImages:arrayAfterDelete
+    })
+
     this.props.deleteAnimalPictures(imageId,animalId)
     .then(res => console.log('delete pic fn from animal view component ', res))
     .catch(error => console.log(error))
@@ -564,9 +584,10 @@ this.props.updateAnimal(updateInfo,
                   maxLength={this.maxLength}
                   open={this.state.open}
                   handleClose={this.handleClose}
-                  animalPictures ={this.state.animalPictures}
                   placeholderImages = {this.state.placeholderImages} 
-                  deletePictures = {this.deletePictures} />
+                  deletePictures = {this.deletePictures} 
+                  handleViewingPics = {this.handleViewPics}
+                  isViewingPhotos = {this.state.isViewingPhotos}/>
                 <GridItem xs={12} sm={12} md={12}>
                   <div style={customStyle.animalButtonStyle}>
 
