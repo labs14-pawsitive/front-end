@@ -16,6 +16,7 @@ export const updateSearchOption = (changedAttribute, value) => dispatch => {
 export const UPDATE_DISPLAYED_ANIMALS_START = 'DISPLAYED_ANIMALS_START';
 export const UPDATE_DISPLAYED_ANIMALS_SUCCESS = 'UPDATE_DISPLAYED_ANIMALS_SUCCESS';
 export const UPDATE_DISPLAYED_ANIMALS_ERROR = 'UPDATE_DISPLAYED_ANIMALS_ERROR';
+// export const UPDATE_DISPLAYED_PAGINATION_DETAILS = 'UPDATE_DISPLAYED_PAGINATION_DETAILS'
 export const updateDisplayedAnimals = (options={}) => dispatch => {
     dispatch({ type: UPDATE_DISPLAYED_ANIMALS_START})
 
@@ -26,7 +27,7 @@ export const updateDisplayedAnimals = (options={}) => dispatch => {
     return axios
     .post('http://localhost:8000/api/search/advancedSearch', searchObj)
     .then(res => {
-        dispatch({ type: UPDATE_DISPLAYED_ANIMALS_SUCCESS, payload: {animals: res.data} })
+        dispatch({ type: UPDATE_DISPLAYED_ANIMALS_SUCCESS, payload: {animals: res.data.animals} })
     })
     .catch(err => {
         dispatch({type: UPDATE_DISPLAYED_ANIMALS_ERROR, payload: err.response})

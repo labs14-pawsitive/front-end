@@ -40,12 +40,13 @@ import { flexbox } from '@material-ui/system';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import ReactDOM from 'react-dom';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import queryString from 'query-string';
 
 class SearchPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      radiusOptions: [10, 25, 50, 100],
+      radiusOptions: [5, 10, 15],
       genderOptions: [{name: "Male", value: true}, {name: "Female", value: false}],
       labelWidth: 0
     }
@@ -54,16 +55,24 @@ class SearchPage extends React.Component {
   componentDidMount() {
     this.props.fetchOptions(0)
     const {searchSelections} = this.props
+
+    this.updateInitialSearchOptions()
+
+
     const options = {
       breed_id: searchSelections.breed_ids,
-      species_id: searchSelections.species_ids,
+      species_id: searchSelections.species_ids, 
       size_id: searchSelections.size_ids,
       age_id: searchSelections.age_ids,
       coat_length_id: searchSelections.coatLength_ids,
       zipcode: searchSelections.zipcode,
-      is_male: searchSelections.is_male
+      is_male: searchSelections.is_male,
+      radius: searchSelections.radius
     }
     this.props.updateDisplayedAnimals(options)
+    console.log(options)
+    
+
     this.setState({
       breedLabelWidth: ReactDOM.findDOMNode(this.BreedLabelRef).offsetWidth,
       speciesLabelWidth: ReactDOM.findDOMNode(this.SpeciesLabelRef).offsetWidth,
@@ -75,6 +84,49 @@ class SearchPage extends React.Component {
     })
   }
 
+  updateInitialSearchOptions() {
+    const test = this.props.location.search
+    const query = queryString.parse(test)
+
+    if (query.species_id) {
+      const speciesIds = Array.from(query.species_id).map(id => parseInt(id))
+      this.props.updateSearchOption("species_ids", speciesIds)
+    }
+    if(query.radius) {
+      this.props.updateSearchOption("radius", parseInt(query.radius))
+    }
+    if(query.breed_id) {
+      const breedsIds = Array.from(query.breed_id).map(id => parseInt(id))
+      this.props.updateSearchOption("breed_ids", breedsIds)
+    }
+    if(query.is_male && query.is_male.length) {
+      const convertedBooleans = [].concat(query.is_male).map(value => {
+        if (value == "true") {
+          return true
+        } else if (value == "false") {
+          return false
+        } else {
+          return value
+        }
+      })
+      this.props.updateSearchOption("is_male", convertedBooleans)
+    }
+    if(query.size_id) {
+      const sizeIds = Array.from(query.size_id).map(id => parseInt(id))
+      this.props.updateSearchOption("size_ids", sizeIds)
+    }
+    if(query.age_id) {
+      const ageIds = Array.from(query.age_id).map(id => parseInt(id))
+      this.props.updateSearchOption("age_ids", ageIds)
+    }
+    if(query.coat_length_id) {
+      const coatLengthIds = Array.from(query.coat_length_id).map(id => parseInt(id))
+      this.props.updateSearchOption("coatLength_ids", coatLengthIds)
+    }
+    
+    
+  }
+
   componentWillReceiveProps(nextProps) {
     const {searchSelections} = nextProps
     const options = {
@@ -84,12 +136,36 @@ class SearchPage extends React.Component {
       age_id: searchSelections.age_ids,
       coat_length_id: searchSelections.coatLength_ids,
       zipcode: searchSelections.zipcode,
-      is_male: searchSelections.is_male
+      is_male: searchSelections.is_male,
+      radius: searchSelections.radius
     }
     if(this.detectChanges(searchSelections)) {
+      this.updateQueryString(options)
+      // console.log(options)
       this.props.updateDisplayedAnimals(options)
     }
-  } 
+  }
+
+  updateQueryString(options) {
+    const filteredOptions = this.filterOutNullZipCode(options)
+    const qs = queryString.stringify(filteredOptions)
+    this.props.history.push({
+      search: qs
+    })
+  }
+
+  filterOutNullZipCode(options) {
+    // query-string always includes zip code, even if null. filter out of querystring if null
+    const optionsArray = Object.entries(options)
+    const filteredOptionsArray = optionsArray.filter(optionArray=> {
+      if (optionArray[0] == "zipcode") {
+        return (optionArray[1] && optionArray[1].length)
+      } else {
+        return true
+      }
+    })
+    return Object.fromEntries(filteredOptionsArray)
+  }
 
   detectChanges(searchSelections) {
     return searchSelections.species_ids != this.props.searchSelections.species_ids ||
@@ -99,7 +175,8 @@ class SearchPage extends React.Component {
     searchSelections.age_ids != this.props.searchSelections.age_ids ||
     searchSelections.coatLength_ids != this.props.searchSelections.coatLength_ids ||
     searchSelections.zipcode != this.props.searchSelections.zipcode ||
-    searchSelections.is_male != this.props.searchSelections.is_male
+    searchSelections.is_male != this.props.searchSelections.is_male ||
+    searchSelections.radius != this.props.searchSelections.radius
   }
   
   displayOptionLabels(options, label, selectedIds) {
@@ -115,6 +192,15 @@ class SearchPage extends React.Component {
   }
 
   render() {
+    const {species_ids} = this.props.searchSelections
+    const filteredBreedOptions = this.props.breedsOptions.filter(breed => {
+      if (species_ids && species_ids.length) {
+        return species_ids.includes(breed.species_id) 
+      } else {
+        return true
+      }
+    })
+
     const { classes } = this.props;
 
     const customStyle = {
@@ -215,7 +301,7 @@ class SearchPage extends React.Component {
           <FormControl style={customStyle.formControlStyle} className={classes.formControl}>
             <TextField style={customStyle.textStyle}
               name="zipcode"
-              value={this.props.searchSelections.zipcode}
+              value={this.props.searchSelections.zipcode || ""} 
               label="Zipcode"
               className={classes.textField}
               onChange={e => this.handleToggle(e, 'zipcode')}
@@ -237,7 +323,7 @@ class SearchPage extends React.Component {
               onChange={e => this.handleToggle(e, "radius")}
               input={<OutlinedInput 
                 id="select-multiple-checkbox"
-                name="distance"
+                name="radius"
                 labelWidth={this.state.distanceLabelWidth}
                 style={customStyle.outlineStyle} 
               />}
@@ -278,7 +364,7 @@ class SearchPage extends React.Component {
                 name: 'breed_ids'
               }}
             >
-              {(this.props.breedsOptions || []).map(breed => (
+              {(filteredBreedOptions || []).map(breed => (
                 <MenuItem key={breed.id} value={breed.id} name={breed.breed}>
                   <Checkbox checked={this.props.searchSelections.breed_ids.indexOf(breed.id) > -1} />
                   <ListItemText primary={breed.breed} />
