@@ -17,6 +17,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
+import { Link } from 'react-router-dom';
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -77,10 +78,13 @@ class AnimalPage extends React.Component {
       shelter: {},
       alert: null,
       isAdult: '',
+      animalFollow: false,
     }
   };
 
   async componentDidMount() {
+
+    window.scrollTo(0, 0)
 
     // verify if user is logged in
     let userID = () => {
@@ -198,18 +202,15 @@ class AnimalPage extends React.Component {
     })
   };
 
-  
-
   addNewFollow = async e => {
+      e.preventDefault();
 
       await axios
       .post(` ${process.env.REACT_APP_BACKEND_URL}/api/users/${localStorage.getItem('user_id')}/follows/animal/${this.props.match.params.id}`)
       .then(result => {
         console.log(result)
         this.setState({
-          animal: {
             animalFollow: true,
-          }
         })
         console.log(this.state.animal.animalFollow)
       })
@@ -226,9 +227,7 @@ class AnimalPage extends React.Component {
       .then( result => {
         console.log(result)
         this.setState({
-          animal: {
             animalFollow: false,
-          }
         })
         console.log(this.state.animal.animalFollow)
       })
@@ -276,6 +275,7 @@ class AnimalPage extends React.Component {
         display: "flex",
         flexDirection: "row",
         marginBottom: "50px",
+        minWidth: "300px",
       },
       myHealthStyle: {
         justifyContent: "center",
@@ -364,9 +364,7 @@ class AnimalPage extends React.Component {
         marginTop: "20px",
         minWidth: "140px",
       },
-      storyTextStyle: {
-        minWidth: "400px",
-      }
+
 
     };
 
@@ -430,9 +428,9 @@ class AnimalPage extends React.Component {
                               ?
                               <Button
                                 className={classes.hungButtonStyle2}
-                                onClick={ this.state.animal.animalFollow ? this.unfollowAnimal : this.addNewFollow }
+                                onClick={ this.state.animalFollow ? this.unfollowAnimal : this.addNewFollow }
                               >
-                                {this.state.animal.animalFollow ? "Followed" : "Follow Me"}
+                                {this.state.animalFollow ? "Followed" : "Follow Me"}
                               </Button>
                               :
                               <div style={{ display: "flex !important", justifyContent: "center !important" }}>
@@ -474,6 +472,7 @@ class AnimalPage extends React.Component {
           </Hidden>
 
           {/* SHELTER INFO CARD */}
+          <Link to={`/shelter/${this.state.animal.shelter_id}`}>
           <GridContainer className={classes.shelterCard}>
                   
                 <Hidden smDown>
@@ -589,6 +588,7 @@ class AnimalPage extends React.Component {
                   </GridItem>
                 </GridItem>
           </GridContainer>
+          </Link>
 
 
           <GridContainer xs={12} sm={12} md={12} lg={12} xl={12} style={{ marginRight: "auto", marginLeft: "auto" }}>
@@ -820,7 +820,6 @@ class AnimalPage extends React.Component {
                         multiline
                         label="My Story"
                         fullWidth="true"
-                        style={customStyle.storyTextStyle}
                         value={this.state.animal.description}
                         InputProps={{
                           disableUnderline: true
@@ -845,8 +844,7 @@ class AnimalPage extends React.Component {
                       <TextField
                         multiline
                         label="My Health"
-                        fullWidth="true"
-                        style={customStyle.storyTextStyle}
+                        fullWidth="true"                      
                         value={this.state.animal.health}
                         InputProps={{
                           disableUnderline: true,
@@ -872,8 +870,7 @@ class AnimalPage extends React.Component {
                     <GridItem>
                       <TextField
                         multiline
-                        fullWidth="true"
-                        style={customStyle.storyTextStyle}
+                        fullWidth="true"               
                         value={this.state.animal.is_good_with_kids ? "I Am Good With Kids" : "I Need A Kid-Free Home"}
                         InputProps={{
                           disableUnderline: true,
@@ -894,8 +891,7 @@ class AnimalPage extends React.Component {
                     <GridItem>
                       <TextField
                         multiline
-                        fullWidth="true"
-                        style={customStyle.storyTextStyle}
+                        fullWidth="true"                       
                         value={this.state.animal.is_good_with_dogs ? "I Am Good With Dogs" : "I Need A Dog-Free Home"}
                         InputProps={{
                           disableUnderline: true,
@@ -916,8 +912,7 @@ class AnimalPage extends React.Component {
                     <GridItem>
                       <TextField
                         multiline
-                        fullWidth="true"
-                        style={customStyle.storyTextStyle}
+                        fullWidth="true"                
                         value={this.state.animal.is_good_with_cats ? "I Am Good With Cats" : "I Need a Cat-Free Home"}
                         InputProps={{
                           disableUnderline: true,

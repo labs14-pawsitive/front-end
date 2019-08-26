@@ -53,7 +53,7 @@ const animalPageStyle = () => ({
     backgroundSize: "cover",
     backgroundPosition: "center center",
     backgroundRepeat: "no-repeat",
-    background: "linear-gradient(to bottom, #349FAD 0%, #349FAD 35%, #000000 35%, lightgrey 35%, lightgrey 50%)",
+    background: "linear-gradient(to bottom, #349FAD 0%, #349FAD 31%, #000000 31%, lightgrey 31%, lightgrey 50%)",
     minHeight: "65vh",
     zIndex: "3",
    },
