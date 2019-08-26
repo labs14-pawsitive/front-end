@@ -98,7 +98,7 @@ updateLocation = e => {
 
 deleteLocation = async(e) => {
     e.preventDefault()
-    await this.verifyShelter(localStorage.getItem('shelter_id'))
+    await this.verifyShelter(this.props.shelterID)
     //if(this.state.shelterVerified) {
       this.props.deleteShelterLoc(this.props.location.id)
         .then( () => {
@@ -112,12 +112,12 @@ deleteLocation = async(e) => {
 
 updateSubmit = async(e) => {
   e.preventDefault()
-  await this.verifyShelter(localStorage.getItem('shelter_id'))
+  await this.verifyShelter(this.props.shelterID)
 
   //if (this.isValidated() && this.state.shelterVerified) {
     if (this.isValidated()) {
     const updatedLocation = {
-      shelter_id: localStorage.getItem('shelter_id'),
+      shelter_id: this.props.shelterID,
       street_address: this.state.location.street_address,
       city: this.state.location.city,
       zipcode: this.state.location.zipcode,

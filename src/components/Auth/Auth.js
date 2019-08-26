@@ -53,7 +53,7 @@ export default class Auth {
 
         const config = {
             headers : {
-                //Authorization: `Bearer ${localStorage.getItem('id_token')}`,
+                // Authorization: `Bearer ${localStorage.getItem('id_token')}`,
                 Authorization: `Bearer ${authResult.idToken}`,
                 withCredentials: true 
             }

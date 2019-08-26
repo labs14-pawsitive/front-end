@@ -17,7 +17,9 @@
 import {
   cardTitle,
   successColor,
-  dangerColor
+  dangerColor,
+  roseColor,
+  whiteColor
 } from "assets/jss/material-dashboard-pro-react.jsx";
 import customCheckboxRadioSwitch from "assets/jss/material-dashboard-pro-react/customCheckboxRadioSwitch.jsx";
 
@@ -68,11 +70,15 @@ const regularFormsStyle = {
     marginLeft: '5px',
   },
   underlineStyle: {
-    
     borderBottom: '1px solid black',
-  }
-
-
+  },
+  submitButtonStyle: {
+    backgroundColor: roseColor[0],
+    color: whiteColor,
+    width: '200px',
+    marginTop: '20px',
+    marginRight: '15px',
+  },
 
 };
 
