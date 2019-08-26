@@ -69,13 +69,6 @@ class AnimalViewTop extends React.Component {
         this.props.deletePictures(imgID, this.props.animal.id)
     }
 
-    // handleViewingPics = (event) => {
-    //     event.preventDefault()
-
-    //     this.setState({
-    //         isViewingPhotos: !this.state.isViewingPhotos
-    //     })
-    // }
 
     render() {
         console.log('placeholder images in animal top component ', this.props.placeholderImages)
@@ -277,11 +270,11 @@ class AnimalViewTop extends React.Component {
                         </GridListTile>
                     </GridList>
                     <Button size="small" color="primary" className={classes.button} onClick={this.props.handleViewingPics}>
-                                {/* {this.props.isViewingPhotos ? "CLOSE" : "VIEW MORE PHOTOS"} */}
-                                VIEW MORE PHOTOS
+                                {!this.props.isViewingPhotos && !this.props.isEditing && "VIEW MORE PHOTOS"}
+                                {/* VIEW MORE PHOTOS */}
                             </Button>
 
-                            {this.props.isViewingPhotos &&
+                            {this.props.isViewingPhotos && 
                                 <Dialog style={{
                                     overflowY: "hidden"
                                 }}

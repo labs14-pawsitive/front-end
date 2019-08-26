@@ -532,15 +532,28 @@ this.props.updateAnimal(updateInfo,
     this.state.animal.img_id = response[0].image.image_id
 
     let updateInfo = {
-      profile_img_id: response[0].image.image_id,
+      img_id: response[0].image.image_id,
+      img_url:response[0].image.image_url,
+      animal_id:this.state.animal.id
     }
 
     console.log('call updated info ', updateInfo)
 
-    await this.props.updateAnimal(updateInfo,
-      this.state.animal.id, this.state.animal_meta.id)
-      .then(res => console.log('update animal animal view :success ', res))
-      .catch(error => console.log('update error animal view', error))
+    await axios
+      .post(`${process.env.REACT_APP_BACKEND_URL}/api/animals/pictures`,updateInfo )
+      .then( result => {
+        console.log('upload image success animal view',result )
+      })
+      .catch( error => {
+        console.log('upload image error animal view', error)
+      })
+
+    // await this.props.updateAnimal(updateInfo,
+    //   this.state.animal.id, this.state.animal_meta.id)
+    //   .then(res => console.log('update animal animal view :success ', res))
+    //   .catch(error => console.log('update error animal view', error))
+
+
   }
 
   render() {
