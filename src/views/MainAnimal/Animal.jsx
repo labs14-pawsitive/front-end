@@ -580,7 +580,7 @@ class AnimalPage extends React.Component {
                       <img className={classes.iconStyle2} src={breedIcon}></img>
                     </GridItem>
 
-                    <GridItem xs={8} sm={8} md={8}>
+                    <GridItem xs={10} sm={10} md={10}>
                       <TextField
                         label="Breed"
                         value={this.state.animal.breed}
@@ -603,7 +603,7 @@ class AnimalPage extends React.Component {
                       <img className={classes.iconStyle2} src={ageIcon}></img>
                     </GridItem>
 
-                    <GridItem xs={8} sm={8} md={8}>
+                    <GridItem xs={10} sm={10} md={10}>
                       <TextField
                         label="Age"
                         value={this.state.animal.age}
@@ -626,7 +626,7 @@ class AnimalPage extends React.Component {
                       <img className={classes.iconStyle2} src={sizeIcon}></img>
                     </GridItem>
 
-                    <GridItem xs={8} sm={8} md={8}>
+                    <GridItem xs={10} sm={10} md={10}>
                       <TextField
                         label="Size"
                         value={this.state.animal.size}
@@ -649,7 +649,7 @@ class AnimalPage extends React.Component {
                       <img className={classes.iconStyle2} src={coatLengthIcon}></img>
                     </GridItem>
 
-                    <GridItem xs={8} sm={8} md={8}>
+                    <GridItem xs={10} sm={10} md={10}>
                       <TextField
                         label="Coat Length"
                         value={this.state.animal.coat_length}
@@ -672,7 +672,7 @@ class AnimalPage extends React.Component {
                       <img className={classes.iconStyle2} src={genderIcon}></img>
                     </GridItem>
 
-                    <GridItem xs={8} sm={8} md={8}>
+                    <GridItem xs={10} sm={10} md={10}>
                       <TextField
                         label="Gender"
                         value={this.state.animal.is_male ? "Male" : "Female"}
@@ -718,7 +718,7 @@ class AnimalPage extends React.Component {
                       <img className={classes.iconStyle} src={vaccinationIcon}></img>
                     </GridItem>
 
-                    <GridItem xs={8} sm={8} md={8}>
+                    <GridItem xs={10} sm={10} md={10}>
                       <TextField
                         label="Vaccination"
                         multiline
@@ -742,7 +742,7 @@ class AnimalPage extends React.Component {
                       <img className={classes.iconStyle2} src={neuterSpayedIcon}></img>
                     </GridItem>
 
-                    <GridItem xs={8} sm={8} md={8}>
+                    <GridItem xs={10} sm={10} md={10}>
                       <TextField
                         label="Spayed / Neutered"
                         value={this.state.animal.is_neutered_spayed ? "Yes" : "No"}
@@ -766,7 +766,7 @@ class AnimalPage extends React.Component {
                       <img className={classes.iconStyle2} src={houseTrainedIcon}></img>
                     </GridItem>
 
-                    <GridItem xs={8} sm={8} md={8}>
+                    <GridItem xs={10} sm={10} md={10}>
                       <TextField
                         label="House-trained"
                         value={this.state.animal.is_house_trained ? "Yes" : "No"}
