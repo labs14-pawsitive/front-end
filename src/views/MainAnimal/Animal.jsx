@@ -316,7 +316,7 @@ class AnimalPage extends React.Component {
         color: "#666666",
         textAlign: "center",
         position: "relative",
-        maxWidth: "340px",
+        //maxWidth: "340px",
         textTransform: "uppercase",
       },
       buttonStyle: {
