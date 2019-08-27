@@ -4,7 +4,6 @@ import {GET_USER_START, GET_USER_SUCCESS, GET_USER_FAIL} from '../actions/userAc
 
 const initialState = {
     user : {},
-   userInfo: {}
     error : "",
     gettingUser : false,
 

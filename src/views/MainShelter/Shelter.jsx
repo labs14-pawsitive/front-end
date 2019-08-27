@@ -204,10 +204,10 @@ class ShelterPage extends React.Component {
       <>
       <div className={classes.wrapper} >
       <div className={classes.header}
-      style={{ backgroundImage: "url(" + this.getBgImage() + ")" }}>
-      
-        <GridContainer className={classes.contentHeader}>
-          <GridItem xs={12} sm={12} md={7}>
+      style={{ backgroundImage: "linear-gradient(#00000040, #00000005),url(" + this.getBgImage() + ")" }}>
+
+        <GridContainer className={classes.contentHeader} style={{maxWidth: "1200px", margin: "0 auto", padding: "150px 0", width:"80%"}}>
+          <GridItem xs={10} sm={10} md={7}>
             <h1 className={classes.title}>{shelter.shelter}</h1>
           </GridItem>
           <GridItem xs={12} sm={12} md={7}></GridItem>
@@ -222,14 +222,14 @@ class ShelterPage extends React.Component {
           <GridItem xs={12} sm={12} md={4}></GridItem>
         </GridContainer>
         </div>
-        <GridContainer className={classes.shelterCard}>
+        <GridContainer className={classes.shelterCard} style={{maxWidth: "1200px", width: "80%"}}>
         <GridItem xs={12} sm={6} md={6} style={{ minHeight: '40px'}}><img src={houseIcon} className={classes.imageIcon}></img><h6 className={classes.cardType}>{shelter.street_address}<br></br>{shelter.city}, {shelter.state} {shelter.zipcode}</h6> </GridItem>
         <GridItem xs={12} sm={6} md={6} style={{ minHeight: '40px'}}><img src={mailIcon} className={classes.imageIcon}></img><h6 className={classes.cardType}>{shelter.email}</h6></GridItem>  
         <GridItem xs={12} sm={6} md={6} style={{ minHeight: '40px'}}><img src={phoneIcon} className={classes.imageIcon}></img><h6 className={classes.cardType}>{shelter.phone}</h6></GridItem>  
         <GridItem xs={12} sm={6} md={6} style={{ minHeight: '40px'}}><img src={serviceIcon} className={classes.imageIcon}></img><h6 className={classes.cardType}>{shelter.name}</h6></GridItem>   
       </GridContainer>
          <div className={classes.picturesStyle}>
-        <GridContainer xs={10} style={{margin:"50px auto 0"}}>
+        <GridContainer xs={10} style={{margin:"50px auto 0", maxWidth:"1200px", width:"80%"}}>
               {this.state.animals.map(animal => <AnimalCard animal={animal}/>)}  
             </GridContainer> 
         </div>
