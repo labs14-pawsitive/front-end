@@ -286,7 +286,7 @@ class SearchPage extends React.Component {
         margin: "20px 30px",
         width: "90%",
         paddingTop: "100px",
-        maxWidth: "1400px
+        maxWidth: "1400px"
       },
       animalCardStyle: {
         marginTop: "20px",
