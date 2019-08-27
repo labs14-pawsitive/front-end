@@ -67,6 +67,8 @@ class Application extends React.Component {
           boxShadow: "5px 5px 0 #C9AAA9",
           fontSize: "1em",
           fontWeight: "700",
+          width:"100%",
+          minWidth: "100%",
           "&:hover": {
             backgroundColor: "#A464A3"
           }
