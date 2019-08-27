@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const ADD_ANIMAL_START = 'ADD_ANIMAL_START';
 export const ADD_ANIMAL_SUCCESS = 'ADD_ANIMAL_SUCCESS';
-export const ADD_ANIMAL_ERROR = 'ADD_ANIMAL_ERROR';
+export const ADD_ANIMAL_ERROR = 'ADD_ANIMAL_ERROR'
 
 export const addAnimal  = animal => dispatch => {
     dispatch ({type: ADD_ANIMAL_START});

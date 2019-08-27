@@ -14,8 +14,8 @@ import { connect } from "react-redux";
 import moment from 'moment';
 import CreateNotes from "../Components/Application/CreateNotes";
 import { fetchOptions, fetchApplication, updateApplication } from "../../actions/applicationAction";
-import {axiosWithAuth} from "axiosWithAuth";
-import axios from "axios";
+import {axiosWithAuth} from 'axiosWithAuth';
+import axios from 'axios';
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -73,6 +73,7 @@ class ApplicationView extends React.Component {
 
   };
 
+
   updateAppStatus = async (event) => {
 
     let updatedStatus = {
@@ -89,9 +90,8 @@ class ApplicationView extends React.Component {
   async componentDidMount(prevProps, prevState) {
 
     await this.loadApplication()
-
-    axios
-    .get(`${process.env.REACT_APP_BACKEND_URL}/api/users/${localStorage.getItem('user_id')}`)
+    axios.
+    get(`${process.env.REACT_APP_BACKEND_URL}/api/users/${localStorage.getItem('user_id')}`)
     .then( result => {
       console.log(result)
       this.setState({
@@ -106,6 +106,7 @@ class ApplicationView extends React.Component {
     
     this.loadOptions()
 
+    
   };
 
 
@@ -140,6 +141,8 @@ class ApplicationView extends React.Component {
   };
 
 
+
+
   handleChange = async (event) => {
 
     const appStatus = this.props.options[event.target.value - 1].application_status
@@ -170,7 +173,7 @@ class ApplicationView extends React.Component {
   };
 
   render() {
-    
+
     const { classes } = this.props;
 
     const customStyle = {
@@ -948,12 +951,7 @@ class ApplicationView extends React.Component {
 
           <GridItem xs={12} sm={12} md={6} lg={4} className={classes.notesSectionStyle}>
 
-            <CreateNotes 
-            application={this.state.application} 
-            application_id={this.props.match.params.id} 
-            username={this.state.user.username} 
-            helterUserId={this.state.user.shelter_user_id}
-            />
+            <CreateNotes application={this.state.application} application_id={this.props.match.params.id} userEmail={this.state.user.email} shelterUserId={this.state.user.shelter_user_id}/>
 
           </GridItem>
 
@@ -976,7 +974,7 @@ const mapStateToProps = (state) => {
     shelterWorkerID: state.userReducer.shelterWorkerID,
     roleID: state.userReducer.roleID,
     shelter: state.shelterReducer.shelter,
-    options: state.applicationReducer.options,
+    options: state.applicationReducer.options
   }
 };
 export default connect(

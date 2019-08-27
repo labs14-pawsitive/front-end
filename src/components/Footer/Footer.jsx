@@ -18,7 +18,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
-import { withRouter, NavLink } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -28,28 +28,21 @@ import ListItem from "@material-ui/core/ListItem";
 import footerStyle from "assets/jss/material-dashboard-pro-react/components/footerStyle";
 
 function Footer({ ...props }) {
-  const { classes, fluid, black , white } = props;
+  const { classes, fluid, white, rtlActive } = props;
   var container = cx({
     [classes.container]: !fluid,
     [classes.containerFluid]: fluid,
-    [classes.whiteColor]: white,
-    [classes.blackColor]: black
+    [classes.whiteColor]: white
   });
   var anchor =
     classes.a +
     cx({
-      [" " + classes.blackColor]: black
+      [" " + classes.whiteColor]: white
     });
   var block = cx({
     [classes.block]: true,
-    [classes.whiteColor]: white,
-    [classes.blackColor]:black
+    [classes.whiteColor]: white
   });
-  const customStyle={
-    link: {
-      color:"white"
-    }
-  }
   return (
     <footer className={classes.footer}>
       <div className={container}>
@@ -57,12 +50,12 @@ function Footer({ ...props }) {
        <div className={classes.left}>
          <List className={classes.list}>
            <ListItem className={classes.inlineBlock}>
-             <NavLink to="/">
-             <div className={block}
-              target={window.location.pathname.indexOf("/admin/") !== -1 ? "_blank" : ""}>
+              <a href="/" 
+              className={block}
+              target={window.location.pathname.indexOf("/admin/") !== -1 ? "_blank" : ""}
+              >
                Home
-              </div>
-              </NavLink>
+              </a>
             </ListItem>
 
           {window.location.pathname.indexOf("/admin/") !== -1 
@@ -70,30 +63,26 @@ function Footer({ ...props }) {
           null
           : 
           <ListItem className={classes.inlineBlock}>
-              <NavLink to="/shelter-signup">
-                <div className={block}>
+              <a href="/shelter-signup" className={block}>
               Register Your Shelter
-            </div>
-            </NavLink>
+            </a>
           </ListItem>
          }
 
-             
+            {/* 
             <ListItem className={classes.inlineBlock}>
-              <NavLink to="/team">
-              <div className={block}>
+              <a href="#team" className={block}>
                 Team
-              </div>
-              </NavLink>
+              </a>
             </ListItem>
             
             <ListItem className={classes.inlineBlock}>
-              <a href="#contact" className={block}>
-               Contact Us
+              <a href="#blog" className={block}>
+               Blog
               </a>
             </ListItem>
           
-          
+          */}
           </List> 
         </div>
        
@@ -102,10 +91,10 @@ function Footer({ ...props }) {
           <a
             href="/"
             className={anchor}
-
             target={window.location.pathname.indexOf("/admin/") !== -1 ? "_blank" : ""}
           > Pawsnfind
           </a>
+          
         </p>
       </div>
     </footer>
