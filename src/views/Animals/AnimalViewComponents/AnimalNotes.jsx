@@ -4,8 +4,7 @@ import { connect } from "react-redux";
 import NotesComponent from './NotesComponent.jsx'
 
 import { addNotes } from '../../../actions/animalAction.js'
-//import {getUser} from '../../../actions/userAction.js'
-
+ 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import GridItem from "components/Grid/GridItem.jsx";
@@ -242,6 +241,6 @@ export default connect(
     mapStateToProps,
     {
         addNotes,
-        //getUser
+ 
     }
 )(withStyles(regularFormsStyle)(AnimalNotes)) 

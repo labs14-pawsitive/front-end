@@ -5,7 +5,10 @@ import {
     SEARCH_OPTION_ERROR,
     UPDATE_DISPLAYED_ANIMALS_START,
     UPDATE_DISPLAYED_ANIMALS_SUCCESS,
-    UPDATE_DISPLAYED_ANIMALS_ERROR
+    UPDATE_DISPLAYED_ANIMALS_ERROR, 
+    UPDATE_DISPLAYED_PAGINATION_DETAILS,
+    PAGINATION_OPTION_START,
+    PAGINATION_OPTION_SUCCESS,
 } from '../actions/searchAction'
 
 const initialState = {
@@ -22,7 +25,14 @@ const initialState = {
     displayedAnimals: [],
     error: '',
     updatingSearchOptions: false,
-    updatingDisplayedAnimals: false
+    updatingDisplayedAnimals: false,
+    paginationDetails: {
+        totalCount: 1,
+        currentPage: 1,
+        display: 10
+    },
+    updatingDisplayedPaginationDetails: false,
+    updatingPaginationOption: false
 }
 
 export const searchReducer = (state = initialState, action) => {
@@ -59,11 +69,35 @@ export const searchReducer = (state = initialState, action) => {
                 updatingDisplayedAnimals: false,
                 displayedAnimals: action.payload.animals
             }
+        case UPDATE_DISPLAYED_PAGINATION_DETAILS:
+            return {
+                ...state,
+                updatingDisplayedPaginationDetails: false,
+                paginationDetails: {
+                    ...state.paginationDetails,
+                    ...action.payload.paginationDetails
+                }
+            }
         case UPDATE_DISPLAYED_ANIMALS_ERROR:
             return {
                 ...state,
                 updatingDisplayedAnimals: false,
                 error: action.payload
+            }
+        case PAGINATION_OPTION_START:
+            return {
+                ...state,
+                updatingPaginationOption: true,
+            }
+        case PAGINATION_OPTION_SUCCESS:
+            const detail = { [action.payload.optionName]: action.payload.value }
+            return {
+                ...state,
+                updatingPaginationOption: false,
+                paginationDetails: {
+                    ...state.paginationDetails,
+                    ...detail
+                }
             }
         default: 
             return state

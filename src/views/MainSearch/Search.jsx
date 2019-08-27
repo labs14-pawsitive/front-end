@@ -33,38 +33,45 @@ import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
 import Chip from '@material-ui/core/Chip';
 import {fetchOptions} from '../../actions/animalAction';
-import {updateSearchOption, updateDisplayedAnimals} from '../../actions/searchAction';
+import {updateSearchOption, updateDisplayedAnimals, updatePaginationOption} from '../../actions/searchAction';
 import AnimalCard from '../../components/AnimalCard/AnimalCard.jsx';
 import mainPageStyle from "assets/jss/material-dashboard-pro-react/views/mainPageStyle.jsx";
 import { flexbox } from '@material-ui/system';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import ReactDOM from 'react-dom';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import queryString from 'query-string';
+import Pagination from '../../components/Pagination/Pagination.jsx'
+
 
 
 class SearchPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      radiusOptions: [10, 25, 50, 100],
+      radiusOptions: [5, 10, 15],
       genderOptions: [{name: "Male", value: true}, {name: "Female", value: false}],
-      labelWidth: 0
+      labelWidth: 0,
     }
   }
   
   componentDidMount() {
     this.props.fetchOptions(0)
     const {searchSelections} = this.props
+    this.updateInitialSearchOptions()
+
     const options = {
       breed_id: searchSelections.breed_ids,
-      species_id: searchSelections.species_ids,
+      species_id: searchSelections.species_ids, 
       size_id: searchSelections.size_ids,
       age_id: searchSelections.age_ids,
       coat_length_id: searchSelections.coatLength_ids,
       zipcode: searchSelections.zipcode,
-      is_male: searchSelections.is_male
+      is_male: searchSelections.is_male,
+      radius: searchSelections.radius
     }
     this.props.updateDisplayedAnimals(options)
+
     this.setState({
       breedLabelWidth: ReactDOM.findDOMNode(this.BreedLabelRef).offsetWidth,
       speciesLabelWidth: ReactDOM.findDOMNode(this.SpeciesLabelRef).offsetWidth,
@@ -76,8 +83,50 @@ class SearchPage extends React.Component {
     })
   }
 
+  updateInitialSearchOptions() {
+    const test = this.props.location.search
+    const query = queryString.parse(test)
+
+    if (query.species_id) {
+      const speciesIds = Array.from(query.species_id).map(id => parseInt(id))
+      this.props.updateSearchOption("species_ids", speciesIds)
+    }
+    if(query.radius) {
+      this.props.updateSearchOption("radius", parseInt(query.radius))
+    }
+    if(query.breed_id) {
+      const breedsIds = Array.from(query.breed_id).map(id => parseInt(id))
+      this.props.updateSearchOption("breed_ids", breedsIds)
+    }
+    if(query.is_male && query.is_male.length) {
+      const convertedBooleans = [].concat(query.is_male).map(value => {
+        if (value == "true") {
+          return true
+        } else if (value == "false") {
+          return false
+        } else {
+          return value
+        }
+      })
+      this.props.updateSearchOption("is_male", convertedBooleans)
+    }
+    if(query.size_id) {
+      const sizeIds = Array.from(query.size_id).map(id => parseInt(id))
+      this.props.updateSearchOption("size_ids", sizeIds)
+    }
+    if(query.age_id) {
+      const ageIds = Array.from(query.age_id).map(id => parseInt(id))
+      this.props.updateSearchOption("age_ids", ageIds)
+    }
+    if(query.coat_length_id) {
+      const coatLengthIds = Array.from(query.coat_length_id).map(id => parseInt(id))
+      this.props.updateSearchOption("coatLength_ids", coatLengthIds)
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
-    const {searchSelections} = nextProps
+    //TODO: insure that detect changes listens to page changes
+    const {searchSelections, paginationDetails} = nextProps
     const options = {
       breed_id: searchSelections.breed_ids,
       species_id: searchSelections.species_ids,
@@ -85,14 +134,41 @@ class SearchPage extends React.Component {
       age_id: searchSelections.age_ids,
       coat_length_id: searchSelections.coatLength_ids,
       zipcode: searchSelections.zipcode,
-      is_male: searchSelections.is_male
+      is_male: searchSelections.is_male,
+      radius: searchSelections.radius,
+      page: paginationDetails.currentPage || 1
     }
-    if(this.detectChanges(searchSelections)) {
+    if(this.detectSearchChanges(searchSelections) || this.detectPaginationChanges(paginationDetails)) {
+      if (this.detectSearchChanges(searchSelections)) {
+        options.page = 1
+      }
+      this.updateQueryString(options)
       this.props.updateDisplayedAnimals(options)
     }
-  } 
+  }
 
-  detectChanges(searchSelections) {
+  updateQueryString(options) {
+    const filteredOptions = this.filterOutNullZipCode(options)
+    const qs = queryString.stringify(filteredOptions)
+    this.props.history.push({
+      search: qs
+    })
+  }
+
+  filterOutNullZipCode(options) {
+    // query-string always includes zip code, even if null. filter out of querystring if null
+    const optionsArray = Object.entries(options)
+    const filteredOptionsArray = optionsArray.filter(optionArray=> {
+      if (optionArray[0] == "zipcode") {
+        return (optionArray[1] && optionArray[1].length)
+      } else {
+        return true
+      }
+    })
+    return Object.fromEntries(filteredOptionsArray)
+  }
+
+  detectSearchChanges(searchSelections) {
     return searchSelections.species_ids != this.props.searchSelections.species_ids ||
     searchSelections.breed_ids != this.props.searchSelections.breed_ids ||
     searchSelections.species_ids != this.props.searchSelections.species_ids ||
@@ -100,7 +176,12 @@ class SearchPage extends React.Component {
     searchSelections.age_ids != this.props.searchSelections.age_ids ||
     searchSelections.coatLength_ids != this.props.searchSelections.coatLength_ids ||
     searchSelections.zipcode != this.props.searchSelections.zipcode ||
-    searchSelections.is_male != this.props.searchSelections.is_male
+    searchSelections.is_male != this.props.searchSelections.is_male ||
+    searchSelections.radius != this.props.searchSelections.radius 
+  }
+
+  detectPaginationChanges(paginationDetails) {
+    return paginationDetails.currentPage != this.props.paginationDetails.currentPage
   }
   
   displayOptionLabels(options, label, selectedIds) {
@@ -116,6 +197,39 @@ class SearchPage extends React.Component {
   }
 
   render() {
+    const {species_ids} = this.props.searchSelections
+    const {currentPage, totalCount} = this.props.paginationDetails
+    const filteredBreedOptions = this.props.breedsOptions.filter(breed => {
+      if (species_ids && species_ids.length) {
+        return species_ids.includes(breed.species_id) 
+      } else {
+        return true
+      }
+    })
+    const pageArray = Array.from({length: totalCount}, (x, i) => i)
+    const previousButtonOnClick = (e) => {
+      if (currentPage - 1 > 0) {
+        this.props.updatePaginationOption("currentPage", currentPage - 1)
+      }
+    }
+    const nextButtonOnClick = (e) => {
+      if (currentPage + 1 <= totalCount) {
+        this.props.updatePaginationOption("currentPage", currentPage + 1)
+      }
+    }
+    const paginationButtons = [
+      { text: "PREV", onClick: previousButtonOnClick},
+      ...pageArray.map(num => {
+        const pageNumber = num + 1
+        return {
+          text: pageNumber,
+          active: currentPage == pageNumber,
+          onClick: e => this.props.updatePaginationOption("currentPage", pageNumber)
+        }
+      }),
+      { text: "NEXT", onClick: nextButtonOnClick }
+    ]
+
     const { classes } = this.props;
 
     const customStyle = {
@@ -182,9 +296,21 @@ class SearchPage extends React.Component {
         flexDirection: "row",
         justifyContent: "center",
         flexWrap: "wrap",
+<<<<<<< HEAD
         backgroundColor: "white",
         maxWidth:"1200px"
         //margin: "20px 0 0"
+=======
+ 
+        backgroundColor: "white"
+      },
+      paginationStyle: {
+        margin: "20px 60px",
+        display: "flex",
+        justifyContent: "flex-end"
+
+ 
+>>>>>>> dc7bb118acef872bca94e49958a6268c03dcc0da
       }
     }
     
@@ -225,6 +351,7 @@ class SearchPage extends React.Component {
             </FormControl>
           </GridItem>
 
+ 
           <GridItem xs={12} sm={6} md={3} style={customStyle.eachGridStyle}>
             <FormControl style={customStyle.formControlStyle} className={classes.formControl}>
               <div style={{backgroundColor:"#fcfcfc", borderRadius:"5px"}}>
@@ -304,6 +431,7 @@ class SearchPage extends React.Component {
               </Select>
             </FormControl>
           </GridItem>
+ 
 
           <GridItem xs={12} sm={6} md={3} style={customStyle.eachGridStyle}>
             <FormControl style={customStyle.formControlStyle} className={classes.formControl}>
@@ -442,7 +570,16 @@ class SearchPage extends React.Component {
                 <AnimalCard key={animal.id} animal={animal}/>
               ))}
           </GridContainer>
-
+ 
+          <GridContainer style = {customStyle.paginationStyle}>
+            <Pagination
+              pages={[
+                ...paginationButtons,
+              ]}
+              color="info"
+            />
+          </GridContainer>
+ 
       </GridContainer>
     );
   }
@@ -457,7 +594,8 @@ const mapStateToProps = state => {
     agesOptions: state.animalReducer.agesOptions,
     locationsOptions: state.animalReducer.locationsOptions,
     searchSelections: state.searchReducer.searchSelections,
-    displayedAnimals: state.searchReducer.displayedAnimals
+    displayedAnimals: state.searchReducer.displayedAnimals,
+    paginationDetails: state.searchReducer.paginationDetails
   }
 }
 
@@ -467,7 +605,7 @@ SearchPage.propTypes = {
 
 export default connect(
   mapStateToProps,
-  {updateSearchOption, updateDisplayedAnimals, fetchOptions}
+  {updateSearchOption, updateDisplayedAnimals, fetchOptions, updatePaginationOption}
 )(withStyles(mainPageStyle)(SearchPage));
 
 

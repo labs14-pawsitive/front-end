@@ -149,7 +149,6 @@ class MainPage extends React.Component {
         this.setState({ speciesState: "error" });
       }
 
- 
     }
     return false;
   }
@@ -268,7 +267,6 @@ class MainPage extends React.Component {
         width: "100%"
       },
       buttonStyle: {
- 
         marginTop: "15px",
         marginBottom: "15px",
         width: "100%",
@@ -392,12 +390,11 @@ class MainPage extends React.Component {
 
       },
     }
- 
+
 
 
     return (
 
- 
       <GridContainer className={classes.bodyStyle}>
         {/* full background container */}
         <GridItem xs={12} sm={12} md={12} xl={12}
@@ -574,9 +571,9 @@ class MainPage extends React.Component {
       
       </GridContainer >
 
+
+
  
-
-
     );
   }
 }
