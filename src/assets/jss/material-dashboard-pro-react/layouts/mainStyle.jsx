@@ -34,7 +34,7 @@ const pagesStyle = theme => ({
     justifyContent: "center",
     backgroundSize: "cover",
     backgroundPosition: "center center",
-    height: "100vh",
+    height: "auto",
     [theme.breakpoints.down("sm")]: {
       minHeight: "fit-content!important"
     },
@@ -81,8 +81,10 @@ const pagesStyle = theme => ({
       border: "none !important"
     },
     "&:before": {
-      backgroundColor: "rgba(" + hexToRgb(blackColor) + ", 0.65)"
-      // backgroundColor: 'white'
+ 
+      //backgroundColor: "rgba(" + hexToRgb(blackColor) + ", 0.65)"
+      //backgroundColor: 'white'
+ 
       
     },
     "&:before,&:after": {
@@ -93,6 +95,40 @@ const pagesStyle = theme => ({
       height: "100%",
       top: "0",
       left: "0",
+     }
+  },
+  fullPageError: {
+    padding: "120px 0",
+    position: "relative",
+    minHeight: "100vh",
+    display: "flex!important",
+    margin: "0",
+    border: "0",
+    color: whiteColor,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundSize: "cover",
+    backgroundPosition: "center center",
+    height: "100vh",
+    [theme.breakpoints.down("sm")]: {
+      minHeight: "fit-content!important"
+    },
+    "& footer": {
+      position: "absolute",
+      bottom: "0",
+      width: "100%",
+      border: "none !important"
+    },
+
+    "&:before,&:after": {
+      display: "block",
+      content: '""',
+      position: "absolute",
+      width: "100%",
+      height: "100%",
+      top: "0",
+      left: "0",
+ 
     }
   }
 });

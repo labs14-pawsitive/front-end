@@ -5,6 +5,7 @@ import axios from 'axios';
 import withStyles from "@material-ui/core/styles/withStyles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
+import Button from '@material-ui/core/Button';
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -148,6 +149,14 @@ class AnimalMetaCard extends React.Component {
                         </Card>
                     </GridContainer>
 
+                    <GridContainer>
+                        <Button
+                         variant="contained"
+                         color="secondary"
+                        >
+                            Follow
+                        </Button>
+                    </GridContainer>
 
                 </GridContainer>
             </>

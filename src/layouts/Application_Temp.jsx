@@ -49,7 +49,7 @@ class Application extends React.Component {
     super(props);
     this.state={
       alert: null,
-      show: false,
+      //show: false,
       match: "",
       animalId: "",
       shelterId: ""
@@ -87,7 +87,6 @@ async componentWillMount() {
       })
     } 
       this.setAlert();   
-
   }
 
  componentDidMount() {
@@ -95,7 +94,6 @@ async componentWillMount() {
   }
 
   setAlert = () => {
-    //if (!localStorage.getItem('animalId') && !localStorage.getItem('shelterId')) {
     if(this.state.match == false) {
       this.dangerAlert();
     } else if(!localStorage.getItem('token') && !localStorage.getItem('user_id')) {
@@ -119,7 +117,7 @@ async componentWillMount() {
           confirmBtnText="OK"
         >
           Please try again or request a valid link from your shelter.
-          </SweetAlert>
+        </SweetAlert>
       )
     });
   }

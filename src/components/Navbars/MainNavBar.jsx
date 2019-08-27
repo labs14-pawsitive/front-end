@@ -19,6 +19,8 @@ import React from "react";
 import cx from "classnames";
 import PropTypes from "prop-types";
 import { NavLink, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -38,7 +40,7 @@ import Fingerprint from "@material-ui/icons/Fingerprint";
 import LockOpen from "@material-ui/icons/LockOpen";
 import MonetizationOn from "@material-ui/icons/MonetizationOn";
 import LibraryBooks from "@material-ui/icons/LibraryBooks";
-
+import Face from "@material-ui/icons/Face";
 
 import Auth from "components/Auth/Auth.js"
 import AuthView from "views/Auth/AuthView.jsx"
@@ -50,7 +52,7 @@ import authNavbarStyle from "assets/jss/material-dashboard-pro-react/components/
 //import custom style 
 import pawsStyle from "assets/custom/pawsnfind.css"
 
-//const auth = new Auth();
+import { get_user } from '../../actions/userAction'
 
 class MainNavBar extends React.Component {
   constructor(props) {
@@ -60,13 +62,26 @@ class MainNavBar extends React.Component {
       open: false
     };
   }
+
+  componentDidMount() {
+    if(localStorage.getItem('token') && localStorage.getItem('user_id') !== null && typeof(localStorage.getItem('user_id')) != undefined ) {
+       this.getUser(localStorage.getItem('user_id'));
+    }
+  }
+
+  getUser = async(user_id) => {
+    await this.props.get_user(user_id)
+  }
+
   handleDrawerToggle = () => {
     this.setState({ open: !this.state.open });
   };
+
   // verifies if routeName is the one active (in browser input)
   activeRoute(routeName) {
     return window.location.href.indexOf(routeName) > -1 ? true : false;
   }
+  
   componentDidUpdate(e) {
     if (e.history.location.pathname !== e.location.pathname) {
       this.setState({ open: false });
@@ -78,27 +93,57 @@ class MainNavBar extends React.Component {
     const appBarClasses = cx({
       [" " + classes[color]]: color
     });
+    const user_id = localStorage.getItem("user_id")
+    const shelter_id = localStorage.getItem("shelter_id")
     var list = (
       <List className={classes.list}>
+      
         <ListItem className={classes.listItem}>
-          <NavLink to={"/shelterManagers"} className={classes.navLink}>
-            <Dashboard className={classes.listItemIcon} />
+        {localStorage.getItem("token") && user_id != "null" && typeof(user_id)!== 'undefined' ?
+          <NavLink to={'/userDash/dashboard'} className={classes.navLink}>
+            <Face className={classes.listItemIcon} />
             <ListItemText
-              primary={"Shelter Managers"}
-              disableTypography={true}
-              className={classes.listItemText}
-            />
+                primary={`Hello ${this.props.user.username}`}
+                disableTypography={true}
+                className={classes.listItemText}
+              />   
           </NavLink>
-        </ListItem>
+          : 
+          null
+        }
         
+        </ListItem>
+
+        <ListItem className={classes.listItem}>
+          {localStorage.getItem("token") && shelter_id != "null" && typeof(shelter_id) !== 'undefined' ? 
+            <NavLink to={'/admin/dashboard'} className={classes.navLink}>
+              <Dashboard className={classes.listItemIcon} />
+              <ListItemText
+                primary={"Shelter Dashboard"}
+                disableTypography={true}
+                className={classes.listItemText}
+              />    
+            </NavLink>
+            :
+             <NavLink to={"/shelterManagers"} className={classes.navLink}>
+              <Dashboard className={classes.listItemIcon} />
+              <ListItemText
+                primary={"Shelter Managers"}
+                disableTypography={true}
+                className={classes.listItemText}
+              />
+            </NavLink>
+        } 
+        </ListItem>
        
         <AuthView {...this.props}/>
-        
         
       </List>
     );
     const logoStyle = {
-        fontFamily : "Baloo-Regular",
+        fontFamily: "Coiny, cursive",
+        color : "#FCFCFC",
+        fontSize:"2rem",
       }
 
     return (
@@ -107,18 +152,15 @@ class MainNavBar extends React.Component {
         <Toolbar className={classes.container}>
           <Hidden smDown>
             <div className={classes.flex}>
-              <NavLink to="/">
-              <Button className={classes.title} color="transparent">
-                <h3 style={logoStyle}>Pawsnfind</h3>
-              </Button></NavLink>
+              <NavLink to="/"><h3 style={logoStyle}>Pawsnfind</h3>
+     
+              </NavLink>
             </div>
           </Hidden>
           <Hidden mdUp>
             <div className={classes.flex}>
-              <NavLink to="/">
-              <Button className={classes.title} color="transparent">
-                <h4 style={logoStyle}>Pawsnfind</h4>
-              </Button>
+              <NavLink to="/"> <h4 style={logoStyle}>Pawsnfind</h4>
+      
               </NavLink>
             </div>
           </Hidden>
@@ -158,10 +200,20 @@ class MainNavBar extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    user : state.userReducer.user,
+  }
+}
+
+
 MainNavBar.propTypes = {
   classes: PropTypes.object.isRequired,
   color: PropTypes.oneOf(["primary", "info", "success", "warning", "danger"]),
   brandText: PropTypes.string
 };
 
-export default withRouter(withStyles(authNavbarStyle)(MainNavBar));
+export default connect(
+  mapStateToProps,
+  { get_user }
+)(withStyles(authNavbarStyle)(MainNavBar))

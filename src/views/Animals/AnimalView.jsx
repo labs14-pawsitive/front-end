@@ -17,7 +17,9 @@ import {axiosWithAuth} from 'axiosWithAuth';
 
 import { updateAnimal, getInfoByAnimalID, getAllOptions, addNotes, updateNotes, deleteNotes }
   from '../../actions/animalAction.js'
-import AnimalNotes from './AnimalViewComponents/AnimalNotes.jsx'
+ 
+ import AnimalNotes from './AnimalViewComponents/AnimalNotes.jsx'
+ 
 import AnimalViewTop from './AnimalViewComponents/AnimalViewTop.jsx'
 import AnimalViewDetails from './AnimalViewComponents/AnimalViewDetails.jsx'
 
@@ -503,7 +505,7 @@ class AnimalView extends React.Component {
   }
 
   callback = (response) => {
-    // console.log(response)
+    console.log(response)
     this.state.animal.img_url = response[0].image.image_url
     this.state.animal.img_id = response[0].image.image_id
 
@@ -641,7 +643,8 @@ export default connect(
     getInfoByAnimalID,
     addNotes,
     updateNotes,
-    deleteNotes
+    deleteNotes,
+ 
   }
 )(withStyles(regularFormsStyle)(AnimalView))
 

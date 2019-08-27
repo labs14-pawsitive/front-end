@@ -131,7 +131,7 @@ class CreateNotes extends React.Component {
     };
 
     render() {
-
+        
         const { classes } = this.props;
 
         const customStyle = {
@@ -156,6 +156,7 @@ class CreateNotes extends React.Component {
         };
 
         return (
+            
             <>
        
                 <Typography style={customStyle.headerStyle} >

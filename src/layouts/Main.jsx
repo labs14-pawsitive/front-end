@@ -24,6 +24,8 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 // core components
 import MainNavBar from "components/Navbars/MainNavBar.jsx";
+import TempNavBar from "components/Navbars/TempNavBar.jsx";
+
 import Footer from "components/Footer/Footer.jsx";
 
 import MainPage from "views/Main/Main.jsx";
@@ -37,7 +39,7 @@ import TeamPage from "views/MainTeam/Team.jsx";
 import mainStyle from "assets/jss/material-dashboard-pro-react/layouts/mainStyle.jsx";
 
 import mainBG from "assets/img/bg-application.jpg";
-import error from "assets/img/bg-404lostPuppy.jpg";
+import error from "assets/img/bg-error.png";
 
 class MainLayout extends React.Component {
   wrapper = React.createRef();
@@ -58,7 +60,9 @@ class MainLayout extends React.Component {
     const { classes, ...rest } = this.props;
     return (
       <div>
-        <MainNavBar brandText="Pawsnfind" {...rest} />
+       
+        <MainNavBar brandText="Pawsnfind" {...rest} />  
+
         <div className={classes.wrapper} ref={this.wrapper}>
           <div
             className={window.location.pathname.indexOf("/error") !== -1 ? classes.fullPageError : null}
@@ -74,7 +78,14 @@ class MainLayout extends React.Component {
               <Route path="/error" component={ErrorPage} />
               <Redirect from ="/" to="/error" />
             </Switch>
-            {/* <Footer white/> */}
+ 
+            {window.location.pathname.indexOf('/error') !== -1 ? 
+              <Footer white/>
+              :
+              <Footer black/>
+            }
+            
+ 
 
           </div>
         </div>

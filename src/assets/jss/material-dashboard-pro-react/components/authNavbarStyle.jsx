@@ -149,7 +149,7 @@ const pagesHeaderStyle = theme => ({
     width: "20px",
     height: "20px",
     verticalAlign: "middle",
-    color: "inherit",
+    color: whiteColor,
     display: "inline-block"
   },
   listItemText: {

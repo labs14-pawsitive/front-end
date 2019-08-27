@@ -406,8 +406,7 @@ class Sidebar extends React.Component {
 
     var brand = (
       <div className={logoClasses} style={customStyle.brandStyle}>
-        {logoText}
-     
+        {window.location.pathname.indexOf("/userDash") !== -1 ? "Hello, " + logoText : logoText}
       </div>
     );
     const drawerPaper =

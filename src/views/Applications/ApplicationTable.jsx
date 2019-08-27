@@ -108,7 +108,7 @@ class ApplicationTable extends React.Component {
           status: application.application_status,
           applicant_email: application.email,
           actions: (
-            <div className="actions-right">
+            <div className="actions-left">
               <NavLink to={`/admin/application/${application.id}`}>
                 <Button color="success">
                   <Search />

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { DropzoneDialog } from "material-ui-dropzone";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
-
 class ImageUpload extends Component {
   constructor(props) {
     super(props);
@@ -11,7 +10,6 @@ class ImageUpload extends Component {
       files: [],
       defaultImage: null
     };
-
     this.editText = this.props.editText
       ? this.props.editText
       : "Click to change image";
@@ -32,7 +30,6 @@ class ImageUpload extends Component {
         padding: 0,
      
       },
-
       image: {
         padding: 0,
         margin: 0,
@@ -44,7 +41,6 @@ class ImageUpload extends Component {
         position: "relative",
         borderRadius: borderRadius
       },
-
       text: {
         padding: 0,
         margin: 0,
@@ -58,27 +54,28 @@ class ImageUpload extends Component {
       }
     };
   }
-
   componentDidMount() {
     if (this.props.defaultImage)
       this.setState({ defaultImage: this.props.defaultImage });
   }
-
   handleClose() {
     this.setState({
       open: false
     });
   }
-
   async handleSave(files) {
     await this.setState({
       files: files,
       open: false
     });
+    
     const imageInfo = [];
     // Hacky, need to build out image hosting backend to accept multiple images in one call
-    await this.state.files.forEach(async (image, index, array) => {
+    console.log( files.length);
+     
+    await files.forEach(async (image, index, array) => {
       const formData = new FormData();
+    
       formData.append("image", image);
       await axios
         .post(this.props.url, formData, {
@@ -90,6 +87,7 @@ class ImageUpload extends Component {
           if (!res) {
             if (this.props.callback) {
               this.props.callback({ error: "upload error" });
+              files = [];
               return;
             }
           } else {
@@ -100,36 +98,37 @@ class ImageUpload extends Component {
               }
             };
             imageInfo.push(response);
+            if (imageInfo.length === array.length) {
+              let response = imageInfo;
+      
+              if (this.props.callback) {
+                if (imageInfo.length === 0){
+                  this.props.callback({ error: "Nothing uploaded" });
+                  files = [];
+                }
+                else {
+                  this.setState({ defaultImage: response[0].image.image_url });
+                  this.props.callback(response);
+                  files = [];
+                }
+              }
+            }
           }
         });
-      if (image === array[array.length - 1]) {
-        let response = imageInfo;
-
-        if (this.props.callback) {
-          if (imageInfo.length === 0)
-            this.props.callback({ error: "Nothing uploaded" });
-          else {
-            this.setState({ defaultImage: response[0].image.image_url });
-            this.props.callback(response);
-          }
-        }
-      }
+     
     });
+ 
   }
-
   handleOpen = () => {
     if (!this.props.editable) return;
     this.setState({
       open: true
     });
   };
-
   render() {
     let imageLimit = 20;
     if (this.props.imageLimit) imageLimit = this.props.imageLimit;
-
     const image = this.state.files ? this.state.files[0] : null;
-
     return (
       <div>
         <Button
@@ -137,8 +136,7 @@ class ImageUpload extends Component {
           onClick={this.handleOpen}
           style={this.styles.media}
         >
-          <img src={this.state.defaultImage} alt="" style={this.styles.image} />
-
+          <img src={this.props.optionalImage || this.state.defaultImage} alt="" style={this.styles.image} />
           {this.props.editable && (
             <div className="click-text" style={this.styles.text}>
               {" "}
@@ -148,6 +146,7 @@ class ImageUpload extends Component {
         </Button>
         <DropzoneDialog
           open={this.state.open}
+          clearOnUnmount={true}
           onSave={this.handleSave.bind(this)}
           acceptedFiles={["image/jpeg", "image/png"]}
           showPreviewsInDropzone={true}

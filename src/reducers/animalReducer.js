@@ -25,6 +25,9 @@ import {
     GET_ANIMAL_START,
     GET_ANIMAL_SUCCESS,
     GET_ANIMAL_FAILURE,
+    FETCH_ANIMALS_BY_SHELTER_START,
+    FETCH_ANIMALS_BY_SHELTER_SUCCESS,
+    FETCH_ANIMALS_BY_SHELTER_FAILURE,
     POST_NOTES_START,
     POST_NOTES_SUCCESS,
     POST_NOTES_FAILURE,
@@ -89,6 +92,8 @@ const initialState = {
         animalNotes: [],
         animalFollowers: []
     },
+    allAnimals: [],
+    fetchingAllAnimals: false,               
     updatingAnimalInfo: false,
     gettingDropdownOptions: false,
     gettingAnimalInfo: false,
@@ -257,6 +262,23 @@ export const animalReducer = (state = initialState, action) => {
             return {
                 ...state,
                 gettingAnimalInfo: false,
+                error: action.payload
+            };
+            case FETCH_ANIMALS_BY_SHELTER_START:
+            return {
+                ...state,
+                fetchingAllAnimals: true
+            };
+        case FETCH_ANIMALS_BY_SHELTER_SUCCESS:
+            return {
+                ...state,
+                fetchingAllAnimals: false,
+                allAnimals: action.payload
+            };
+        case FETCH_ANIMALS_BY_SHELTER_FAILURE:
+            return {
+                ...state,
+                fetchingAllAnimals: false,
                 error: action.payload
             };
         case EDIT_ANIMAL_INFO_START:

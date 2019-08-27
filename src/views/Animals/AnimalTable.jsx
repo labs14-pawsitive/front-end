@@ -95,7 +95,6 @@ class ReactTables extends React.Component {
 
   componentDidMount() {
     axios
-    //.get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/shelter/${localStorage.getItem('shelter_id')}`)
     .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/shelter/${localStorage.getItem('shelter_id')}`)
 
     .then(animals => {
@@ -112,37 +111,14 @@ class ReactTables extends React.Component {
           status: animal.animal_status,
           location: animal.nickname,
           actions: (
-            <div className="actions-right">
+            <div className="actions-left">
               {/* view animal */}
               <NavLink to={`/admin/animal/${animal.id}`}>
- 
-             {/* 
-                <Button
- 
-                  justIcon
-                  round
-                  simple
-                  color="info"
-                  className="like"
-                >
-                  <Search />
-                </Button>  */}
+
                  <Button color="success">
           <Search />
         </Button>
               </NavLink>{" "}
-              {/* edit animal 
-              <NavLink to={`/admin/editAnimal/${animal.id}`}>
-                <Button
-                  justIcon
-                  round
-                  simple
-                  color="warning"
-                  className="edit"
-                >
-                  <Dvr />
-                </Button>
-              </NavLink>{" "}*/}
            
             </div>
           )
@@ -200,7 +176,6 @@ class ReactTables extends React.Component {
             </Card>
           </GridItem>
         <GridItem xs={12}>
-          {/*{this.state.animals.map(animal => <p>{animal.name}</p>)}*/}
           <Card>
             <CardHeader color="primary" icon>
               <CardIcon color="primary">

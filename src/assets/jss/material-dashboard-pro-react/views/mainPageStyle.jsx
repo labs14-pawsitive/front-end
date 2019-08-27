@@ -1,7 +1,11 @@
-import { title, whiteColor } from "assets/jss/material-dashboard-pro-react.jsx";
+import { title, whiteColor, blackColor } from "assets/jss/material-dashboard-pro-react.jsx";
+import buttonStyle from "assets/jss/material-dashboard-pro-react/components/buttonStyle.jsx";
 
+
+import backgroundImage from 'assets/img/main-page/adorable-animal-beach-928449.jpg'
 
 const mainPageStyle = () => ({
+  
   contentCenter: {
     position: "absolute",
     top: "50%",
@@ -17,7 +21,7 @@ const mainPageStyle = () => ({
   title: {
     ...title,
     fontSize: "13.7em",
-    color: whiteColor,
+    color: blackColor,
     letterSpacing: "14px",
     fontWeight: "700"
   },
@@ -36,10 +40,15 @@ const mainPageStyle = () => ({
     display:"flex",
     alignItems: "center",
     justifyContent: "center",
+
     width:"100%",
   },
   
 
+
+    // `url(${"../static/DSC_1037.jpg"})`
+  }
+ 
 });
 
 export default mainPageStyle;

@@ -29,7 +29,9 @@ import errorPageStyles from "assets/jss/material-dashboard-pro-react/views/error
 
 class ErrorPage extends React.Component {
   render() {
+
     const { classes } = this.props;
+
     return (
       <div className={classes.contentCenter}>
         <GridContainer>

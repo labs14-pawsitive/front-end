@@ -34,7 +34,7 @@ class AuthView extends React.Component {
       const { classes } = this.props
       const customStyle = {
         buttonWrapper : {
-          color: "#FFF",
+        color: "#FFF",
         margin: "0 5px",
         display: "block",
         padding: "10px 15px",
@@ -50,7 +50,7 @@ class AuthView extends React.Component {
         background:"#ffffff20",
         }, 
         linkStyle: {
-          color: "#fff"
+          color: "#fcfcfc"
         } 
       }
         return(
@@ -80,7 +80,6 @@ class AuthView extends React.Component {
             </NavLink>
         </ListItem> 
        )
-
 }
   
 }

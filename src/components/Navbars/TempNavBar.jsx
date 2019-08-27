@@ -41,11 +41,11 @@ import LibraryBooks from "@material-ui/icons/LibraryBooks";
 
 
 import Auth from "components/Auth/Auth.js"
-import AuthView from "views/Auth/AuthView.jsx"
+import AuthView from "views/Auth/AuthViewTemp.jsx"
 // core components
 import Button from "components/CustomButtons/Button";
 
-import authNavbarStyle from "assets/jss/material-dashboard-pro-react/components/authNavbarStyle.jsx";
+import authNavbarStyle from "assets/jss/material-dashboard-pro-react/components/authNavbarStyleTemp.jsx";
 
 //import custom style 
 import pawsStyle from "assets/custom/pawsnfind.css"
@@ -81,10 +81,10 @@ class TempNavBar extends React.Component {
     var list = (
       <List className={classes.list}>
         <ListItem className={classes.listItem}>
-          <NavLink to={"/admin/dashboard"} className={classes.navLink}>
+          <NavLink to={"/shelterManagers"} className={classes.navLink}>
             <Dashboard className={classes.listItemIcon} />
             <ListItemText
-              primary={"Shelter Dashboard Beta"}
+              primary={"Shelter Managers"}
               disableTypography={true}
               className={classes.listItemText}
             />
@@ -98,7 +98,9 @@ class TempNavBar extends React.Component {
       </List>
     );
     const logoStyle = {
-        fontFamily : "Baloo-Regular",
+        fontFamily: "Coiny, cursive",
+        color : "#FCFCFC",
+        fontSize:"2rem",
       }
 
     return (

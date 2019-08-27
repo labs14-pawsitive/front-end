@@ -51,24 +51,31 @@ class Callback extends React.Component {
     const newUser = localStorage.getItem('new_user');
     const shelter_id = localStorage.getItem('shelter_id');
     const shelterId = localStorage.getItem('shelterId');
-    const animalId = localStorage.getItem('animalId')
+    const animalId = localStorage.getItem('animalId');
+    const token = localStorage.getItem('token')
+
    
-      if(newUser == "true") {
-        this.props.history.push('/callback/onboarding')
-      }  
-      else 
-      if (localStorage.getItem('animalId') && localStorage.getItem('shelterId')) { 
-        this.props.history.push(`/application/${shelterId}/${animalId}`)
-      }
-      else 
-      if (shelter_id != "null" && typeof(shelter_id) !== 'undefined') {
-        this.props.history.push('/admin/dashboard')
-      } 
-     
-      else {
-        this.props.history.push('/')
-      }
-      clearInterval(this.interval);
+    if(token != "null" && typeof(token) !== 'undefined') {
+          if (shelter_id != "null" && typeof(shelter_id) !== 'undefined') {
+            this.props.history.push('/admin/dashboard')
+            clearInterval(this.interval);
+          } else if(localStorage.getItem('animalId')) {
+            clearInterval(this.interval);
+            this.props.history.push(`/animal/${animalId}`)
+          } else if (localStorage.getItem('shelterId')) {
+            this.props.history.push(`/shelter/${shelterId}`)
+            clearInterval(this.interval);
+          } else if (localStorage.getItem('shelter_signup')) {
+            this.props.history.push('/shelter-signup')
+            clearInterval(this.interval);
+          } else if (newUser == "true") {
+            this.props.history.push('/callback/onboarding')
+            clearInterval(this.interval);
+          } else {
+            this.props.history.push('/')
+            clearInterval(this.interval);
+          }
+    }
   }
 
   componentDidMount() {

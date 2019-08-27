@@ -54,27 +54,31 @@ class CheckoutForm extends Component {
             name: this.state.name,
         })
 
-
-        axios
-            .post(`${process.env.REACT_APP_BACKEND_URL}/api/stripe/donate`, {
-                token: token.id,
-                data: { 
-                    amount: (this.state.amount * 100), 
-                    shelter_id: this.props.shelterID,
-                    user_id: localStorage.getItem('user_id'),
-                 } 
-            })
-            .then(res =>{ 
-                console.log(res)
-                this.setState({
-                    amount: "",
-                    name: "",
-                    complete: true
+      
+                axios
+                .post(`${process.env.REACT_APP_BACKEND_URL}/api/stripe/donate`, {
+                    token: token.id,
+                    data: { 
+                        amount: (this.state.amount * 100), 
+                        shelter_id: this.props.shelterID,
+                        user_id: localStorage.getItem('user_id'),
+                     } 
                 })
-            })
-            .catch(err => {
-                console.log('Donate Error:', err)
-            })
+                .then(res =>{ 
+                    console.log(res)
+                    this.setState({
+                        amount: "",
+                        name: "",
+                        complete: true
+                    })
+                })
+                .catch(err => {
+                    console.log('Donate Error:', err)
+                })
+            
+     
+        
+
     }
 
     changeHandler = e => {
@@ -96,7 +100,9 @@ class CheckoutForm extends Component {
         return (
             <div>
                <DialogTitle id="form-dialog-title">
-                        Donate to My Shelter
+ 
+                        Donate to my Shelter!
+ 
                 </DialogTitle>
                 <DialogContentText>
                 </DialogContentText>

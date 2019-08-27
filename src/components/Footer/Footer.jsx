@@ -25,6 +25,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 
+import ContactModal from "components/ContactModal/ContactModal.jsx";
 import footerStyle from "assets/jss/material-dashboard-pro-react/components/footerStyle";
 
 function Footer({ ...props }) {
@@ -65,35 +66,21 @@ function Footer({ ...props }) {
               </NavLink>
             </ListItem>
 
-          {window.location.pathname.indexOf("/admin/") !== -1 
-          ? 
-          null
-          : 
-          <ListItem className={classes.inlineBlock}>
-              <NavLink to="/shelter-signup">
-                <div className={block}>
-              Register Your Shelter
-            </div>
-            </NavLink>
-          </ListItem>
-         }
-
-             
             <ListItem className={classes.inlineBlock}>
               <NavLink to="/team">
               <div className={block}>
                 Team
               </div>
               </NavLink>
-            </ListItem>
-            
+            </ListItem>      
+            <ContactModal {...props}/>
+            {/*  
             <ListItem className={classes.inlineBlock}>
               <a href="#contact" className={block}>
                Contact Us
               </a>
             </ListItem>
-          
-          
+            */}    
           </List> 
         </div>
        

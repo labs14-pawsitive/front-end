@@ -249,7 +249,7 @@ class Dashboard extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    userID : state.userReducer.userID,
+    //userID : state.userReducer.userID,
     shelterID : state.shelterReducer.shelterID,
     shelterWorkerID : state.userReducer.shelterWorkerID,
     roleID : state.userReducer.roleID
