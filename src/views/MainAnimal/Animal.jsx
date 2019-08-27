@@ -427,7 +427,7 @@ class AnimalPage extends React.Component {
 
                           {/* DONATE BUTTON */}
                           <GridItem xs={12} sm={3} md={3} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                            <StripeDonation shelter_id={this.state.animal.shelter_id}/>
+                            <StripeDonation id={this.state.animal.shelter_id}/>
                           </GridItem>
                     </GridContainer>
               </GridItem>
