@@ -114,6 +114,10 @@ Provides a way to securely accept payments. Pawsnfind uses a feature in the Stri
 
 Propublica Nonprofit Explorer API provides a way to verify EIN numbers are valid and non profit organizations. Pawsnfind uses it in the rescue on boarding process to validate the EIN number entered by the organization rep.
 
+## [SendGrid](https://sendgrid.com/solutions/email-api/)
+
+SendGrid API allows Pawsnfind to receive emails from the contact us form.
+
 # NPM Modules
 
 ## [Zipcodes](https://www.npmjs.com/package/zipcodes)
