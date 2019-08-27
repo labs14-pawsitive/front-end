@@ -101,7 +101,6 @@ class MainTemp extends React.Component {
             className={classes.fullPage}
             style={{ backgroundImage: "url(" + this.getBgImage() + ")" }}
           >
-            
             <Main {...this.props}/>
             
             <Footer white />

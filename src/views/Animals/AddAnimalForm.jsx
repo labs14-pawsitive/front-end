@@ -71,7 +71,7 @@ class AddAnimalForm extends React.Component {
         coat_length_id: null,
         age_id: null,
         shelter_location_id: null,
-        
+ 
         is_male: false,
         is_house_trained: false,
         is_neutered_spayed: false,
@@ -82,7 +82,6 @@ class AddAnimalForm extends React.Component {
         is_mixed: false,
         shelter_id: null,
         profile_img_id: null,
-        images: [],
       },
       validation: {
         is_male: true,
@@ -199,14 +198,14 @@ class AddAnimalForm extends React.Component {
   }
 
   handleImgUploadResponse = response => {
-    console.log(response)
+   
     if (!response.error) {
-      const images = response.map(item => item.image)
+      const { image_id, image_url } = response[0].image
       this.setState({
         animal: {
           ...this.state.animal,
-          images: images,
-          profile_img_id: images[0].image_id
+          profile_img_id: image_id,
+          image_url: image_url
         }
       })
     }
@@ -298,7 +297,7 @@ class AddAnimalForm extends React.Component {
       this.state.validation.is_neutered_spayed &&
       this.state.validation.is_vaccinated &&
       this.state.validation.is_mixed &&
-      // this.state.animal.profile_img_id &&
+      this.state.animal.profile_img_id &&
       this.state.validation.shelter_location_id &&
       this.state.validation.size_id &&
       this.state.validation.species_id &&
@@ -358,7 +357,6 @@ class AddAnimalForm extends React.Component {
               age_id: "",
               shelter_location_id: "",
               shelter_id: "",
-              profile_img_id: "",
               is_male: false,
               is_house_trained: false,
               is_neutered_spayed: false,
@@ -465,7 +463,7 @@ class AddAnimalForm extends React.Component {
             height="250px" 
             width="250px" 
             borderRadius="5px" 
-            imageLimit={6} 
+            imageLimit={1} 
             editable={true} 
             callback={this.handleImgUploadResponse} 
             url={`${process.env.REACT_APP_BACKEND_URL}/api/pictures`}

@@ -3,7 +3,7 @@ import { combineReducers } from "redux";
 import { userReducer } from './userReducer.js';
 import { shelterReducer } from './shelterReducer.js';
 import { applicationReducer } from './applicationReducer.js';
-import { searchReducer } from './searchReducer.js';
+ 
 import { animalReducer } from './animalReducer.js'
  
 
@@ -12,6 +12,5 @@ export default combineReducers({
     userReducer,
     shelterReducer,
     applicationReducer,
-    animalReducer,
-    searchReducer
+    animalReducer
 });

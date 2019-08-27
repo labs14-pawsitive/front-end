@@ -32,12 +32,13 @@ import PrivateRouteShelter from 'PrivateRouteShelter.js';
 import AuthLayout from "layouts/Auth.jsx";
 import AdminLayout from "layouts/Admin.jsx";
 import ApplicationLayout from "layouts/Application_Temp.jsx";
-import MainLayout from "layouts/Main.jsx";
+import MainLayout from "layouts/Main_Temp.jsx";
 import Callback from "layouts/Callback.jsx";
 import ShelterOnboarding from "layouts/ShelterOnboarding.jsx";
 import ErrorPage from "layouts/Error.jsx";
 
 import "assets/scss/material-dashboard-pro-react.scss?v=1.7.0";
+
 
 const store = createStore(
     reducer,
@@ -59,13 +60,15 @@ ReactDOM.render(
     <Provider store = {store} >
         <Router history={hist}>
             <Switch>
-                <Route exact path="/auth" component={AuthLayout} />
-                <Route path="/callback" render={props => {handleAuthentication(props); return <Callback {...props} />}} />
-                <Route path="/application/:shelterId/:animalId" component={ApplicationLayout} />
-                <Route path="/application" component={ApplicationLayout} />
-                <PrivateRoute path="/shelter-signup" component={ShelterOnboarding}/>
-                <PrivateRouteShelter path="/admin" component={AdminLayout} />
-                <Route path="/" component={MainLayout} /> 
+            <Route exact path="/" component = {MainLayout} />   
+            <Route exact path="/auth" component={AuthLayout} />
+            <Route path="/callback" render={props => {handleAuthentication(props); return <Callback {...props} />}} />
+            <Route path="/application/:shelterId/:animalId" component={ApplicationLayout} />
+            <Route path="/application" component={ApplicationLayout} />
+            <PrivateRoute path="/shelter-signup" component={ShelterOnboarding}/>
+            <PrivateRouteShelter path="/admin" component={AdminLayout} />
+            <Route path="/error" component={ErrorPage} />
+            <Redirect from ="/" to="/error" />
             </Switch>
         </Router>
     </Provider>,
