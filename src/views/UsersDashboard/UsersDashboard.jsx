@@ -1,18 +1,12 @@
 /*!
-
 =========================================================
 * Material Dashboard PRO React - v1.7.0
 =========================================================
-
 * Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
 * Copyright 2019 Creative Tim (https://www.creative-tim.com)
-
 * Coded by Creative Tim
-
 =========================================================
-
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
 */
 import React from "react";
 import PropTypes from "prop-types";
@@ -91,55 +85,46 @@ class UserDashboard extends React.Component {
     userVerified : ""
   };
 
-
-  
-  // componentWillMount() {
-  //   //verifying shelter before proceeding
-  //   axiosWithAuth()
-  //     .get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/shelter/${localStorage.getItem('shelter_id')}`)
-  //     .then( result => {
-  //       this.setState({
-  //         shelterVerified: true
-  //       })
-  //       console.log(result)
-  //     })
-  //     .catch( error => {
-
-  //       console.log(error)
-  //       this.props.history.push('/')
-  //     })
-  // }
+  componentWillMount() {
+    //verifying shelter before proceeding
+    axiosWithAuth()
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/user/${localStorage.getItem('user_id')}`)
+      .then( result => {
+        this.setState({
+          userVerified: true
+        })
+        console.log(result)
+      })
+      .catch( error => {
+        console.log(error)
+        this.props.history.push('/')
+      })
+  }
 
 
-  // async componentDidMount() {
-  //   await axios
-  //   //await axiosWithAuth()
-  //   //.get(`${process.env.REACT_APP_BACKEND_URL}/api/dashboard/${localStorage.getItem('shelter_id')}`)
-  //   .get(`${process.env.REACT_APP_BACKEND_URL}/api/dashboard/${localStorage.getItem('shelter_id')}`)
-  //   .then(results => {
-  //     if (results){
-  //     this.setState({
-  //       animal_3 : results.data.animal_3,
-  //       animal_count : results.data.animal_count,
-  //       application_30 : results.data.application_30,
-  //       donation_30 : results.data.donation_30,
-  //       follower_count : results.data.follower_count,
-  //       monthly_application : results.data.monthly_application,
-  //       monthly_donation : results.data.monthly_donation,
-  //       recent_application : results.data.recent_application,
-  //       shelter_info : results.data.shelter_info,
-  //       donationRawSeries : results.data.monthly_donation,
-  //       applicationRawSeries : results.data.monthly_application
-  //     })
-  //   }
 
-  //   })
-  //   .catch(error => {
-  //     console.log(error)
-  //   })
-  //   console.log(this.state)
-  // }
-
+  async componentDidMount() {
+    await axios
+    .get(`${process.env.REACT_APP_BACKEND_URL}/api/dashboard/user/${localStorage.getItem('user_id')}`)
+    .then(results => {
+        
+      if (results){
+      this.setState({
+        animalFollows: results.data.animalFollows[0].totalAnimalFollows,
+        applicationCount: results.data.applicationCount[0].totalApplications,
+        monthlyDonation: results.data.monthlyDonation,
+        recentApplication: results.data.recentApplication,
+        shelterFollows: results.data.shelterFollows[0].totalShelterFollows,
+        totalDonation: results.data.totalDonation[0].total
+      })
+    }
+    
+    })
+    .catch(error => {
+      console.log(error)
+    })
+    console.log(this.state)
+  }
 
   handleChange = (event, value) => {
     this.setState({ value });
