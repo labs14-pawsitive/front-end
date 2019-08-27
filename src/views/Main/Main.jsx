@@ -50,6 +50,9 @@ import mainPageStyle from "assets/jss/material-dashboard-pro-react/views/mainPag
 import FeatureAnimals from "./FeatureAnimals";
 import AnimalCard from "components/AnimalCard/AnimalCard.jsx";
 
+import Auth from "components/Auth/Auth.js"
+
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -86,6 +89,10 @@ function TextMaskCustom(props) {
 TextMaskCustom.propTypes = {
   inputRef: PropTypes.func.isRequired,
 };
+
+
+const auth = new Auth();
+
 
 class MainPage extends React.Component {
   constructor(props) {
@@ -226,6 +233,15 @@ class MainPage extends React.Component {
           : that.props.theme.typography.fontWeightMedium
     };
   }
+
+  handleSignup = () => {
+    if(localStorage.getItem("token") && localStorage.getItem("user_id")) {
+      this.props.history.push('/userDash/Dashboard')
+    } else {
+      auth.login();
+    }
+  }
+
 
 
   render() {
@@ -413,8 +429,8 @@ class MainPage extends React.Component {
                   <p style={customStyle.textP2}>ADOPT YOUR PET</p>
                 </div>
                 <Button size="large" style={customStyle.signUpButton}
-                  variant="contained" className={classes.button} onClick={this.handleSearch}>
-                  SIGN UP
+                  variant="contained" className={classes.button} onClick={this.handleSignup}>
+                  {localStorage.getItem("token") && localStorage.getItem("user_id") ? "GO TO MY ACCOUNT" : "SIGN UP"}
                 </Button>
               </div>
             </GridItem>
