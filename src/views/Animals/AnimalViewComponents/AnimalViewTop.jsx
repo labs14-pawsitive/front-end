@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import axios from 'axios';
 
 
 // @material-ui/core components
@@ -37,49 +38,117 @@ class AnimalViewTop extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            // placeholderImages: Array(6).fill("url(" + placeholderImage + ")"),
-            updatedImages: [],
-            animalPictures: [],
-            deletePicture: [],
-            isViewingPhotos: false
+               placeholderImages: []
         }
     }
 
-    componentDidMount = () => {
-        this.setState({
-            updatedImages: this.props.placeholderImages
+    componentDidMount = async () => {
+
+       let images = [];
+        await axios
+            .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${this.props.paramsId}/pictures`)
+            .then(res => {
+                images = res.data;
+                console.log(res);
+                console.log('action: delete animal pictures success from action', res.data)
         })
+        
+        console.log(images);
+
+        for (let i = 6 - (6 - images.length); i < 6; i++){
+            images.push('');
+        } 
+
+        this.setState({
+            placeholderImages: images
+        })
+        this.callback.bind(this);
+        this.deletePicture.bind(this);
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        console.log('component did update in animal view top is invoked')
-        if (this.props.placeholderImages !== prevProps.placeholderImages) {
-            this.setState({
-                updatedImages: this.state.updatedImages
-            })
+   
 
-        }
-    }
-
-    deletePicture = (event, imgID) => {
+    deletePicture =  (event, imageId) => {
 
         event.preventDefault()
 
-        console.log('updated pics after deletion in the animal top component state', this.state.updatedImages.filter(image => image.img_id !== imgID))
+ 
+        const arrayAfterDelete = this.state.placeholderImages.map(image => image.img_id === imageId ? '' : image)
 
-        // const deletePictureArray = this.state.placeholderImages.filter(image => image.img_id !== imgID)
+        console.log('animal view: array after delete ',arrayAfterDelete)
+    
+         this.setState({
+          placeholderImages: arrayAfterDelete
+        })
+    
+        axios
+        .delete(`${process.env.REACT_APP_BACKEND_URL}/api/animals/pictures/${imageId}`)
+        .then(async res => await axios
+        .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${this.props.animal_id}/pictures`))
+        .then(async res => {
 
-        console.log('new placeholder images array after delete ', this.state.placeholderImages.filter(image => image.img_id !== imgID))
+            let images = res.data;
 
-        this.props.deletePictures(imgID, this.props.animal.id)
+            for (let i = 6 - (6 - images.length); i < 6; i++){
+                images.push('');
+            } 
+    
+            await this.setState({
+                placeholderImages: images
+              })
+            console.log(res);
+       console.log('action: delete animal pictures success from action', res.data)
+    })
+    .catch(err => {
+       console.log('action:  delete animal pictures error from action: ', err.response)
+    })
+   
+        
     }
 
+    callback = async (response) => {
+        console.log('callback img_id ', response)
+    
+        let updateInfo = {
+          img_id: response[0].image.image_id,
+          img_url: response[0].image.image_url,
+          animal_id: this.props.paramsId
+        }
+    
+        console.log('call updated info ', updateInfo)
+    
+        await axios
+          .post(`${process.env.REACT_APP_BACKEND_URL}/api/animals/pictures`, updateInfo)
+          .then(async result => {
+
+            await axios
+            .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${this.props.paramsId}/pictures`)
+            .then(async res => {
+                let images = res.data;
+
+                for (let i = 6 - (6 - images.length); i < 6; i++){
+                    images.push('');
+                } 
+        
+                await this.setState({
+                    placeholderImages: images
+                  })
+            })
+
+    
+          
+            console.log('upload image success animal view', result)
+          })
+          .catch(error => {
+            console.log('upload image error animal view', error)
+          })
+    
+    
+      }
 
     render() {
-        console.log('animal view top component: this.props.placeholderImages ', this.props.placeholderImages)
-
-        console.log('animal view top component: this.props.animalPictures ',this.props.animalPictures )
-        const { classes, fullScreen } = this.props;
+ 
+         const { classes, fullScreen } = this.props;
 
         const customStyle = {
             imgCardStyle: {
@@ -237,7 +306,7 @@ class AnimalViewTop extends React.Component {
                                     </IconButton>
                                     </DialogTitle>
                                     <GridContainer md={12}>
-                                        {this.props.placeholderImages.map(eachImage => (
+                                        {this.state.placeholderImages.map(eachImage => (
                                             <GridItem xs={2} sm={2} md={4} key={eachImage.img_id}>
                                                 <DialogContent style={{
                                                     height: "200px",
@@ -251,12 +320,12 @@ class AnimalViewTop extends React.Component {
                                                             <ImageUploadEdit height="150px" width="150px"
                                                                 defaultImage={eachImage.img_url}
                                                                 borderRadius="5px" imageLimit={1}
-                                                                editable={this.props.isEditing} callback={this.props.callback}
+                                                                editable={this.props.isEditing} callback={this.callback }
                                                                 url={`${process.env.REACT_APP_BACKEND_URL}/api/pictures`} />
 
                                                             {/* color: "#cd5c5c", */}
                                                             <IconButton style={{ float: "right", color: "rgba(170, 39, 176, 0.83)", marginTop: "-204px", }} 
-                                                            onClick={(event) => this.deletePicture(event, eachImage.img_id)}>
+                                                            onClick={(event) => this.deletePicture(event, eachImage.img_id) }>
                                                                 <DeleteIcon />
                                                             </IconButton>
                                                         </div>
@@ -264,10 +333,10 @@ class AnimalViewTop extends React.Component {
                                                         <div>
                                                             <ImageUploadEdit height="150px" width="150px"
                                                                 borderRadius="5px" imageLimit={1}
-                                                                editable={this.props.isEditing} callback={this.props.callback}
+                                                                editable={this.props.isEditing} callback={this.callback }
                                                                 url={`${process.env.REACT_APP_BACKEND_URL}/api/pictures`} />
                                                             <IconButton style={{ float: "right", color: "rgba(170, 39, 176, 0.83)", marginTop: "-204px", }} 
-                                                            onClick={(event) => this.deletePicture(event, eachImage.img_id)}>
+                                                            onClick={(event) => this.deletePicture(event, eachImage.img_id) }>
                                                                 <DeleteIcon />
                                                             </IconButton>
                                                         </div>}
@@ -321,7 +390,7 @@ class AnimalViewTop extends React.Component {
                             </IconButton>
                             </DialogTitle>
                             <GridContainer md={12}>
-                                {this.props.animalPictures.map(eachImage => (
+                                {this.state.placeholderImages.map(eachImage => (
                                     <GridItem md={4} key={eachImage.img_id}>
                                         <DialogContent style={{
                                             height: "200px",
@@ -428,8 +497,7 @@ AnimalViewTop.propTypes = {
 const mapStateToProps = (state) => {
     return {
         locations: state.animalReducer.dropdownAnimalOptions.locations,
-        // animalPictures: state.animalReducer.animalPictures
-    }
+     }
 }
 
 export default connect(

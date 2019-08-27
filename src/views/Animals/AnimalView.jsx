@@ -123,24 +123,16 @@ class AnimalView extends React.Component {
     this.props.getAllOptions(localStorage.getItem('shelter_id'))])
       .then(([animalInfo, animalOptions]) => {
 
-        //updating the pictures array
-        let newArray = []
-
-        this.state.placeholderImages.map((value, i) => {
-          console.log(`value at ${i} is ${value}`)
-          if (this.props.animalPictures[i]) {
-            value = this.props.animalPictures[i]
-            newArray.push(value)
-
-          }
-          else {
-            newArray.push(value)
-          }
-        })
+      
 
         //verifying shelter
         this.verifyShelter(this.props.animal.shelter_id)
 
+        let newArray = this.props.animalPictures;
+
+        for (let i = 6 - (6 - newArray.length); i < 6; i++){
+          newArray.push('');
+        }
         // call setState here
 
         this.setState({
@@ -191,27 +183,7 @@ class AnimalView extends React.Component {
 
     }
 
-    if (this.props.animalPictures !== prevProps.animalPictures) {
-      let newArray = []
-
-        this.state.placeholderImages.map((value, i) => {
-          console.log(`value at ${i} is ${value}`)
-          if (this.props.animalPictures[i]) {
-            value = this.props.animalPictures[i]
-            newArray.push(value)
-
-          }
-          else {
-            newArray.push(value)
-          }
-        })
-      console.log('placeholder images: component did update in animal view  is invoked')
-      this.setState({
-        placeholderImages: newArray,
-        animalPictures:this.props.animalPictures
-      })
-
-    }
+    
   }
 
   updateForm = () => {
@@ -552,8 +524,17 @@ class AnimalView extends React.Component {
 
   callback = async (response) => {
     console.log('callback img_id ', response)
-    this.state.animal.img_url = response[0].image.image_url
-    this.state.animal.img_id = response[0].image.image_id
+
+    let newArray = this.state.placeholderImages;
+    for(let i = 0; i < this.state.placeholderImages.length; i++){
+        if (newArray[i] === ''){
+          newArray[i] = response[0].image;
+          break;
+        }
+    }
+    this.setState({
+      placeholderImages: newArray
+    })
 
     let updateInfo = {
       img_id: response[0].image.image_id,
@@ -571,6 +552,7 @@ class AnimalView extends React.Component {
       .catch(error => {
         console.log('upload image error animal view', error)
       })
+
 
   }
 
