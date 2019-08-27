@@ -65,8 +65,8 @@ class StripeOnboarding extends React.Component {
         this.state = {
             first_name: '',
             last_name: '',
-            routing_number: '110000000',
-            account_number: '000123456789',
+            routing_number: '',
+            account_number: '',
             address_1: '',
             address_2: '',
             city: '',
