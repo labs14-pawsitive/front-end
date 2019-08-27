@@ -30,7 +30,7 @@ import {
 
 //initialState set for testing
 const initialState = {
-    shelterID : 3,
+    shelterID : localStorage.getItem('shelter_id'),
     upgraded : true,
     shelter: {},
     location: [],

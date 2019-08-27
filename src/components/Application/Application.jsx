@@ -64,10 +64,11 @@ class Application extends React.Component {
         buttonStyle: {
           backgroundColor: "#A464A3",
           marginTop: "25px",
-          marginRight: "15px",
           boxShadow: "5px 5px 0 #C9AAA9",
           fontSize: "1em",
           fontWeight: "700",
+          width:"100%",
+          minWidth: "100%",
           "&:hover": {
             backgroundColor: "#A464A3"
           }
@@ -76,9 +77,15 @@ class Application extends React.Component {
 
     return (
         <> 
+
+ 
+            {/* <GridItem xs={10} sm={4}> */}
             <Button style={customStyle.buttonStyle} onClick={this.handleClickOpen('paper')}>
                 ADOPT ME
             </Button>
+            {/* </GridItem> */}
+ 
+
             {this.state.open === true ? 
                 <GridContainer>
                     <GridItem xs={12} sm={11} md={10}>
@@ -110,5 +117,6 @@ class Application extends React.Component {
     );
   }
 }
-
+ 
 export default Application;
+ 

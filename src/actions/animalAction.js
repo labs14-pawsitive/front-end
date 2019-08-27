@@ -1,4 +1,4 @@
-
+ 
 import axios from 'axios';
 
 export const ADD_ANIMAL_START = 'ADD_ANIMAL_START';
@@ -91,153 +91,133 @@ export const GET_DROPDOWN_FAILURE = 'GET_DROPDOWN_FAILURE'
 
 export const getAllOptions = (shelterID) => dispatch => {
 
-  dispatch({ type: GET_DROPDOWN_START })
-  return axios
-    .get(`http://localhost:8000/api/internal/paws/options/${shelterID}`)
+    
+    dispatch({ type: GET_DROPDOWN_START })
+    return axios
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/internal/paws/options/${shelterID}`)
+      
+      .then(res => {
+        dispatch({ type: GET_DROPDOWN_SUCCESS, payload: res.data })
+        console.log('action: get all animal options info', res.data)
+      })
+      .catch(err => {
+        dispatch({ type: GET_DROPDOWN_FAILURE, payload: err.response })
+        console.log('action: get animal info error: ', err.response)
+      })
+  }
 
-    .then(res => {
-      dispatch({ type: GET_DROPDOWN_SUCCESS, payload: res.data })
-      console.log('action: get all animal options info', res.data)
-    })
-    .catch(err => {
-      dispatch({ type: GET_DROPDOWN_FAILURE, payload: err.response })
-      console.log('action: get animal info error: ', err.response)
-    })
-}
+  export const GET_ANIMAL_START = 'GET_ANIMAL_START'
+  export const GET_ANIMAL_SUCCESS = 'GET_ANIMAL_SUCCESS'
+  export const GET_ANIMAL_FAILURE = 'GET_ANIMAL_FAILURE'
+  
+  export const getInfoByAnimalID = (animalID) => dispatch => {
+      
+      dispatch({ type: GET_ANIMAL_START })
+      return axios
+        .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalID}`)
+        //.get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalID}`)
+        .then(res => {
+          console.log(res)
+          dispatch({ type: GET_ANIMAL_SUCCESS, payload: res.data })
+          console.log('action: get all animal info', res.data)
+        })
+        .catch(err => {
+          dispatch({ type: GET_ANIMAL_FAILURE, payload: err.response })
+          console.log('action: get animal info error: ', err.response)
+        })
+    }  
 
-export const GET_ANIMAL_START = 'GET_ANIMAL_START'
-export const GET_ANIMAL_SUCCESS = 'GET_ANIMAL_SUCCESS'
-export const GET_ANIMAL_FAILURE = 'GET_ANIMAL_FAILURE'
+    export const POST_NOTES_START = 'POST_NOTES_START'
+    export const POST_NOTES_SUCCESS = 'POST_NOTES_SUCCESS'
+    export const POST_NOTES_FAILURE = 'POST_NOTES_FAILURE'
 
-export const getInfoByAnimalID = (animalID) => dispatch => {
+    export const GET_NOTES_BY_ANIMAL_START = 'GET_NOTES_BY_ANIMAL_START'
+    export const GET_NOTES_BY_ANIMAL_SUCCESS = 'GET_NOTES_BY_ANIMAL_SUCCESS'
+    export const GET_NOTES_BY_ANIMAL_FAILURE = 'GET_NOTES_BY_ANIMAL_FAILURE'
 
-  dispatch({ type: GET_ANIMAL_START })
-  return axios
-    .get(`http://localhost:8000/api/animals/${animalID}`)
-    //.get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalID}`)
-    .then(res => {
-      dispatch({ type: GET_ANIMAL_SUCCESS, payload: res.data })
-      console.log('action: get all animal info', res.data)
-    })
-    .catch(err => {
-      dispatch({ type: GET_ANIMAL_FAILURE, payload: err.response })
-      console.log('action: get animal info error: ', err.response)
-    })
-}
+    export const addNotes = (animalID, note) => dispatch => {
+        
+        dispatch({ type: POST_NOTES_START })
+        return axios
+          .post(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalID}/admin`, note)
+          .then(res => axios
+            .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalID}`))
+          .then(res => {
+            dispatch({ type: GET_ANIMAL_SUCCESS, payload: res.data })
+            console.log('action: update notes info', res.data)
+          })
+          // .then(res => axios
+          //   .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalID}/admin`))
+          // .then(res => {
+          //   dispatch({ type: GET_NOTES_BY_ANIMAL_SUCCESS, payload: res.data })
+          //   console.log('action :get notes info', res.data)
+          // })
+          .catch(err => {
+            dispatch({ type: POST_NOTES_FAILURE, payload: err.response })
+            console.log('action: get notes info error: ', err.response)
+          })
+      }
 
-export const POST_NOTES_START = 'POST_NOTES_START'
-export const POST_NOTES_SUCCESS = 'POST_NOTES_SUCCESS'
-export const POST_NOTES_FAILURE = 'POST_NOTES_FAILURE'
-
-export const GET_NOTES_BY_ANIMAL_START = 'GET_NOTES_BY_ANIMAL_START'
-export const GET_NOTES_BY_ANIMAL_SUCCESS = 'GET_NOTES_BY_ANIMAL_SUCCESS'
-export const GET_NOTES_BY_ANIMAL_FAILURE = 'GET_NOTES_BY_ANIMAL_FAILURE'
-
-export const addNotes = (animalID, note) => dispatch => {
-
-  dispatch({ type: POST_NOTES_START })
-  return axios
-    .post(`http://localhost:8000/api/animals/${animalID}/admin`, note)
-    .then(res => axios
-      .get(`http://localhost:8000/api/animals/${animalID}`))
-    .then(res => {
-      dispatch({ type: GET_ANIMAL_SUCCESS, payload: res.data })
-      console.log('action: update notes info', res.data)
-    })
-    .catch(err => {
-      dispatch({ type: POST_NOTES_FAILURE, payload: err.response })
-      console.log('action: get notes info error: ', err.response)
-    })
-}
-
-export const UPDATE_NOTES_START = 'UPDATE_NOTES_START'
-export const UPDATE_NOTES_SUCCESS = 'UPDATE_NOTES_SUCCESS'
-export const UPDATE_NOTES_FAILURE = 'UPDATE_NOTES_FAILURE'
-
-export const updateNotes = (animalID, noteID, updateNote) => dispatch => {
-
-  dispatch({ type: UPDATE_NOTES_START })
-  return axios
-    .put(`http://localhost:8000/api/animals/${animalID}/admin/${noteID}`, updateNote)
-    .then(res => axios
-      .get(`http://localhost:8000/api/animals/${animalID}`))
-    .then(res => {
-      dispatch({ type: UPDATE_NOTES_SUCCESS, payload: res.data })
-      console.log('action: update notes info', res.data)
-    })
-    .catch(err => {
-      dispatch({ type: UPDATE_NOTES_FAILURE, payload: err.response })
-      console.log('action: update notes error: ', err.response)
-    })
-}
+      export const FETCH_ANIMALS_BY_SHELTER_START = 'FETCH_ANIMALS_BY_SHELTER_START'
+      export const FETCH_ANIMALS_BY_SHELTER_SUCCESS = 'FETCH_ANIMALS_BY_SHELTER_SUCCESS'
+      export const FETCH_ANIMALS_BY_SHELTER_FAILURE = 'FETCH_ANIMALS_BY_SHELTER_FAILURE'
+      
+      export const getPublicAnimalInfoByCount = (count) => dispatch => {
+          
+          dispatch({ type: FETCH_ANIMALS_BY_SHELTER_START })
+          return axios
+            .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/public/count/${count}`)
+            //.get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalID}`)
+            .then(res => {
+              dispatch({ type: FETCH_ANIMALS_BY_SHELTER_SUCCESS, payload: res.data })
+              console.log('action: FETCH_ANIMALS_BY_SHELTER_SUCCESS', res.data)
+            })
+            .catch(err => {
+              dispatch({ type: FETCH_ANIMALS_BY_SHELTER_FAILURE, payload: err.response })
+              console.log('action: FETCH_ANIMALS_BY_SHELTER_FAILURE error: ', err.response)
+            })
+        } 
+        
+      export const UPDATE_NOTES_START = 'UPDATE_NOTES_START'
+      export const UPDATE_NOTES_SUCCESS = 'UPDATE_NOTES_SUCCESS'
+      export const UPDATE_NOTES_FAILURE = 'UPDATE_NOTES_FAILURE'
+      
+      export const updateNotes = (animalID,noteID,updateNote) => dispatch => {
+          
+          dispatch({ type: UPDATE_NOTES_START })
+          return axios
+            .put(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalID}/admin/${noteID}`,updateNote)
+            .then(res => axios
+              .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalID}`))
+            .then(res => {
+              dispatch({ type: UPDATE_NOTES_SUCCESS, payload: res.data })
+              console.log('action: update notes info', res.data)
+            })
+            .catch(err => {
+              dispatch({ type: UPDATE_NOTES_FAILURE, payload: err.response })
+              console.log('action: update notes error: ', err.response)
+            })
+        }
 
 
-export const DELETE_NOTES_START = 'DELETE_NOTES_START'
-export const DELETE_NOTES_SUCCESS = 'DELETE_NOTES_SUCCESS'
-export const DELETE_NOTES_FAILURE = 'DELETE_NOTES_FAILURE'
-
-export const deleteNotes = (animalID, noteID) => dispatch => {
-
-  dispatch({ type: DELETE_NOTES_START })
-  return axios
-    .delete(`http://localhost:8000/api/animals/${animalID}/admin/${noteID}`)
-    .then(res => axios
-      .get(`http://localhost:8000/api/animals/${animalID}`))
-    .then(res => {
-      dispatch({ type: DELETE_NOTES_SUCCESS, payload: res.data })
-      console.log('action: delete notes info', res.data)
-    })
-    .catch(err => {
-      dispatch({ type: DELETE_NOTES_FAILURE, payload: err.response })
-      console.log('action: delete notes error: ', err.response)
-    })
-}
-
-export const GET_ANIMAL_PICTURES_START = 'GET_ANIMAL_PICTURES_START'
-export const GET_ANIMAL_PICTURES_SUCCESS = 'GET_ANIMAL_PICTURES_SUCCESS'
-export const GET_ANIMAL_PICTURES_FAILURE = 'GET_ANIMAL_PICTURES_FAILURE'
-
-export const getAnimalPictures = (animalID) => dispatch => {
-
-  dispatch({ type: GET_ANIMAL_PICTURES_START })
-  return axios
-    .get(`http://localhost:8000/api/pictures/animal/${animalID}`)
-
-    .then(res => {
-      dispatch({ type: GET_ANIMAL_PICTURES_SUCCESS, payload: res.data })
-      console.log('action: get animal pictures success from action', res.data)
-    })
-    .catch(err => {
-      dispatch({ type: GET_ANIMAL_PICTURES_FAILURE, payload: err.response })
-      console.log('action:  get animal pictures error from action: ', err.response)
-    })
-}
-
-export const DELETE_ANIMAL_PICTURES_START = 'DELETE_ANIMAL_PICTURES_START'
-export const DELETE_ANIMAL_PICTURES_SUCCESS = 'DELETE_ANIMAL_PICTURES_SUCCESS'
-export const DELETE_ANIMAL_PICTURES_FAILURE = 'DELETE_ANIMAL_PICTURES_FAILURE'
-
-export const deleteAnimalPictures = (imageID, animalID) => dispatch => {
-
-  dispatch({ type: DELETE_ANIMAL_PICTURES_START })
-  return axios
-  //old route
-    // .delete(`http://localhost:8000/api/pictures/image/${imageID}`)
-    //new route
-    .delete(`http://localhost:8000/api/animals/pictures/${imageID}`)
-    //old route
-    // .then(res => axios
-    //   .get(`http://localhost:8000/api/pictures/animal/${animalID}`))
-      //new route
-      .then(res => axios
-        .get(`http://localhost:8000/api/animals/${animalID}/pictures`))
-    .then(res => {
-      dispatch({ type: GET_ANIMAL_PICTURES_SUCCESS, payload: res.data })
-      console.log('action: delete animal pictures success from action', res.data)
-    })
-    .catch(err => {
-      dispatch({ type: DELETE_ANIMAL_PICTURES_FAILURE, payload: err.response })
-      console.log('action:  delete animal pictures error from action: ', err.response)
-    })
-}
+        export const DELETE_NOTES_START = 'DELETE_NOTES_START'
+        export const DELETE_NOTES_SUCCESS = 'DELETE_NOTES_SUCCESS'
+        export const DELETE_NOTES_FAILURE = 'DELETE_NOTES_FAILURE'
+        
+        export const deleteNotes = (animalID,noteID) => dispatch => {
+            
+            dispatch({ type: DELETE_NOTES_START })
+            return axios
+              .delete(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalID}/admin/${noteID}`)
+              .then(res => axios
+                .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalID}`))
+              .then(res => {
+                dispatch({ type: DELETE_NOTES_SUCCESS, payload: res.data })
+                console.log('action: delete notes info', res.data)
+              })
+              .catch(err => {
+                dispatch({ type: DELETE_NOTES_FAILURE, payload: err.response })
+                console.log('action: delete notes error: ', err.response)
+              })
+          }
 

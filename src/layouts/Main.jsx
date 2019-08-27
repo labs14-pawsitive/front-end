@@ -39,7 +39,7 @@ import TeamPage from "views/MainTeam/Team.jsx";
 import mainStyle from "assets/jss/material-dashboard-pro-react/layouts/mainStyle.jsx";
 
 import mainBG from "assets/img/bg-application.jpg";
-import error from "assets/img/bg-404lostPuppy.jpg";
+import error from "assets/img/bg-error.png";
 
 class MainLayout extends React.Component {
   wrapper = React.createRef();
@@ -78,14 +78,18 @@ class MainLayout extends React.Component {
               <Route path="/error" component={ErrorPage} />
               <Redirect from ="/" to="/error" />
             </Switch>
+ 
             {window.location.pathname.indexOf('/error') !== -1 ? 
               <Footer white/>
               :
               <Footer black/>
             }
             
+ 
+
           </div>
         </div>
+        
       </div>
     );
   }

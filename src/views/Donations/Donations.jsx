@@ -1,4 +1,5 @@
 /*!
+ 
 
 =========================================================
 * Material Dashboard PRO React - v1.7.0
@@ -13,6 +14,16 @@
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
+=======
+=========================================================
+* Material Dashboard PRO React - v1.7.0
+=========================================================
+* Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
+* Copyright 2019 Creative Tim (https://www.creative-tim.com)
+* Coded by Creative Tim
+=========================================================
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ 
 */
 import React from "react";
 import PropTypes from "prop-types";
@@ -73,7 +84,7 @@ class Donations extends React.Component {
       recentDonations : "",
       topDonors : [], 
       shelterVerified: ""
-
+ 
     };
   }
 
@@ -109,7 +120,9 @@ class Donations extends React.Component {
           email: donation.email,
           amount: parseInt(donation.amount),
           date: `${donation.month}/${donation.day}/${donation.year}`,
-          icon: <Favorite style={{color: '#e0286a'}}/>
+ 
+         // icon: <Favorite style={{color: '#e0286a'}}/>
+ 
         };
       }),
       totalDonations : results.data.totalDonations[0].total,
@@ -206,50 +219,52 @@ class Donations extends React.Component {
 
     return (
       <GridContainer>
-        <GridItem xs={12} sm={12} md={4}>
+ 
+        <GridItem xs={12} sm={12} md={5} lg={4}>
           <GridContainer>
-          <GridItem xs={12} sm={6} md={12} lg={12}>
-            <Card>
-              <CardHeader color="success" stats icon>
-                <CardIcon color="success">
-                  <Icon>pets</Icon>
-                </CardIcon>
-                <p className={classes.cardCategory} style={card_category}>Recent Donations</p>
-                <h3 className={classes.cardTitle} style={card_title}>
-                  <small>$</small>{this.state.recentDonations} 
-                </h3>
-              </CardHeader>
-              <CardFooter stats>
-                <div className={classes.stats} style={card_category}>
-                <Update />
-                  Just Updated
-                </div>
-              </CardFooter>
-            </Card>
-          </GridItem> 
-          <GridItem xs={12} sm={6} md={12} lg={12}>
-            <Card>
-              <CardHeader color="warning" stats icon>
-                <CardIcon color="warning">
-                  <Icon>pets</Icon>
-                </CardIcon>
-                <p className={classes.cardCategory} style={card_category}>Total Donations</p>
-                <h3 className={classes.cardTitle} style={card_title}>
-                  <small>$</small>{this.state.totalDonations} 
-                </h3>
-              </CardHeader>
-              <CardFooter stats>
-                <div className={classes.stats} style={card_category}>
-                <Update />
-                  Just Updated
-                </div>
-              </CardFooter>
-            </Card>
-          </GridItem>
+            <GridItem xs={12} sm={6} md={12} lg={12}>
+              <Card>
+                <CardHeader color="success" stats icon>
+                  <CardIcon color="success">
+                    <Icon>pets</Icon>
+                  </CardIcon>
+                  <p className={classes.cardCategory} style={card_category}>Recent Donations</p>
+                  <h3 className={classes.cardTitle} style={card_title}>
+                    <small>$</small>{this.state.recentDonations} 
+                  </h3>
+                </CardHeader>
+                <CardFooter stats>
+                  <div className={classes.stats} style={card_category}>
+                  <Update />
+                    Just Updated
+                  </div>
+                </CardFooter>
+              </Card>
+            </GridItem> 
+            <GridItem xs={12} sm={6} md={12} lg={12}>
+              <Card>
+                <CardHeader color="warning" stats icon>
+                  <CardIcon color="warning">
+                    <Icon>pets</Icon>
+                  </CardIcon>
+                  <p className={classes.cardCategory} style={card_category}>Total Donations</p>
+                  <h3 className={classes.cardTitle} style={card_title}>
+                    <small>$</small>{this.state.totalDonations} 
+                  </h3>
+                </CardHeader>
+                <CardFooter stats>
+                  <div className={classes.stats} style={card_category}>
+                  <Update />
+                    Just Updated
+                  </div>
+                </CardFooter>
+              </Card>
+            </GridItem>
           </GridContainer>
-          </GridItem>
+        </GridItem>
          
-          <GridItem xs={12} sm={12} md={8}>
+        <GridItem xs={12} sm={12} md={7} lg={8}>
+ 
             <Card>
               <CardHeader color="rose" text>
                 <CardText color="rose">
@@ -302,10 +317,7 @@ class Donations extends React.Component {
                   {
                     Header: "Date",
                     accessor: "date"
-                  },
-                  {
-                    Header: "",
-                    accessor: "icon"
+ 
                   }
                 ]}
                 defaultPageSize={10}
@@ -323,12 +335,10 @@ class Donations extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    userID : state.userReducer.userID,
-    shelterID : state.shelterReducer.shelterID,
-    shelterWorkerID : state.userReducer.shelterWorkerID,
-    roleID : state.userReducer.roleID
+ 
+    user : state.userReducer.user
   }
-  
+ 
 }
 
 Donations.propTypes = {
@@ -341,4 +351,6 @@ Donations.propTypes = {
 export default connect(
   mapStateToProps,
   {}
+ 
 )(withStyles(styles)(Donations))
+ 

@@ -1,26 +1,22 @@
 /*!
-
 =========================================================
 * Material Dashboard PRO React - v1.7.0
 =========================================================
-
 * Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
 * Copyright 2019 Creative Tim (https://www.creative-tim.com)
-
 * Coded by Creative Tim
-
 =========================================================
-
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
 */
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 // react component for creating dynamic tables
 import ReactTable from "react-table";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import axios from 'axios';
+import {axiosWithAuth} from 'axiosWithAuth';
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Icon from "@material-ui/core/Icon";
@@ -29,11 +25,11 @@ import Icon from "@material-ui/core/Icon";
 import Update from "@material-ui/icons/Update";
 
 import Assignment from "@material-ui/icons/Assignment";
-import Dvr from "@material-ui/icons/Dvr";
+// import Dvr from "@material-ui/icons/Dvr";
 import Search from "@material-ui/icons/Search";
 import Favorite from "@material-ui/icons/Favorite";
-import Close from "@material-ui/icons/Close";
-import Warning from "@material-ui/icons/Warning";
+// import Close from "@material-ui/icons/Close";
+// import Warning from "@material-ui/icons/Warning";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -44,11 +40,8 @@ import CardBody from "components/Card/CardBody.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
-import Danger from "components/Typography/Danger.jsx";
-
-
-
-import { dataTable } from "variables/general.jsx";
+// import Danger from "components/Typography/Danger.jsx";
+// import { dataTable } from "variables/general.jsx";
 
 import { cardTitle } from "assets/jss/material-dashboard-pro-react.jsx";
 
@@ -72,153 +65,63 @@ class UserApplications extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      animals: [],
-      data: dataTable.dataRows.map((prop, key) => {
-        return {
-          id: key,
-          /*name: prop[0],
-          position: prop[1],
-          office: prop[2],
-          age: prop[3],*/
-          profilePic: prop[0],
-          name: prop[1],
-          status: prop[2],
-          location: prop[3],
-          actions: (
-            // we've added some custom button actions
-            <div className="actions-right">
-              {/* use this button to add a like kind of action */}
-              <NavLink to={`/admin/animal/${key}`}>
-                <Button
-                  justIcon
-                  round
-                  simple
-                  /*onClick={() => {
-                    let obj = this.state.data.find(o => o.id === key);
-                    alert(
-                      "You've clicked LIKE button on \n{ \nName: " +
-                        obj.name +
-                        ", \nposition: " +
-                        obj.position +
-                        ", \noffice: " +
-                        obj.office +
-                        ", \nage: " +
-                        obj.age +
-                        "\n}."
-                    );
-                  }}*/
-                  color="info"
-                  className="view"
-                >
-                  <Search />
-                </Button>
-              </NavLink>{" "}
-              {/* use this button to add a edit kind of action */}
-              <NavLink to={`/admin/editAnimal/${key}`}>
-                <Button
-                  justIcon
-                  round
-                  simple
-                  /*onClick={() => {
-                    let obj = this.state.data.find(o => o.id === key);
-                    alert(
-                      "You've clicked EDIT button on \n{ \nName: " +
-                        obj.name +
-                        ", \nposition: " +
-                        obj.position +
-                        ", \noffice: " +
-                        obj.office +
-                        ", \nage: " +
-                        obj.age +
-                        "\n}."
-                    );
-                  }}*/
-                  color="warning"
-                  className="edit"
-                >
-                  <Dvr />
-                </Button>
-              </NavLink>{" "}
-             {/* use this button to remove the data row */}
-             {/* <Button
-                justIcon
-                round
-                simple
-                onClick={() => {
-                  var data = this.state.data;
-                  data.find((o, i) => {
-                    if (o.id === key) {
-                      // here you should add some custom code so you can delete the data
-                      // from this component and from your server as well
-                      data.splice(i, 1);
-                      return true;
-                    }
-                    return false;
-                  });
-                  this.setState({ data: data });
-                }}
-                color="danger"
-                className="remove"
-              >
-                <Close />
-              </Button>*/}{" "}
-            </div>
-          )
-        };
-      })
+      applications: [],
+      userVerified: ""
+
     };
   }
 
-  componentDidMount() {
+ 
+  componentWillMount() {
+    //verifying user before proceeding
+    axiosWithAuth()
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/user/${localStorage.getItem('user_id')}`)
+      .then( result => {
+        this.setState({
+          userVerified : true
+        })
+        console.log(result)
+      })
+      .catch( error => {
+        console.log(error)
+        this.props.history.push('/')
+      })
+  }
+
+
+   componentDidMount() {
     axios
-    //.get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/shelter/${localStorage.getItem("shelter_id")}`)
-    .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/shelter/${localStorage.getItem('shelter_id')}`)
-    .then(animals => {
-      const picStyle = { width: '100%' }
-      console.log(animals)
-      this.setState({
-        animals : animals.data.map((animal, key) => {
+    .get(`${process.env.REACT_APP_BACKEND_URL}/api/applications/user/${localStorage.getItem('user_id')}`)
+
+    .then(applications => {
+        console.log(applications)
+        const picStyle = { width: '100%' }
+        this.setState({
+        applications : applications.data.map((application, key) => {
         return {
           id: key,
-          animalID: animal.id,
-          profilePic: <img src={animal.img_url} style={picStyle}/>,
-          name: animal.name,
-          species: animal.species,
-          status: animal.animal_status,
-          location: animal.nickname,
+          profilePic: <img src={application.img_url} style={picStyle}/>,
+          applicationID: application.id,
+          name: application.animal_name,
+          shelter: application.shelter,
+          status: application.application_status,
+          date: `${application.month}/${application.day}/${application.year}`,
+         // icon: <Favorite style={{color: '#e0286a'}}/>
+
+          
           actions: (
-            <div className="actions-right">
-              {/* view animal */}
-              <NavLink to={`/admin/animal/${animal.id}`}>
-                <Button
-                  justIcon
-                  round
-                  simple
-                  color="info"
-                  className="like"
-                >
+            <div className="actions-left">
+              <NavLink to={`/animal/${application.animal_id}`}>
+              <Button color="success">
                   <Search />
-                </Button>
+                  </Button>
               </NavLink>{" "}
-              {/* edit animal */}
-              <NavLink to={`/admin/editAnimal/${animal.id}`}>
-                <Button
-                  justIcon
-                  round
-                  simple
-                  color="warning"
-                  className="edit"
-                >
-                  <Dvr />
-                </Button>
-              </NavLink>{" "}
-           
             </div>
           )
         };
       })
       })
-      console.log("state" , this.state.animals)
+      console.log("state" , this.state.applications)
     })
     .catch(error => {
       console.log(error)
@@ -245,17 +148,20 @@ class UserApplications extends React.Component {
       textAlign: "right"
     }
 
+    if(this.state.userVerified !== true) return <div>Verifying applications</div>
+
     return (
-      <GridContainer>
-         <GridItem xs={12} sm={6} md={6} lg={3}>
+
+      <GridContainer>     
+         <GridItem xs={12} sm={6} md={6} lg={4}>
             <Card>
               <CardHeader color="warning" stats icon>
                 <CardIcon color="warning">
                   <Icon>pets</Icon>
                 </CardIcon>
-                <p className={classes.cardCategory} style={card_category}>Current Animals</p>
+                <p className={classes.cardCategory} style={card_category}>Total Applications</p>
                 <h3 className={classes.cardTitle} style={card_title}>
-                  {this.state.animals.length} <small>Animals</small>
+                  {this.state.applications.length} <small>Application{this.state.applications.length > 1 ? "s" : "" }</small>
                 </h3>
               </CardHeader>
               <CardFooter stats>
@@ -267,48 +173,48 @@ class UserApplications extends React.Component {
             </Card>
           </GridItem>
         <GridItem xs={12}>
-          {/*{this.state.animals.map(animal => <p>{animal.name}</p>)}*/}
           <Card>
             <CardHeader color="primary" icon>
               <CardIcon color="primary">
                 <Assignment />
               </CardIcon>
-              <h4 className={classes.cardIconTitle}>Animals</h4>
+              <h4 className={classes.cardIconTitle}>Applications</h4>
             </CardHeader>
+
+      
+
             <CardBody>
               <ReactTable
-                data={this.state.animals}
+                data={this.state.applications}
                 filterable
                 columns={[
-                  
                   {
-                    Header: "Profile Pic",
-                    accessor: "profilePic",
-                    sortable: false,
-                    filterable: false
+                    Header: "Profile Picture",
+                    accessor: "profilePic"
                   },
                   {
-                    Header: "Animal ID",
-                    accessor: "animalID"
+                    Header: "Application ID",
+                    accessor: "applicationID",
                   },
                   {
-                    Header: "Name",
+                    Header: "Animal Name",
                     accessor: "name"
-                  },
-                  {
-                    Header: "Species",
-                    accessor: "species"
                   },
                   {
                     Header: "Status",
                     accessor: "status"
                   },
                   {
-                    Header: "Location",
-                    accessor: "location"
+                    Header: "Shelter",
+                    accessor: "shelter"
                   },
                   {
-                    Header: "Actions",
+                    Header: "Date",
+                    accessor: "date"
+                  },
+                  
+                  {
+                    Header: "View Animal",
                     accessor: "actions",
                     sortable: false,
                     filterable: false
@@ -329,10 +235,7 @@ class UserApplications extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    userID : state.userReducer.userID,
-    shelterID : state.shelterReducer.shelterID,
-    shelterWorkerID : state.userReducer.shelterWorkerID,
-    roleID : state.userReducer.roleID
+    user : state.userReducer.user
   }
   
 }
@@ -348,3 +251,4 @@ export default connect(
   mapStateToProps,
   {}
 )(withStyles(styles)(UserApplications))
+

@@ -41,7 +41,6 @@ import ErrorPage from "layouts/Error.jsx";
 
 import "assets/scss/material-dashboard-pro-react.scss?v=1.7.0";
 
-
 const store = createStore(
     reducer,
         applyMiddleware(thunk, logger)
@@ -70,8 +69,10 @@ ReactDOM.render(
                 */}
                 <PrivateRoute path="/shelter-signup" component={ShelterOnboarding}/>
                 <PrivateRouteShelter path="/admin" component={AdminLayout} />
+
                 <PrivateRouteUser path="/userDash" component={UserLayout} />
                 <Route path="/" component={MainLayout} />   
+
             </Switch>
         </Router>
     </Provider>,

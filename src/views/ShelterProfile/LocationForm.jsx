@@ -108,7 +108,7 @@ class LocationForm extends React.Component {
        // if (this.isValidated() && this.state.shelterVerified) {
         if (this.isValidated()) {
             const newLocation = {
-            shelter_id: localStorage.getItem('shelter_id'),
+            shelter_id: this.props.shelterID,
             street_address: this.state.street_address,
             city: this.state.city,
             zipcode: this.state.zipcode,
@@ -119,7 +119,7 @@ class LocationForm extends React.Component {
 
         console.log(newLocation)
 
-        this.props.addShelterLoc(localStorage.getItem('shelter_id'), newLocation)
+        this.props.addShelterLoc(this.props.shelterID, newLocation)
 
         .then( () => {
             this.props.updateShelter();

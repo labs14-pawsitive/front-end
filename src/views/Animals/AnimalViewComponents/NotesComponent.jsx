@@ -185,7 +185,7 @@ class NotesComponent extends React.Component {
                     <span style={customStyle.noteStyle}>
                         <Typography style={customStyle.typographyStyle}
                             component="span">
-                            User:#{this.state.editNoteInfo.shelter_user_id}
+                            User:{this.props.userInfo.username}
                         </Typography>
                         {/* {moment(note.created_at).format("MMMM Do YYYY").toString()} */}
                         {moment(this.state.editNoteInfo.created_at).fromNow()}
@@ -216,7 +216,7 @@ NotesComponent.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-
+        userInfo: state.userReducer.userInfo,
         shelterWorkerID: state.userReducer.shelterWorkerID,
     }
 }

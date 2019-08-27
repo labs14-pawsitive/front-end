@@ -109,7 +109,7 @@ class MapNotes extends React.Component {
                         }}
                     />
 
-                    <FormLabel> <p> {this.props.email} . {moment(this.props.note.created_at).format("MMMM Do YYYY").toString()} </p> </FormLabel>
+                    <FormLabel> <p> {this.props.username} . {moment(this.props.note.created_at).format("MMMM Do YYYY").toString()} </p> </FormLabel>
                 </div>
 
                 <GridContainer

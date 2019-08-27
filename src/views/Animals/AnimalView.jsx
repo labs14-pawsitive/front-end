@@ -17,7 +17,9 @@ import { axiosWithAuth } from 'axiosWithAuth';
 
 import { updateAnimal, getInfoByAnimalID, getAllOptions, addNotes, updateNotes, deleteNotes, getAnimalPictures, deleteAnimalPictures }
   from '../../actions/animalAction.js'
-import AnimalNotes from './AnimalViewComponents/AnimalNotes.jsx'
+ 
+ import AnimalNotes from './AnimalViewComponents/AnimalNotes.jsx'
+ 
 import AnimalViewTop from './AnimalViewComponents/AnimalViewTop.jsx'
 import AnimalViewDetails from './AnimalViewComponents/AnimalViewDetails.jsx'
 
@@ -494,6 +496,7 @@ class AnimalView extends React.Component {
     else this.handleToggle(event)
   }
 
+
   handleViewPics = (event) => {
     event.preventDefault()
     console.log('this.props.isEditingPhotos is ', this.state.isEditingPhotos)
@@ -696,6 +699,7 @@ export default connect(
     deleteNotes,
     getAnimalPictures,
     deleteAnimalPictures
+
   }
 )(withStyles(regularFormsStyle)(AnimalView))
 

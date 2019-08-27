@@ -61,7 +61,10 @@ class ApplicationWizard extends React.Component {
         transition: "transform 0s"
       },
       allStates: {},
-      isSuccess: ""
+      isSuccess: "",
+      animal: {},
+      shelter: {},
+      user: {}
     };
 
 
@@ -77,7 +80,19 @@ class ApplicationWizard extends React.Component {
   componentDidMount() {
     this.refreshAnimation(0);
     window.addEventListener("resize", this.updateWidth);
-    
+    //add another route to retrieve basic animal and shelter contact info
+    //shelter email, user email, shelter name,  username, animal name
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/applications/getMessageData/${localStorage.getItem("user_id")}/${this.props.shelterId}/${this.props.animalId}`)
+    .then( results => {
+      this.setState({
+        animal: results.data.animal,
+        shelter: results.data.shelter,
+        user: results.data.user
+      })
+    })
+    .catch( error => {
+      console.log(error)
+    })
   }
 
   componentWillUnmount() {
@@ -246,6 +261,9 @@ class ApplicationWizard extends React.Component {
       this.setState({
         isSuccess : true
       })
+
+      this.sendNotification();
+
       localStorage.removeItem('animalId')
       localStorage.removeItem('shelterId')
     })
@@ -254,6 +272,23 @@ class ApplicationWizard extends React.Component {
         isSuccess : false
       })
       console.log(error)
+    })
+  }
+
+  sendNotification = () => {
+    const message = {
+      shelterEmail : this.state.shelter.shelterEmail,
+      applicantEmail : this.state.allStates.about.email,
+      shelter: this.state.shelter.shelter,
+      username: this.state.user.username,
+      animalName: this.state.animal.animalName
+    }
+    axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/sendgrid/sendNotification`, message)
+    .then( app => {
+      console.log({message: "notification sent successfully"})
+    })
+    .catch(error => {
+      console.log({message: "error sending notification"})
     })
   }
 

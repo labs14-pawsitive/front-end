@@ -23,6 +23,7 @@ export const get_user = user_id => dispatch => {
     )
 }
 
+
 export const UPDATE_USER_PROFILE_START = "UPDATE_USER_PROFILE_START";
 export const UPDATE_USER_PROFILE_SUCCESS = "UPDATE_USER_PROFILE_SUCCESS";
 export const UPDATE_USER_PROFILE_FAIL = "UPDATE_USER_PROFILE_FAIL";
@@ -44,3 +45,4 @@ export const update_user_profile = (user_id,userObject) => dispatch => {
         })
     )
 }
+

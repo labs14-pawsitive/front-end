@@ -48,7 +48,7 @@ class UserDashboard extends React.Component {
     miniActive: false,
     image: require("assets/img/sidebar-2.jpg"),
     color: "blue",
-    bgColor: "black",
+    bgColor: "blue",
     hasImage: true,
     fixedClasses: "dropdown",
     logo: require("assets/img/logo-white.svg"),
@@ -58,7 +58,6 @@ class UserDashboard extends React.Component {
 
   onBackButtonEvent = (e) => {
     e.preventDefault();
-
   }
   
     componentWillMount() {
@@ -75,10 +74,9 @@ class UserDashboard extends React.Component {
     }
 
   componentDidMount() {
-    
     this.getUser(localStorage.getItem('user_id'));
 
-        if (navigator.platform.indexOf("Win") > -1) {
+    if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(this.mainPanel.current, {
         suppressScrollX: true,
         suppressScrollY: false
@@ -109,27 +107,7 @@ class UserDashboard extends React.Component {
   getUser = async(user_id) => {
     await this.props.get_user(user_id)
   }
-/*
-  handleImageClick = image => {
-    this.setState({ image: image });
-  };
 
-  handleColorClick = color => {
-    this.setState({ color: color });
-  };
-
-  handleBgColorClick = bgColor => {
-    switch (bgColor) {
-      case "white":
-        this.setState({ logo: require("assets/img/logo.svg") });
-        break;
-      default:
-        this.setState({ logo: require("assets/img/logo-white.svg") });
-        break;
-    }
-    this.setState({ bgColor: bgColor });
-  };
-*/
   handleFixedClick = () => {
     if (this.state.fixedClasses === "dropdown") {
       this.setState({ fixedClasses: "dropdown show" });

@@ -98,7 +98,7 @@ class Locations extends Component {
 
   deleteLocation = async (e) => {
     e.preventDefault()
-    await this.verifyShelter(localStorage.getItem('shelter_id'))
+    await this.verifyShelter(this.props.shelterID)
     //if(this.state.shelterVerified) {
     this.props.deleteShelterLoc(this.props.location.id)
       .then(() => {
@@ -110,12 +110,15 @@ class Locations extends Component {
     //} 
   }
 
+
   updateSubmit = async (e) => {
     e.preventDefault()
     await this.verifyShelter(localStorage.getItem('shelter_id'))
 
+
     //if (this.isValidated() && this.state.shelterVerified) {
     if (this.isValidated()) {
+
       const updatedLocation = {
         shelter_id: localStorage.getItem('shelter_id'),
         street_address: this.state.location.street_address,
@@ -126,6 +129,7 @@ class Locations extends Component {
         shelter_contact_id: this.state.location.shelter_contact_id
       }
       console.log('UPDATECHANGE', updatedLocation)
+
 
 
       this.props.updateShelterLoc(this.props.location.id, updatedLocation)

@@ -79,25 +79,18 @@ import {
 import shelterDashboardStyle from "assets/jss/material-dashboard-pro-react/views/shelterDashboardStyle";
 
 
-//let monthlyDonation = [];
-//let monthlyApplication = [];
-
 class UserDashboard extends React.Component {
   state = {
     months: getFullMonths(),
-    animal_3 : [],
-    animal_count : [],
-    application_30 : [],
-    donation_30 : [],
-    follower_count : [],
-    monthly_application : [],
-    monthly_donation : [],
-    recent_application : [],
-    shelter_info : [],
-    donationRawSeries : [],
-    applicationRawSeries : [],
-    shelterVerified : ""
+    animalFollows: '',
+    applicationCount: '',
+    monthlyDonation: [],
+    recentApplication: [],
+    shelterFollows: '',
+    totalDonation: '',
+    userVerified : ""
   };
+
 
   
   // componentWillMount() {
@@ -147,6 +140,7 @@ class UserDashboard extends React.Component {
   //   console.log(this.state)
   // }
 
+
   handleChange = (event, value) => {
     this.setState({ value });
   };
@@ -157,43 +151,24 @@ class UserDashboard extends React.Component {
 
   getApplicationRows = () => {
       let result = []
-       this.state.recent_application.map((app, key) => {
-         result.push([`${app.id}`,  `${app.animal_name}`, `${app.application_status}`, `${app.applicant_username}`, `${app.month}/${app.day}/${app.year}`, this.getApplication(app.id)])
+       this.state.recentApplication.map((app, key) => {
+         result.push([`${app.id}`,  `${app.animal_name}`,  `${app.shelter}`, `${app.application_status}`, `${app.month}/${app.day}/${app.year}`])
       })
       return result;
     }
-    
-  getApplication = id => {
-    return (
-      <NavLink to={`/admin/application/${id}`}>
-      <Button color="success">
-          <Search />
-        </Button>
-      </NavLink>
-    )
-  }
 
   render() {
     const { classes } = this.props;
     
     let applicationRows = this.getApplicationRows();
     
-    
     let donationChartData = {};
-    let applicationChartData = {};
-    const donationSeries = this.state.donationRawSeries;
-    const applicationSeries = this.state.applicationRawSeries;
+    const donationSeries = this.state.monthlyDonation;
     
     if (donationSeries.length > 0 ){
       const monthlyDonationSeries = getDataSeries(donationSeries);
       donationChartData = { labels : this.state.months, series : [monthlyDonationSeries]}
     }
-
-    if (applicationSeries.length > 0 ){
-      const monthlyApplicationSeries = getDataSeries(applicationSeries)
-      applicationChartData = { labels : this.state.months, series : [monthlyApplicationSeries]}
-    } 
-  
 
     const customStyle = {
       imgHover : {
@@ -213,8 +188,7 @@ class UserDashboard extends React.Component {
 
     }
     
-    if(this.state.shelterVerified !== true) return <div>Verifying Shelter</div>
-    else if(!this.state.shelter_info[0]) return <div>Still loading data</div>
+    if(this.state.userVerified !== true) return <div>Verifying User</div>
 
     return (
       
@@ -226,22 +200,17 @@ class UserDashboard extends React.Component {
                 <CardIcon color="warning">
                   <Pets />
                 </CardIcon>
-                <p className={classes.cardCategory}>Current Animals</p>
-                  {this.state.animal_count.length > 0 
+                <p className={classes.cardCategory}>I'm Following</p>
+                  {this.state.animalFollows.length > 0 
                   ? 
-                  this.state.animal_count.map((count, key) => (
-                    <h3 className={classes.cardTitle} style={customStyle.tightLineHeight}>{count.count}{' '}{count.species}{count.count > 1 ? "s" : ""}</h3>
-                  ))
+                    <h3 className={classes.cardTitle}>{this.state.animalFollows}{' '}{this.state.animalFollows > 1 ? "Animals" : "Animal"}</h3>
                   :
-                    <h3 className={classes.cardTitle}>0 Animals</h3>}
-                
+                    <h3 className={classes.cardTitle}>0 Animal</h3>}
               </CardHeader>
               <CardFooter stats style={customStyle.bottomFooter}>
                 <div className={classes.stats}>
-                 <Pets />
-                  
-                    Animals available for adoptions
-                 
+                 <AccessTime />
+                    Just Updated
                 </div>
               </CardFooter>
             </Card>
@@ -253,14 +222,13 @@ class UserDashboard extends React.Component {
                 <CardIcon color="success">
                  <Money />
                 </CardIcon>
-                <p className={classes.cardCategory}>Recent Donations</p>
-                {this.state.donation_30.length > 0 ? <h3 className={classes.cardTitle}>${this.state.donation_30[0].total}</h3> :<h3 className={classes.cardTitle}>$0</h3>  }
-                
+                <p className={classes.cardCategory}>Total Donations</p>
+                    <h3 className={classes.cardTitle}>${this.state.totalDonation}</h3>  
               </CardHeader>
               <CardFooter stats style={customStyle.bottomFooter}>
                 <div className={classes.stats}>
                 <Money />
-                  Total donations from the past 30 days
+                  Total Donations Made
                 </div>
               </CardFooter>
             </Card>
@@ -272,14 +240,13 @@ class UserDashboard extends React.Component {
                 <CardIcon color="danger">
                   <LibraryBooks />
                 </CardIcon>
-                <p className={classes.cardCategory}>Recent Applications</p>
-                {this.state.application_30.length > 0 ? <h3 className={classes.cardTitle}>{this.state.application_30[0].count}</h3> : <h3 className={classes.cardTitle}>0</h3> }
-                
+                <p className={classes.cardCategory}>Total Applications</p>
+                <h3 className={classes.cardTitle}>{this.state.applicationCount}{' '}{this.state.applicationCount > 1 ? "Applications" : "Application"}</h3> }
               </CardHeader>
               <CardFooter stats style={customStyle.bottomFooter}>
                 <div className={classes.stats}>
                 <LibraryBooks />
-                  Total application from the past 30 days
+                Total Applications I've Filled Out
                 </div>
               </CardFooter>
             </Card>
@@ -291,13 +258,13 @@ class UserDashboard extends React.Component {
                 <CardIcon color="info">
                   <Face />
                 </CardIcon>
-                <p className={classes.cardCategory}>Followers</p>
-                <h3 className={classes.cardTitle}>{this.state.follower_count[0].count}</h3>
+                <p className={classes.cardCategory}>I'm Following</p>
+                <h3 className={classes.cardTitle}>{this.state.shelterFollows}{' '}{this.state.shelterFollows > 1 ? "Shelters" : "Shelter"} </h3>
               </CardHeader>
               <CardFooter stats style={customStyle.bottomFooter}>
                 <div className={classes.stats}>
-                <Face />
-                  Total Pawsnfind members who are following you
+                <AccessTime />
+                  Just updated
                 </div>
               </CardFooter>
             </Card>
@@ -307,13 +274,12 @@ class UserDashboard extends React.Component {
 
         <GridContainer>
            
-          <GridItem xs={12} sm={12} md={6}>
+          <GridItem xs={12} lg={5}>
             <Card chart>
               <CardHeader color="info" className={classes.cardHeaderHover}>
                 <ChartistGraph
                   className="ct-chart-white-colors"
                   data={donationChartData}
-                  //type="Line"
                   type="Bar"
                   options={donationChart.options}
                   listener={donationChart.animation}
@@ -343,10 +309,10 @@ class UserDashboard extends React.Component {
                     </Button>
                   </Tooltip>
                 </div>
-                <h4 className={classes.cardTitle}>Monthly Donations</h4>
+                <h4 className={classes.cardTitle}>My Monthly Donations</h4>
                 <p className={classes.cardCategory}>
              
-                  A snapshot of your aggregated monthly donation for the past 12 months
+                  A snapshot of my aggregated monthly donation for the past 12 months
                 </p>
               </CardBody>
               <CardFooter chart>
@@ -356,76 +322,22 @@ class UserDashboard extends React.Component {
               </CardFooter>
             </Card>
           </GridItem>
-
-
-          <GridItem xs={12} sm={12} md={6}>
-            <Card chart>
-              <CardHeader color="danger" className={classes.cardHeaderHover}>
-                <ChartistGraph
-                  className="ct-chart-white-colors"
-                  data={applicationChartData}
-                  type="Line"
-                  options={applicationChart.options}
-                  listener={applicationChart.animation}
-                />
-              </CardHeader>
-              <CardBody>
-                <div className={classes.cardHoverUnder}>
-                  <Tooltip
-                    id="tooltip-top"
-                    title="Refresh"
-                    placement="bottom"
-                    classes={{ tooltip: classes.tooltip }}
-                  >
-                    <Button simple color="info" justIcon>
-                      <Refresh className={classes.underChartIcons} />
-                    </Button>
-                  </Tooltip>
-                  <Tooltip
-                    id="tooltip-top"
-                    title="Change Date"
-                    placement="bottom"
-                    classes={{ tooltip: classes.tooltip }}
-                  >
-                    <Button color="transparent" simple justIcon>
-                      <Edit className={classes.underChartIcons} />
-                    </Button>
-                  </Tooltip>
-                </div>
-                <h4 className={classes.cardTitle}>Monthly Applications</h4>
-                <p className={classes.cardCategory}>
-                  A snapshot of your aggregated monthly application for the past 12 months
-                </p>
-              </CardBody>
-              <CardFooter chart>
-                <div className={classes.stats}>
-                  <AccessTime /> Updated within the last 24 hours
-                </div>
-              </CardFooter>
-            </Card>
-          </GridItem>
-        </GridContainer>
-
-
-
-        <GridContainer>
-          <GridItem xs={12}>
+          <GridItem xs={12} lg={7}>
           <Card>
             <CardHeader color="rose" icon>
               <CardIcon color="rose">
                 <LibraryBooks />
               </CardIcon>
-              <h4 className={classes.cardIconTitle}>Recent Applications</h4>
+              <h4 className={classes.cardIconTitle}>My Recent Applications</h4>
             </CardHeader>
             <CardBody>
               <Table
                 tableHead={[
-                  "Application ID",
+                  "App. ID",
                   "Animal Name",
-                  "Application Status",
-                  "Applicant",
-                  "Submission Date",
-                  "View Application"
+                  "Shelter",
+                  "Status",
+                  "Date"
                 ]}
                 tableData={applicationRows}
                 customCellClasses={[
@@ -444,68 +356,6 @@ class UserDashboard extends React.Component {
             </CardBody>
           </Card>
         </GridItem>
-        </GridContainer>
-
-
-        <h3>Animal Spotlights</h3>
-        <br />
-        <GridContainer>
-          {this.state.animal_3.map((animal, key) => (
-            <GridItem xs={12} sm={6} md={4}>
-              <NavLink to={`/admin/animal/${animal.id}`}>
-            <Card product>
-              <CardHeader image className={classes.cardHeaderHover} style={customStyle.imgHover}>
-               
-                  <img src={animal.img_url} alt={animal.name} />
-               
-              </CardHeader>
-              <CardBody>
-                <div className={classes.cardHoverUnder}>
-                  <Tooltip
-                    id="tooltip-top"
-                    title="View"
-                    placement="bottom"
-                    classes={{ tooltip: classes.tooltip }}
-                  >
-                    <Button color="transparent" simple justIcon>
-                      <ArtTrack className={classes.underChartIcons} />
-                    </Button>
-                  </Tooltip>
-                  <Tooltip
-                    id="tooltip-top"
-                    title="Edit"
-                    placement="bottom"
-                    classes={{ tooltip: classes.tooltip }}
-                  >
-                    <Button color="success" simple justIcon>
-                      <Refresh className={classes.underChartIcons} />
-                    </Button>
-                  </Tooltip>
-                  <Tooltip
-                    id="tooltip-top"
-                    title="Remove"
-                    placement="bottom"
-                    classes={{ tooltip: classes.tooltip }}
-                  >
-                    <Button color="danger" simple justIcon>
-                      <Edit className={classes.underChartIcons} />
-                    </Button>
-                  </Tooltip>
-                </div>
-                <h4 className={classes.cardProductTitle}>
-                  <NavLink to={`/admin/animal/${animal.id}`}>
-                    {animal.name}
-                  </NavLink>
-                </h4>
-              
-              </CardBody>
-             
-            </Card>
-            </NavLink>
-          </GridItem>
-          ))}
-          
-
         </GridContainer>
       </div>
     );

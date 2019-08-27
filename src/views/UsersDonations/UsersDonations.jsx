@@ -1,26 +1,22 @@
 /*!
-
 =========================================================
 * Material Dashboard PRO React - v1.7.0
 =========================================================
-
 * Product Page: https://www.creative-tim.com/product/material-dashboard-pro-react
 * Copyright 2019 Creative Tim (https://www.creative-tim.com)
-
 * Coded by Creative Tim
-
 =========================================================
-
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
 */
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 // react component for creating dynamic tables
 import ReactTable from "react-table";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import axios from 'axios';
+import {axiosWithAuth} from 'axiosWithAuth';
+
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Icon from "@material-ui/core/Icon";
@@ -29,11 +25,11 @@ import Icon from "@material-ui/core/Icon";
 import Update from "@material-ui/icons/Update";
 
 import Assignment from "@material-ui/icons/Assignment";
-import Dvr from "@material-ui/icons/Dvr";
+// import Dvr from "@material-ui/icons/Dvr";
 import Search from "@material-ui/icons/Search";
 import Favorite from "@material-ui/icons/Favorite";
-import Close from "@material-ui/icons/Close";
-import Warning from "@material-ui/icons/Warning";
+// import Close from "@material-ui/icons/Close";
+// import Warning from "@material-ui/icons/Warning";
 
 // core components
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -44,13 +40,15 @@ import CardBody from "components/Card/CardBody.jsx";
 import CardIcon from "components/Card/CardIcon.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
-import Danger from "components/Typography/Danger.jsx";
+import CardText from "components/Card/CardText.jsx";
+import Table from "components/Table/Table.jsx";
 
-
-
-import { dataTable } from "variables/general.jsx";
+// import Danger from "components/Typography/Danger.jsx";
 
 import { cardTitle } from "assets/jss/material-dashboard-pro-react.jsx";
+
+
+
 
 const styles = {
   cardIconTitle: {
@@ -72,161 +70,110 @@ class UserDonations extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      animals: [],
-      data: dataTable.dataRows.map((prop, key) => {
-        return {
-          id: key,
-          /*name: prop[0],
-          position: prop[1],
-          office: prop[2],
-          age: prop[3],*/
-          profilePic: prop[0],
-          name: prop[1],
-          status: prop[2],
-          location: prop[3],
-          actions: (
-            // we've added some custom button actions
-            <div className="actions-right">
-              {/* use this button to add a like kind of action */}
-              <NavLink to={`/admin/animal/${key}`}>
-                <Button
-                  justIcon
-                  round
-                  simple
-                  /*onClick={() => {
-                    let obj = this.state.data.find(o => o.id === key);
-                    alert(
-                      "You've clicked LIKE button on \n{ \nName: " +
-                        obj.name +
-                        ", \nposition: " +
-                        obj.position +
-                        ", \noffice: " +
-                        obj.office +
-                        ", \nage: " +
-                        obj.age +
-                        "\n}."
-                    );
-                  }}*/
-                  color="info"
-                  className="view"
-                >
-                  <Search />
-                </Button>
-              </NavLink>{" "}
-              {/* use this button to add a edit kind of action */}
-              <NavLink to={`/admin/editAnimal/${key}`}>
-                <Button
-                  justIcon
-                  round
-                  simple
-                  /*onClick={() => {
-                    let obj = this.state.data.find(o => o.id === key);
-                    alert(
-                      "You've clicked EDIT button on \n{ \nName: " +
-                        obj.name +
-                        ", \nposition: " +
-                        obj.position +
-                        ", \noffice: " +
-                        obj.office +
-                        ", \nage: " +
-                        obj.age +
-                        "\n}."
-                    );
-                  }}*/
-                  color="warning"
-                  className="edit"
-                >
-                  <Dvr />
-                </Button>
-              </NavLink>{" "}
-             {/* use this button to remove the data row */}
-             {/* <Button
-                justIcon
-                round
-                simple
-                onClick={() => {
-                  var data = this.state.data;
-                  data.find((o, i) => {
-                    if (o.id === key) {
-                      // here you should add some custom code so you can delete the data
-                      // from this component and from your server as well
-                      data.splice(i, 1);
-                      return true;
-                    }
-                    return false;
-                  });
-                  this.setState({ data: data });
-                }}
-                color="danger"
-                className="remove"
-              >
-                <Close />
-              </Button>*/}{" "}
-            </div>
-          )
-        };
-      })
+      donations: [],
+      top_donations: [],
+      count: '',
+      total: '',
+      userVerified: ""
+
     };
   }
 
-  componentDidMount() {
+ 
+  componentWillMount() {
+    //verifying user before proceeding
+    axiosWithAuth()
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/user/${localStorage.getItem('user_id')}`)
+      .then( result => {
+        this.setState({
+          userVerified : true
+        })
+        console.log(result)
+      })
+      .catch( error => {
+        console.log(error)
+        this.props.history.push('/')
+      })
+  }
+
+
+   componentDidMount() {
     axios
-    //.get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/shelter/${localStorage.getItem("shelter_id")}`)
-    .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/shelter/${localStorage.getItem('shelter_id')}`)
-    .then(animals => {
-      const picStyle = { width: '100%' }
-      console.log(animals)
-      this.setState({
-        animals : animals.data.map((animal, key) => {
+    .get(`${process.env.REACT_APP_BACKEND_URL}/api/donations/user/${localStorage.getItem('user_id')}`)
+
+    .then(results => {
+        console.log(results)
+        this.setState({
+        donations : results.data.donations.map((donation, key) => {
         return {
           id: key,
-          animalID: animal.id,
-          profilePic: <img src={animal.img_url} style={picStyle}/>,
-          name: animal.name,
-          species: animal.species,
-          status: animal.animal_status,
-          location: animal.nickname,
-          actions: (
-            <div className="actions-right">
-              {/* view animal */}
-              <NavLink to={`/admin/animal/${animal.id}`}>
-                <Button
-                  justIcon
-                  round
-                  simple
-                  color="info"
-                  className="like"
-                >
-                  <Search />
-                </Button>
-              </NavLink>{" "}
-              {/* edit animal */}
-              <NavLink to={`/admin/editAnimal/${animal.id}`}>
-                <Button
-                  justIcon
-                  round
-                  simple
-                  color="warning"
-                  className="edit"
-                >
-                  <Dvr />
-                </Button>
-              </NavLink>{" "}
-           
-            </div>
-          )
+          donationID: donation.id,
+          amount: parseInt(donation.amount),
+          shelter: donation.shelter,
+          date: `${donation.month}/${donation.day}/${donation.year}`,
+          //icon: <Favorite style={{color: '#e0286a'}}/>
+          //empty: []
         };
+      }),
+        count: results.data.total_donations[0].count,
+        total: results.data.total_donations[0].total,
+        top_donations : results.data.top_donations
       })
-      })
-      console.log("state" , this.state.animals)
+      console.log("state" , this.state)
     })
     .catch(error => {
       console.log(error)
     })
   }
 
+
+  getTopDonationRows = () => {
+    let result = []
+     this.state.top_donations.map((donation, key) => {
+       result.push([`${key+1}`,  `${donation.shelter}`, `${donation.total}`, `${donation.number_of_donations}`])
+    })
+    return result;
+  }
+
   render() {
     const { classes } = this.props;
+    const styles = {
+      cardTitle,
+      cardTitleWhite: {
+        ...cardTitle,
+        color: "#FFFFFF",
+        marginTop: "0"
+      },
+      cardCategoryWhite: {
+        margin: "0",
+        color: "rgba(255, 255, 255, 0.8)",
+        fontSize: ".875rem"
+      },
+      cardCategory: {
+        color: "#999999",
+        marginTop: "10px"
+      },
+      icon: {
+        color: "#333333",
+        margin: "10px auto 0",
+        width: "130px",
+        height: "130px",
+        border: "1px solid #E5E5E5",
+        borderRadius: "50%",
+        lineHeight: "174px",
+        "& svg": {
+          width: "55px",
+          height: "55px"
+        },
+        "& .fab,& .fas,& .far,& .fal,& .material-icons": {
+          width: "55px",
+          fontSize: "55px"
+        }
+      },
+      marginTop30: {
+        marginTop: "30px"
+      }
+    };
     const card_category = {
       color: "#999",
       margin: "0",
@@ -245,74 +192,116 @@ class UserDonations extends React.Component {
       textAlign: "right"
     }
 
+    let topDonationRows = this.getTopDonationRows();
+
+
+    if(this.state.userVerified !== true) return <div>Verifying donations</div>
+
     return (
-      <GridContainer>
-         <GridItem xs={12} sm={6} md={6} lg={3}>
+
+      <GridContainer>     
+        <GridItem xs={12} sm={12} md={5} lg={4}>
+            <GridContainer>
+                <GridItem xs={12} sm={6} md={12} lg={12}>
+                    <Card>
+                    <CardHeader color="warning" stats icon>
+                        <CardIcon color="warning">
+                        <Icon>pets</Icon>
+                        </CardIcon>
+                        <p className={classes.cardCategory} style={card_category}>I've Made a Total of</p>
+                        <h3 className={classes.cardTitle} style={card_title}>
+                        {this.state.count} <small>Donation{this.state.donations.length > 1 ? "s" : "" }</small>
+                        </h3>
+                    </CardHeader>
+                    <CardFooter stats>
+                        <div className={classes.stats} style={card_category}>
+                        <Update />
+                        Just Updated
+                        </div>
+                    </CardFooter>
+                    </Card>
+                </GridItem>
+
+                <GridItem xs={12} sm={6} md={12} lg={12}>
+                    <Card>
+                    <CardHeader color="warning" stats icon>
+                        <CardIcon color="warning">
+                        <Icon>money</Icon>
+                        </CardIcon>
+                        <p className={classes.cardCategory} style={card_category}>I've Donated a Total Amount of</p>
+                        <h3 className={classes.cardTitle} style={card_title}>
+                        ${this.state.total}
+                        </h3>
+                    </CardHeader>
+                    <CardFooter stats>
+                        <div className={classes.stats} style={card_category}>
+                        <Update />
+                        Just Updated
+                        </div>
+                    </CardFooter>
+                    </Card>
+                </GridItem>
+            </GridContainer>
+        </GridItem>
+
+
+        <GridItem xs={12} sm={12} md={7} lg={8}>
             <Card>
-              <CardHeader color="warning" stats icon>
-                <CardIcon color="warning">
-                  <Icon>pets</Icon>
-                </CardIcon>
-                <p className={classes.cardCategory} style={card_category}>Current Animals</p>
-                <h3 className={classes.cardTitle} style={card_title}>
-                  {this.state.animals.length} <small>Animals</small>
-                </h3>
+              <CardHeader color="rose" text>
+                <CardText color="rose">
+                  <h4 className={classes.cardTitleWhite}>My Top 4 Shelters</h4>
+                  <h4 className={classes.cardCategoryWhite} style={styles.cardCategoryWhite}>
+                    My Top 4 Shelter Donations Over Time
+                  </h4>
+                </CardText>
               </CardHeader>
-              <CardFooter stats>
-                <div className={classes.stats} style={card_category}>
-                <Update />
-                  Just Updated
-                </div>
-              </CardFooter>
+              <CardBody>
+                <Table
+                  hover
+                  tableHeaderColor="warning"
+                  tableHead={["Rank", "Shelter", "Total Donation", "# of Donations"]}
+                  tableData={topDonationRows}
+                />
+              </CardBody>
             </Card>
           </GridItem>
+
+
         <GridItem xs={12}>
-          {/*{this.state.animals.map(animal => <p>{animal.name}</p>)}*/}
           <Card>
             <CardHeader color="primary" icon>
               <CardIcon color="primary">
                 <Assignment />
               </CardIcon>
-              <h4 className={classes.cardIconTitle}>Animals</h4>
+              <h4 className={classes.cardIconTitle}>Donations</h4>
             </CardHeader>
+
+      
+
             <CardBody>
               <ReactTable
-                data={this.state.animals}
+                data={this.state.donations}
                 filterable
                 columns={[
+                 
+                  {
+                    Header: "Donation ID",
+                    accessor: "donationID",
+                  },
+                  {
+                    Header: "Donation Amount",
+                    accessor: "amount"
+                  },
                   
                   {
-                    Header: "Profile Pic",
-                    accessor: "profilePic",
-                    sortable: false,
-                    filterable: false
+                    Header: "Shelter",
+                    accessor: "shelter"
                   },
                   {
-                    Header: "Animal ID",
-                    accessor: "animalID"
-                  },
-                  {
-                    Header: "Name",
-                    accessor: "name"
-                  },
-                  {
-                    Header: "Species",
-                    accessor: "species"
-                  },
-                  {
-                    Header: "Status",
-                    accessor: "status"
-                  },
-                  {
-                    Header: "Location",
-                    accessor: "location"
-                  },
-                  {
-                    Header: "Actions",
-                    accessor: "actions",
-                    sortable: false,
-                    filterable: false
+                    Header: "Date",
+                    accessor: "date"
                   }
+                  
                 ]}
                 defaultPageSize={10}
                 showPaginationTop
@@ -329,10 +318,7 @@ class UserDonations extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    userID : state.userReducer.userID,
-    shelterID : state.shelterReducer.shelterID,
-    shelterWorkerID : state.userReducer.shelterWorkerID,
-    roleID : state.userReducer.roleID
+    user : state.userReducer.user
   }
   
 }
@@ -349,12 +335,3 @@ export default connect(
   {}
 )(withStyles(styles)(UserDonations))
 
-
-//export default withStyles(styles)(ReactTables);
-
-/*
-export default connect(
-  mapStateToProps,
-  {}
-)(ReactTables)
-*/
