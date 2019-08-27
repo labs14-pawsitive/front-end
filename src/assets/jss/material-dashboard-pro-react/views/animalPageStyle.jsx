@@ -53,7 +53,7 @@ const animalPageStyle = () => ({
     backgroundSize: "cover",
     backgroundPosition: "center center",
     backgroundRepeat: "no-repeat",
-    background: "linear-gradient(to bottom, #349FAD 0%, #349FAD 35%, #000000 35%, lightgrey 35%, lightgrey 50%)",
+    background: "linear-gradient(to bottom, #349FAD 0%, #349FAD 33%, #000000 33%, lightgrey 33%, lightgrey 50%)",
     minHeight: "65vh",
     zIndex: "3",
    },
@@ -64,6 +64,7 @@ const animalPageStyle = () => ({
    },
    shelterCard: {
     width: "85%",
+    maxWidth: "1400px",
     marginLeft: "auto",
     marginRight: "auto",
     marginTop: "20px",
@@ -77,9 +78,15 @@ const animalPageStyle = () => ({
     textAlign: "left",
     alignItems: "center",
     backgroundColor: "white",
+    display: "flex",
     justifyContent: "center",
     paddingTop: "20px",
     paddingBottom: "20px",
+  },
+  shelterCardGrid: {
+    margin: "0 auto",
+    width: "100%",
+    // maxWidth: "1400px",
   },
   iconStyle: {
     width: "40px",
@@ -110,19 +117,9 @@ const animalPageStyle = () => ({
      backgroundColor: "green",
    }
 },
-hungButtonStyle2: {
-    backgroundColor: "#A464A3",
-    marginTop: "25px",
-    marginRight: "15px",
-    boxShadow: "5px 5px 0 #C9AAA9",
-    fontSize: "1em",
-    fontWeight: "700",
-    "&:hover": {
-     backgroundColor: "#A464A3",
- },
-   "&:active": {
-     backgroundColor: "green",
-   }
+addressStyle: {
+    minWidth: "140px",
+    marginBottom: "-10px",
 },
 ...buttonStyle,
   

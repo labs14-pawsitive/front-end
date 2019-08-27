@@ -40,12 +40,11 @@ const mainPageStyle = () => ({
     display:"flex",
     alignItems: "center",
     justifyContent: "center",
-    margin: "0",
+
     width:"100%",
-    color: blackColor,
-    // height:"auto",
-    // background: `url(${"backgroundImage"}) noRepeat center center fixed`,
-    // backgroundSize: "cover"
+  },
+  
+
 
     // `url(${"../static/DSC_1037.jpg"})`
   }
