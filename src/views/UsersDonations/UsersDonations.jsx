@@ -210,7 +210,7 @@ class UserDonations extends React.Component {
                         </CardIcon>
                         <p className={classes.cardCategory} style={card_category}>I've Made a Total of</p>
                         <h3 className={classes.cardTitle} style={card_title}>
-                        {this.state.count} <small>Donation{this.state.donations.length > 1 ? "s" : "" }</small>
+                        {this.state.count === '' ? "0" : this.state.count} <small>Donation{this.state.donations.length > 1 ? "s" : "" }</small>
                         </h3>
                     </CardHeader>
                     <CardFooter stats>
@@ -230,7 +230,7 @@ class UserDonations extends React.Component {
                         </CardIcon>
                         <p className={classes.cardCategory} style={card_category}>I've Donated a Total Amount of</p>
                         <h3 className={classes.cardTitle} style={card_title}>
-                        ${this.state.total}
+                        ${this.state.total === '' ? "0" : this.state.total}
                         </h3>
                     </CardHeader>
                     <CardFooter stats>
