@@ -221,3 +221,50 @@ export const getAllOptions = (shelterID) => dispatch => {
               })
           }
 
+export const GET_ANIMAL_PICTURES_START = 'GET_ANIMAL_PICTURES_START'
+export const GET_ANIMAL_PICTURES_SUCCESS = 'GET_ANIMAL_PICTURES_SUCCESS'
+export const GET_ANIMAL_PICTURES_FAILURE = 'GET_ANIMAL_PICTURES_FAILURE'
+
+export const getAnimalPictures = (animalID) => dispatch => {
+
+  dispatch({ type: GET_ANIMAL_PICTURES_START })
+  return axios
+    .get(`${process.env.REACT_APP_BACKEND_URL}/api/pictures/animal/${animalID}`)
+
+    .then(res => {
+      dispatch({ type: GET_ANIMAL_PICTURES_SUCCESS, payload: res.data })
+      console.log('action: get animal pictures success from action', res.data)
+    })
+    .catch(err => {
+      dispatch({ type: GET_ANIMAL_PICTURES_FAILURE, payload: err.response })
+      console.log('action:  get animal pictures error from action: ', err.response)
+    })
+}
+
+export const DELETE_ANIMAL_PICTURES_START = 'DELETE_ANIMAL_PICTURES_START'
+export const DELETE_ANIMAL_PICTURES_SUCCESS = 'DELETE_ANIMAL_PICTURES_SUCCESS'
+export const DELETE_ANIMAL_PICTURES_FAILURE = 'DELETE_ANIMAL_PICTURES_FAILURE'
+
+export const deleteAnimalPictures = (imageID, animalID) => dispatch => {
+
+  dispatch({ type: DELETE_ANIMAL_PICTURES_START })
+  return axios
+  //old route
+    // .delete(`http://localhost:8000/api/pictures/image/${imageID}`)
+    //new route
+    .delete(`${process.env.REACT_APP_BACKEND_URL}/api/animals/pictures/${imageID}`)
+    //old route
+    // .then(res => axios
+    //   .get(`http://localhost:8000/api/pictures/animal/${animalID}`))
+      //new route
+      .then(res => axios
+        .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalID}/pictures`))
+    .then(res => {
+      dispatch({ type: GET_ANIMAL_PICTURES_SUCCESS, payload: res.data })
+      console.log('action: delete animal pictures success from action', res.data)
+    })
+    .catch(err => {
+      dispatch({ type: DELETE_ANIMAL_PICTURES_FAILURE, payload: err.response })
+      console.log('action:  delete animal pictures error from action: ', err.response)
+    })
+}
