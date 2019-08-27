@@ -41,6 +41,7 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import ReactDOM from 'react-dom';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
+
 class SearchPage extends React.Component {
   constructor(props) {
     super(props);
@@ -171,7 +172,8 @@ class SearchPage extends React.Component {
       filterContainerStyle: {
         margin: "20px 30px",
         width: "90%",
-        paddingTop: "100px"
+        paddingTop: "100px", 
+        maxWidth: "1200px"
       },
       animalCardStyle: {
         marginTop: "20px",
@@ -181,6 +183,7 @@ class SearchPage extends React.Component {
         justifyContent: "center",
         flexWrap: "wrap",
         backgroundColor: "white",
+        maxWidth:"1200px"
         //margin: "20px 0 0"
       }
     }
@@ -224,17 +227,19 @@ class SearchPage extends React.Component {
 
           <GridItem xs={12} sm={6} md={3} style={customStyle.eachGridStyle}>
             <FormControl style={customStyle.formControlStyle} className={classes.formControl}>
-              <TextField style={customStyle.textStyle}
-                name="zipcode"
-                value={this.props.searchSelections.zipcode}
-                label="Zipcode"
-                className={classes.textField}
-                onChange={e => this.handleToggle(e, 'zipcode')}
-                margin="normal"
-                variant="outlined"
-                background="#fcfcfc"
-              />
+              <div style={{backgroundColor:"#fcfcfc", borderRadius:"5px"}}>
+                <TextField style={customStyle.textStyle}
+                  name="zipcode"
+                  value={this.props.searchSelections.zipcode}
+                  label="Zipcode"
+                  className={classes.textField}
+                  onChange={e => this.handleToggle(e, 'zipcode')}
+                  margin="normal"
+                  variant="outlined"
+                /> 
+                </div>
             </FormControl>
+           
           </GridItem>
 
           <GridItem xs={12} sm={6} md={3} style={customStyle.eachGridStyle}>
