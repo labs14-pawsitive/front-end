@@ -1,21 +1,22 @@
+ 
 import axios from 'axios';
 
 export const ADD_ANIMAL_START = 'ADD_ANIMAL_START';
 export const ADD_ANIMAL_SUCCESS = 'ADD_ANIMAL_SUCCESS';
 export const ADD_ANIMAL_ERROR = 'ADD_ANIMAL_ERROR'
 
-export const addAnimal  = animal => dispatch => {
-    dispatch ({type: ADD_ANIMAL_START});
-    console.log(animal)
-    return axios
-        .post(`${process.env.REACT_APP_BACKEND_URL}/api/animals`, animal)
-        .then(res => {
-            dispatch ({type: ADD_ANIMAL_SUCCESS, payload: res.data})
-            return res.data
-        })
-        .catch(err => {
-            dispatch({type: ADD_ANIMAL_ERROR, payload: err.response})
-        })
+export const addAnimal = animal => dispatch => {
+  dispatch({ type: ADD_ANIMAL_START });
+  console.log(animal)
+  return axios
+    .post('http://localhost:8000/api/animals', animal)
+    .then(res => {
+      dispatch({ type: ADD_ANIMAL_SUCCESS, payload: res.data })
+      return res.data
+    })
+    .catch(err => {
+      dispatch({ type: ADD_ANIMAL_ERROR, payload: err.response })
+    })
 }
 
 export const FETCH_OPTIONS_START = 'FETCH_OPTIONS_START';
@@ -34,45 +35,45 @@ export const UPDATE_LOCATIONS = 'UPDATE_LOCATIONS';
 export const UPDATE_STATES = 'UPDATE_STATES'
 
 
-export const fetchOptions  = (shelterId) => dispatch => {
-    dispatch ({type: FETCH_OPTIONS_START});
-    // const headers = {Authorization: localStorage.getItem('token')}
-    return axios
-    .get(`${process.env.REACT_APP_BACKEND_URL}/api/internal/paws/options/${shelterId}`)
+export const fetchOptions = (shelterId) => dispatch => {
+  dispatch({ type: FETCH_OPTIONS_START });
+  // const headers = {Authorization: localStorage.getItem('token')}
+  return axios
+    .get(`http://localhost:8000/api/internal/paws/options/${shelterId}`)
     .then(res => {
-        console.log(res)
-        dispatch ({type: UPDATE_BREEDS, payload: res.data.breeds})
-        dispatch ({type: UPDATE_SIZE, payload: res.data.size})
-        dispatch ({type: UPDATE_SUBSCRIPTIONS, payload: res.data.subscriptions})
-        dispatch ({type: UPDATE_COAT_LENGTH, payload: res.data.coat_length})
-        dispatch ({type: UPDATE_AGES, payload: res.data.ages})
-        dispatch ({type: UPDATE_APPLICATION_STATUS, payload: res.data.application_status})
-        dispatch ({type: UPDATE_SPECIES, payload: res.data.species})
-        dispatch ({type: UPDATE_ANIMAL_STATUS, payload: res.data.animal_status})
-        dispatch ({type: UPDATE_ROLES, payload: res.data.roles})
-        dispatch ({type: UPDATE_LOCATIONS, payload: res.data.locations})
-        dispatch ({type: UPDATE_STATES, payload: res.data.states})
-        dispatch ({type: FETCH_OPTIONS_SUCCESS, payload: res.data})
+      console.log(res)
+      dispatch({ type: UPDATE_BREEDS, payload: res.data.breeds })
+      dispatch({ type: UPDATE_SIZE, payload: res.data.size })
+      dispatch({ type: UPDATE_SUBSCRIPTIONS, payload: res.data.subscriptions })
+      dispatch({ type: UPDATE_COAT_LENGTH, payload: res.data.coat_length })
+      dispatch({ type: UPDATE_AGES, payload: res.data.ages })
+      dispatch({ type: UPDATE_APPLICATION_STATUS, payload: res.data.application_status })
+      dispatch({ type: UPDATE_SPECIES, payload: res.data.species })
+      dispatch({ type: UPDATE_ANIMAL_STATUS, payload: res.data.animal_status })
+      dispatch({ type: UPDATE_ROLES, payload: res.data.roles })
+      dispatch({ type: UPDATE_LOCATIONS, payload: res.data.locations })
+      dispatch({ type: UPDATE_STATES, payload: res.data.states })
+      dispatch({ type: FETCH_OPTIONS_SUCCESS, payload: res.data })
     })
     .catch(err => {
-        dispatch({type: FETCH_OPTIONS_ERROR, payload: err.response})
+      dispatch({ type: FETCH_OPTIONS_ERROR, payload: err.response })
     })
-} 
+}
 
- 
+
 
 export const EDIT_ANIMAL_INFO_START = 'EDIT_ANIMAL_INFO_START'
 export const EDIT_ANIMAL_INFO_SUCCESS = 'EDIT_ANIMAL_INFO_SUCCESS'
 export const EDIT_ANIMAL_INFO_FAILURE = 'EDIT_ANIMAL_INFO_FAILURE'
 
-export const updateAnimal = (updateinfo,animalId,animalMetaId) => dispatch => {
+export const updateAnimal = (updateinfo, animalId, animalMetaId) => dispatch => {
   console.log('action updateInfo data ', updateinfo)
- 
+
   dispatch({ type: EDIT_ANIMAL_INFO_START })
   return axios
-    .put(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalId}/meta/${animalMetaId}`, updateinfo)
+    .put(`http://localhost:8000/api/animals/${animalId}/meta/${animalMetaId}`, updateinfo)
     .then(res => axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalId}`))
+      .get(`http://localhost:8000/api/animals/${animalId}`))
     .then(res => {
       dispatch({ type: EDIT_ANIMAL_INFO_SUCCESS, payload: res.data })
       console.log('action updated animal ', res.data)
@@ -89,6 +90,7 @@ export const GET_DROPDOWN_SUCCESS = 'GET_DROPDOWN_SUCCESS'
 export const GET_DROPDOWN_FAILURE = 'GET_DROPDOWN_FAILURE'
 
 export const getAllOptions = (shelterID) => dispatch => {
+
     
     dispatch({ type: GET_DROPDOWN_START })
     return axios
@@ -218,3 +220,4 @@ export const getAllOptions = (shelterID) => dispatch => {
                 console.log('action: delete notes error: ', err.response)
               })
           }
+
