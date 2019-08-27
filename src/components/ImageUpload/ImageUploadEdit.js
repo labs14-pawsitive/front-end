@@ -125,7 +125,7 @@ class ImageUploadEdit extends Component {
   };
 
   render() {
-    let imageLimit = 20;
+    let imageLimit = 6;
     if (this.props.imageLimit) imageLimit = this.props.imageLimit;
 
     const image = this.state.files ? this.state.files[0] : null;

@@ -67,12 +67,18 @@ class AnimalViewTop extends React.Component {
 
         console.log('updated pics after deletion in the animal top component state', this.state.updatedImages.filter(image => image.img_id !== imgID))
 
+        // const deletePictureArray = this.state.placeholderImages.filter(image => image.img_id !== imgID)
+
+        console.log('new placeholder images array after delete ', this.state.placeholderImages.filter(image => image.img_id !== imgID))
+
         this.props.deletePictures(imgID, this.props.animal.id)
     }
 
 
     render() {
-        console.log('placeholder images in animal top component ', this.props.placeholderImages)
+        console.log('animal view top component: this.props.placeholderImages ', this.props.placeholderImages)
+
+        console.log('animal view top component: this.props.animalPictures ',this.props.animalPictures )
         const { classes, fullScreen } = this.props;
 
         const customStyle = {
@@ -192,7 +198,7 @@ class AnimalViewTop extends React.Component {
 
             <GridItem xs={12} sm={12} md={12} style={customStyle.gridItemStyle}>
                 {/* <GridItem xs={12} sm={12} md={5}> */}
-                <GridItem xs={12} sm={6} md={5}>
+                <GridItem xs={8} sm={6} md={5} xl={3}>
                     <GridList className={classes.gridList} style={{ marginBottom: "10px" }}>
                         <GridListTile key={this.props.animal.img_url} style={customStyle.imgCardStyle} >
 
@@ -226,7 +232,7 @@ class AnimalViewTop extends React.Component {
 
 
                                     <DialogTitle id="alert-dialog-title" >{"Edit Pictures"}
-                                    <IconButton style={{ float: "right" }} onClick={this.props.handleClose}>
+                                    <IconButton style={{ float: "right",marginTop: "-16px" }} onClick={this.props.handleClose}>
                                         <CloseIcon />
                                     </IconButton>
                                     </DialogTitle>
@@ -249,7 +255,8 @@ class AnimalViewTop extends React.Component {
                                                                 url={`${process.env.REACT_APP_BACKEND_URL}/api/pictures`} />
 
                                                             {/* color: "#cd5c5c", */}
-                                                            <IconButton style={{ float: "right", color: "rgba(170, 39, 176, 0.83)", marginTop: "-204px", }} onClick={(event) => this.deletePicture(event, eachImage.img_id)}>
+                                                            <IconButton style={{ float: "right", color: "rgba(170, 39, 176, 0.83)", marginTop: "-204px", }} 
+                                                            onClick={(event) => this.deletePicture(event, eachImage.img_id)}>
                                                                 <DeleteIcon />
                                                             </IconButton>
                                                         </div>
@@ -259,7 +266,8 @@ class AnimalViewTop extends React.Component {
                                                                 borderRadius="5px" imageLimit={1}
                                                                 editable={this.props.isEditing} callback={this.props.callback}
                                                                 url={`${process.env.REACT_APP_BACKEND_URL}/api/pictures`} />
-                                                            <IconButton style={{ float: "right", color: "#cd5c5c", marginTop: "-204px", }} onClick={(event) => this.deletePicture(event, eachImage.img_id)}>
+                                                            <IconButton style={{ float: "right", color: "rgba(170, 39, 176, 0.83)", marginTop: "-204px", }} 
+                                                            onClick={(event) => this.deletePicture(event, eachImage.img_id)}>
                                                                 <DeleteIcon />
                                                             </IconButton>
                                                         </div>}
@@ -308,7 +316,7 @@ class AnimalViewTop extends React.Component {
 
                             
                             <DialogTitle id="alert-dialog-title" >{"View Pictures"}
-                            <IconButton style={{ float: "right"}} onClick={this.props.handleClose}>
+                            <IconButton style={{ float: "right",marginTop: "-16px"}} onClick={this.props.handleClose}>
                                 <CloseIcon />
                             </IconButton>
                             </DialogTitle>
@@ -420,7 +428,7 @@ AnimalViewTop.propTypes = {
 const mapStateToProps = (state) => {
     return {
         locations: state.animalReducer.dropdownAnimalOptions.locations,
-        animalPictures: state.animalReducer.animalPictures
+        // animalPictures: state.animalReducer.animalPictures
     }
 }
 

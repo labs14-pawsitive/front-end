@@ -191,10 +191,24 @@ class AnimalView extends React.Component {
 
     }
 
-    if (this.state.placeholderImages !== prevState.placeholderImages) {
+    if (this.props.animalPictures !== prevProps.animalPictures) {
+      let newArray = []
+
+        this.state.placeholderImages.map((value, i) => {
+          console.log(`value at ${i} is ${value}`)
+          if (this.props.animalPictures[i]) {
+            value = this.props.animalPictures[i]
+            newArray.push(value)
+
+          }
+          else {
+            newArray.push(value)
+          }
+        })
       console.log('placeholder images: component did update in animal view  is invoked')
       this.setState({
-        placeholderImages: this.state.placeholderImages
+        placeholderImages: newArray,
+        animalPictures:this.props.animalPictures
       })
 
     }
@@ -525,6 +539,8 @@ class AnimalView extends React.Component {
 
     const arrayAfterDelete = this.state.placeholderImages.map(image => image.img_id === imageId ? '' : image)
 
+    console.log('animal view: array after delete ',arrayAfterDelete)
+
     this.setState({
       placeholderImages: arrayAfterDelete
     })
@@ -560,7 +576,8 @@ class AnimalView extends React.Component {
 
   render() {
 
-    console.log('animal view component updated pictures ', this.state.placeholderImages)
+    // console.log('animal view component updated pictures ', this.state.placeholderImages)
+    console.log('animal view component: this.state.placeholderImages ', this.state.placeholderImages)
 
     const { classes } = this.props;
 
@@ -600,6 +617,7 @@ class AnimalView extends React.Component {
                   open={this.state.open}
                   handleClose={this.handleClose}
                   placeholderImages={this.state.placeholderImages}
+                  animalPictures = {this.state.animalPictures}
                   deletePictures={this.deletePictures}
                   handleViewingPics={this.handleViewPics}
                   isViewingPhotos={this.state.isViewingPhotos} />
