@@ -423,7 +423,7 @@ class MainPage extends React.Component {
               <GridItem md={12} xl={6} style={{
 
                 zIndex: "7",
-                minHeight: "500px",
+                minHeight: "450px",
                 maxHeight: "600px",
                 backgroundImage: "url(" + dogImage + ")",
                 backgroundPosition: "right bottom",
