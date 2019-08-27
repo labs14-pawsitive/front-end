@@ -36,6 +36,7 @@ import Person from "@material-ui/icons/Person";
 import Notifications from "@material-ui/icons/Notifications";
 import Dashboard from "@material-ui/icons/Dashboard";
 import Search from "@material-ui/icons/Search";
+import Home from "@material-ui/icons/Home";
 
 // core components
 import CustomInput from "components/CustomInput/CustomInput.jsx";
@@ -68,6 +69,12 @@ class HeaderLinks extends React.Component {
     auth.logout();
 
   }
+  
+  handleHomeClick = () => {
+    this.props.history.push('/')
+  }
+  
+  
   render() {
     const { classes, rtlActive } = this.props;
     const { openNotification, openProfile } = this.state;
@@ -92,6 +99,14 @@ class HeaderLinks extends React.Component {
     });
     return (
       <div className={wrapper}>
+      <Button
+            color="transparent"
+            aria-label="Home"
+            justIcon 
+            onClick={this.handleHomeClick}
+          >        
+          <Home />
+      </Button>
         {/* 
         <CustomInput
           rtlActive={rtlActive}
