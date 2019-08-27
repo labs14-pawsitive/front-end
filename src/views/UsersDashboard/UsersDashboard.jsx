@@ -208,7 +208,7 @@ class UserDashboard extends React.Component {
                  <Money />
                 </CardIcon>
                 <p className={classes.cardCategory}>Total Donations</p>
-                    <h3 className={classes.cardTitle}>${this.state.totalDonation}</h3>  
+                  <h3 className={classes.cardTitle}>${this.state.totalDonation === null? "0" : this.state.totalDonation}</h3>  
               </CardHeader>
               <CardFooter stats style={customStyle.bottomFooter}>
                 <div className={classes.stats}>
