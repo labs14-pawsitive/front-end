@@ -17,7 +17,9 @@ import {axiosWithAuth} from 'axiosWithAuth';
 
 import { updateAnimal, getInfoByAnimalID, getAllOptions, addNotes, updateNotes, deleteNotes }
   from '../../actions/animalAction.js'
+ 
  import AnimalNotes from './AnimalViewComponents/AnimalNotes.jsx'
+ 
 import AnimalViewTop from './AnimalViewComponents/AnimalViewTop.jsx'
 import AnimalViewDetails from './AnimalViewComponents/AnimalViewDetails.jsx'
 

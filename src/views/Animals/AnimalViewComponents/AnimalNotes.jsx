@@ -241,6 +241,6 @@ export default connect(
     mapStateToProps,
     {
         addNotes,
-         
+ 
     }
 )(withStyles(regularFormsStyle)(AnimalNotes)) 

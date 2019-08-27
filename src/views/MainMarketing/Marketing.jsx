@@ -50,23 +50,27 @@ class MarketingPage extends React.Component {
     };
     
     return (
-      <div className={classes.container}>
-      <div className={classes.div_1}
-      style={{ backgroundImage: "url(" + getBgImage() + ")" }}>
-        <GridContainer style={{width: "80%", margin:"0 auto"}}>
-        <GridItem xs={12} sm={12} md={8} >
+      <div className={classes.container} style={{maxWidth:"100%", overflow: "hidden"}}>
+      <div className={classes.div_1} 
+      style={{ backgroundImage: "url(" + getBgImage() + ")" , maxWidth:"100%"}}>
+      
+        <GridContainer xs={10} style={{margin:"0 auto", maxWidth:"1200px", paddingTop: "80px", dipplay:"flex"}}>
+        <GridItem xs={10} sm={10} md={6} style={{marginLeft:"4%"}}>
           <h1 className={classes.headerTitle}>Promote and Manage Shelter</h1>
           <h4 className={classes.description} style={{color: "white", textShadow: "1px 1px 1px black"}}>All from One App</h4>
           <Link to={"/shelter-signup"}><Button className={classes.signupButton}>Sign Up</Button></Link>
         </GridItem>
-        </GridContainer>
+        
         <Hidden smDown>
-        <div className={classes.div1img}>
+          <GridItem xs={12} style={{marginRight: "3%", backgroundImage:"url(" + div_1pic + ")", backgroundPosition:"right bottom", height: "340px", marginTop:"-250px", backgroundRepeat: "no-repeat", backgroundSize: "auto 100%"}}></GridItem>
+
+       {/*  <div className={classes.div1img}>
         <img src= {div_1pic} className={classes.div_1_pic}></img>
-      </div>
+      </div>*/}
       </Hidden> 
+      </GridContainer>
       </div>
-      <div className={classes.iconsBar}>
+      <div className={classes.iconsBar} style={{width:"90%"}}>
       <GridContainer style={{ display: "flex",justifyContent: "center", alignItems: "center"}}>
       <GridItem xs={12} sm={12} md={4} >
         <img className={classes.icon} src= {breedIcon}></img>
@@ -82,48 +86,53 @@ class MarketingPage extends React.Component {
       </GridItem>
       </GridContainer>
       </div>
-      <div className={classes.div_2}>
-      <GridContainer style={{width: "80%", margin:"0 auto"}} >
+      <div className={classes.div_2} style={{maxWidth:"100%", paddingTop:"100px", margin:"-90px auto 0", minHeight: "25rem", display:'flex', justifyContent: 'center', alignItems: 'center'}}>
+      <GridContainer style={{width: "90%", margin:"90 auto 0", maxWidth:"1200px", display: "flex", justifyContent: "space-between"}} >
       <GridItem xs={12} sm={12} md={6} >
         <h1 className={classes.subTitle}>Shelter Management Snapshot</h1>
         <h4 className={classes.description} style={{color:"#9A9A9A"}}> Get all the important data from your shelter operation at one page.</h4>
         <h4 className={classes.description} style={{marginTop: "1.5rem"}}>From tracking your recent donations and applications to getting a visualized chart on how your fundraising efforts is going.</h4>
-      </GridItem>
-      </GridContainer>
-      </div>
+      </GridItem> 
       <Hidden smDown>
-        <div className={classes.div2img}>
+
+        <div className={classes.div2img} style={{marginTop:"0", marginRight: "0", width:"50%"}}>
         <img src= {div_2pic} className={classes.div_2_pic}></img>
       </div>
+
       </Hidden> 
-    <div className={classes.div_3}>
-    <GridContainer style={{width: "80%", margin:"0 auto"}}>
+      </GridContainer>
+      </div>
+     
+    <div className={classes.div_3} style={{maxWidth:"100%", minHeight: "25rem", display:'flex', justifyContent: 'center', alignItems: 'center'}}>
+    <GridContainer style={{width: "90%", margin:"90 auto 0", maxWidth:"1200px", display: "flex", justifyContent: "space-between"}}>
       <GridItem xs={12} sm={12} md={6} >
         <h1 className={classes.subTitle}>Promote Adoptable Animals</h1>
         <h4 className={classes.description} style={{color:"#9A9A9A"}}> Show your current adoptable animals to potential adopters who are looking for their new best friend!</h4>
         <h4 className={classes.description} style={{marginTop: "1.5rem"}}>Adding and updating information about your adorable animals will take less time. Allowing potential adopters to follow the animals and directly donate to your shelter cause.</h4>
       </GridItem>
-    </GridContainer>
-    </div>
-    <Hidden smDown>
-        <div className={classes.div3img}>
+      <Hidden smDown>
+        <div className={classes.div3img}  style={{marginTop:"0", marginRight: "0", width:"50%"}}>
         <img src= {div_3pic} className={classes.div_3_pic}></img>
       </div>
       </Hidden> 
-    <div className={classes.div_4}>
-    <GridContainer style={{width: "80%", margin:"0 auto"}}>
+    </GridContainer>
+    </div>
+    
+    <div className={classes.div_4} style={{maxWidth:"100%", minHeight: "25rem", display:'flex', justifyContent: 'center', alignItems: 'center'}}>
+    <GridContainer style={{width: "90%", margin:"90 auto 0", maxWidth:"1200px", display: "flex", justifyContent: "space-between"}}>
       <GridItem xs={12} sm={12} md={6} >
         <h1 className={classes.subTitle}>Paperless Online Application</h1>
         <h4 className={classes.description} style={{color:"#9A9A9A"}}> Streamline your application process so that you will have more time looking for the right adopter!</h4>
         <h4 className={classes.description} style={{marginTop: "1.5rem"}}>Potential adopters can find your application form easily. You can manage incoming applications and make notes on them, making the application process painless.</h4>
-      </GridItem>
-    </GridContainer>
-    </div>
-    <Hidden smDown>
-        <div className={classes.div4img}>
+      </GridItem> 
+      <Hidden smDown>
+        <div className={classes.div4img}  style={{marginTop:"0", marginRight: "0", width:"50%"}}>
         <img src= {div_4pic} className={classes.div_4_pic}></img>
       </div>
       </Hidden> 
+    </GridContainer>
+    </div>
+   
     </div>
   );
   }

@@ -150,12 +150,13 @@ class TeamPage extends React.Component {
               backgroundPosition: "center center"
             }}
           ></GridItem>
-          <GridItem xs={10} sm={10} md={10}>
+          <GridItem xs={12} style={{maxWidth:"1280px"}}>
             <h1
               style={{
                 textAlign: "center",
                 fontWeight: "bold",
-                marginBottom: "30px"
+                marginBottom: "80px",
+                marginTop: "50px"
               }}
             >
               Meet the Team

@@ -104,7 +104,7 @@ class MainPage extends React.Component {
   }
 
   componentDidMount() {
-
+    window.scrollTo(0, 0);
     Promise.all([this.props.getPublicAnimalInfoByCount(6),
     this.props.getAllOptions(0)])
       .then(([allAnimalCardInfo, options]) => {
@@ -242,10 +242,10 @@ class MainPage extends React.Component {
 
     const customStyle = {
       speciesOutline: {
-        width: "159%"
+        //width: "159%"
       },
       distanceOutline: {
-        width: "262%"
+        //width: "262%"
       },
       speciesCardStyle: {
         padding: "0 3%",
@@ -258,13 +258,13 @@ class MainPage extends React.Component {
       },
       textStyle: {
         margin: 0,
-        width: "95.5%"
+        width: "100%"
       },
       speciesGridStyle: {
         marginBottom: "30px",
       },
       speciesFormStyle: {
-        width: "60%"
+        width: "100%"
       },
       buttonStyle: {
         marginTop: "15px",
@@ -285,7 +285,8 @@ class MainPage extends React.Component {
       ImageStyle: {
         display: "flex",
         flexWrap: 'wrap',
-        margin: "0 auto"
+        margin: "0 auto",
+        maxWidth:"1280px"
       },
       imageHeaderStyle: {
         textAlign: "center"
@@ -339,14 +340,15 @@ class MainPage extends React.Component {
         marginTop: "120px"
       },
       textP1: {
-        fontSize: "22px",
+        fontSize: "2rem",
         color: "white",
       },
       textP2: {
-        fontSize: "30px",
+        fontSize: "3rem",
+        lineHeight: "1.1",
         color: "white",
         fontWeight: "bold",
-        textShadow: "2px 4px #2B2B2B41"
+        textShadow: "5px 4px #2B2B2B80"
       },
       imageGrid: {
         // border: "1px solid orange",
@@ -394,6 +396,7 @@ class MainPage extends React.Component {
     return (
 
       <GridContainer className={classes.bodyStyle}>
+        {/* full background container */}
         <GridItem xs={12} sm={12} md={12} xl={12}
         style={{ 
           background: "url(" + backgroundImag + ")", 
@@ -402,37 +405,44 @@ class MainPage extends React.Component {
           backgroundSize: "cover",
         display: "flex" 
         }} >
-          <GridItem xs={12} sm={12} md={11} style={customStyle.textTopGrid}>
-            <div style={customStyle.topLeft}>
-              <div style={customStyle.textBoxTop}>
-                <p style={customStyle.textP1}>Search, Discover</p>
-                <p style={customStyle.textP2}>ADOPT YOUR PET</p>
+          <GridItem xs={11}  md={10}  style={{margin: "0 auto", display:"flex", justifyContent: "space-between", maxWidth: "1200px"}}>
+            <GridItem xs={10} sm={10} md={6} style={customStyle.textTopGrid}>
+              <div style={customStyle.topLeft}>
+                <div style={customStyle.textBoxTop}>
+                  <p style={customStyle.textP1}>Search, Discover</p>
+                  <p style={customStyle.textP2}>ADOPT YOUR PET</p>
+                </div>
+                <Button size="large" style={customStyle.signUpButton}
+                  variant="contained" className={classes.button} onClick={this.handleSearch}>
+                  SIGN UP
+                </Button>
               </div>
-              <Button size="large" style={customStyle.signUpButton}
-                variant="contained" className={classes.button} onClick={this.handleSearch}>
-                SIGN UP
-              </Button>
-            </div>
-          </GridItem>
-          <Hidden smDown>
-            <GridItem md={12} xl={10} style={{
-
-              zIndex: "7",
-              minHeight: "400px",
-              maxHeight: "500px",
-              backgroundImage: "url(" + dogImage + ")",
-              backgroundPosition: "right bottom",
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "auto 100%",
-              position: "relative",
-              marginTop: "100px",
-              marginRight: "140px",
-              marginBottom:"20px"
-            }}>
             </GridItem>
-          </Hidden>
-        </GridItem>
 
+            <Hidden smDown>
+              <GridItem md={12} xl={6} style={{
+
+                zIndex: "7",
+                minHeight: "500px",
+                maxHeight: "600px",
+                backgroundImage: "url(" + dogImage + ")",
+                backgroundPosition: "right bottom",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "auto 100%",
+                position: "relative",
+                marginTop: "100px",
+                //marginRight: "5%",
+                marginBottom:"20px"
+              }}>
+              </GridItem>
+            </Hidden> 
+
+          </GridItem>
+
+          
+          
+        </GridItem>
+       
         <GridItem xs={10} sm={10} md={10}
           style={{
             marginTop: "-60px",
@@ -440,9 +450,10 @@ class MainPage extends React.Component {
             backgroundColor: "#f5f4f4",
             borderRadius: "5px",
             boxShadow: "0 0 5px #33333330",
+            maxWidth:"1280px"
           }} >
 
-          <GridItem xs={12} sm={11} md={12} style={customStyle.subGridStyle}>
+          <GridItem xs={12} sm={12} md={12} style={customStyle.subGridStyle}>
             <div style={{ display: "flex", flexWrap: 'wrap', padding: "30px 10px", width: "100%" }}>
               <GridItem xs={12} sm={12} md={3} style={customStyle.eachGridStyle}>
                 <FormControl variant="outlined" className={classes.formControl} style={customStyle.speciesFormStyle} >
@@ -497,10 +508,10 @@ class MainPage extends React.Component {
                   }}
                 />
               </GridItem>
-              <GridItem xs={8} sm={8} md={2} style={customStyle.distanceGridStyle}>
-                <div style={{ minWidth: "147%" }}>
-                  <FormControl variant="outlined" className={classes.formControl}
-                    style={{ minWidth: "38.195%", }}
+              <GridItem xs={12} sm={12} md={3} style={customStyle.eachGridStyle}>
+                
+                  <FormControl variant="outlined" className={classes.formControl} style={{width:"100%"}}
+                    
                   >
                     <InputLabel
                       ref={ref => {
@@ -531,9 +542,9 @@ class MainPage extends React.Component {
 
                     </Select>
                   </FormControl>
-                </div>
+               
               </GridItem>
-              <GridItem xs={5} sm={6} md={2} style={customStyle.buttonGridStyle}>
+              <GridItem xs={12} sm={12} md={3} style={customStyle.buttonGridStyle}>
                 <Button size="medium" style={customStyle.buttonStyle}
                   variant="contained" className={classes.button} onClick={this.handleSearch}>
                   SEARCH
@@ -548,19 +559,21 @@ class MainPage extends React.Component {
           width: "100%",
           paddingTop: "158px",
           marginTop: "-90px",
-          backgroundColor: "#e7e7e7"
+          backgroundColor: "#e7e7e7",
         }}>
-            <GridContainer xs={10} sm={10} md={10} xl={12} style={customStyle.ImageStyle}>
+            <GridContainer xs={10} sm={10} md={10} xl={10} style={customStyle.ImageStyle}>
               {this.props.allAnimals.slice(0, 6).map(animal => {
                 return <AnimalCard animal={animal} key={animal.id} />
               })}
             </GridContainer>
           </GridContainer>
+      
+      
       </GridContainer >
 
 
 
-
+ 
     );
   }
 }
