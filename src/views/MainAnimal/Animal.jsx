@@ -415,7 +415,7 @@ class AnimalPage extends React.Component {
               </Hidden>
 
                 
-              <GridItem style={{ display: "flex", justifyContent: "center", alignItems: "center" }} xs={12} sm={12} md={12}>
+              <GridItem style={{ display: "flex", justifyContent: "flex-start", alignItems: "center", maxWidth: "650px" }} xs={12} sm={12} md={12}>
                     <GridContainer style={{ display: "flex", justifyContent: "flex-start", alignItems: "center" }}>
                           {this.state.alert}
 
@@ -502,7 +502,7 @@ class AnimalPage extends React.Component {
                   </GridItem>
                 </GridItem>
 
-                <GridItem xs={12} sm={6} md={6} lg={6} xl={6} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center"}}>
+                <GridItem xs={12} sm={7} md={7} lg={7} xl={7} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center"}}>
                   <GridItem xs={10} sm={10} md={10} lg={10} xl={10} style={customStyle.emailItemStyle}>
                     <img className={classes.iconStyle} src={emailIcon}></img>
 
@@ -544,7 +544,7 @@ class AnimalPage extends React.Component {
                   </GridItem>
                 </GridItem>
 
-                <GridItem xs={12} sm={6} md={6} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center" }}>
+                <GridItem xs={12} sm={7} md={7} lg={7} xl={7} style={{ display: "flex", justifyContent: "flex-start", alignItems: "center" }}>
                   <GridItem xs={10} sm={10} md={10} lg={10} xl={10} style={customStyle.rescueItemStyle}>
                     <img className={classes.iconStyle} src={rescueIcon}></img>
 
@@ -586,6 +586,9 @@ class AnimalPage extends React.Component {
                         value={this.state.animal.breed}
                         InputProps={{
                           disableUnderline: true,
+                          style: {
+                            fontSize: "18px",
+                          }
                         }}
                         InputLabelProps={{
                           style: {
@@ -609,6 +612,9 @@ class AnimalPage extends React.Component {
                         value={this.state.animal.age}
                         InputProps={{
                           disableUnderline: true,
+                          style: {
+                            fontSize: "18px",
+                          }
                         }}
                         InputLabelProps={{
                           style: {
@@ -632,6 +638,9 @@ class AnimalPage extends React.Component {
                         value={this.state.animal.size}
                         InputProps={{
                           disableUnderline: true,
+                          style: {
+                            fontSize: "18px",
+                          }
                         }}
                         InputLabelProps={{
                           style: {
@@ -655,6 +664,9 @@ class AnimalPage extends React.Component {
                         value={this.state.animal.coat_length}
                         InputProps={{
                           disableUnderline: true,
+                          style: {
+                            fontSize: "18px",
+                          }
                         }}
                         InputLabelProps={{
                           style: {
@@ -678,6 +690,9 @@ class AnimalPage extends React.Component {
                         value={this.state.animal.is_male ? "Male" : "Female"}
                         InputProps={{
                           disableUnderline: true,
+                          style: {
+                            fontSize: "18px",
+                          }
                         }}
                         InputLabelProps={{
                           style: {
@@ -695,12 +710,15 @@ class AnimalPage extends React.Component {
                       <img className={classes.iconStyle2} src={colorIcon}></img>
                     </GridItem>
 
-                    <GridItem xs={8} sm={8} md={8}>
+                    <GridItem xs={10} sm={10} md={10}>
                       <TextField
                         label="Color"
                         value={this.state.animal.color}
                         InputProps={{
                           disableUnderline: true,
+                          style: {
+                            fontSize: "18px",
+                          }
                         }}
                         InputLabelProps={{
                           style: {
@@ -748,6 +766,9 @@ class AnimalPage extends React.Component {
                         value={this.state.animal.is_neutered_spayed ? "Yes" : "No"}
                         InputProps={{
                           disableUnderline: true,
+                          style: {
+                            fontSize: "18px",
+                          }
                         }}
                         InputLabelProps={{
                           style: {
@@ -772,6 +793,9 @@ class AnimalPage extends React.Component {
                         value={this.state.animal.is_house_trained ? "Yes" : "No"}
                         InputProps={{
                           disableUnderline: true,
+                          style: {
+                            fontSize: "18px",
+                          }
                         }}
                         InputLabelProps={{
                           style: {
@@ -800,7 +824,10 @@ class AnimalPage extends React.Component {
                         fullWidth="true"
                         value={this.state.animal.description}
                         InputProps={{
-                          disableUnderline: true
+                          disableUnderline: true,
+                          style: {
+                            fontSize: "18px",
+                          }
                         }}
                         InputLabelProps={{
                           style: {
@@ -829,6 +856,9 @@ class AnimalPage extends React.Component {
                         style={{ marginBottom: "30px" }}
                         InputProps={{
                           disableUnderline: true,
+                          style: {
+                            fontSize: "18px",
+                          }
                         }}
                         InputLabelProps={{
                           style: {

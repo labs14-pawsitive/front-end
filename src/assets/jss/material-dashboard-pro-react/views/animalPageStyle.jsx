@@ -64,7 +64,7 @@ const animalPageStyle = () => ({
    },
    shelterCard: {
     width: "85%",
-    maxWidth: "1200px",
+    maxWidth: "1400px",
     marginLeft: "auto",
     marginRight: "auto",
     marginTop: "20px",
@@ -85,8 +85,8 @@ const animalPageStyle = () => ({
   },
   shelterCardGrid: {
     margin: "0 auto",
-    // maxWidth: "1400px",
     width: "100%",
+    // maxWidth: "1400px",
   },
   iconStyle: {
     width: "40px",
