@@ -74,6 +74,24 @@ function Footer({ ...props }) {
               </NavLink>
             </ListItem>      
             <ContactModal {...props}/>
+           
+           <ListItem className={classes.inlineBlock}>
+              <Button simple style={{padding:"0", color: "#55acee"}}>
+                      <a href="https://twitter.com" style={{padding: "5px"}}><i className={"fab fa-twitter"} /></a>
+                    </Button>
+            </ListItem>   
+            <ListItem className={classes.inlineBlock}>
+              <Button simple style={{padding:"0", color: "#3b5998"}}>
+                      <a href="https://www.facebook.com/Pawsnfind" style={{padding: "5px"}}><i className={"fab fa-facebook"} /></a>
+                    </Button>
+            </ListItem>   
+            <ListItem className={classes.inlineBlock}>
+              <Button simple style={{padding:"0", color:"#cb2964"}}>
+                      <a href="https://www.instagram.com/pawsnfind/" style={{padding: "5px"}}><i className="fab fa-instagram"></i></a>
+              </Button>
+            </ListItem>  
+           
+           
             {/*  
             <ListItem className={classes.inlineBlock}>
               <a href="#contact" className={block}>
