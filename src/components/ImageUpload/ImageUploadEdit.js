@@ -158,6 +158,7 @@ class ImageUploadEdit extends Component {
         <DropzoneDialog
           open={this.state.open}
           onSave={this.handleSave.bind(this)}
+          clearOnUnmount={true}
           acceptedFiles={["image/jpeg", "image/png"]}
           showPreviewsInDropzone={true}
           showPreviews={false}
