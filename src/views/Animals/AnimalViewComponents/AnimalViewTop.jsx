@@ -299,7 +299,7 @@ class AnimalViewTop extends React.Component {
                                     </IconButton>
                                     </DialogTitle>
                                     <GridContainer md={12}>
-                                        {this.state.placeholderImages.map(eachImage => (
+                                        {this.state.placeholderImages.map((eachImage, i) => (
                                             <GridItem xs={2} sm={2} md={4} key={eachImage.img_id}>
                                                 <DialogContent style={{
                                                     height: "200px",
@@ -313,9 +313,13 @@ class AnimalViewTop extends React.Component {
                                                             <div style={{ width:"150px" }}>
                                                                 <img src={eachImage.img_url} style={imageStyle.image} alt=''></img>
 
+                                                                {i === 0 ? 
+                                                                <div></div>
+                                                                :
                                                                 <IconButton style={{ margin:0, padding:0, top:5, right:5, position: "absolute" }} onClick={ (event) => this.deletePicture(event, eachImage.img_id) }>
                                                                     <DeleteIcon />
                                                                 </IconButton> 
+                                                                }
                                                         </div>
                                                         :
                                                         <div>
@@ -379,6 +383,7 @@ class AnimalViewTop extends React.Component {
                                     <GridItem md={4} key={eachImage.img_id}>
                                         <DialogContent style={{
                                             height: "200px",
+                                            overflow: "hidden",
                                             padding: 0,
                                             position: "relative",
                                             width: "169px",
