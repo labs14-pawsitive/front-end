@@ -834,9 +834,6 @@ class AnimalPage extends React.Component {
                       />
                     </GridItem>
               </GridItem>
-              <Hidden smDown>
-              <GridItem md={3} lg={3} xl={3}></GridItem>
-              </Hidden>
 
               <GridItem style={customStyle.myHealthStyle} xs={9} sm={7} md={8} lg={8} xl={8}>
                     <GridItem xs={2} sm={2} md={2}  style={{marginRight:"20px"}}>
@@ -866,9 +863,7 @@ class AnimalPage extends React.Component {
                       />
                     </GridItem>
               </GridItem>
-              <Hidden smDown>
-              <GridItem md={3} lg={3} xl={3}></GridItem>
-              </Hidden>
+
 
               <GridItem style={customStyle.kidFreeStyle} xs={9} sm={7} md={8} lg={8} xl={8}>
                     <GridItem xs={2} sm={2} md={2}  style={{marginRight:"20px"}}>
@@ -890,9 +885,7 @@ class AnimalPage extends React.Component {
                       />
                     </GridItem>
               </GridItem>
-              <Hidden smDown>
-              <GridItem md={3} lg={3} xl={3}></GridItem>
-              </Hidden>
+
 
               <GridItem style={customStyle.goodWithDogStyle}  xs={9} sm={7} md={8} lg={8} xl={8}>
                     <GridItem xs={2} sm={2} md={2}  style={{marginRight:"20px"}}>
@@ -914,9 +907,7 @@ class AnimalPage extends React.Component {
                       />
                     </GridItem>
               </GridItem>
-              <Hidden smDown>
-              <GridItem md={3} lg={3} xl={3}></GridItem>
-              </Hidden>
+
 
               <GridItem style={customStyle.goodWithCatStyle}  xs={9} sm={7} md={8} lg={8} xl={8}>
                     <GridItem xs={2} sm={2} md={2}  style={{marginRight:"20px"}}>
@@ -938,9 +929,7 @@ class AnimalPage extends React.Component {
                       />
                     </GridItem>
               </GridItem>
-              <Hidden smDown>
-              <GridItem md={3} lg={3} xl={3}></GridItem>
-              </Hidden>
+
               
               <Hidden smDown>
               <GridItem md={10} lg={10} xl={10} style={{ marginTop: "360px" }}></GridItem>
