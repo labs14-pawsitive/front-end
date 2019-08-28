@@ -66,8 +66,6 @@ class AnimalViewTop extends React.Component {
         this.deletePicture.bind(this);
     }
 
-   
-
     deletePicture =  (event, imageId) => {
 
         event.preventDefault()
@@ -102,8 +100,6 @@ class AnimalViewTop extends React.Component {
     .catch(err => {
        console.log('action:  delete animal pictures error from action: ', err.response)
     })
-   
-        
     }
 
     callback = async (response) => {
@@ -287,8 +283,6 @@ class AnimalViewTop extends React.Component {
                                 }}
                             />
 
-
-
                             {this.props.isEditing &&
                                 <Dialog style={{
                                     overflowY: "hidden"
@@ -298,7 +292,6 @@ class AnimalViewTop extends React.Component {
                                     onClose={this.props.handleClose}
                                     aria-labelledby="responsive-dialog-title"
                                 >
-
 
                                     <DialogTitle id="alert-dialog-title" >{"Edit Pictures"}
                                     <IconButton style={{ float: "right",marginTop: "-16px" }} onClick={this.props.handleClose}>
@@ -316,29 +309,21 @@ class AnimalViewTop extends React.Component {
                                                     margin: "0 9px 9px 9px"
                                                 }}>
                                                     {eachImage !== '' ?
-                                                        <div>
-                                                            <ImageUploadEdit height="150px" width="150px"
-                                                                defaultImage={eachImage.img_url}
-                                                                borderRadius="5px" imageLimit={1}
-                                                                editable={this.props.isEditing} callback={this.callback }
-                                                                url={`${process.env.REACT_APP_BACKEND_URL}/api/pictures`} />
+                                                    
+                                                            <div style={{ width:"150px" }}>
+                                                                <img src={eachImage.img_url} style={imageStyle.image} alt=''></img>
 
-                                                            {/* color: "#cd5c5c", */}
-                                                            <IconButton style={{ float: "right", color: "rgba(170, 39, 176, 0.83)", marginTop: "-204px", }} 
-                                                            onClick={(event) => this.deletePicture(event, eachImage.img_id) }>
-                                                                <DeleteIcon />
-                                                            </IconButton>
+                                                                <IconButton style={{ margin:0, padding:0, top:5, right:5, position: "absolute" }} onClick={ (event) => this.deletePicture(event, eachImage.img_id) }>
+                                                                    <DeleteIcon />
+                                                                </IconButton> 
                                                         </div>
                                                         :
                                                         <div>
                                                             <ImageUploadEdit height="150px" width="150px"
+                                                                defaultImage={''}
                                                                 borderRadius="5px" imageLimit={1}
                                                                 editable={this.props.isEditing} callback={this.callback }
                                                                 url={`${process.env.REACT_APP_BACKEND_URL}/api/pictures`} />
-                                                            <IconButton style={{ float: "right", color: "rgba(170, 39, 176, 0.83)", marginTop: "-204px", }} 
-                                                            onClick={(event) => this.deletePicture(event, eachImage.img_id) }>
-                                                                <DeleteIcon />
-                                                            </IconButton>
                                                         </div>}
 
                                                 </DialogContent>
@@ -400,12 +385,11 @@ class AnimalViewTop extends React.Component {
                                             margin: "0 9px 9px 9px"
                                         }}>
 
-                                            <ImageUploadEdit height="100%" width="100%"
-                                                defaultImage={eachImage.img_url}
-                                                borderRadius="5px" imageLimit={1}
-                                                customStyle={imageModalStyle}
-                                                editable={this.props.isEditing} callback={this.props.callback}
-                                                url={`${process.env.REACT_APP_BACKEND_URL}/api/pictures`} />
+                                            <div style={{ width:"150px" }}>
+                                                                <img src={eachImage.img_url} style={imageStyle.image} alt=''></img>
+
+                                                        
+                                                        </div>
 
                                         </DialogContent>
                                     </GridItem>
