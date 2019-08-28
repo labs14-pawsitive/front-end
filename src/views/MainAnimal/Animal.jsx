@@ -390,7 +390,7 @@ class AnimalPage extends React.Component {
                 <GridItem style={{ marginTop: "40px", width:"100%" }} xs={10}>
                   
                         <div>
-                            <p style={{ color: "white", fontSize: "30px", fontWeight: "400", letterSpacing: "6px", paddingBottom: "20px", }} >
+                            <p style={{ lineHeight: "1", color: "white", fontSize: "30px", fontWeight: "400", letterSpacing: "6px", paddingBottom: "20px", }} >
                                 Hello, my name is
                             </p>
 
