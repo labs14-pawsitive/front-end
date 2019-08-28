@@ -11,7 +11,7 @@ export const get_user = user_id => dispatch => {
     return (
         axiosWithAuth()
         // .get(`${process.env.REACT_APP_BACKEND_URL}/api/users/strict/${user_id}`)
-        .get(`http://localhost:8000/api/users/strict/${user_id}`)
+        .get(`${process.env.REACT_APP_BACKEND_URL}/api/users/strict/${user_id}`)
         .then( user => {
             dispatch({ type: GET_USER_SUCCESS, payload: user.data })
             console.log(user.data)
@@ -34,7 +34,7 @@ export const update_user_profile = (user_id,userObject) => dispatch => {
     return (
         axiosWithAuth()
         // .get(`${process.env.REACT_APP_BACKEND_URL}/api/users/strict/${user_id}`)
-        .put(`http://localhost:8000/api/users/meta/user/${user_id}`, userObject)
+        .put(`${process.env.REACT_APP_BACKEND_URL}/api/users/meta/user/${user_id}`, userObject)
         .then( user => {
             dispatch({ type: UPDATE_USER_PROFILE_SUCCESS, payload: user.data })
             console.log('UPDATE_USER_PROFILE_SUCCESS ',user)

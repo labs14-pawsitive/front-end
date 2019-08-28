@@ -9,7 +9,7 @@ export const addAnimal = animal => dispatch => {
   dispatch({ type: ADD_ANIMAL_START });
   console.log(animal)
   return axios
-    .post('http://localhost:8000/api/animals', animal)
+    .post(`${process.env.REACT_APP_BACKEND_URL}/api/animals`, animal)
     .then(res => {
       dispatch({ type: ADD_ANIMAL_SUCCESS, payload: res.data })
       return res.data
@@ -39,7 +39,7 @@ export const fetchOptions = (shelterId) => dispatch => {
   dispatch({ type: FETCH_OPTIONS_START });
   // const headers = {Authorization: localStorage.getItem('token')}
   return axios
-    .get(`http://localhost:8000/api/internal/paws/options/${shelterId}`)
+    .get(`${process.env.REACT_APP_BACKEND_URL}/api/internal/paws/options/${shelterId}`)
     .then(res => {
       console.log(res)
       dispatch({ type: UPDATE_BREEDS, payload: res.data.breeds })
@@ -71,9 +71,9 @@ export const updateAnimal = (updateinfo, animalId, animalMetaId) => dispatch => 
 
   dispatch({ type: EDIT_ANIMAL_INFO_START })
   return axios
-    .put(`http://localhost:8000/api/animals/${animalId}/meta/${animalMetaId}`, updateinfo)
+    .put(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalId}/meta/${animalMetaId}`, updateinfo)
     .then(res => axios
-      .get(`http://localhost:8000/api/animals/${animalId}`))
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalId}`))
     .then(res => {
       dispatch({ type: EDIT_ANIMAL_INFO_SUCCESS, payload: res.data })
       console.log('action updated animal ', res.data)
@@ -250,12 +250,12 @@ export const deleteAnimalPictures = (imageID, animalID) => dispatch => {
   dispatch({ type: DELETE_ANIMAL_PICTURES_START })
   return axios
   //old route
-    // .delete(`http://localhost:8000/api/pictures/image/${imageID}`)
+    // .delete(`${process.env.REACT_APP_BACKEND_URL}/api/pictures/image/${imageID}`)
     //new route
     .delete(`${process.env.REACT_APP_BACKEND_URL}/api/animals/pictures/${imageID}`)
     //old route
     // .then(res => axios
-    //   .get(`http://localhost:8000/api/pictures/animal/${animalID}`))
+    //   .get(`${process.env.REACT_APP_BACKEND_URL}/api/pictures/animal/${animalID}`))
       //new route
       .then(res => axios
         .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${animalID}/pictures`))
