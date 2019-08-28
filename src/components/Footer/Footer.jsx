@@ -28,6 +28,9 @@ import ListItem from "@material-ui/core/ListItem";
 import ContactModal from "components/ContactModal/ContactModal.jsx";
 import footerStyle from "assets/jss/material-dashboard-pro-react/components/footerStyle";
 
+import Button from "components/CustomButtons/Button.jsx";
+
+
 function Footer({ ...props }) {
   const { classes, fluid, black , white } = props;
   var container = cx({
@@ -75,6 +78,22 @@ function Footer({ ...props }) {
             </ListItem>      
             <ContactModal {...props}/>
          
+           <ListItem className={classes.inlineBlock}>
+              <Button color="twitter" simple style={{padding:"0"}}>
+                      <a href="https://twitter.com" style={{padding: "5px"}}><i className={"fab fa-twitter"} /></a>
+                    </Button>
+            </ListItem>   
+            <ListItem className={classes.inlineBlock}>
+              <Button color="facebook" simple style={{padding:"0"}}>
+                      <a href="https://www.facebook.com/Pawsnfind" style={{padding: "5px"}}><i className={"fab fa-facebook"} /></a>
+                    </Button>
+            </ListItem>   
+            <ListItem className={classes.inlineBlock}>
+              <Button color="instagram" simple style={{padding:"0", color:"#cb2964"}}>
+                      <a href="https://www.instagram.com/pawsnfind/" style={{padding: "5px"}}><i className="fab fa-instagram"></i></a>
+              </Button>
+            </ListItem>   
+           
            
             {/*  
             <ListItem className={classes.inlineBlock}>
