@@ -98,7 +98,7 @@ class CheckoutForm extends Component {
     render() {
         if (this.state.complete) return (
         <>
-            <DialogContent style={{ margin: "40px auto", textAlign= "center" }}>
+            <DialogContent style={{ margin: "40px auto", textAlign: "center" }}>
                 <h2>Donation Completed!</h2>
                 <Button color="success" style={{margin: "20px auto"}} onClick={this.props.handleClose}>Close</Button>
             </DialogContent>
