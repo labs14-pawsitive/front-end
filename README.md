@@ -102,7 +102,7 @@ Animal Rescue organizations have so much to manage, but their biggest concern is
 
 # APIs
 
-## [AuthO](https://auth0.com/)
+## [Auth0](https://auth0.com/)
 
 A service that provides authentication which allows users to securely register and login using multiple identity providers. Analytics are also provided by Auth0. Pawsnfind uses AuthO for registration with either email or google and to login into both rescue and user accounts.
 
