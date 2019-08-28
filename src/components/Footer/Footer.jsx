@@ -79,11 +79,6 @@ function Footer({ ...props }) {
             <ContactModal {...props}/>
          
            <ListItem className={classes.inlineBlock}>
-              <Button color="twitter" simple style={{padding:"0"}}>
-                      <a href="https://twitter.com" style={{padding: "5px"}}><i className={"fab fa-twitter"} /></a>
-                    </Button>
-            </ListItem>   
-            <ListItem className={classes.inlineBlock}>
               <Button color="facebook" simple style={{padding:"0"}}>
                       <a href="https://www.facebook.com/Pawsnfind" style={{padding: "5px"}}><i className={"fab fa-facebook"} /></a>
                     </Button>
