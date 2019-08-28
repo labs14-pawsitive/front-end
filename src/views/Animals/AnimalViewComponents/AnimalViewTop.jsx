@@ -267,7 +267,7 @@ class AnimalViewTop extends React.Component {
             <GridItem xs={12} sm={12} md={12} style={customStyle.gridItemStyle}>
                 {/* <GridItem xs={12} sm={12} md={5}> */}
                 <GridItem xs={8} sm={6} md={5} xl={3}>
-                    <GridList className={classes.gridList} style={{ marginBottom: "10px", width:'250px'}}>
+                    <GridList className={classes.gridList} style={{ marginBottom: "10px", maxWidth:'250px', minWidth:'100px', heigth:'auto'}}>
                         <GridListTile key={this.props.animal.img_url} style={customStyle.imgCardStyle} >
 
 
