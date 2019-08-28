@@ -14,6 +14,9 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+import buttonGroupStyle from "assets/jss/material-dashboard-pro-react/buttonGroupStyle.jsx";
+
+
 import {
   defaultFont,
   container,
@@ -85,5 +88,14 @@ const footerStyle = {
       color: blackColor
     }
   },
+  socialButtonsIcons: {
+    fontSize: "18px",
+    marginTop: "-2px",
+    position: "relative"
+  },
+  marginRight: {
+    marginRight: "5px"
+  },
+    ...buttonGroupStyle,
 };
 export default footerStyle;
