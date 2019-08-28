@@ -12,7 +12,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {addAnimal, fetchOptions} from '../../actions/animalAction';
-import ImageUpload from '../../components/ImageUpload/ImageUploadEdit'
+import ImageUpload from '../../components/ImageUpload/ImageUpload'
 import { axiosWithAuth } from 'axiosWithAuth';
 
 // @material-ui/core components
