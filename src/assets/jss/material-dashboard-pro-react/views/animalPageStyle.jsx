@@ -124,6 +124,19 @@ addressStyle: {
     minWidth: "140px",
     marginBottom: "-10px",
 },
+  animalNameStyle: {
+    wordWrap: "break-word", 
+    lineHeight:"1", 
+    fontFamily: "Coiny, cursive" ,
+    color: "white", 
+    fontWeight: "bold", 
+    fontSize: "4rem", 
+    textShadow: "5px 5px #2b2b2b61",
+    textTransform: "uppercase",
+    "@media (max-width: 576px)": {
+    fontSize: "3.5rem"
+    },
+  },
 ...buttonStyle,
   
 
