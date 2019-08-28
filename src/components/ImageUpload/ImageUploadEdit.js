@@ -61,7 +61,7 @@ class ImageUploadEdit extends Component {
 
   componentDidMount() {
     if (this.props.defaultImage)
-      this.setState({ defaultImage: this.props.defaultImage });
+      this.setState({ defaultImage: ''});
   }
 
   handleClose() {
@@ -136,7 +136,7 @@ class ImageUploadEdit extends Component {
           disabled={!this.props.editable}
           onClick={this.handleOpen}
           style={{
-            backgroundImage: "url(" + this.state.defaultImage + ")",
+            
             backgroundSize: "cover",
             backgroundPosition: "center center",
             borderRadius: "5px",
@@ -171,3 +171,4 @@ class ImageUploadEdit extends Component {
   }
 }
 export default ImageUploadEdit;
+
