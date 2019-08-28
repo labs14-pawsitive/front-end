@@ -285,7 +285,8 @@ class SearchPage extends React.Component {
       filterContainerStyle: {
         margin: "20px 30px",
         width: "90%",
-        paddingTop: "100px",
+        paddingTop: "120px",
+        paddingBottom: "30px",
         maxWidth: "1200px"
       },
       animalCardStyle: {
