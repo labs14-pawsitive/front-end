@@ -116,7 +116,7 @@ Propublica Nonprofit Explorer API provides a way to verify EIN numbers are valid
 
 ## [SendGrid](https://sendgrid.com/solutions/email-api/)
 
-SendGrid API allows Pawsnfind to receive emails from the contact us form.
+SendGrid API allows Pawsnfind to receive emails from the contact us form and to send a notification to the rescue organization when an application is received.
 
 # NPM Modules
 
