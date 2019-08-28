@@ -149,10 +149,10 @@ class AnimalViewTop extends React.Component {
         const customStyle = {
             imgCardStyle: {
                 paddingTop: "2px",
-                // width: "210px",
-                // height: "200px"
-                width: "100%",
-                height: "auto"
+                 width: "100%",
+                 height:"250px"
+           
+             
             },
             imgTitle: {
                 background:
@@ -180,7 +180,10 @@ class AnimalViewTop extends React.Component {
             dialogPaper: {
                 minHeight: '80vh',
                 maxHeight: '80vh',
-            }
+            },
+            width:'250px',
+            height:'250px'
+    
 
         }
 
@@ -201,7 +204,7 @@ class AnimalViewTop extends React.Component {
                 padding: 0,
                 margin: 0,
                 top: 0,
-                height: "100%",
+            
                 width: "100%",
                 objectFit: "cover",
                 overflow: "hidden",
@@ -264,15 +267,12 @@ class AnimalViewTop extends React.Component {
             <GridItem xs={12} sm={12} md={12} style={customStyle.gridItemStyle}>
                 {/* <GridItem xs={12} sm={12} md={5}> */}
                 <GridItem xs={8} sm={6} md={5} xl={3}>
-                    <GridList className={classes.gridList} style={{ marginBottom: "10px" }}>
+                    <GridList className={classes.gridList} style={{ marginBottom: "10px", width:'250px'}}>
                         <GridListTile key={this.props.animal.img_url} style={customStyle.imgCardStyle} >
 
-                            <ImageUploadEdit height="100%" width="100%"
-                                defaultImage={this.props.animal.img_url}
-                                borderRadius="5px" imageLimit={1}
-                                customStyle={imageStyle}
-                                editable={this.props.isEditing} callback={this.props.callback}
-                                url={`${process.env.REACT_APP_BACKEND_URL}/api/pictures/animal/${this.props.paramsId}`} />
+
+                            <img style={{width:'250px', height:'250px'}} src={this.props.animal.img_url} alt=''></img>
+                            
 
 
                             <GridListTileBar style={customStyle.imgTitle}
