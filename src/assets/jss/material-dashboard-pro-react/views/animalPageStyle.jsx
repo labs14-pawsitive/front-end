@@ -134,7 +134,7 @@ addressStyle: {
     textShadow: "5px 5px #2b2b2b61",
     textTransform: "uppercase",
     "@media (max-width: 576px)": {
-    fontSize: "3.5rem"
+    fontSize: "3.0rem"
     },
   },
 ...buttonStyle,
