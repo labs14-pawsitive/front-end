@@ -394,7 +394,7 @@ class AnimalPage extends React.Component {
                                 Hello, my name is
                             </p>
 
-                            <p style={{lineHeight:"1", fontFamily: "Coiny, cursive" ,color: "white", fontWeight: "bold", fontSize: "4rem", textShadow: "5px 5px #2b2b2b61", textTransform: "uppercase" }}>
+                            <p style={{wordWrap: "break-word", lineHeight:"1", fontFamily: "Coiny, cursive" ,color: "white", fontWeight: "bold", fontSize: "4rem", textShadow: "5px 5px #2b2b2b61", textTransform: "uppercase" }}>
                                 {this.state.animal.name}
                            </p>
                         </div>
