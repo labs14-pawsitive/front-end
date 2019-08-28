@@ -116,9 +116,9 @@ const animalPageStyle = () => ({
     "&:hover": {
      backgroundColor: "#A464A3",
  },
-   "&:active": {
+  /* "&:active": {
      backgroundColor: "green",
-   }
+   }*/
 },
 addressStyle: {
     minWidth: "140px",
