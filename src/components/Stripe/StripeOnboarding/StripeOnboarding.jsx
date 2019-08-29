@@ -65,8 +65,8 @@ class StripeOnboarding extends React.Component {
         this.state = {
             first_name: '',
             last_name: '',
-            routing_number: '110000000',
-            account_number: '000123456789',
+            routing_number: '',
+            account_number: '',
             address_1: '',
             address_2: '',
             city: '',
@@ -180,8 +180,8 @@ class StripeOnboarding extends React.Component {
             .createToken("bank_account", {
                 country: "US",
                 currency: "usd",
-                routing_number: "110000000",
-                account_number: "000123456789",
+                routing_number: `${state.routing_number}`,
+                account_number: `${state.account_number}`,
                 account_holder_name: `${state.firstName}` + `${state.lastName}`,
                 account_holder_type: "company"
             })

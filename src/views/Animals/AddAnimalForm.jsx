@@ -415,7 +415,7 @@ class AddAnimalForm extends React.Component {
           <GridItem  xs={12} sm={12} md={12} style={styles.photo}>
             <legend>Add Animal Profile Image</legend>
             <ImageUpload
-              // optionalImage={this.state.animal.images.length ? this.state.animal.images[0].image_url : "default"} 
+              optionalImage={this.state.animal.images.length ? this.state.animal.images[0].image_url : "default"} 
               height="300px" 
               width="300px" 
               borderRadius="5px" 

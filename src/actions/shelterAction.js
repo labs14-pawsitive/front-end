@@ -8,8 +8,10 @@ export const GET_SHELTER_ERR = 'GET_SHELTER_ERROR';
 export const fetchShelter = shelterID => dispatch => {
     dispatch({ type: GET_SHELTER_START })
     return axios
+
     
     .get(`${process.env.REACT_APP_BACKEND_URL}/api/shelters/${shelterID}`)
+
     .then(res => {
         dispatch({ type: GET_SHELTER_SUCCESS, payload: res.data })
     })

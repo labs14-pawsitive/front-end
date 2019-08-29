@@ -96,7 +96,14 @@ class CheckoutForm extends Component {
     }
 
     render() {
-        if (this.state.complete) return <h1>Purchase Complete</h1>
+        if (this.state.complete) return (
+        <>
+            <DialogContent style={{ margin: "40px auto", textAlign: "center" }}>
+                <h2>Donation Completed!</h2>
+                <Button color="success" style={{margin: "20px auto"}} onClick={this.props.handleClose}>Close</Button>
+            </DialogContent>
+        </>
+        )
         return (
             <div>
                <DialogTitle id="form-dialog-title">
@@ -112,7 +119,7 @@ class CheckoutForm extends Component {
 
                 <CustomInput 
                         id = "name"
-                        labelText = "Contact Name"
+                        labelText = "Card Holder Name"
                         inputProps={{
                             type: "text",
                             value: this.state.name,

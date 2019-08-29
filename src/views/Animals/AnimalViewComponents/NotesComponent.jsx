@@ -185,7 +185,7 @@ class NotesComponent extends React.Component {
                     <span style={customStyle.noteStyle}>
                         <Typography style={customStyle.typographyStyle}
                             component="span">
-                            User:{this.props.userInfo.username}
+                            User:{this.props.note.username}
                         </Typography>
                         {/* {moment(note.created_at).format("MMMM Do YYYY").toString()} */}
                         {moment(this.state.editNoteInfo.created_at).fromNow()}

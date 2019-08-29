@@ -14,6 +14,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import List from '@material-ui/core/List';
 import ListSubheader from '@material-ui/core/ListSubheader';
+import axios from "axios";
 
 import regularFormsStyle from "assets/jss/material-dashboard-pro-react/views/regularFormsStyle";
 
@@ -33,20 +34,23 @@ class AnimalNotes extends React.Component {
         }
 
         this.maxLength = 3;
+
+        this.submitNote.bind(this);
     }
 
-    // componentDidMount(){
-    //     this.props.getUser(this.props.animal.shelter_id)
-    //     .then(res => {
-    //         console.log('animal notes component ', res)
-    //         this.setState({
-    //             username:this.props.userInfo.username
-    //         })
-    //     })
-    //     .catch(error =>{
-    //         console.log('animal notes error', error)
-    //     })
-    // }
+    componentDidMount(){
+        axios
+        .get(`${process.env.REACT_APP_BACKEND_URL}/api/users/${localStorage.getItem('user_id')}`)
+        .then( result => {
+          console.log(result)
+          this.setState({
+            shelter_user_id : result.data
+          })
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
 
     handleUrlClick = e => {
         this.setState({
@@ -100,8 +104,8 @@ class AnimalNotes extends React.Component {
 
     submitNote = (event) => {
         event.preventDefault()
-        console.log(this.state.note)
-
+        console.log(this.state)
+        console.log(this.props);
         if (this.state.note.length === 0)
             return;
         let notes = {}
@@ -109,7 +113,7 @@ class AnimalNotes extends React.Component {
         notes = {
             notes: this.state.note,
             animal_id: this.props.animal.id,
-            shelter_user_id: this.props.userInfo.id
+            shelter_user_id: this.state.shelter_user_id.id
         }
 
         console.log('post notes info: ', notes)
@@ -164,11 +168,11 @@ class AnimalNotes extends React.Component {
         }
         return (
             <GridItem xs={12} sm={12} md={4} lg={4}>
-                <Card style={this.state.urlClicked? customStyle.urlClicked : customStyle.urlButton}>
+                {/* <Card style={this.state.urlClicked? customStyle.urlClicked : customStyle.urlButton}>
                     <div onClick={this.handleUrlClick} >
                         {this.state.urlClicked ? `http${window.location.hostname.indexOf(".com") !== -1 ? "s" : ""}://${window.location.host}/application/${this.props.shelter_id}/${this.props.animal_id}`: "Generate Application Link"}  
                     </div>
-                </Card>
+                </Card> */}
                 <Card style={customStyle.textFieldNote}>
 
                     <CardHeader>
@@ -233,7 +237,7 @@ const mapStateToProps = (state) => {
     return {
         animal: state.animalReducer.animalInfo.animal,
         animalNotes: state.animalReducer.animalInfo.animalNotes,
-        userInfo: state.userReducer.userInfo,
+        userInfo: state.userReducer.user,
     }
 }
 

@@ -17,6 +17,7 @@
 
 import buttonGroupStyle from "assets/jss/material-dashboard-pro-react/buttonGroupStyle.jsx";
 
+
 import {
   defaultFont,
   container,
@@ -98,7 +99,5 @@ const footerStyle = {
   },
     ...buttonGroupStyle,
 
-
-  
 };
 export default footerStyle;

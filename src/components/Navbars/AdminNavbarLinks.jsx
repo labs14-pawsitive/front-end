@@ -69,9 +69,12 @@ class HeaderLinks extends React.Component {
 
     auth.logout();
   }
+
+  
   handleHomeClick = () => {
     this.props.history.push('/')
   }
+  
 
   render() {
     const { classes, rtlActive } = this.props;
@@ -97,7 +100,9 @@ class HeaderLinks extends React.Component {
     });
     return (
       <div className={wrapper}>
-        <Button
+
+      <Button
+
             color="transparent"
             aria-label="Home"
             justIcon 
