@@ -3,6 +3,7 @@ import axios from 'axios';
 export const SEARCH_OPTION_START = 'SEARCH_OPTION_START';
 export const SEARCH_OPTION_SUCCESS = 'SEARCH_OPTION_SUCCESS';
 export const SEARCH_OPTION_ERROR = 'SEARCH_OPTION_ERROR';
+
 export const updateSearchOption = (changedAttribute, value) => dispatch => {
     dispatch({ type: SEARCH_OPTION_START});
 
@@ -17,6 +18,7 @@ export const UPDATE_DISPLAYED_ANIMALS_START = 'DISPLAYED_ANIMALS_START';
 export const UPDATE_DISPLAYED_ANIMALS_SUCCESS = 'UPDATE_DISPLAYED_ANIMALS_SUCCESS';
 export const UPDATE_DISPLAYED_ANIMALS_ERROR = 'UPDATE_DISPLAYED_ANIMALS_ERROR';
 export const UPDATE_DISPLAYED_PAGINATION_DETAILS = 'UPDATE_DISPLAYED_PAGINATION_DETAILS'
+
 export const updateDisplayedAnimals = (options={}) => dispatch => {
     dispatch({ type: UPDATE_DISPLAYED_ANIMALS_START})
 

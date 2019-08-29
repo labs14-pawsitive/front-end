@@ -13,7 +13,7 @@ export const initialSearch  = initialSearchForm => dispatch => {
         .then(res => {
             console.log('SEARCH_SPECIES_SUCCESS ', res.data)
             
-            dispatch ({type: SEARCH_SPECIES_SUCCESS, payload: res.data,initialSearchForm})
+            dispatch ({type: SEARCH_SPECIES_SUCCESS, payload: res.data, initialSearchForm})
             // return res.data
         })
         .catch(err => {

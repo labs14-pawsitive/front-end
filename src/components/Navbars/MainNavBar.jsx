@@ -152,15 +152,16 @@ class MainNavBar extends React.Component {
         <Toolbar className={classes.container}>
           <Hidden smDown>
             <div className={classes.flex}>
-              <NavLink to="/"><h3 style={logoStyle}>Pawsnfind</h3>
+              <NavLink to="/">
+                <h3 style={logoStyle}>Pawsnfind</h3>
      
               </NavLink>
             </div>
           </Hidden>
           <Hidden mdUp>
             <div className={classes.flex}>
-              <NavLink to="/"> <h4 style={logoStyle}>Pawsnfind</h4>
-      
+              <NavLink to="/"> 
+              <h4 style={logoStyle}>Pawsnfind</h4>
               </NavLink>
             </div>
           </Hidden>

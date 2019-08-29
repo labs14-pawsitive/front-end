@@ -18,7 +18,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
-import { withRouter, NavLink } from 'react-router-dom'
+import { withRouter, NavLink, Link } from 'react-router-dom'
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -52,7 +52,12 @@ function Footer({ ...props }) {
   const customStyle={
     link: {
       color:"white"
-    }
+    },
+    socialButtonsIcons: {
+    fontSize: "18px",
+    marginTop: "-2px",
+    position: "relative"
+  }
   }
   return (
     <footer className={classes.footer}>
@@ -76,9 +81,12 @@ function Footer({ ...props }) {
               </div>
               </NavLink>
             </ListItem>      
+
             <ContactModal {...props}/>
+
          
            <ListItem className={classes.inlineBlock}>
+
               <Button color="facebook" simple style={{padding:"0"}}>
                       <a href="https://www.facebook.com/Pawsnfind" style={{padding: "5px"}}><i className={"fab fa-facebook"} /></a>
                     </Button>
@@ -88,8 +96,7 @@ function Footer({ ...props }) {
                       <a href="https://www.instagram.com/pawsnfind/" style={{padding: "5px"}}><i className="fab fa-instagram"></i></a>
               </Button>
             </ListItem>   
-           
-           
+
             {/*  
             <ListItem className={classes.inlineBlock}>
               <a href="#contact" className={block}>

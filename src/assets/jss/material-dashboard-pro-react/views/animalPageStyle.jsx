@@ -116,15 +116,15 @@ const animalPageStyle = () => ({
     "&:hover": {
      backgroundColor: "#A464A3",
  },
-  /* "&:active": {
-     backgroundColor: "green",
-   }*/
+
 },
 addressStyle: {
     minWidth: "140px",
     marginBottom: "-10px",
 },
+
   animalNameStyle: {
+
     wordWrap: "break-word", 
     lineHeight:"1", 
     fontFamily: "Coiny, cursive" ,
@@ -136,7 +136,9 @@ addressStyle: {
     "@media (max-width: 576px)": {
     fontSize: "3.0rem"
     },
+
   },
+
 ...buttonStyle,
   
 

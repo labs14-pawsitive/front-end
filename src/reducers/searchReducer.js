@@ -11,6 +11,16 @@ import {
     PAGINATION_OPTION_SUCCESS,
 } from '../actions/searchAction'
 
+
+//home page initial search
+/*
+import {
+    SEARCH_SPECIES_START,
+    SEARCH_SPECIES_SUCCESS,
+    SEARCH_SPECIES_ERROR
+} from '../actions/mainPageAction.js'
+*/
+
 const initialState = {
     searchSelections: {
         breed_ids: [],
@@ -32,7 +42,9 @@ const initialState = {
         display: 10
     },
     updatingDisplayedPaginationDetails: false,
-    updatingPaginationOption: false
+    updatingPaginationOption: false,
+
+    initialSearch: false,
 }
 
 export const searchReducer = (state = initialState, action) => {
@@ -99,7 +111,35 @@ export const searchReducer = (state = initialState, action) => {
                     ...detail
                 }
             }
+        
+            //main page search
+          /*  case SEARCH_SPECIES_START:
+                    //console.log('reducers action for SEARCH_SPECIES_START ', action)
+                    return {
+                        ...state,
+                        initialSearch: true,
+                        error: ''
+        
+                    };
+                case SEARCH_SPECIES_SUCCESS:
+        
+                        console.log('reducers action for SEARCH_SPECIES_SUCCESS ', action.initialSearchForm)
+                    return {
+                        ...state,
+                        initialSearch: false,
+                        displayedAnimals: action.payload,
+                       
+                    };
+                case SEARCH_SPECIES_ERROR:
+                    return {
+                        ...state,
+                        initialSearch: false,
+                        error: action.payload
+                    };
+
+            */
         default: 
             return state
     }
 }
+

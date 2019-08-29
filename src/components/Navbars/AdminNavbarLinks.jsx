@@ -17,7 +17,8 @@
 import React from "react";
 import classNames from "classnames";
 import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom"
+import { withRouter, NavLink } from "react-router-dom"
+
 // import { Manager, Target, Popper } from "react-popper";
 
 // @material-ui/core components
@@ -65,16 +66,16 @@ class HeaderLinks extends React.Component {
     this.setState({ openProfile: false });
   };
   handleLogout = ()=> {
- 
-    auth.logout();
 
+    auth.logout();
   }
+
   
   handleHomeClick = () => {
     this.props.history.push('/')
   }
   
-  
+
   render() {
     const { classes, rtlActive } = this.props;
     const { openNotification, openProfile } = this.state;
@@ -99,7 +100,9 @@ class HeaderLinks extends React.Component {
     });
     return (
       <div className={wrapper}>
+
       <Button
+
             color="transparent"
             aria-label="Home"
             justIcon 

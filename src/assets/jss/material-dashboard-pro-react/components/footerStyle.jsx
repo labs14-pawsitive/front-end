@@ -14,6 +14,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+
 import buttonGroupStyle from "assets/jss/material-dashboard-pro-react/buttonGroupStyle.jsx";
 
 
@@ -97,5 +98,6 @@ const footerStyle = {
     marginRight: "5px"
   },
     ...buttonGroupStyle,
+
 };
 export default footerStyle;
