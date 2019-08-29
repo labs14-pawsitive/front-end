@@ -132,9 +132,11 @@ class UserAnimalFollows extends React.Component {
           {this.state.animals.map(animal => (
              <GridItem xs={12} sm={6} md={4} lg={3} key={animal.animal_id}>
             <Card product className={classes.cardHover}>
+             <Link to={`/animal/${animal.animal_id}`}>
               <CardHeader image className={classes.cardHeaderHover} style={{backgroundImage: animal.species_id === 1 ? `url(` + DogBg +  `)` : `url(` + CatBg + `)`, backgroundSize: "cover", backgroundPosition: "center center", height:"250px", boxShadow: "0 0 5px #00000020"}}>
                   <div style={{borderRadius: "6px", backgroundImage: `url(${animal.img_url})`, backgroundSize: "cover", backgroundPosition: "center center", width: "100%", height: "100%"}}></div>
               </CardHeader>
+              </Link>
               <CardBody>
                 <div className={classes.cardHoverUnder}>
                   <Tooltip

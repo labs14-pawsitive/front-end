@@ -316,7 +316,7 @@ class AnimalPage extends React.Component {
         color: "#666666",
         textAlign: "center",
         position: "relative",
-        maxWidth: "340px",
+        //maxWidth: "340px",
         textTransform: "uppercase",
       },
       buttonStyle: {
@@ -363,7 +363,7 @@ class AnimalPage extends React.Component {
         margin: "10px 0",
         minWidth: "140px",
       },
-
+     
     };
 
     return (
@@ -377,7 +377,7 @@ class AnimalPage extends React.Component {
               </GridItem>
 
             <GridItem xs={12} sm={12} md={7} lg={7} xl={7} style={{ marginBottom: "70px", width:"100%", display:"flex", justifyContent:"center", alignItems:"center", flexDirection: "column" }}>
-                <GridItem xs={10} style={{width:"100%"}}>
+                <GridItem  xs={11} sm={10} style={{width:"100%"}}>
           
                         <InputLabel
                           style={customStyle.adoptionStatusStyle}
@@ -387,21 +387,22 @@ class AnimalPage extends React.Component {
                   
                 </GridItem>
 
-                <GridItem style={{ marginTop: "40px", width:"100%" }} xs={10}>
+                <GridItem style={{ marginTop: "40px", width:"100%" }} xs={11} sm={10}>
                   
                         <div>
-                            <p style={{ color: "white", fontSize: "30px", fontWeight: "400", letterSpacing: "6px", paddingBottom: "20px", }} >
+                            <p style={{ lineHeight: "1", color: "white", fontSize: "30px", fontWeight: "400", letterSpacing: "6px", paddingBottom: "20px", }} >
                                 Hello, my name is
                             </p>
 
-                            <p style={{lineHeight:"1", fontFamily: "Coiny, cursive" ,color: "white", fontWeight: "bold", fontSize: "4rem", textShadow: "5px 5px #2b2b2b61", textTransform: "uppercase" }}>
+                           {/* <p style={{wordWrap: "break-word", lineHeight:"1", fontFamily: "Coiny, cursive" ,color: "white", fontWeight: "bold", fontSize: "4rem", textShadow: "5px 5px #2b2b2b61", textTransform: "uppercase" }}> */} 
+                           <p className={classes.animalNameStyle} >
                                 {this.state.animal.name}
                            </p>
                         </div>
                     
                 </GridItem>
 
-                <GridItem style={{ marginTop: "40px", width:"100%" }} xs={10}>        
+                <GridItem style={{ marginTop: "40px", width:"100%" }} xs={11} sm={10}>        
                         
                           <div style={{ color: "white", fontSize: "24px", fontWeight: "400", letterSpacing: "6px", lineHeight: "30px" }} >
                           I'm { this.state.isAdult ? "an" : "a" } <span style={{ textTransform: "lowercase" }}>{this.state.animal.age}</span> {this.state.animal.is_male ? "boy" : "girl"} who is on the <span style={{ textTransform: "lowercase" }}> {this.state.animal.size} </span> side. I am a {this.state.animal.breed} who has <span style={{ textTransform: "lowercase" }}>{this.state.animal.coat_length}</span> length hair.  I am {this.state.animal.is_neutered_spayed ? "neutered" : "not neutered"}, {this.state.animal.is_neutered_spayed ? "" : "but"} {this.state.animal.is_vaccinated ? "up to date on all shots" : "and in need of shots from the vet"}.  I am {this.state.animal.is_house_trained ? "house trained" : "in need of training"} and {this.state.animal.is_good_with_dogs ? "good with other dogs" : "not friendly with other dogs"}.
@@ -413,7 +414,7 @@ class AnimalPage extends React.Component {
 
 
                 
-              <GridItem style={{ display: "flex", justifyContent: "center", alignItems: "center", width:"100%", marginTop: "30px"}} xs={10} sm={10} md={10} lg={10}>
+              <GridItem style={{ display: "flex", justifyContent: "center", alignItems: "center", width:"100%", marginTop: "30px"}} xs={11} sm={10} md={10} lg={10}>
                     <GridContainer style={{ display: "flex", justifyContent:"flex-left", alignItems: "center" }}>
                           {this.state.alert}
 
@@ -808,7 +809,7 @@ class AnimalPage extends React.Component {
              {/* RIGHT SECTION OF ICON/INFO DISPLAY */}
             <GridContainer xs={12} sm={12} md={7} lg={7} xl={7} style={{ display: "flex", justifyContent: "center", marginTop: "40px", marginBottom: "40px", borderLeft: "2px solid grey" }} >
 
-              <GridItem style={customStyle.myStoryStyle} xs={9} sm={7} md={8} lg={8} xl={8}>
+              <GridItem style={customStyle.myStoryStyle} xs={9} sm={7} md={9} lg={9} xl={9}>
                     <GridItem xs={2} sm={2} md={2}  style={{marginRight:"20px"}}>
                       <img className={classes.iconStyle2} src={myStoryIcon}></img>
                     </GridItem>
@@ -834,11 +835,9 @@ class AnimalPage extends React.Component {
                       />
                     </GridItem>
               </GridItem>
-              <Hidden smDown>
-              <GridItem md={3} lg={3} xl={3}></GridItem>
-              </Hidden>
 
-              <GridItem style={customStyle.myHealthStyle} xs={9} sm={7} md={8} lg={8} xl={8}>
+
+              <GridItem style={customStyle.myHealthStyle} xs={9} sm={7} md={9} lg={9} xl={9}>
                     <GridItem xs={2} sm={2} md={2}  style={{marginRight:"20px"}}>
                       <img className={classes.iconStyle2} src={myHealthIcon}></img>
                     </GridItem>
@@ -866,11 +865,9 @@ class AnimalPage extends React.Component {
                       />
                     </GridItem>
               </GridItem>
-              <Hidden smDown>
-              <GridItem md={3} lg={3} xl={3}></GridItem>
-              </Hidden>
 
-              <GridItem style={customStyle.kidFreeStyle} xs={9} sm={7} md={8} lg={8} xl={8}>
+
+              <GridItem style={customStyle.kidFreeStyle} xs={9} sm={7} md={9} lg={9} xl={9}>
                     <GridItem xs={2} sm={2} md={2}  style={{marginRight:"20px"}}>
                       <img className={classes.iconStyle2} src={this.state.animal.is_good_with_kids ? kidFriendlyIcon : noKidIcon}></img>
                     </GridItem>
@@ -890,11 +887,9 @@ class AnimalPage extends React.Component {
                       />
                     </GridItem>
               </GridItem>
-              <Hidden smDown>
-              <GridItem md={3} lg={3} xl={3}></GridItem>
-              </Hidden>
 
-              <GridItem style={customStyle.goodWithDogStyle}  xs={9} sm={7} md={8} lg={8} xl={8}>
+
+              <GridItem style={customStyle.goodWithDogStyle}  xs={9} sm={7} md={9} lg={9} xl={9}>
                     <GridItem xs={2} sm={2} md={2}  style={{marginRight:"20px"}}>
                       <img className={classes.iconStyle2} src={this.state.animal.is_good_with_dogs ? dogFriendlyIcon : noDogIcon}></img>
                     </GridItem>
@@ -914,11 +909,8 @@ class AnimalPage extends React.Component {
                       />
                     </GridItem>
               </GridItem>
-              <Hidden smDown>
-              <GridItem md={3} lg={3} xl={3}></GridItem>
-              </Hidden>
 
-              <GridItem style={customStyle.goodWithCatStyle}  xs={9} sm={7} md={8} lg={8} xl={8}>
+              <GridItem style={customStyle.goodWithCatStyle}  xs={9} sm={7} md={9} lg={9} xl={9}>
                     <GridItem xs={2} sm={2} md={2}  style={{marginRight:"20px"}}>
                       <img className={classes.iconStyle2} src={this.state.animal.is_good_with_cats ? catFriendlyIcon : noCatIcon}></img>
                     </GridItem>
@@ -938,10 +930,7 @@ class AnimalPage extends React.Component {
                       />
                     </GridItem>
               </GridItem>
-              <Hidden smDown>
-              <GridItem md={3} lg={3} xl={3}></GridItem>
-              </Hidden>
-              
+             
               <Hidden smDown>
               <GridItem md={10} lg={10} xl={10} style={{ marginTop: "360px" }}></GridItem>
               </Hidden>

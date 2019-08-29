@@ -219,7 +219,9 @@ class MainPage extends React.Component {
         .then(
           res =>{ 
           console.log('initial search results ', res)
-          this.props.history.push('/search/advancedSearch')
+          const species = newArray.map( species => `&species_id=${species}`).toString().replace(',', '')
+          //this.props.history.push('/search/advancedSearch')
+          this.props.history.push(`/search/advancedSearch?page=1&radius=${this.state.distance}${species}&zipcode=${this.state.zipcode}`)
           })
         .catch(error => console.log('initial search error ', error))
     }

@@ -18,7 +18,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
-import { withRouter, NavLink } from 'react-router-dom'
+import { withRouter, NavLink, Link } from 'react-router-dom'
 
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -27,6 +27,9 @@ import ListItem from "@material-ui/core/ListItem";
 
 import ContactModal from "components/ContactModal/ContactModal.jsx";
 import footerStyle from "assets/jss/material-dashboard-pro-react/components/footerStyle";
+
+import Button from "components/CustomButtons/Button.jsx";
+
 
 function Footer({ ...props }) {
   const { classes, fluid, black , white } = props;
@@ -49,7 +52,12 @@ function Footer({ ...props }) {
   const customStyle={
     link: {
       color:"white"
-    }
+    },
+    socialButtonsIcons: {
+    fontSize: "18px",
+    marginTop: "-2px",
+    position: "relative"
+  }
   }
   return (
     <footer className={classes.footer}>
@@ -73,7 +81,24 @@ function Footer({ ...props }) {
               </div>
               </NavLink>
             </ListItem>      
+
             <ContactModal {...props}/>
+
+            <ListItem className={classes.inlineBlock}>
+              <Button color="twitter" simple style={{padding:"0"}}>
+                      <a href="https://twitter.com" style={{padding: "5px"}}><i className={"fab fa-twitter"} /></a>
+                    </Button>
+            </ListItem>   
+            <ListItem className={classes.inlineBlock}>
+              <Button color="facebook" simple style={{padding:"0"}}>
+                      <a href="https://www.facebook.com/Pawsnfind" style={{padding: "5px"}}><i className={"fab fa-facebook"} /></a>
+                    </Button>
+            </ListItem>   
+            <ListItem className={classes.inlineBlock}>
+              <Button color="instagram" simple style={{padding:"0", color:"#cb2964"}}>
+                      <a href="https://www.instagram.com/pawsnfind/" style={{padding: "5px"}}><i className="fab fa-instagram"></i></a>
+              </Button>
+            </ListItem>   
             {/*  
             <ListItem className={classes.inlineBlock}>
               <a href="#contact" className={block}>

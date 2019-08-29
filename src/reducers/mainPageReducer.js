@@ -17,7 +17,6 @@ export const mainPageReducer = (state = initialState, action) => {
             return {
                 ...state,
                 searchingSpecies: true,
-
             };
         case SEARCH_SPECIES_SUCCESS:
 

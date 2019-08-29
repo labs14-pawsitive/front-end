@@ -51,13 +51,13 @@ class SearchPage extends React.Component {
       radiusOptions: [5, 10, 15],
       genderOptions: [{name: "Male", value: true}, {name: "Female", value: false}],
       labelWidth: 0,
+      originalOptions : {},
+      initialFetched: false
     }
   }
   
-  componentDidMount() {
-    this.props.fetchOptions(0)
+  componentWillMount() {
     const {searchSelections} = this.props
-    this.updateInitialSearchOptions()
 
     const options = {
       breed_id: searchSelections.breed_ids,
@@ -69,7 +69,38 @@ class SearchPage extends React.Component {
       is_male: searchSelections.is_male,
       radius: searchSelections.radius
     }
-    this.props.updateDisplayedAnimals(options)
+
+    this.setState({
+      originalOptions : options
+    })
+    
+    this.updateInitialSearchOptions();
+    
+    const updatedOptions = {
+      breed_id: searchSelections.breed_ids,
+      species_id: searchSelections.species_ids, 
+      size_id: searchSelections.size_ids,
+      age_id: searchSelections.age_ids,
+      coat_length_id: searchSelections.coatLength_ids,
+      zipcode: searchSelections.zipcode,
+      is_male: searchSelections.is_male,
+      radius: searchSelections.radius
+    }
+      this.props.updateDisplayedAnimals(updatedOptions);
+  }
+
+   componentDidMount() {
+     this.props.fetchOptions(0)
+    //const {searchSelections} = this.props
+    //this.updateInitialSearchOptions()
+
+   
+
+    //populate the search page with initial set of animals from main page, if no animals then do full search
+    if(this.props.displayedAnimals.length < 1 && this.state.initialFetched === false) {
+      this.props.updateDisplayedAnimals(this.state.originalOptions)
+    }
+
 
     this.setState({
       breedLabelWidth: ReactDOM.findDOMNode(this.BreedLabelRef).offsetWidth,
@@ -79,12 +110,17 @@ class SearchPage extends React.Component {
       coatLengthLabelWidth: ReactDOM.findDOMNode(this.CoatLengthLabelRef).offsetWidth,
       genderLabelWidth: ReactDOM.findDOMNode(this.GenderLabelRef).offsetWidth,
       distanceLabelWidth: ReactDOM.findDOMNode(this.DistanceLabelRef).offsetWidth,
+      initialFetched: true
     })
   }
 
   updateInitialSearchOptions() {
     const test = this.props.location.search
     const query = queryString.parse(test)
+
+    if(query.zipcode) {
+      this.props.updateSearchOption("zipcode", query.zipcode)
+    }
 
     if (query.species_id) {
       const speciesIds = Array.from(query.species_id).map(id => parseInt(id))
@@ -143,8 +179,17 @@ class SearchPage extends React.Component {
       }
       this.updateQueryString(options)
       this.props.updateDisplayedAnimals(options)
+      //this.checkDisplayedList()
     }
   }
+
+/*
+  checkDisplayedList = () => {
+    if(this.props.displayedAnimals.length < 1) {
+      this.props.updateDisplayedAnimals(this.state.originalOptions)
+    }
+  }
+*/
 
   updateQueryString(options) {
     const filteredOptions = this.filterOutNullZipCode(options)
@@ -285,7 +330,8 @@ class SearchPage extends React.Component {
       filterContainerStyle: {
         margin: "20px 30px",
         width: "90%",
-        paddingTop: "100px",
+        paddingTop: "120px",
+        paddingBottom: "30px",
         maxWidth: "1200px"
       },
       animalCardStyle: {
@@ -307,6 +353,7 @@ class SearchPage extends React.Component {
       }
     }
     
+
     return (
       <GridContainer style={customStyle.gridContainerStyle} className={classes.bodyStyle}>
       <GridItem sm={12} style={{backgroundColor:"#588caadb", display:"flex", justifyContent:"center", alignItems: "center", boxShadow: "0 0 15px #00000050"}}>
@@ -555,13 +602,20 @@ class SearchPage extends React.Component {
           </GridItem>
           </GridContainer>
         </GridItem>
-      
+          {this.props.displayedAnimals.length < 1 ? 
+          <GridContainer style={{display:"flex", justifyContent:"center", flexDirection: "column", textAlign:"center", padding: "50px"}}>
+            <h3>Your search does not result in any animal</h3>
+            <h4>Please expand your search and checkout some of the awesome animals on Pawsnfind!</h4>
+          </GridContainer>
+          
+           : 
           <GridContainer style={customStyle.animalCardStyle}>
+          
               {this.props.displayedAnimals.map(animal => (
               
                 <AnimalCard key={animal.id} animal={animal}/>
               ))}
-          </GridContainer>
+          </GridContainer>}
  
           <GridContainer style = {customStyle.paginationStyle}>
             <Pagination
