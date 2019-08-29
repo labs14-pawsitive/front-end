@@ -119,7 +119,7 @@ class CheckoutForm extends Component {
 
                 <CustomInput 
                         id = "name"
-                        labelText = "Contact Name"
+                        labelText = "Card Holder Name"
                         inputProps={{
                             type: "text",
                             value: this.state.name,
