@@ -13,13 +13,13 @@ import {
 
 
 //home page initial search
-/*
+
 import {
     SEARCH_SPECIES_START,
     SEARCH_SPECIES_SUCCESS,
     SEARCH_SPECIES_ERROR
 } from '../actions/mainPageAction.js'
-*/
+
 
 const initialState = {
     searchSelections: {
@@ -45,6 +45,7 @@ const initialState = {
     updatingPaginationOption: false,
 
     initialSearch: false,
+    initialError: ''
 }
 
 export const searchReducer = (state = initialState, action) => {
@@ -113,12 +114,13 @@ export const searchReducer = (state = initialState, action) => {
             }
         
             //main page search
-          /*  case SEARCH_SPECIES_START:
+          case SEARCH_SPECIES_START:
                     //console.log('reducers action for SEARCH_SPECIES_START ', action)
                     return {
                         ...state,
                         initialSearch: true,
-                        error: ''
+                        displayedAnimals: [],
+                        initialError: ''
         
                     };
                 case SEARCH_SPECIES_SUCCESS:
@@ -127,17 +129,17 @@ export const searchReducer = (state = initialState, action) => {
                     return {
                         ...state,
                         initialSearch: false,
-                        displayedAnimals: action.payload,
+                        //displayedAnimals: action.payload,
                        
                     };
                 case SEARCH_SPECIES_ERROR:
                     return {
                         ...state,
                         initialSearch: false,
-                        error: action.payload
+                        initialError: action.payload
                     };
 
-            */
+           
         default: 
             return state
     }
