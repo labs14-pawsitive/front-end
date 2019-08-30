@@ -39,7 +39,7 @@ import TeamPage from "views/MainTeam/Team.jsx";
 import mainStyle from "assets/jss/material-dashboard-pro-react/layouts/mainStyle.jsx";
 
 import mainBG from "assets/img/bg-application.jpg";
-import error from "assets/img/bg-error.png";
+import error from "assets/img/bg-404lostPuppy.jpg";
 
 class MainLayout extends React.Component {
   wrapper = React.createRef();
