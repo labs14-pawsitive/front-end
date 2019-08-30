@@ -44,7 +44,7 @@ import CardFooter from "components/Card/CardFooter.jsx";
 import { widgetStories, bugs, website, server } from "variables/general.jsx";
 
 import image from "assets/img/faces/card-profile1-square.jpg";
-import bg from "assets/img/bg-team.jpg";
+import bg from "assets/img/bg-team-sm.jpg";
 
 import mainPageStyle from "assets/jss/material-dashboard-pro-react/views/mainPageStyle.jsx";
 
