@@ -66,7 +66,7 @@ class MainLayout extends React.Component {
         <div className={classes.wrapper} ref={this.wrapper}>
           <div
             className={window.location.pathname.indexOf("/error") !== -1 ? classes.fullPageError : null}
-            style={{backgroundImage: "linear-gradient(#00000080, #00000050),url(" + this.getBgImage() + ")", overflow: "hidden"}}
+            style={{ backgroundImage: "url(" + this.getBgImage() + ")" , overflow: "hidden"}}
           >
             <Switch>
               <Route path="/animal/:id" component={AnimalPage} />
