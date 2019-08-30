@@ -690,7 +690,7 @@ class StripeOnboarding extends React.Component {
                                         }}
                                         inputProps={{
                                             type: "text",
-                                            onChange: event => this.change(event, "account_number", "digit-only", 8),
+                                            onChange: event => this.change(event, "account_number", "digit-only", 20),
                                             value: this.state.account_number,
                                         }}
                                     />
