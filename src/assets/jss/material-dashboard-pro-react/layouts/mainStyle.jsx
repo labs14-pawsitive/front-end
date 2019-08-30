@@ -82,7 +82,7 @@ const pagesStyle = theme => ({
     },
     "&:before": {
  
-      //backgroundColor: "rgba(" + hexToRgb(blackColor) + ", 0.65)"
+      backgroundColor: "rgba(" + hexToRgb(blackColor) + ", 0.65)"
       //backgroundColor: 'white'
  
       
@@ -97,6 +97,7 @@ const pagesStyle = theme => ({
       left: "0",
      }
   },
+  /*
   fullPageError: {
     padding: "120px 0",
     position: "relative",
@@ -130,7 +131,7 @@ const pagesStyle = theme => ({
       left: "0",
  
     }
-  }
+  }*/
 });
 
 export default pagesStyle;
