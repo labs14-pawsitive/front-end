@@ -113,7 +113,7 @@ class AnimalNotes extends React.Component {
         notes = {
             notes: this.state.note,
             animal_id: this.props.animal.id,
-            shelter_user_id: this.state.shelter_user_id.id
+            shelter_user_id: this.state.shelter_user_id
         }
 
         console.log('post notes info: ', notes)
