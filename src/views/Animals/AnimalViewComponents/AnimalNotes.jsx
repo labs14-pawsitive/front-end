@@ -44,7 +44,7 @@ class AnimalNotes extends React.Component {
         .then( result => {
           console.log(result)
           this.setState({
-            shelter_user_id : result.data
+            shelter_user_id : result.data.shelter_user_id
           })
         })
         .catch(error => {
