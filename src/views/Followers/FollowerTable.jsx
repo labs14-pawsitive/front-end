@@ -184,7 +184,7 @@ class FollowerTable extends React.Component {
                   },
                   {
                     Header: "Location",
-                    accessor: "zip"
+                    accessor: "location"
                   }
                 ]}
                 defaultPageSize={10}
