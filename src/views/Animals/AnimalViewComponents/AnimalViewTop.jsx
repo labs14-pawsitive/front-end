@@ -68,6 +68,46 @@ class AnimalViewTop extends React.Component {
 
    
 
+    // deletePicture =  (event, imageId) => {
+
+    //     event.preventDefault()
+
+ 
+    //     const arrayAfterDelete = this.state.placeholderImages.map(image => image.img_id === imageId ? '' : image)
+
+    //     console.log('animal view: array after delete ',arrayAfterDelete)
+    
+    //      this.setState({
+    //       placeholderImages: arrayAfterDelete
+    //     })
+    
+    //     axios
+    //     .delete(`${process.env.REACT_APP_BACKEND_URL}/api/animals/pictures/${imageId}`)
+    //     .then(async res => await axios
+    //     .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${this.props.animal_id}/pictures`))
+    //     .then(async res => {
+
+    //         let images = res.data;
+
+    //         for (let i = 6 - (6 - images.length); i < 6; i++){
+    //             images.push('');
+    //         } 
+    
+    //         await this.setState({
+    //             placeholderImages: images
+    //           })
+    //         console.log(res);
+    //    console.log('action: delete animal pictures success from action', res.data)
+    // })
+    // .catch(err => {
+    //    console.log('action:  delete animal pictures error from action: ', err.response)
+    // })
+   
+        
+    // }
+
+    //my way
+
     deletePicture =  (event, imageId) => {
 
         event.preventDefault()
@@ -83,22 +123,27 @@ class AnimalViewTop extends React.Component {
     
         axios
         .delete(`${process.env.REACT_APP_BACKEND_URL}/api/animals/pictures/${imageId}`)
-        .then(async res => await axios
-        .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${this.props.animal_id}/pictures`))
         .then(async res => {
-
-            let images = res.data;
-
-            for (let i = 6 - (6 - images.length); i < 6; i++){
-                images.push('');
-            } 
-    
             await this.setState({
-                placeholderImages: images
-              })
-            console.log(res);
-       console.log('action: delete animal pictures success from action', res.data)
-    })
+                            placeholderImages: arrayAfterDelete
+                          })
+        })
+    //     .then(async res => await axios
+    //     .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${this.props.animal_id}/pictures`))
+    //     .then(async res => {
+
+    //         let images = res.data;
+
+    //         for (let i = 6 - (6 - images.length); i < 6; i++){
+    //             images.push('');
+    //         } 
+    
+    //         await this.setState({
+    //             placeholderImages: images
+    //           })
+    //         console.log(res);
+    //    console.log('action: delete animal pictures success from action', res.data)
+    // })
     .catch(err => {
        console.log('action:  delete animal pictures error from action: ', err.response)
     })
@@ -106,8 +151,11 @@ class AnimalViewTop extends React.Component {
         
     }
 
+    //my way
     callback = async (response) => {
         console.log('callback img_id ', response)
+
+        // console.log('index in callback ',index)
     
         let updateInfo = {
           img_id: response[0].image.image_id,
@@ -116,6 +164,16 @@ class AnimalViewTop extends React.Component {
         }
     
         console.log('call updated info ', updateInfo)
+
+        // let find = this.state.placeholderImages.findIndex(eachImage => eachImage === '')
+
+        // let newPlaceholder = [...this.state.placeholderImages]
+
+        // newPlaceholder[find] = updateInfo
+
+        // this.setState({
+        //     placeholderImages: newPlaceholder
+        //   })
     
         await axios
           .post(`${process.env.REACT_APP_BACKEND_URL}/api/animals/pictures`, updateInfo)
@@ -124,12 +182,14 @@ class AnimalViewTop extends React.Component {
             await axios
             .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${this.props.paramsId}/pictures`)
             .then(async res => {
+
+                console.log(res.data)
                 let images = res.data;
 
                 for (let i = 6 - (6 - images.length); i < 6; i++){
                     images.push('');
                 } 
-        
+      
                 await this.setState({
                     placeholderImages: images
                   })
@@ -145,6 +205,46 @@ class AnimalViewTop extends React.Component {
     
     
       }
+
+    // callback = async (response) => {
+    //     console.log('callback img_id ', response)
+    
+    //     let updateInfo = {
+    //       img_id: response[0].image.image_id,
+    //       img_url: response[0].image.image_url,
+    //       animal_id: this.props.paramsId
+    //     }
+    
+    //     console.log('call updated info ', updateInfo)
+    
+    //     await axios
+    //       .post(`${process.env.REACT_APP_BACKEND_URL}/api/animals/pictures`, updateInfo)
+    //       .then(async result => {
+
+    //         await axios
+    //         .get(`${process.env.REACT_APP_BACKEND_URL}/api/animals/${this.props.paramsId}/pictures`)
+    //         .then(async res => {
+    //             let images = res.data;
+
+    //             for (let i = 6 - (6 - images.length); i < 6; i++){
+    //                 images.push('');
+    //             } 
+      
+    //             await this.setState({
+    //                 placeholderImages: images
+    //               })
+    //         })
+
+    
+          
+    //         console.log('upload image success animal view', result)
+    //       })
+    //       .catch(error => {
+    //         console.log('upload image error animal view', error)
+    //       })
+    
+    
+    //   }
 
     render() {
  
@@ -306,7 +406,7 @@ class AnimalViewTop extends React.Component {
                                     </IconButton>
                                     </DialogTitle>
                                     <GridContainer md={12}>
-                                        {this.state.placeholderImages.map(eachImage => (
+                                        {this.state.placeholderImages.map((eachImage,index) => (
                                             <GridItem xs={2} sm={2} md={4} key={eachImage.img_id}>
                                                 <DialogContent style={{
                                                     height: "200px",
@@ -320,7 +420,7 @@ class AnimalViewTop extends React.Component {
                                                             <ImageUploadEdit height="150px" width="150px"
                                                                 defaultImage={eachImage.img_url}
                                                                 borderRadius="5px" imageLimit={1}
-                                                                editable={this.props.isEditing} callback={this.callback }
+                                                                editable={this.props.isEditing} callback={this.callback}
                                                                 url={`${process.env.REACT_APP_BACKEND_URL}/api/pictures`} />
 
                                                             {/* color: "#cd5c5c", */}
