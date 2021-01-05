@@ -7,7 +7,7 @@
     "@material-ui/icons": "4.1.0",
     "auth0": "^2.18.0",
     "auth0-js": "^9.11.2",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "bootstrap": "^4.3.1",
     "chartist": "0.10.1",
     "classnames": "^2.2.6",
