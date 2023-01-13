@@ -8,10 +8,6 @@ You can find the deployed project at [Pawsnfind.com](https://pawsnfind.com).
 
 Animal Rescue organizations have so much to manage, but their biggest concern is making sure pets go to a great home. Pawsnfind allows rescues to manage their operations while making it easier for adopters to find their perfect pet and connect with the rescue.
 
- [Trello Board](https://trello.com/b/8947SC7z/labs-14-pawsitive)
-
- [Product Canvas](https://www.notion.so/Pawsnfind-1c8b27ec71124ca09a76b0c94d277cec)
-
 ## Contributors
 | [Ming Liu](https://github.com/skysthelimit68) | [Christopher Riffle](https://github.com/cmr629) | [Sarah Lee](https://github.com/sarahlee671) | [James Pak](https://github.com/jimpakdev) | [Aruna Benjamin](https://github.com/arunabenji29) |   [Hung Pham](https://github.com/ghungpham)    | [Lenna Mau](https://github.com/lennamau)  |                   
 | :----------------: | :--------------: | :------------: | :-------------------: | :-------------: | :-------------: | :---------------: |
